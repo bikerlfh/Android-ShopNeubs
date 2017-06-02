@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Categorias">
+        <menu>
+            <group android:checkableBehavior="single" android:menuCategory="alternative">
+                <item
+                    android:id="@+id/nav_board"
+                    android:icon="@drawable/ic_shop_car"
+                    android:title="Board" />
+                <item
+                    android:id="@+id/nav_caja_atx"
+                    android:icon="@drawable/ic_categoria_02"
+                    android:title="Caja ATX" />
+                <item
+                    android:id="@+id/nav_consolas"
+                    android:icon="@drawable/ic_categoria_16"
+                    android:title="Consolas y Videojuegos" />
+                <item
+                    android:id="@+id/nav_dd"
+                    android:icon="@drawable/ic_categoria_04"
+                    android:title="Discos Duros" />
+                <item
+                    android:id="@+id/nav_electronica"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Electrónica" />
+                <item
+                    android:id="@+id/nav_fuentes"
+                    android:icon="@drawable/ic_categoria_05"
+                    android:title="Fuentes de Poder" />
+                <item
+                    android:id="@+id/nav_impresoras"
+                    android:icon="@drawable/ic_categoria_06"
+                    android:title="Impresoras" />
+                <item
+                    android:id="@+id/nav_memorias_ram"
+                    android:icon="@drawable/ic_categoria_09"
+                    android:title="Memorias RAM" />
+                <item
+                    android:id="@+id/nav_monitores"
+                    android:icon="@drawable/ic_shop_car"
+                    android:title="Monitores" />
+                <item
+                    android:id="@+id/nav_pcs"
+                    android:icon="@drawable/ic_categoria_03"
+                    android:title="PCs" />
+                <item
+                    android:id="@+id/nav_perifericos"
+                    android:icon="@drawable/ic_categoria_15"
+                    android:title="Perifericos" />
+                <item
+                    android:id="@+id/nav_portatiles"
+                    android:icon="@drawable/ic_shop_car"
+                    android:title="Portatiles" />
+                <item
+                    android:id="@+id/nav_procesadores"
+                    android:icon="@drawable/ic_categoria_12"
+                    android:title="Procesadores" />
+                <item
+                    android:id="@+id/nav_refrigeracion"
+                    android:icon="@drawable/ic_categoria_13"
+                    android:title="Refrigeración" />
+                <item
+                    android:id="@+id/nav_tabletas"
+                    android:icon="@drawable/ic_categoria_18"
+                    android:title="Tableta Digitalizadora" />
+                <item
+                    android:id="@+id/nav_tarjetas_video"
+                    android:icon="@drawable/ic_categoria_14"
+                    android:title="Tarjetas de Video" />
+            </group>
+        </menu>
+    </item>
+
+    <!--item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item-->
+
+</menu>
