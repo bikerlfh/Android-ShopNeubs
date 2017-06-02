@@ -15,4 +15,21 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ofertas_title">Ofertas</string>
     <string name="text_loading">Loading...</string>
+    <string name="categoria_01">Motherboards</string>
+    <string name="categoria_02">Cases</string>
+    <string name="categoria_03">PCs</string>
+    <string name="categoria_04">Hard Drives</string>
+    <string name="categoria_05">Power Supplies</string>
+    <string name="categoria_06">Printers</string>
+    <string name="categoria_08">Memory Flash</string>
+    <string name="categoria_09">Memory RAM</string>
+    <string name="categoria_10">Monitors</string>
+    <string name="categoria_11">Laptop</string>
+    <string name="categoria_12">CPUs</string>
+    <string name="categoria_13">Cooling</string>
+    <string name="categoria_14">Video Cards</string>
+    <string name="categoria_15">Computer Peripherals</string>
+    <string name="categoria_16">Video Games</string>
+    <string name="categoria_17">Electronic</string>
+    <string name="categoria_18">Pen Tablets</string>
 </resources>

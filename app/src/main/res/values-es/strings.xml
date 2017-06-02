@@ -5,4 +5,20 @@
     <string name="settings_title">Configuración</string>
     <string name="welcome_title">Bienvenido</string>
     <string name="text_loading">Cargando...</string>
+    <string name="categoria_02">Cajas</string>
+    <string name="categoria_04">Discos Duros</string>
+    <string name="categoria_05">Fuentes de Poder</string>
+    <string name="categoria_06">Impresoras</string>
+    <string name="categoria_08">Memoria Flash</string>
+    <string name="categoria_09">Memoria RAM</string>
+    <string name="categoria_01">Motherboards</string>
+    <string name="categoria_10">Monitores</string>
+    <string name="categoria_11">Portatiles</string>
+    <string name="categoria_12">Procesadores</string>
+    <string name="categoria_13">Refrigeración</string>
+    <string name="categoria_14">Tarjetas de video</string>
+    <string name="categoria_15">Perifericos</string>
+    <string name="categoria_16">Video Juegos</string>
+    <string name="categoria_17">Electrónica</string>
+    <string name="categoria_18">Tarjetas Digitalizadoras</string>
 </resources>
