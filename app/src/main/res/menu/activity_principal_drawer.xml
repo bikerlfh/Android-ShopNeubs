@@ -7,67 +7,71 @@
                 <item
                     android:id="@+id/nav_board"
                     android:icon="@drawable/ic_categoria_01"
-                    android:title="Board" />
+                    android:title="@string/categoria_01" />
                 <item
                     android:id="@+id/nav_caja_atx"
                     android:icon="@drawable/ic_categoria_02"
-                    android:title="Caja ATX" />
+                    android:title="@string/categoria_02" />
                 <item
                     android:id="@+id/nav_consolas"
                     android:icon="@drawable/ic_categoria_16"
-                    android:title="Consolas y Videojuegos" />
+                    android:title="@string/categoria_16" />
                 <item
                     android:id="@+id/nav_dd"
                     android:icon="@drawable/ic_categoria_04"
-                    android:title="Discos Duros" />
+                    android:title="@string/categoria_04" />
                 <item
                     android:id="@+id/nav_electronica"
-                    android:icon="@drawable/ic_menu_manage"
-                    android:title="Electrónica" />
+                    android:icon="@drawable/ic_categoria_17"
+                    android:title="@string/categoria_17" />
                 <item
                     android:id="@+id/nav_fuentes"
                     android:icon="@drawable/ic_categoria_05"
-                    android:title="Fuentes de Poder" />
+                    android:title="@string/categoria_05" />
                 <item
                     android:id="@+id/nav_impresoras"
                     android:icon="@drawable/ic_categoria_06"
-                    android:title="Impresoras" />
+                    android:title="@string/categoria_06" />
+                <item
+                    android:id="@+id/nav_memorias_flash"
+                    android:icon="@drawable/ic_categoria_08"
+                    android:title="@string/categoria_08" />
                 <item
                     android:id="@+id/nav_memorias_ram"
                     android:icon="@drawable/ic_categoria_09"
-                    android:title="Memorias RAM" />
+                    android:title="@string/categoria_09" />
                 <item
                     android:id="@+id/nav_monitores"
-                    android:icon="@drawable/ic_shop_car"
-                    android:title="Monitores" />
+                    android:icon="@drawable/ic_categoria_10"
+                    android:title="@string/categoria_10" />
                 <item
                     android:id="@+id/nav_pcs"
                     android:icon="@drawable/ic_categoria_03"
-                    android:title="PCs" />
+                    android:title="@string/categoria_03" />
                 <item
                     android:id="@+id/nav_perifericos"
                     android:icon="@drawable/ic_categoria_15"
-                    android:title="Perifericos" />
+                    android:title="@string/categoria_15" />
                 <item
                     android:id="@+id/nav_portatiles"
-                    android:icon="@drawable/ic_shop_car"
-                    android:title="Portatiles" />
+                    android:icon="@drawable/ic_categoria_11"
+                    android:title="@string/categoria_11" />
                 <item
                     android:id="@+id/nav_procesadores"
                     android:icon="@drawable/ic_categoria_12"
-                    android:title="Procesadores" />
+                    android:title="@string/categoria_12" />
                 <item
                     android:id="@+id/nav_refrigeracion"
                     android:icon="@drawable/ic_categoria_13"
-                    android:title="Refrigeración" />
+                    android:title="@string/categoria_13" />
                 <item
                     android:id="@+id/nav_tabletas"
                     android:icon="@drawable/ic_categoria_18"
-                    android:title="Tableta Digitalizadora" />
+                    android:title="@string/categoria_18" />
                 <item
                     android:id="@+id/nav_tarjetas_video"
                     android:icon="@drawable/ic_categoria_14"
-                    android:title="Tarjetas de Video" />
+                    android:title="@string/categoria_14" />
             </group>
         </menu>
     </item>
