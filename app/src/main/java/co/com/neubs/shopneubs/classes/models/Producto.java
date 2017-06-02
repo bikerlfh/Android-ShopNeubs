@@ -135,7 +135,7 @@ public class Producto {
     }
 
     public boolean getProductoByid(int idProducto){
-        Cursor c = dbManager.Select(ProductoModel.NAME_TABLE, new String[] { "*" },ProductoModel.PK + "=?",new String[] {String.valueOf(idProducto)},null,null,null,null);
+        Cursor c = dbManager.Select(ProductoModel.NAME_TABLE, new String[] { "*" },ProductoModel.PK + "=?",new String[] {String.valueOf(idProducto)});
         if (c.moveToFirst())
         {
             serializeProducto(c);
@@ -145,7 +145,7 @@ public class Producto {
     }
 
     public boolean getProductoByNumeroProducto(int numeroProducto){
-        Cursor c = dbManager.Select(ProductoModel.NAME_TABLE, new String[] { "*" },ProductoModel.NUMERO_PRODUCTO + "=?",new String[] {String.valueOf(numeroProducto)},null,null,null,null);
+        Cursor c = dbManager.Select(ProductoModel.NAME_TABLE, new String[] { "*" },ProductoModel.NUMERO_PRODUCTO + "=?",new String[] {String.valueOf(numeroProducto)});
         if (c.moveToFirst())
         {
             serializeProducto(c);

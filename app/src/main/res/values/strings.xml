@@ -12,8 +12,7 @@
     <string name="welcome_title">Welcome</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="ofertas_title">Ofertas</string>
+    <string name="ofertas_title">Offer</string>
     <string name="text_loading">Loading...</string>
     <string name="categoria_01">Motherboards</string>
     <string name="categoria_02">Cases</string>

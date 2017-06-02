@@ -21,4 +21,6 @@
     <string name="categoria_16">Video Juegos</string>
     <string name="categoria_17">Electrónica</string>
     <string name="categoria_18">Tarjetas Digitalizadoras</string>
+    <string name="ofertas_title">Ofertas</string>
+    <string name="action_settings">Configuración</string>
 </resources>

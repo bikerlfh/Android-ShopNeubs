@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Created by TatisRamos on 13/05/2016.
+ * Update by bikerlfh on 01/06/2017 (Se agrega los metodos de Select sin todos los parametros y SelectAll)
  */
 
 public class DbManager
@@ -49,6 +50,21 @@ public class DbManager
                          String groupBy, String having, String orderBy, String limit)
     {
         return db.query(table, columns, selection, selectionArgs, groupBy,having, orderBy,null);
+    }
+
+    public Cursor Select(String table, String[] columns, String selection, String[] selectionArgs)
+    {
+        return db.query(table, columns, selection, selectionArgs, null,null, null,null);
+    }
+
+    public Cursor Select(String table, String[] columns)
+    {
+        return db.query(table, columns, null, null,null, null,null);
+    }
+
+    public Cursor SelectAll(String table)
+    {
+        return db.query(table, new String[]{"*"}, null, null,null, null,null);
     }
 
     public Cursor RawQuery(String sql, String[] selectionArgs)

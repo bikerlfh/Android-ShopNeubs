@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import co.com.neubs.shopneubs.classes.models.Marca;
 import co.com.neubs.shopneubs.models.CategoriaModel;
 import co.com.neubs.shopneubs.models.MarcaModel;
 import co.com.neubs.shopneubs.models.ProductoModel;
@@ -28,6 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(MarcaModel.CREATE_TABLE);
         db.execSQL(ProductoModel.CREATE_TABLE);
         db.execSQL(SaldoInventarioModel.CREATE_TABLE);
+
     }
 
     @Override

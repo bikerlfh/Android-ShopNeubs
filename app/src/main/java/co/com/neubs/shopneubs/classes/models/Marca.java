@@ -1,7 +1,11 @@
 package co.com.neubs.shopneubs.classes.models;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.Nullable;
+
+import com.google.gson.annotations.SerializedName;
 
 import co.com.neubs.shopneubs.classes.DbManager;
 import co.com.neubs.shopneubs.models.MarcaModel;
@@ -11,11 +15,12 @@ import co.com.neubs.shopneubs.models.MarcaModel;
  */
 
 public class Marca {
+    @SerializedName("pk")
     private int idMarca;
     private String codigo;
     private String descripcion;
 
-    private DbManager dbManager;
+    private transient DbManager dbManager;
 
     public Marca(int idMarca,String codigo, String descripcion){
         this.idMarca = idMarca;
@@ -26,8 +31,46 @@ public class Marca {
         this.dbManager = new DbManager(context);
     }
 
+    public int getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void initDbManager(Context context){
+        this.dbManager = new DbManager(context);
+    }
+
+    public boolean save(){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MarcaModel.PK,this.idMarca);
+        contentValues.put(MarcaModel.CODIGO,this.codigo);
+        contentValues.put(MarcaModel.DESCRIPCION,this.descripcion);
+
+        if(dbManager.Insert(MarcaModel.NAME_TABLE,contentValues))
+            return true;
+        return false;
+    }
     public boolean getMarcaByid(int idMarca){
-        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.PK + "=?",new String[] {String.valueOf(idMarca)},null,null,null,null);
+        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.PK + "=?",new String[] {String.valueOf(idMarca)});
         if (c.moveToFirst())
         {
             serializeMarca(c);
@@ -37,7 +80,7 @@ public class Marca {
     }
 
     public boolean getMarcaByCodigo(String codigo){
-        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.CODIGO + "=?",new String[] {codigo},null,null,null,null);
+        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.CODIGO + "=?",new String[] {codigo});
         if (c.moveToFirst())
         {
             serializeMarca(c);
