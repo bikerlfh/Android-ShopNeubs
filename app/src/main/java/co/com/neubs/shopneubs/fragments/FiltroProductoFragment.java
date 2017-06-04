@@ -95,7 +95,7 @@ public class FiltroProductoFragment extends Fragment {
         snackbar.show();
 
         String url = "search/?filtro=" + URLEncoder.encode(filtro);
-        APIRest.get(url, new IServerCallback() {
+        APIRest.Async.get(url, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
                 final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);

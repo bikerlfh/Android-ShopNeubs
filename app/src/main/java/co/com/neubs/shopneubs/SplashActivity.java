@@ -1,17 +1,16 @@
 package co.com.neubs.shopneubs;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import co.com.neubs.shopneubs.classes.APIRest;
-import co.com.neubs.shopneubs.classes.AsyncTaskBuiler;
 import co.com.neubs.shopneubs.classes.Synchronize;
 
 public class SplashActivity extends Activity {
@@ -20,6 +19,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
 
         /*new Handler().postDelayed(new Runnable() {
             @Override
@@ -30,22 +30,34 @@ public class SplashActivity extends Activity {
             }
         },TIME_SPLASH);
         */
-        AsyncSyncronize syncronize = new AsyncSyncronize(this);
-        syncronize.execute();
-    }
-
-    private void initSyncronize(){
-
-        Synchronize.SyncronizeMarcas(this);
+        isOnline();
     }
 
     // Verifica la conectividad a internet
     public boolean isOnline() {
+        final boolean[] internetActive = {false};
         ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnectedOrConnecting())
-            return true;
-        return false;
+            internetActive[0] = true;
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage(R.string.msg_no_internet);
+            builder.setPositiveButton("Recargar",new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    internetActive[0] = isOnline();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        if (internetActive[0]){
+            AsyncSyncronize syncronizeData = new AsyncSyncronize(this);
+            syncronizeData.execute();
+        }
+        return internetActive[0];
     }
 
     public class AsyncSyncronize  extends AsyncTask<Void, Void, Boolean> {
@@ -79,5 +91,6 @@ public class SplashActivity extends Activity {
 
         }
     }
+
 
 }

@@ -93,7 +93,7 @@ public class OfertasFragment extends Fragment {
         // get list saldo inventario from de Api
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.progress_bar);
         spinner.setVisibility(View.VISIBLE);
-        APIRest.get("ofertas/", new IServerCallback() {
+        APIRest.Async.get("ofertas/", new IServerCallback() {
             @Override
             public void onSuccess(String json) {
                 ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);

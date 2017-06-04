@@ -111,7 +111,7 @@ public class ProductosCategoriaFragment extends Fragment {
         spinner.setVisibility(View.VISIBLE);
 
         String url = "?categoria=" + codigoCategoria;
-        APIRest.get(url, new IServerCallback() {
+        APIRest.Async.get(url, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
                 final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);

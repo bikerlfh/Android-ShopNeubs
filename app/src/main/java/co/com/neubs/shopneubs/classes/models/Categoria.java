@@ -36,7 +36,7 @@ public class Categoria {
     }
 
     public Categoria(Context context){
-        this.dbManager = new DbManager(context);
+        this.initDbManager(context);
     }
 
     public int getIdCategoria() {

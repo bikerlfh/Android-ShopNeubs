@@ -157,7 +157,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.progress_bar);
             spinner.setVisibility(View.VISIBLE);
             // Se consulta a la api la proxima pagina
-            APIRest.get(this.nextPage, new IServerCallback() {
+            APIRest.Async.get(this.nextPage, new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
                     ConsultaPaginada cPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
