@@ -15,7 +15,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/logo_prueba"
-            app:srcCompat="@drawable/logo_prueba" />
+            android:src="@drawable/logo_nuevo"
+            app:srcCompat="@drawable/logo_nuevo" />
 
 </RelativeLayout>
