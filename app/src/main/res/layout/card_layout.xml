@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -35,29 +36,36 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/img_producto"
-                android:gravity="center_vertical"
                 android:ellipsize="end"
-                android:maxLines="1"
-                android:text="TextView"
-                />
-
-            <TextView
-                android:id="@+id/txt_precio_anterior"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/txt_nombre_producto"
                 android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="TextView" />
 
             <TextView
                 android:id="@+id/txt_precio"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                android:textColor="@color/colorPrecio"
+                android:textSize="16sp"
+                android:layout_below="@+id/txt_nombre_producto"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/txt_precio_anterior"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/txt_precio"
+                android:layout_alignBottom="@+id/txt_precio"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/txt_precio"
+                android:gravity="center_vertical"
                 android:text="TextView"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/txt_precio_anterior"
-                android:layout_alignParentEnd="true" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </RelativeLayout>
 

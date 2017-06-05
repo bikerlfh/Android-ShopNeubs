@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -55,8 +56,9 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             nombre_producto = (TextView)itemView.findViewById(R.id.txt_nombre_producto);
             precio = (TextView)itemView.findViewById(R.id.txt_precio);
             oferta = (TextView)itemView.findViewById(R.id.txt_precio_anterior);
+            //Estilo Texto strikethrough
+            oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
             context = itemView.getContext();
-
 
         }
 
@@ -65,11 +67,11 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             nombre_producto.setText(producto.getNombre());
             if (saldoInventario.getPrecioOferta() > 0){
 
-                oferta.setText(String.format("%.00f",saldoInventario.getPrecioVentaUnitario()));
-                precio.setText(String.format("%.00f",saldoInventario.getPrecioOferta()));
+                oferta.setText(String.format("$%.00f", saldoInventario.getPrecioVentaUnitario()));
+                precio.setText(String.format("$%.00f", saldoInventario.getPrecioOferta()));
             }
             else{
-                precio.setText(String.format("%.00f",saldoInventario.getPrecioVentaUnitario()));
+                precio.setText(String.format("$%.00f",saldoInventario.getPrecioVentaUnitario()));
                 oferta.setVisibility(View.GONE);
             }
             // Se obtiene la imagen y se guarda en el cache

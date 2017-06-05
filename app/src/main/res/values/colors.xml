@@ -8,4 +8,5 @@
     <color name="colorSecundary">#ff5722</color>
     <color name="colorBackground">#E0E0E0</color>
     <color name="colorBackgroundCardView">#f7f7f7</color>
+    <color name="colorPrecio">#e01414</color>
 </resources>
