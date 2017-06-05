@@ -6,7 +6,7 @@ package co.com.neubs.shopneubs.models;
 
 public class CategoriaModel {
 
-    public static final String NAME_TABLE = "categoria";
+    public static final String NAME_TABLE = "Categoria";
     public static final String PK = "idCategoria";
     public static final String CODIGO = "codigo";
     public static final String DESCRIPCION = "descripcion";

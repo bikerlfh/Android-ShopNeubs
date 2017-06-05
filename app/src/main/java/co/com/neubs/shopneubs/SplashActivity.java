@@ -13,9 +13,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.List;
+
 import co.com.neubs.shopneubs.classes.AsyncTaskBuiler;
 import co.com.neubs.shopneubs.classes.DbManager;
 import co.com.neubs.shopneubs.classes.Synchronize;
+import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.interfaces.IAsyncTask;
 
 public class SplashActivity extends Activity {
@@ -122,7 +125,11 @@ public class SplashActivity extends Activity {
         protected Boolean doInBackground(Void... params) {
             // Se sincroniza toda la api
             if (isFirstRun){
-                if(!synchronize.InitialSyncronize())
+                if(synchronize.InitialSyncronize() == -1)
+                    return false;
+            }
+            else{
+                if(synchronize.SyncronizeAPI(true)==-1)
                     return false;
             }
             return true;

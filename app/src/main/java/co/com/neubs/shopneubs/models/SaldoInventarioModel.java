@@ -5,7 +5,7 @@ package co.com.neubs.shopneubs.models;
  */
 
 public class SaldoInventarioModel {
-    public static final String NAME_TABLE = "saldoinventario";
+    public static final String NAME_TABLE = "SaldoInventario";
     public static final String PK = "idSaldoInventario";
     public static final String ID_PRODUCTO = "idProducto";
     public static final String PRECIO_VENTA_UNITARIO = "precioVentaUnitario";

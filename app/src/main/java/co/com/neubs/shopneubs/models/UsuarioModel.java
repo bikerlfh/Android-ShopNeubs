@@ -6,7 +6,7 @@ package co.com.neubs.shopneubs.models;
 
 public class UsuarioModel {
 
-    public static final String NAME_TABLE = "usuario";
+    public static final String NAME_TABLE = "Usuario";
     public static final String PK = "idUsuario";
     public static final String USERNAME = "username";
     public static final String EMAIL = "email";

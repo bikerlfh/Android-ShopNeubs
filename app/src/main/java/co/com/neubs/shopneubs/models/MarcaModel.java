@@ -5,7 +5,7 @@ package co.com.neubs.shopneubs.models;
  */
 
 public class MarcaModel {
-    public static final String NAME_TABLE = "marca";
+    public static final String NAME_TABLE = "Marca";
     public static final String PK = "idMarca";
     public static final String CODIGO = "codigo";
     public static final String DESCRIPCION = "descripcion";

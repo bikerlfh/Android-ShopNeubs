@@ -4,6 +4,9 @@ import android.content.Context;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.APITabla;
 import co.com.neubs.shopneubs.classes.models.Categoria;
@@ -15,8 +18,16 @@ import co.com.neubs.shopneubs.classes.models.Marca;
 
 public class Synchronize {
 
+    // VARIABLES URLS API
+    private final String URL_API_SINCRONIZACION = "api-sincronizacion/";
+    private final String URL_API_TABLA = "api-tabla/";
+    private final String URL_CATEGORIA = "categoria/";
+    private final String URL_MARCA = "marca/";
+
     private Context context;
-    public static String message_error;
+
+    public String message_error;
+
 
     public Synchronize(Context context) {
         this.context = context;
@@ -26,129 +37,166 @@ public class Synchronize {
      * Sincronización inicial (debe ser llamada cuando se abre la aplicación por primera vez)
      * @return
      */
-    public boolean InitialSyncronize(){
-        if (SyncronizeApiTabla()){
-            if (SyncronizeCategorias()){
-                if (SyncronizeMarcas()){
-                    if (SyncronizeApiSincronizacion())
-                        return true;
-                }
-            }
+    public int InitialSyncronize(){
+        int totalRowSync = 0;
+        try {
+            // Se sincroniza la API
+            totalRowSync += SyncronizeAPI(false);
+            // Se sincroniza la APITabla
+            totalRowSync += SyncronizeApiTabla();
+            // Se sincroniza las categorias
+            totalRowSync += SyncronizeCategorias();
+            // Se sincroniza las marcas
+            totalRowSync += SyncronizeMarcas();
         }
-        return false;
+        catch (Exception ex){
+            message_error = ex.getMessage();
+            return -1;
+        }
+        return totalRowSync;
     }
 
 
+    /**
+     * Sincroniza ApiTabla
+     * @return un el numero de sincronzaciones guardadas.
+     */
+    public int SyncronizeApiTabla(){
+        int numSincronizacion = 0;
+
+        // Se consulta la api y se obtiene un arreglo tipo APITabla[]
+        final APITabla[] listadoAPITabla = APIRest.Sync.get(URL_API_TABLA,APITabla[].class);
+        if (listadoAPITabla != null && listadoAPITabla.length > 0) {
+            for (APITabla tabla : listadoAPITabla) {
+                tabla.initDbManager(context);
+                // Si la tabla no está creada en la base de datos se guarda
+                if (!tabla.exists()) {
+                    tabla.save();
+                    numSincronizacion++;
+                }
+            }
+        }
+        return numSincronizacion;
+    }
     /**
      * Sincroniza el registro ApiSincronizacion segun el idApiTabla
      * @param idApiTabla
      * @return
      */
-    public boolean SyncronizeApiSincronizacion(int idApiTabla){
-        final String url = "api-sincronizacion/?tabla="+idApiTabla;
+    public int SyncronizeAPI(int idApiTabla){
+        final String url = URL_API_SINCRONIZACION + "?tabla="+idApiTabla;
 
         APISincronizacion apiSincronizacion = APIRest.Sync.get(url,APISincronizacion.class);
         apiSincronizacion.initDbManager(context);
-        if (apiSincronizacion != null && !apiSincronizacion.exists(apiSincronizacion.getIdApiSincronizacion())){
+        if (apiSincronizacion != null && !apiSincronizacion.exists()){
             apiSincronizacion.save();
-            return true;
-
+            return 1;
         }
-        message_error = "ERROR al sincronizar api";
-        return false;
+        return 0;
     }
 
     /**
-     * Sincroniza toda la tabla ApiSincronizcion
-     * @return
+     * Sincroniza toda la tabla ApiSincronizacion
+     * @param withTablas True, Sincroniza las tablas que la APISincronizacion especifique. False, solo sincroniza APISincronización
+     * @return un el número de sincronzaciones guardadas.
      */
-    public boolean SyncronizeApiSincronizacion(){
-        final APISincronizacion[] listApiSincronizacion = APIRest.Sync.get("api-sincronizacion/",APISincronizacion[].class);
-        if (listApiSincronizacion != null && listApiSincronizacion.length > 0){
-            for (APISincronizacion apiSincronizacion: listApiSincronizacion) {
-                apiSincronizacion.initDbManager(context);
-                if (apiSincronizacion != null && !apiSincronizacion.exists(apiSincronizacion.getIdApiSincronizacion())) {
-                    apiSincronizacion.save();
-                }
-            }
-            return  true;
-        }
-        message_error = "ERROR al sincronizar api";
-        return false;
-    }
-
-    /**
-     * Sincroniza ApiTabla
-     * @return
-     */
-    public boolean SyncronizeApiTabla(){
+    public int SyncronizeAPI(boolean withTablas) {
+        int numSincronizacion = 0;
         try {
-                        // Se consulta la api y se obtiene un arreglo tipo APITabla[]
-            final APITabla[] listadoAPITabla = APIRest.Sync.get("api-tabla/",APITabla[].class);
-            if (listadoAPITabla != null && listadoAPITabla.length > 0) {
-                for (APITabla tabla : listadoAPITabla) {
-                    tabla.initDbManager(context);
-                    // Si la tabla no está creada en la base de datos se guarda
-                    if (!tabla.exists()) {
-                        tabla.save();
+            final APISincronizacion[] listApiSincronizacion = APIRest.Sync.get(URL_API_SINCRONIZACION, APISincronizacion[].class);
+            if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
+                for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
+                    apiSincronizacion.initDbManager(context);
+                    if (apiSincronizacion != null && !apiSincronizacion.exists()) {
+                        apiSincronizacion.save();
+                        numSincronizacion++;
+
+                        if (withTablas) {
+                            SynchronizeAPITabla(apiSincronizacion.getTabla());
+                        }
                     }
                 }
             }
-            return true;
         }
         catch (Exception ex){
-            Log.d("SyncronizeApiTabla",ex.getMessage());
             message_error = ex.getMessage();
+            numSincronizacion = -1;
         }
-        return false;
+        return numSincronizacion;
     }
+
+
 
     /**
      * Realiza la sincronización de las marcas
      * @return
      */
-    public boolean SyncronizeMarcas(){
-        try {
-            final Marca[] listMarca = APIRest.Sync.get("marca/",Marca[].class);
-            if (listMarca != null && listMarca.length > 0) {
-                for (Marca marca : listMarca) {
-                    marca.initDbManager(context);
-                    if (!marca.exists()) {
-                        marca.save();
-                    }
+    public int SyncronizeMarcas(){
+        int numSincronizacion = 0;
+        final Marca[] listMarca = APIRest.Sync.get(URL_MARCA,Marca[].class);
+        if (listMarca != null && listMarca.length > 0) {
+            for (Marca marca : listMarca) {
+                marca.initDbManager(context);
+                if (!marca.exists()) {
+                    marca.save();
+                    numSincronizacion++;
                 }
             }
-            return true;
         }
-        catch (Exception ex){
-            Log.d("SincronizacionMarcas",ex.getMessage());
-            message_error = ex.getMessage();
-        }
-        return false;
+        return numSincronizacion;
     }
 
     /**
      * Realiza la sincronización de las Categorias
      * @return
      */
-    public boolean SyncronizeCategorias(){
-        try{
-            final Categoria[] listCategoria = APIRest.Sync.get("categoria/",Categoria[].class);
-            if (listCategoria != null && listCategoria.length > 0) {
-                for (Categoria cat : listCategoria) {
-                    cat.initDbManager(context);
-                    if (!cat.exists()) {
-                        cat.save();
-                    }
+    public int SyncronizeCategorias(){
+        int numSincronizacion = 0;
+
+        final Categoria[] listCategoria = APIRest.Sync.get(URL_CATEGORIA,Categoria[].class);
+        if (listCategoria != null && listCategoria.length > 0) {
+            for (Categoria cat : listCategoria) {
+                cat.initDbManager(context);
+                if (!cat.exists()) {
+                    cat.save();
+                    numSincronizacion++;
                 }
             }
-            return true;
         }
-        catch (Exception ex){
-            Log.d("SyncronizeCategorias",ex.getMessage());
-            message_error = ex.getMessage();
+        return numSincronizacion;
+    }
+
+    /**
+     * Sincroniza una tabla en especifico. Si la tabla es null, realiza una sincronización inicial
+     * @param tabla
+     * @return
+     */
+    private int SynchronizeAPITabla(APITabla tabla){
+        int numSincronizacion = 0;
+        if (tabla != null) {
+            switch (tabla.getCodigo()) {
+                // APITablas
+                case "01":
+                    numSincronizacion = SyncronizeApiTabla();
+                    break;
+                // Categorias
+                case "02":
+                    numSincronizacion = SyncronizeCategorias();
+                    break;
+                // Marcas
+                case "03":
+                    numSincronizacion = SyncronizeMarcas();
+                    break;
+                // Productos
+                case "04":
+                    break;
+            }
         }
-        return false;
+        else{
+            // Se sincroniza todas las tablas
+            numSincronizacion = InitialSyncronize();
+        }
+        return numSincronizacion;
     }
 
 }

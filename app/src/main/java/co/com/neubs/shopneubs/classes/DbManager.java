@@ -12,6 +12,7 @@ import co.com.neubs.shopneubs.models.CategoriaModel;
 import co.com.neubs.shopneubs.models.MarcaModel;
 import co.com.neubs.shopneubs.models.ProductoModel;
 import co.com.neubs.shopneubs.models.SaldoInventarioModel;
+import co.com.neubs.shopneubs.models.UsuarioModel;
 
 /**
  * Created by TatisRamos on 13/05/2016.
@@ -113,6 +114,7 @@ public class DbManager
             db.execSQL(SaldoInventarioModel.CREATE_TABLE);
             db.execSQL(APITablaModel.CREATE_TABLE);
             db.execSQL(APISincronizacionModel.CREATE_TABLE);
+            db.execSQL(UsuarioModel.CREATE_TABLE);
         }
 
         @Override

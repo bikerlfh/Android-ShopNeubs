@@ -6,7 +6,7 @@ package co.com.neubs.shopneubs.models;
 
 public class APITablaModel {
 
-    public static final String NAME_TABLE = "apitabla";
+    public static final String NAME_TABLE = "ApiTabla";
     public static final String PK = "idApiTabla";
     public static final String CODIGO = "codigo";
     public static final String DESCRIPCION = "descripcion";

@@ -5,8 +5,8 @@ package co.com.neubs.shopneubs.models;
  */
 
 public class APISincronizacionModel {
-    public static final String NAME_TABLE = "sincronizacion";
-    public static final String PK = "pk";
+    public static final String NAME_TABLE = "ApiSincronizacion";
+    public static final String PK = "idApiSincronizacion";
     /**
      * especifica que tabla fue  sincronizada
      * Sí es NULL, es una sincronización de la API completa
