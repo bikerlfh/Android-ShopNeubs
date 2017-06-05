@@ -1,12 +1,6 @@
 package co.com.neubs.shopneubs.classes;
 
 import android.content.Context;
-
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.APITabla;
 import co.com.neubs.shopneubs.classes.models.Categoria;
