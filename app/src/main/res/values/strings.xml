@@ -34,5 +34,7 @@
     <string name="msg_no_internet">No Internet connection available. Press ok to reload</string>
     <string name="title_no_internet">No Internet Connection</string>
     <string name="msg_sincronizando_datos">Synchronizing</string>
+    <string name="title_description">Description</string>
+    <string name="title_specification">Specification</string>
 
 </resources>

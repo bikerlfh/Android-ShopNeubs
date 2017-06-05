@@ -27,4 +27,6 @@
     <string name="navigation_drawer_close">No hay conexión a Internet disponible</string>
     <string name="title_no_internet">No hay conexión a Internet</string>
     <string name="msg_sincronizando_datos">Sincronizando</string>
+    <string name="title_description">Descripción</string>
+    <string name="title_specification">Especificación</string>
 </resources>

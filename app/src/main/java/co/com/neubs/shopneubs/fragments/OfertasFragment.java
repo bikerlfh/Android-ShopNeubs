@@ -20,6 +20,7 @@ import co.com.neubs.shopneubs.adapters.ProductoAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
+import co.com.neubs.shopneubs.classes.OnVerticalScrollListener;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
@@ -42,6 +43,7 @@ public class OfertasFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private OnFragmentInteractionListener mListener;
+    private ProductoAdapter productoAdapter;
 
     public OfertasFragment() {
         // Required empty public constructor
@@ -97,8 +99,16 @@ public class OfertasFragment extends Fragment {
             @Override
             public void onSuccess(String json) {
                 ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
-                ProductoAdapter productoAdapter = new ProductoAdapter(getActivity(),consultaPaginada);
+                productoAdapter = new ProductoAdapter(getActivity(),consultaPaginada);
                 recyclerView.setAdapter(productoAdapter);
+                recyclerView.addOnScrollListener(new OnVerticalScrollListener(){
+                    @Override
+                    public void onScrolledToBottom() {
+                        super.onScrolledToBottom();
+                        productoAdapter.getNextPage(view);
+
+                    }
+                });
                 spinner.setVisibility(View.GONE);
             }
 

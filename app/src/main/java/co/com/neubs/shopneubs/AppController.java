@@ -29,7 +29,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        addShortcut();
+        //addShortcut();
     }
 
     public static synchronized AppController getInstance() {

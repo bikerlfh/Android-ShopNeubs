@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import co.com.neubs.shopneubs.ProductoDetalleActivity;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
@@ -46,7 +47,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         private TextView precio;
         private TextView oferta;
 
-
+        private SaldoInventario saldoInventario;
 
         private Context context;
 
@@ -63,6 +64,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         }
 
         public void bindProducto(SaldoInventario saldoInventario) {
+            this.saldoInventario = saldoInventario;
             Producto producto = saldoInventario.getProducto();
             nombre_producto.setText(producto.getNombre());
             if (saldoInventario.getPrecioOferta() > 0){
@@ -84,7 +86,10 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         @Override
         public void onClick(View v) {
             // Aca se debe abrir la actividad de visualización del producto detalle
-            Toast.makeText(v.getContext(),"position " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(v.getContext(),"position " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(v.getContext(),ProductoDetalleActivity.class);
+            intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,this.saldoInventario.getIdSaldoInventario());
+            v.getContext().startActivity(intent);
         }
     }
 
@@ -125,33 +130,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
      */
     public void getNextPage(View view){
         if (this.nextPage!= null && this.nextPage.length() > 0){
-
-            /*AsyncTaskBuiler asyncTaskBuiler = new AsyncTaskBuiler(context, new IAsyncTask() {
-                @Override
-                public void onPreExecute() {
-                }
-
-                @Override
-                public boolean doInBackground() {
-                    try {
-                        String json = HttpRequest.get(nextPage).accept("application/json").body();
-                        ConsultaPaginada cPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
-                        addItems(getItemCount(),cPaginada.getResults());
-                        // Se modifica nextPage asignandole la nueva (pagina siguiente)
-                        nextPage = cPaginada.getNext();
-                        return true;
-                    }
-                    catch(Exception ex){
-                        Log.d(TAG,"ERROR: " + ex.getMessage());
-                    }
-                    return false;
-                }
-
-                @Override
-                public void onPostExecute(Boolean result) {
-                }
-            });
-            asyncTaskBuiler.execute();*/
 
             final Snackbar snackbar = Snackbar.make(view, R.string.text_loading, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null);
