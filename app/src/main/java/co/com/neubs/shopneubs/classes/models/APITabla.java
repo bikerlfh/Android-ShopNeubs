@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.com.neubs.shopneubs.classes.DbManager;
+import co.com.neubs.shopneubs.interfaces.ICrud;
 import co.com.neubs.shopneubs.models.APITablaModel;
 
 /**
  * Created by bikerlfh on 6/3/17.
  */
 
-public class APITabla {
+public class APITabla implements ICrud {
     private int idApiTabla;
     private String codigo;
     private String descripcion;
@@ -52,7 +53,9 @@ public class APITabla {
     public void initDbManager(Context context){
         this.dbManager = new DbManager(context);
     }
-    public boolean save(){
+
+    @Override
+    public boolean save() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(APITablaModel.PK,idApiTabla);
         contentValues.put(APITablaModel.CODIGO,codigo);
@@ -63,12 +66,18 @@ public class APITabla {
         return false;
     }
 
+    @Override
+    public boolean exists() {
+        return dbManager.exists(APITablaModel.NAME_TABLE,APITablaModel.PK,idApiTabla);
+    }
+
     /**
      * Consulta la ApiTabla por ID
-     * @param idApiTabla
+     * @param id idApiTabla
      * @return
      */
-    public boolean getAPITablaByid(int idApiTabla){
+    @Override
+    public boolean getById(int id) {
         Cursor c = dbManager.Select(APITablaModel.NAME_TABLE, new String[] { "*" },APITablaModel.PK + "=?",new String[] {String.valueOf(idApiTabla)});
         if (c.moveToFirst()){
             serialize(c);

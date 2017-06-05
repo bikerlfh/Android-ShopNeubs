@@ -16,16 +16,12 @@ import co.com.neubs.shopneubs.models.APISincronizacionModel;
 public class APISincronizacion {
     private int idApiSincronizacion;
     private APITabla tabla;
-    private Date fecha;
+    private String fecha;
 
     private transient DbManager dbManager;
 
     public APISincronizacion(Context context) {
         this.initDbManager(context);
-    }
-
-    public void initDbManager(Context context) {
-        this.dbManager = new DbManager(context);
     }
 
     public int getIdApiSincronizacion() {
@@ -40,14 +36,18 @@ public class APISincronizacion {
         this.tabla = tabla;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
+
+    public void initDbManager(Context context){
+        this.dbManager = new DbManager(context);
+    }
 
     /**
      * Graba el registro en la DB
@@ -56,7 +56,8 @@ public class APISincronizacion {
      */
     public boolean save() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(APISincronizacionModel.ID_APITABLA, tabla.getIdApiTabla());
+        if (tabla != null)
+            contentValues.put(APISincronizacionModel.ID_APITABLA, tabla.getIdApiTabla());
         contentValues.put(APISincronizacionModel.FECHA, fecha.toString());
 
         if (dbManager.Insert(APISincronizacionModel.NAME_TABLE, contentValues))
@@ -115,11 +116,11 @@ public class APISincronizacion {
      */
     private void serialize(Cursor c){
         this.idApiSincronizacion = c.getInt(c.getColumnIndex(APISincronizacionModel.PK));
-        this.fecha = Date.class.cast(c.getString(c.getColumnIndex(APISincronizacionModel.FECHA)));
+        this.fecha = c.getString(c.getColumnIndex(APISincronizacionModel.FECHA));
         int idApiTabla = c.getInt(c.getColumnIndex(APISincronizacionModel.ID_APITABLA));
         if (idApiTabla > 0){
             this.tabla = new APITabla(this.dbManager.context);
-            this.tabla.getAPITablaByid(idApiTabla);
+            this.tabla.getById(idApiTabla);
         }
     }
 }

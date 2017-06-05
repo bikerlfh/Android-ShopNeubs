@@ -31,5 +31,7 @@
     <string name="categoria_16">Video Games</string>
     <string name="categoria_17">Electronic</string>
     <string name="categoria_18">Pen Tablets</string>
-    <string name="msg_no_internet">No Internet connection available</string>
+    <string name="msg_no_internet">No Internet connection available. Press ok to reload</string>
+    <string name="title_no_internet">No Internet Connection</string>
+    <string name="msg_sincronizando_datos">Synchronizing</string>
 </resources>

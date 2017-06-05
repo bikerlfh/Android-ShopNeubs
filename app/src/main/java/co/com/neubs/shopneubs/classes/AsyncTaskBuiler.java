@@ -19,28 +19,42 @@ public class AsyncTaskBuiler  extends AsyncTask<Void, Void, Boolean> {
     private ProgressDialog progressDialog;
     private Context context;
 
-     public AsyncTaskBuiler(Context context, final IAsyncTask iTask)
-     {
+    private String messageProgressDialog;
+
+     public AsyncTaskBuiler(Context context, final IAsyncTask iTask){
         this. context = context;
         this.iTask = iTask;
      }
 
+    public void setMessageProgressDialog(String message){
+        this.messageProgressDialog = message;
+    }
+
+    public void setProgressDialog(ProgressDialog progressDialog){
+        this.progressDialog = progressDialog;
+    }
+
+     private void createProgressDialog(){
+         if (progressDialog == null) {
+             progressDialog = new ProgressDialog(this.context);
+             progressDialog.setCancelable(false);
+             progressDialog.setMessage(messageProgressDialog);
+             progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
+             progressDialog.setProgress(0);
+             progressDialog.setMax(100);
+
+             progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                 @Override
+                 public void onDismiss(DialogInterface dialog) {
+                     AsyncTaskBuiler.this.cancel(true);
+                 }
+             });
+         }
+     }
 
     @Override
     protected void onPreExecute() {
-        progressDialog = new ProgressDialog(this.context);
-        progressDialog.setCancelable(true);
-        progressDialog.setMessage("Consultando ...");
-        progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
-        progressDialog.setProgress(0);
-        progressDialog.setMax(100);
-
-        progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-            AsyncTaskBuiler.this.cancel(true);
-            }
-        });
+        createProgressDialog();
 
         progressDialog.show();
         iTask.onPreExecute();
@@ -53,7 +67,6 @@ public class AsyncTaskBuiler  extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
-
         progressDialog.dismiss();
         iTask.onPostExecute(result);
     }

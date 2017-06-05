@@ -15,52 +15,81 @@ import co.com.neubs.shopneubs.classes.models.Marca;
 
 public class Synchronize {
 
-    /**
-     * Sincronización inicial
-     * @param context
-     * @return
-     */
-    public static boolean InitialSyncronize(Context context){
-        APITabla apiTabla = new APITabla(context);
-        if (SyncronizeApiTabla(context)){
-           if (SyncronizeCategorias(context)){
-                if (SyncronizeMarcas(context)){
-                    return true;
-                }
-           }
-        }
-        return false;
+    private Context context;
+    public static String message_error;
+
+    public Synchronize(Context context) {
+        this.context = context;
     }
 
-
-    public static boolean SyncronizeApiSincronizacion(Context context, int idApiTabla){
-        final String url = "api-sincronizacion/" + ((idApiTabla > 0)? "?tabla="+idApiTabla : "");
-
-        if (idApiTabla > 0){
-            APISincronizacion apiSincronizacion = APIRest.Sync.get(url,APISincronizacion.class);
-            if (apiSincronizacion != null && !apiSincronizacion.exists(apiSincronizacion.getIdApiSincronizacion())){
-                apiSincronizacion.save();
-                //SyncronizeApiSincronizacion(context,null);
+    /**
+     * Sincronización inicial (debe ser llamada cuando se abre la aplicación por primera vez)
+     * @return
+     */
+    public boolean InitialSyncronize(){
+        if (SyncronizeApiTabla()){
+            if (SyncronizeCategorias()){
+                if (SyncronizeMarcas()){
+                    if (SyncronizeApiSincronizacion())
+                        return true;
+                }
             }
         }
         return false;
     }
+
+
     /**
-     * Sincroniza ApiTabla
-     * @param context
+     * Sincroniza el registro ApiSincronizacion segun el idApiTabla
+     * @param idApiTabla
      * @return
      */
-    public static boolean SyncronizeApiTabla(Context context){
-        try {
-            APITabla apiTabla = new APITabla(context);
+    public boolean SyncronizeApiSincronizacion(int idApiTabla){
+        final String url = "api-sincronizacion/?tabla="+idApiTabla;
 
-            // Se consulta la api y se obtiene un arreglo tipo APITabla[]
+        APISincronizacion apiSincronizacion = APIRest.Sync.get(url,APISincronizacion.class);
+        apiSincronizacion.initDbManager(context);
+        if (apiSincronizacion != null && !apiSincronizacion.exists(apiSincronizacion.getIdApiSincronizacion())){
+            apiSincronizacion.save();
+            return true;
+
+        }
+        message_error = "ERROR al sincronizar api";
+        return false;
+    }
+
+    /**
+     * Sincroniza toda la tabla ApiSincronizcion
+     * @return
+     */
+    public boolean SyncronizeApiSincronizacion(){
+        final APISincronizacion[] listApiSincronizacion = APIRest.Sync.get("api-sincronizacion/",APISincronizacion[].class);
+        if (listApiSincronizacion != null && listApiSincronizacion.length > 0){
+            for (APISincronizacion apiSincronizacion: listApiSincronizacion) {
+                apiSincronizacion.initDbManager(context);
+                if (apiSincronizacion != null && !apiSincronizacion.exists(apiSincronizacion.getIdApiSincronizacion())) {
+                    apiSincronizacion.save();
+                }
+            }
+            return  true;
+        }
+        message_error = "ERROR al sincronizar api";
+        return false;
+    }
+
+    /**
+     * Sincroniza ApiTabla
+     * @return
+     */
+    public boolean SyncronizeApiTabla(){
+        try {
+                        // Se consulta la api y se obtiene un arreglo tipo APITabla[]
             final APITabla[] listadoAPITabla = APIRest.Sync.get("api-tabla/",APITabla[].class);
             if (listadoAPITabla != null && listadoAPITabla.length > 0) {
                 for (APITabla tabla : listadoAPITabla) {
+                    tabla.initDbManager(context);
                     // Si la tabla no está creada en la base de datos se guarda
-                    if (!apiTabla.getAPITablaByid(tabla.getIdApiTabla())) {
-                        tabla.initDbManager(context);
+                    if (!tabla.exists()) {
                         tabla.save();
                     }
                 }
@@ -69,24 +98,23 @@ public class Synchronize {
         }
         catch (Exception ex){
             Log.d("SyncronizeApiTabla",ex.getMessage());
+            message_error = ex.getMessage();
         }
         return false;
     }
 
     /**
      * Realiza la sincronización de las marcas
-     * @param context
      * @return
      */
-    public static boolean SyncronizeMarcas(Context context){
+    public boolean SyncronizeMarcas(){
         try {
-            final Marca[] marcas = APIRest.Sync.get("marca/",Marca[].class);
-            if (marcas != null && marcas.length > 0) {
-                Marca marca = new Marca(context);
-                for (Marca m : marcas) {
-                    if (!marca.getMarcaByid(m.getIdMarca())) {
-                        m.initDbManager(context);
-                        m.save();
+            final Marca[] listMarca = APIRest.Sync.get("marca/",Marca[].class);
+            if (listMarca != null && listMarca.length > 0) {
+                for (Marca marca : listMarca) {
+                    marca.initDbManager(context);
+                    if (!marca.exists()) {
+                        marca.save();
                     }
                 }
             }
@@ -94,23 +122,22 @@ public class Synchronize {
         }
         catch (Exception ex){
             Log.d("SincronizacionMarcas",ex.getMessage());
+            message_error = ex.getMessage();
         }
         return false;
     }
 
     /**
      * Realiza la sincronización de las Categorias
-     * @param context
      * @return
      */
-    public static boolean SyncronizeCategorias(Context context){
+    public boolean SyncronizeCategorias(){
         try{
-            final Categoria[] categorias = APIRest.Sync.get("",Categoria[].class);
-            if (categorias != null && categorias.length > 0) {
-                Categoria categoria = new Categoria(context);
-                for (Categoria cat : categorias) {
-                    if (!categoria.getCategoriaByid(cat.getIdCategoria())) {
-                        cat.initDbManager(context);
+            final Categoria[] listCategoria = APIRest.Sync.get("categoria/",Categoria[].class);
+            if (listCategoria != null && listCategoria.length > 0) {
+                for (Categoria cat : listCategoria) {
+                    cat.initDbManager(context);
+                    if (!cat.exists()) {
                         cat.save();
                     }
                 }
@@ -119,6 +146,7 @@ public class Synchronize {
         }
         catch (Exception ex){
             Log.d("SyncronizeCategorias",ex.getMessage());
+            message_error = ex.getMessage();
         }
         return false;
     }

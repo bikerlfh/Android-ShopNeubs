@@ -8,13 +8,14 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 
 import co.com.neubs.shopneubs.classes.DbManager;
+import co.com.neubs.shopneubs.interfaces.ICrud;
 import co.com.neubs.shopneubs.models.MarcaModel;
 
 /**
  * Created by bikerlfh on 5/22/17.
  */
 
-public class Marca {
+public class Marca implements ICrud {
     @SerializedName("pk")
     private int idMarca;
     private String codigo;
@@ -59,7 +60,24 @@ public class Marca {
         this.dbManager = new DbManager(context);
     }
 
-    public boolean save(){
+    public boolean getMarcaByCodigo(String codigo){
+        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.CODIGO + "=?",new String[] {codigo});
+        if (c.moveToFirst())
+        {
+            serialize(c);
+            return true;
+        }
+        return false;
+    }
+
+    private void serialize(Cursor c){
+        this.idMarca = c.getInt(c.getColumnIndex(MarcaModel.PK));
+        this.codigo = c.getString(c.getColumnIndex(MarcaModel.CODIGO));
+        this.descripcion = c.getString(c.getColumnIndex(MarcaModel.DESCRIPCION));
+    }
+
+    @Override
+    public boolean save() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MarcaModel.PK,this.idMarca);
         contentValues.put(MarcaModel.CODIGO,this.codigo);
@@ -69,29 +87,20 @@ public class Marca {
             return true;
         return false;
     }
-    public boolean getMarcaByid(int idMarca){
+
+    @Override
+    public boolean exists() {
+        return dbManager.exists(MarcaModel.NAME_TABLE,MarcaModel.PK,idMarca);
+    }
+
+    @Override
+    public boolean getById(int id) {
         Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.PK + "=?",new String[] {String.valueOf(idMarca)});
         if (c.moveToFirst())
         {
-            serializeMarca(c);
+            serialize(c);
             return true;
         }
         return false;
-    }
-
-    public boolean getMarcaByCodigo(String codigo){
-        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.CODIGO + "=?",new String[] {codigo});
-        if (c.moveToFirst())
-        {
-            serializeMarca(c);
-            return true;
-        }
-        return false;
-    }
-
-    private void serializeMarca(Cursor c){
-        this.idMarca = c.getInt(c.getColumnIndex(MarcaModel.PK));
-        this.codigo = c.getString(c.getColumnIndex(MarcaModel.CODIGO));
-        this.descripcion = c.getString(c.getColumnIndex(MarcaModel.DESCRIPCION));
     }
 }

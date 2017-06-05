@@ -1,5 +1,6 @@
 package co.com.neubs.shopneubs.classes.models;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -8,13 +9,14 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 import co.com.neubs.shopneubs.classes.DbManager;
+import co.com.neubs.shopneubs.interfaces.ICrud;
 import co.com.neubs.shopneubs.models.ProductoModel;
 
 /**
  * Created by bikerlfh on 5/22/17.
  */
 
-public class Producto {
+public class Producto implements ICrud {
     @SerializedName("id_producto")
     private int idProducto;
     @SerializedName("categoria")
@@ -134,11 +136,31 @@ public class Producto {
         this.imagen = imagen;
     }
 
-    public boolean getProductoByid(int idProducto){
+    @Override
+    public boolean save() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ProductoModel.PK,idProducto);
+        contentValues.put(ProductoModel.NUMERO_PRODUCTO,numeroProducto);
+        contentValues.put(ProductoModel.NOMBRE,nombre);
+        contentValues.put(ProductoModel.DESCRIPCION,descripcion);
+        contentValues.put(ProductoModel.ESPECIFICACION,especificacion);
+        contentValues.put(ProductoModel.URL_DESCRIPCION,urlDescripcion);
+
+        if(dbManager.Insert(ProductoModel.NAME_TABLE,contentValues))
+            return true;
+        return false;
+    }
+
+    @Override
+    public boolean exists() {
+        return dbManager.exists(ProductoModel.NAME_TABLE,ProductoModel.PK,idProducto);
+    }
+
+    @Override
+    public boolean getById(int id) {
         Cursor c = dbManager.Select(ProductoModel.NAME_TABLE, new String[] { "*" },ProductoModel.PK + "=?",new String[] {String.valueOf(idProducto)});
-        if (c.moveToFirst())
-        {
-            serializeProducto(c);
+        if (c.moveToFirst()){
+            serialize(c);
             return true;
         }
         return false;
@@ -146,15 +168,14 @@ public class Producto {
 
     public boolean getProductoByNumeroProducto(int numeroProducto){
         Cursor c = dbManager.Select(ProductoModel.NAME_TABLE, new String[] { "*" },ProductoModel.NUMERO_PRODUCTO + "=?",new String[] {String.valueOf(numeroProducto)});
-        if (c.moveToFirst())
-        {
-            serializeProducto(c);
+        if (c.moveToFirst()) {
+            serialize(c);
             return true;
         }
         return false;
     }
 
-    private void serializeProducto(Cursor c){
+    private void serialize(Cursor c){
         this.idProducto = c.getInt(c.getColumnIndex(ProductoModel.PK));
         this.idCategoria = c.getInt(c.getColumnIndex(ProductoModel.ID_CATEGORIA));
         this.idMarca = c.getInt(c.getColumnIndex(ProductoModel.ID_MARCA));
