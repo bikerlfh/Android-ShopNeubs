@@ -2,41 +2,26 @@ package co.com.neubs.shopneubs;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.text.StringPrepParseException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import java.util.List;
-
-import co.com.neubs.shopneubs.classes.AsyncTaskBuiler;
 import co.com.neubs.shopneubs.classes.DbManager;
 import co.com.neubs.shopneubs.classes.Synchronize;
-import co.com.neubs.shopneubs.classes.models.APISincronizacion;
-import co.com.neubs.shopneubs.interfaces.IAsyncTask;
 
 public class SplashActivity extends Activity {
     private final int TIME_SPLASH = 2000;
+
+    private AsyncSyncronize asyncSyncronizeData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this,PrincipalActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        },TIME_SPLASH);*/
 
         boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isfirstrun", true);
@@ -55,6 +40,16 @@ public class SplashActivity extends Activity {
         }
 
         initApp(isFirstRun);
+
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(SplashActivity.this,PrincipalActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        },TIME_SPLASH);*/
     }
 
 
@@ -66,8 +61,8 @@ public class SplashActivity extends Activity {
             dialogNoInternetConnection(this,isFirstRun).show();
         }
         else {
-            AsyncSyncronize syncronizeData = new AsyncSyncronize(this,isFirstRun);
-            syncronizeData.execute();
+            asyncSyncronizeData = new AsyncSyncronize(this,isFirstRun);
+            asyncSyncronizeData.execute();
         }
     }
 
