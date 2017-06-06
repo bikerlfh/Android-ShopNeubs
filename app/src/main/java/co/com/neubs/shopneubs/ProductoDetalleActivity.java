@@ -59,6 +59,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
         codigoProducto = (TextView) findViewById(R.id.lbl_codigo_producto_detalle);
         marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
 
+        descripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
         //imageView = (ImageView) findViewById(R.id.img_producto_detalle);
 
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -76,11 +77,13 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                     final SaldoInventario saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
                     if (saldoInventario != null){
                         final Producto producto = saldoInventario.getProducto();
+                        producto.initDbManager(ProductoDetalleActivity.this);
 
                         toolbarLayout.setTitle(producto.getNombre());
                         nombreProducto.setText(producto.getNombre());
                         codigoProducto.setText(String.valueOf(producto.getNumeroProducto()));
                         marcaProducto.setText(producto.getMarca().getDescripcion());
+
                         if (producto.getDescripcion().length() > 0)
                             descripcionProducto.setText(producto.getDescripcion());
                         else{

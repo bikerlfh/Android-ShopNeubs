@@ -95,7 +95,7 @@ public class Marca implements ICrud {
 
     @Override
     public boolean getById(int id) {
-        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.PK + "=?",new String[] {String.valueOf(idMarca)});
+        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.PK + "=?",new String[] {String.valueOf(id)});
         if (c.moveToFirst())
         {
             serialize(c);

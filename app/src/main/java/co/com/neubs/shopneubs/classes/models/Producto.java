@@ -23,7 +23,7 @@ public class Producto implements ICrud {
     private int idCategoria;
     @SerializedName("marca")
     private int idMarca;
-    @SerializedName("numero_producto")
+    @SerializedName("numeroProducto")
     private int numeroProducto;
     @SerializedName("nombre")
     private String nombre;
@@ -43,7 +43,7 @@ public class Producto implements ICrud {
     private transient DbManager dbManager;
 
     public Producto(Context context){
-        this.dbManager = new DbManager(context);
+        initDbManager(context);
     }
 
     public Producto(int idProducto,int idCategoria, int idMarca,int numeroProducto,
@@ -148,6 +148,10 @@ public class Producto implements ICrud {
 
     public void setMarca(Marca marca) {
         this.marca = marca;
+    }
+
+    public void initDbManager(Context context){
+        this.dbManager = new DbManager(context);
     }
 
     @Override

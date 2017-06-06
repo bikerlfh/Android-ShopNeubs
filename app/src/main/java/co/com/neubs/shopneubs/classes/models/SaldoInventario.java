@@ -15,7 +15,7 @@ import co.com.neubs.shopneubs.models.SaldoInventarioModel;
  */
 
 public class SaldoInventario implements ICrud {
-    @SerializedName("pk")
+    @SerializedName("idSaldoInventario")
     private int idSaldoInventario;
     @SerializedName("producto")
     private Producto producto;
