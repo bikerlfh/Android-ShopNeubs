@@ -35,6 +35,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
     private TextView descripcionProducto;
     private TextView codigoProducto;
     private TextView marcaProducto;
+    private TextView especificacionProducto;
     //private ImageView imageView;
 
     private CollapsingToolbarLayout toolbarLayout;
@@ -60,6 +61,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
         marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
 
         descripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
+        especificacionProducto = (TextView) findViewById(R.id.lbl_especificacion_producto_detalle);
         //imageView = (ImageView) findViewById(R.id.img_producto_detalle);
 
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -83,6 +85,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                         nombreProducto.setText(producto.getNombre());
                         codigoProducto.setText(String.valueOf(producto.getNumeroProducto()));
                         marcaProducto.setText(producto.getMarca().getDescripcion());
+                        especificacionProducto.setText(producto.getEspecificacion());
 
                         if (producto.getDescripcion().length() > 0)
                             descripcionProducto.setText(producto.getDescripcion());
@@ -100,9 +103,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                         }
                         viewPagerAdapter = new ViewPagerAdapter(ProductoDetalleActivity.this,images);
                         viewPager.setAdapter(viewPagerAdapter);
-
                     }
-
                 }
 
                 @Override
