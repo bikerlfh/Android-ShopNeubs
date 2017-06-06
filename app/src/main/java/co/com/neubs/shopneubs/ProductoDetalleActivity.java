@@ -19,6 +19,7 @@ import java.util.List;
 
 import co.com.neubs.shopneubs.adapters.ViewPagerAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.Imagen;
 import co.com.neubs.shopneubs.classes.models.Producto;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
@@ -30,13 +31,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
-    private TextView title_descripcion;
-    private TextView nombreProducto;
-    private TextView descripcionProducto;
-    private TextView codigoProducto;
-    private TextView marcaProducto;
-    private TextView especificacionProducto;
-    //private ImageView imageView;
+    private TextView title_descripcion, nombreProducto, descripcionProducto, codigoProducto, marcaProducto, especificacionProducto, precioProducto;
 
     private CollapsingToolbarLayout toolbarLayout;
     private ViewPager viewPager;
@@ -53,12 +48,11 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
         viewPager = (ViewPager)findViewById(R.id.viewPager_producto_detalle);
 
-
-
         title_descripcion = (TextView) findViewById(R.id.title_descripcion);
         nombreProducto = (TextView) findViewById(R.id.lbl_nombre_producto_detalle);
         codigoProducto = (TextView) findViewById(R.id.lbl_codigo_producto_detalle);
         marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
+        precioProducto = (TextView) findViewById(R.id.lbl_precio_producto_detalle);
 
         descripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
         especificacionProducto = (TextView) findViewById(R.id.lbl_especificacion_producto_detalle);
@@ -87,6 +81,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                         marcaProducto.setText(producto.getMarca().getDescripcion());
                         especificacionProducto.setText(producto.getEspecificacion());
 
+                        precioProducto.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
                         if (producto.getDescripcion().length() > 0)
                             descripcionProducto.setText(producto.getDescripcion());
                         else{

@@ -8,13 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import java.util.List;
 
 import co.com.neubs.shopneubs.R;
+import co.com.neubs.shopneubs.classes.Helper;
 
 /**
  * Created by bikerlfh on 6/6/17.
@@ -54,7 +51,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         image.setMinimumHeight(height);
         image.setMinimumWidth(width);*/
 
-        Glide.with(activity).load(images.get(position)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(image);
+        Helper.GetImageCached(activity,images.get(position),image);
+        //Glide.with(activity).load(images.get(position)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(image);
 
         container.addView(itemView);
         return itemView;

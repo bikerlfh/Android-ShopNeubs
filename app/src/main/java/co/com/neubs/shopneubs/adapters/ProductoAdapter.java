@@ -19,12 +19,10 @@ import co.com.neubs.shopneubs.ProductoDetalleActivity;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.Producto;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 /**
  * Created by bikerlfh on 5/24/17.
@@ -52,11 +50,12 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         private Context context;
 
         public ProductoViewHolder(View itemView) {
+
             super(itemView);
             imagen = (ImageView)itemView.findViewById(R.id.img_producto);
-            nombre_producto = (TextView)itemView.findViewById(R.id.txt_nombre_producto);
-            precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_detalle);
-            oferta = (TextView)itemView.findViewById(R.id.txt_precio_anterior);
+            nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
+            precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_card);
+            oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card);
             //Estilo Texto strikethrough
             oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
             context = itemView.getContext();
@@ -67,17 +66,20 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             this.saldoInventario = saldoInventario;
             Producto producto = saldoInventario.getProducto();
             nombre_producto.setText(producto.getNombre());
-            if (saldoInventario.getPrecioOferta() > 0){
 
-                oferta.setText(String.format("$%.00f", saldoInventario.getPrecioVentaUnitario()));
-                precio.setText(String.format("$%.00f", saldoInventario.getPrecioOferta()));
+
+
+            if (saldoInventario.getPrecioOferta() > 0){
+                oferta.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
+                precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioOferta()));
             }
             else{
-                precio.setText(String.format("$%.00f",saldoInventario.getPrecioVentaUnitario()));
+                precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
                 oferta.setVisibility(View.GONE);
             }
             // Se obtiene la imagen y se guarda en el cache
-            Glide.with(context).load(producto.getImagen()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(imagen);
+            Helper.GetImageCached(context,producto.getImagen(),imagen);
+            //Glide.with(context).load(producto.getImagen()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(imagen);
 
             imagen.setOnClickListener(this);
             itemView.setOnClickListener(this);

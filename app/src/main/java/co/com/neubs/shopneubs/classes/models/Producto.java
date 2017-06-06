@@ -17,7 +17,7 @@ import co.com.neubs.shopneubs.models.ProductoModel;
  */
 
 public class Producto implements ICrud {
-    @SerializedName("id_producto")
+    @SerializedName("idProducto")
     private int idProducto;
     @SerializedName("categoria")
     private int idCategoria;
@@ -31,7 +31,7 @@ public class Producto implements ICrud {
     private String descripcion;
     @SerializedName("especificacion")
     private String especificacion;
-    @SerializedName("url_descripcion")
+    @SerializedName("urldescripcion")
     private String urlDescripcion;
     @SerializedName("imagenes")
     private ArrayList<Imagen> imagenes;
