@@ -29,7 +29,7 @@ public class Marca implements ICrud {
         this.descripcion = descripcion;
     }
     public Marca(Context context){
-        this.dbManager = new DbManager(context);
+        initDbManager(context);
     }
 
     public int getIdMarca() {

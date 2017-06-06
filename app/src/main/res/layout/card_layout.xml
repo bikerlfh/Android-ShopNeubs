@@ -45,7 +45,7 @@
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/txt_precio"
+                android:id="@+id/lbl_precio_producto_detalle"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -59,10 +59,10 @@
                 android:id="@+id/txt_precio_anterior"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/txt_precio"
-                android:layout_alignBottom="@+id/txt_precio"
+                android:layout_alignBaseline="@+id/lbl_precio_producto_detalle"
+                android:layout_alignBottom="@+id/lbl_precio_producto_detalle"
                 android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/txt_precio"
+                android:layout_toEndOf="@+id/lbl_precio_producto_detalle"
                 android:gravity="center_vertical"
                 android:text="TextView"
                 android:textAppearance="?android:attr/textAppearanceSmall" />

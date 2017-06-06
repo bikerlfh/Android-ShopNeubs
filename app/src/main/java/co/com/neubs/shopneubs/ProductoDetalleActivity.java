@@ -33,6 +33,8 @@ public class ProductoDetalleActivity extends AppCompatActivity {
     private TextView title_descripcion;
     private TextView nombreProducto;
     private TextView descripcionProducto;
+    private TextView codigoProducto;
+    private TextView marcaProducto;
     //private ImageView imageView;
 
     private CollapsingToolbarLayout toolbarLayout;
@@ -54,7 +56,9 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
         title_descripcion = (TextView) findViewById(R.id.title_descripcion);
         nombreProducto = (TextView) findViewById(R.id.lbl_nombre_producto_detalle);
-        descripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
+        codigoProducto = (TextView) findViewById(R.id.lbl_codigo_producto_detalle);
+        marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
+
         //imageView = (ImageView) findViewById(R.id.img_producto_detalle);
 
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -72,8 +76,11 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                     final SaldoInventario saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
                     if (saldoInventario != null){
                         final Producto producto = saldoInventario.getProducto();
-                        nombreProducto.setText(producto.getNombre());
+
                         toolbarLayout.setTitle(producto.getNombre());
+                        nombreProducto.setText(producto.getNombre());
+                        codigoProducto.setText(String.valueOf(producto.getNumeroProducto()));
+                        marcaProducto.setText(producto.getMarca().getDescripcion());
                         if (producto.getDescripcion().length() > 0)
                             descripcionProducto.setText(producto.getDescripcion());
                         else{

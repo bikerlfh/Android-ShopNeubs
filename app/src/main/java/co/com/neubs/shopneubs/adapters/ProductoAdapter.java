@@ -55,7 +55,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             super(itemView);
             imagen = (ImageView)itemView.findViewById(R.id.img_producto);
             nombre_producto = (TextView)itemView.findViewById(R.id.txt_nombre_producto);
-            precio = (TextView)itemView.findViewById(R.id.txt_precio);
+            precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_detalle);
             oferta = (TextView)itemView.findViewById(R.id.txt_precio_anterior);
             //Estilo Texto strikethrough
             oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);

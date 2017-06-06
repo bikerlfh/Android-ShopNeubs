@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/img_producto_detalle"
-        app:layout_collapseMode="parallax"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="300dp"
+        android:scaleType="fitCenter"
+        app:layout_collapseMode="parallax" />
 
 </LinearLayout>

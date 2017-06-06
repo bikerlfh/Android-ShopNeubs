@@ -25,11 +25,11 @@ public class APIRest {
     public static JSONObject jsonObject;
     public static JSONArray jsonArray;
 
-    //public final static String PROTOCOL_URL_API = "https";
-    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    public final static String PROTOCOL_URL_API = "https";
+    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
-    public final static String PROTOCOL_URL_API = "http";
-    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
+    //public final static String PROTOCOL_URL_API = "http";
+    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
 
     /**

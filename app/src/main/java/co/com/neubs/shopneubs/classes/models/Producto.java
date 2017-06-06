@@ -38,6 +38,8 @@ public class Producto implements ICrud {
     @SerializedName("imagen")
     private String imagen;
 
+    private transient Marca marca;
+
     private transient DbManager dbManager;
 
     public Producto(Context context){
@@ -134,6 +136,18 @@ public class Producto implements ICrud {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public Marca getMarca() {
+        if (idMarca>0 && marca==null){
+            marca = new Marca(dbManager.context);
+            marca.getById(idMarca);
+        }
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     @Override
