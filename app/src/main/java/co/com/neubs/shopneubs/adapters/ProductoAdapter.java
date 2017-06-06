@@ -77,7 +77,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 oferta.setVisibility(View.GONE);
             }
             // Se obtiene la imagen y se guarda en el cache
-            Glide.with(context).load(producto.getImagen()).diskCacheStrategy(DiskCacheStrategy.ALL).into(imagen);
+            Glide.with(context).load(producto.getImagen()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(imagen);
 
             imagen.setOnClickListener(this);
             itemView.setOnClickListener(this);
