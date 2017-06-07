@@ -59,7 +59,7 @@ public class Synchronize {
         int numSincronizacion = 0;
 
         // Se consulta la api y se obtiene un arreglo tipo APITabla[]
-        final APITabla[] listadoAPITabla = APIRest.Sync.get(URL_API_TABLA,APITabla[].class);
+        final APITabla[] listadoAPITabla = APIRest.Sync.getSerializedObjectFromGETRequest(URL_API_TABLA,APITabla[].class);
         if (listadoAPITabla != null && listadoAPITabla.length > 0) {
             for (APITabla tabla : listadoAPITabla) {
                 tabla.initDbManager(context);
@@ -80,7 +80,7 @@ public class Synchronize {
     public int SyncronizeAPI(int idApiTabla){
         final String url = URL_API_SINCRONIZACION + "?tabla="+idApiTabla;
 
-        APISincronizacion apiSincronizacion = APIRest.Sync.get(url,APISincronizacion.class);
+        APISincronizacion apiSincronizacion = APIRest.Sync.getSerializedObjectFromGETRequest(url,APISincronizacion.class);
         apiSincronizacion.initDbManager(context);
         if (apiSincronizacion != null && !apiSincronizacion.exists()){
             apiSincronizacion.save();
@@ -97,7 +97,7 @@ public class Synchronize {
     public int SyncronizeAPI(boolean withTablas) {
         int numSincronizacion = 0;
         try {
-            final APISincronizacion[] listApiSincronizacion = APIRest.Sync.get(URL_API_SINCRONIZACION, APISincronizacion[].class);
+            final APISincronizacion[] listApiSincronizacion = APIRest.Sync.getSerializedObjectFromGETRequest(URL_API_SINCRONIZACION, APISincronizacion[].class);
             if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
                 for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
                     apiSincronizacion.initDbManager(context);
@@ -127,7 +127,7 @@ public class Synchronize {
      */
     public int SyncronizeMarcas(){
         int numSincronizacion = 0;
-        final Marca[] listMarca = APIRest.Sync.get(URL_MARCA,Marca[].class);
+        final Marca[] listMarca = APIRest.Sync.getSerializedObjectFromGETRequest(URL_MARCA,Marca[].class);
         if (listMarca != null && listMarca.length > 0) {
             for (Marca marca : listMarca) {
                 marca.initDbManager(context);
@@ -147,7 +147,7 @@ public class Synchronize {
     public int SyncronizeCategorias(){
         int numSincronizacion = 0;
 
-        final Categoria[] listCategoria = APIRest.Sync.get(URL_CATEGORIA,Categoria[].class);
+        final Categoria[] listCategoria = APIRest.Sync.getSerializedObjectFromGETRequest(URL_CATEGORIA,Categoria[].class);
         if (listCategoria != null && listCategoria.length > 0) {
             for (Categoria cat : listCategoria) {
                 cat.initDbManager(context);

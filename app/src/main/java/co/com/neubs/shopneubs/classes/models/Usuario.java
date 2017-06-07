@@ -19,17 +19,10 @@ public class Usuario implements ICrud {
     private String apellido;
     private String token;
 
-    private DbManager dbManager;
+    private transient DbManager dbManager;
 
     public Usuario(Context context){
         this.initDbManager(context);
-    }
-    public Usuario(int idUsuario, String username, String email, String nombre, String apellido) {
-        this.idUsuario = idUsuario;
-        this.username = username;
-        this.email = email;
-        this.nombre = nombre;
-        this.apellido = apellido;
     }
 
     public int getIdUsuario() {
@@ -92,9 +85,20 @@ public class Usuario implements ICrud {
         contentValues.put(UsuarioModel.EMAIL,email);
         contentValues.put(UsuarioModel.NOMBRE,nombre);
         contentValues.put(UsuarioModel.APELLIDO,apellido);
+        contentValues.put(UsuarioModel.TOKEN,apellido);
 
         if(dbManager.Insert(UsuarioModel.NAME_TABLE,contentValues))
             return true;
+        return false;
+    }
+
+    @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public boolean delete() {
         return false;
     }
 
@@ -105,7 +109,7 @@ public class Usuario implements ICrud {
 
     @Override
     public boolean getById(int id) {
-        Cursor c = dbManager.Select(UsuarioModel.NAME_TABLE, new String[] { "*" },UsuarioModel.PK + "=?",new String[] {String.valueOf(idUsuario)});
+        Cursor c = dbManager.Select(UsuarioModel.NAME_TABLE, new String[] { "*" },UsuarioModel.PK + "=?",new String[] {String.valueOf(id)});
         if (c.moveToFirst()){
             serialize(c);
             return true;
@@ -129,6 +133,7 @@ public class Usuario implements ICrud {
         this.email = c.getString(c.getColumnIndex(UsuarioModel.EMAIL));
         this.nombre = c.getString(c.getColumnIndex(UsuarioModel.NOMBRE));
         this.apellido = c.getString(c.getColumnIndex(UsuarioModel.APELLIDO));
+        this.token = c.getString(c.getColumnIndex(UsuarioModel.TOKEN));
 
     }
 }

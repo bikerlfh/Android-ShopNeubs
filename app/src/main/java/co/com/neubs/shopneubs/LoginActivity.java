@@ -28,9 +28,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -185,8 +194,43 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            /*mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+*/
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("email",email);
+                jsonObject.put("password",password);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Map<String,String> params1 = new HashMap<String, String>();
+            params1.put("email",email);
+            params1.put("username","");
+            params1.put("password",password);
+
+            APIRest.Async.post("rest-auth/login/", params1, new IServerCallback() {
+                @Override
+                public void onSuccess(String json) {
+                    Toast.makeText(LoginActivity.this,json,Toast.LENGTH_LONG).show();
+                    showProgress(false);
+                }
+
+                @Override
+                public void onError(String message_error) {
+                    if (message_error != null) {
+                        Toast.makeText(LoginActivity.this, "ERRROR:" + message_error, Toast.LENGTH_LONG).show();
+                    }
+                    else{
+
+                    }
+                    Toast.makeText(LoginActivity.this, "response code:" + String.valueOf(APIRest.RESPONSE_CODE), Toast.LENGTH_LONG).show();
+                    showProgress(false);
+                }
+
+
+            });
         }
     }
 
@@ -309,10 +353,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
+
+                /*JSONObject jsonObject = new JSONObject();
+                jsonObject.put("email",mEmail);
+                jsonObject.put("password",mPassword);*/
+
+                Map<String,String> params1 = new HashMap<String, String>();
+                params1.put("email",mEmail);
+                params1.put("username","bikerlfh");
+                params1.put("password",mPassword);
+                String request = APIRest.Sync.post("rest-auth/login/",params1,null);
+
+                if (request != null)
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+                /*APIRest.Async.post("rest-auth/login/", jsonObject, new IServerCallback() {
+                    @Override
+                    public void onSuccess(String json) {
+                        Toast.makeText(LoginActivity.this,json,Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(String message_error) {
+                        Toast.makeText(LoginActivity.this,message_error,Toast.LENGTH_LONG).show();
+                    }
+                });*/
                 // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                //Thread.sleep(2000);
+            } catch (Exception e) {
+                Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
             }
 
             for (String credential : DUMMY_CREDENTIALS) {
@@ -337,6 +410,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+                Toast.makeText(LoginActivity.this,"Codigo ; " + String.valueOf(APIRest.RESPONSE_CODE),Toast.LENGTH_LONG).show();
             }
         }
 

@@ -85,6 +85,16 @@ public class SaldoInventario implements ICrud {
     }
 
     @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public boolean delete() {
+        return false;
+    }
+
+    @Override
     public boolean exists() {
         return dbManager.exists(SaldoInventarioModel.NAME_TABLE,SaldoInventarioModel.PK,idSaldoInventario);
     }

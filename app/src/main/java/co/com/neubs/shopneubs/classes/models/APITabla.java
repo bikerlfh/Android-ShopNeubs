@@ -67,6 +67,16 @@ public class APITabla implements ICrud {
     }
 
     @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public boolean delete() {
+        return false;
+    }
+
+    @Override
     public boolean exists() {
         return dbManager.exists(APITablaModel.NAME_TABLE,APITablaModel.PK,idApiTabla);
     }

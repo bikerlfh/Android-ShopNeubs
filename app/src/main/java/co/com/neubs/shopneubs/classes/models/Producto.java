@@ -170,6 +170,16 @@ public class Producto implements ICrud {
     }
 
     @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public boolean delete() {
+        return false;
+    }
+
+    @Override
     public boolean exists() {
         return dbManager.exists(ProductoModel.NAME_TABLE,ProductoModel.PK,idProducto);
     }

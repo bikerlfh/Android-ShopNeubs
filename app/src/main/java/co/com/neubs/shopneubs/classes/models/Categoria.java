@@ -105,6 +105,16 @@ public class Categoria implements ICrud{
     }
 
     @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public boolean delete() {
+        return false;
+    }
+
+    @Override
     public boolean exists() {
         return dbManager.exists(CategoriaModel.NAME_TABLE,CategoriaModel.PK,idCategoria);
     }

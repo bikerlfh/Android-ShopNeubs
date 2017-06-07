@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import co.com.neubs.shopneubs.models.APISincronizacionModel;
 import co.com.neubs.shopneubs.models.APITablaModel;
 import co.com.neubs.shopneubs.models.CategoriaModel;
+import co.com.neubs.shopneubs.models.ItemCarModel;
 import co.com.neubs.shopneubs.models.MarcaModel;
 import co.com.neubs.shopneubs.models.ProductoModel;
 import co.com.neubs.shopneubs.models.SaldoInventarioModel;
@@ -115,6 +116,7 @@ public class DbManager
             db.execSQL(APITablaModel.CREATE_TABLE);
             db.execSQL(APISincronizacionModel.CREATE_TABLE);
             db.execSQL(UsuarioModel.CREATE_TABLE);
+            db.execSQL(ItemCarModel.CREATE_TABLE);
         }
 
         @Override

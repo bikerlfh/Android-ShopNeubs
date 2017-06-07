@@ -12,6 +12,7 @@ public class UsuarioModel {
     public static final String EMAIL = "email";
     public static final String NOMBRE = "nombre";
     public static final String APELLIDO = "apellido";
+    public static final String TOKEN = "token";
 
 
     public static final String CREATE_TABLE = "create table " + NAME_TABLE + "("+
@@ -19,5 +20,6 @@ public class UsuarioModel {
             USERNAME + " text not null,"+
             EMAIL + " text not null," +
             NOMBRE + " text not null," +
-            APELLIDO + " text not null)";
+            APELLIDO + " text not null," +
+            TOKEN + " text not null)";
 }

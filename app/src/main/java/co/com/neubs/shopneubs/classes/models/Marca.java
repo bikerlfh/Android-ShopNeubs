@@ -89,6 +89,16 @@ public class Marca implements ICrud {
     }
 
     @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public boolean delete() {
+        return false;
+    }
+
+    @Override
     public boolean exists() {
         return dbManager.exists(MarcaModel.NAME_TABLE,MarcaModel.PK,idMarca);
     }

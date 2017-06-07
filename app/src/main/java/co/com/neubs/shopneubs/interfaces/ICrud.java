@@ -12,6 +12,9 @@ public interface ICrud {
      * Verifica si existe el registro en la base de datos
      * @return
      */
+    boolean update();
+    boolean delete();
     boolean exists();
     boolean getById(int id);
+
 }
