@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.txt_email);
+        mUsernameView = (AutoCompleteTextView) findViewById(R.id.txt_username);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.txt_password);
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(mUsernameView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -158,11 +158,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -176,15 +176,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
         }
+        /*else if (!isEmailValid(username)) {
+            mUsernameView.setError(getString(R.string.error_invalid_email));
+            focusView = mUsernameView;
+            cancel = true;
+        }*/
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -194,20 +195,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            /*mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-*/
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("email",email);
-                jsonObject.put("password",password);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
             Map<String,String> params1 = new HashMap<String, String>();
-            params1.put("email",email);
-            params1.put("username","");
+            params1.put("username",username);
             params1.put("password",password);
 
             APIRest.Async.post("rest-auth/login/", params1, new IServerCallback() {
@@ -215,21 +205,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onSuccess(String json) {
                     Toast.makeText(LoginActivity.this,json,Toast.LENGTH_LONG).show();
                     showProgress(false);
+                    finish();
                 }
 
                 @Override
-                public void onError(String message_error) {
-                    if (message_error != null) {
-                        Toast.makeText(LoginActivity.this, "ERRROR:" + message_error, Toast.LENGTH_LONG).show();
+                public void onError(String message_error, String response) {
+                    showProgress(false);
+                    if(APIRest.Async.badRequest()){
+                        //Toast.makeText(LoginActivity.this, "BAD REQUEST " + response, Toast.LENGTH_LONG).show();
+                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.requestFocus();
                     }
                     else{
-
+                        Toast.makeText(LoginActivity.this, "ERRROR:" + message_error, Toast.LENGTH_LONG).show();
                     }
-                    Toast.makeText(LoginActivity.this, "response code:" + String.valueOf(APIRest.RESPONSE_CODE), Toast.LENGTH_LONG).show();
-                    showProgress(false);
+
                 }
-
-
             });
         }
     }
@@ -320,7 +311,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        mUsernameView.setAdapter(adapter);
     }
 
 
@@ -410,7 +401,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
-                Toast.makeText(LoginActivity.this,"Codigo ; " + String.valueOf(APIRest.RESPONSE_CODE),Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this,"Codigo ; " + String.valueOf(APIRest.RESPONSE_CODE),Toast.LENGTH_LONG).show();
             }
         }
 

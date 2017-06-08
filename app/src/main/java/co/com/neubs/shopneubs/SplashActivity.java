@@ -133,7 +133,7 @@ public class SplashActivity extends Activity {
         @Override
         protected void onPostExecute(Boolean result) {
             if(result) {
-                Intent intent = new Intent(SplashActivity.this,PrincipalActivity.class);
+                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -151,7 +151,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 }
 
                 @Override
-                public void onError(String message_error) {
+                public void onError(String message_error, String response) {
                     Log.d(TAG,"ERROR: " + message_error);
                     snackbar.dismiss();
                     spinner.setVisibility(View.GONE);

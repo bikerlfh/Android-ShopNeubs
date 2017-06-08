@@ -102,9 +102,10 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onError(String message_error) {
+                public void onError(String message_error, String response) {
                     Toast.makeText(ProductoDetalleActivity.this,message_error,Toast.LENGTH_SHORT).show();
                 }
+
             });
 
         }

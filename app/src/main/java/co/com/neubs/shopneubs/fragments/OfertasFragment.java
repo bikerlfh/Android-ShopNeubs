@@ -113,7 +113,7 @@ public class OfertasFragment extends Fragment {
             }
 
             @Override
-            public void onError(String message_error) {
+            public void onError(String message_error, String response) {
                 Snackbar.make(view,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
                 spinner.setVisibility(View.GONE);
             }

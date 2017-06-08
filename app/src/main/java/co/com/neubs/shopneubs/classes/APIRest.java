@@ -29,23 +29,19 @@ import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
 import static java.net.HttpURLConnection.HTTP_NOT_MODIFIED;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
+import static java.net.HttpURLConnection.HTTP_SERVER_ERROR;
 
 /**
  * Created by bikerlfh on 5/23/17.
  */
 
 public class APIRest {
-    public static String message_error;
-    public static JSONObject jsonObject;
-    public static JSONArray jsonArray;
 
-    public final static String PROTOCOL_URL_API = "https";
-    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    //public final static String PROTOCOL_URL_API = "https";
+    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
-    //public final static String PROTOCOL_URL_API = "http";
-    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
-
-    public static int RESPONSE_CODE;
+    public final static String PROTOCOL_URL_API = "http";
+    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
     /**
      * Serialize a object from String(json format)
@@ -63,15 +59,18 @@ public class APIRest {
      * @param url
      * @return
      */
-    private static String constructURL(String url){
+    protected static String constructURL(String url){
         return (!url.contains(URL_API))? URL_API + url : url;
     }
+
+
 
     /**
      * Clase de metodos sincronos
      * los métodos de esta clase deben ser usados dentro de un AsyncTask, de lo contrario se Excepcionará
      */
     public static class Sync {
+        private static HttpRequest request;
         /**
          * realiza una peticion a la API retornando un String en formato json
          * @param url
@@ -79,10 +78,7 @@ public class APIRest {
          */
         public static String get(String url,Map<String,String> headers){
             headers = headers !=  null? headers:new HashMap<String, String>();
-            HttpRequest request = HttpRequest.get(constructURL(url)).accept("application/json").headers(headers);
-            if (!validateResponseCode(request)){
-                return null;
-            }
+            request = HttpRequest.get(constructURL(url)).accept("application/json").headers(headers);
             return request.body();
         }
 
@@ -95,11 +91,7 @@ public class APIRest {
          */
         public static  String post(String url,Map<String,String> params,Map<String,String> headers){
             headers = headers !=  null? headers:new HashMap<String, String>();
-            HttpRequest request = HttpRequest.post(constructURL(url),params,false).accept("application/json").headers(headers);
-            validateResponseCode(request);
-            /*if (!){
-                return null;
-            }*/
+            request = HttpRequest.post(constructURL(url),params,false).accept("application/json").headers(headers);
             return request.body();
         }
 
@@ -111,22 +103,23 @@ public class APIRest {
          */
         public static <T> T getSerializedObjectFromGETRequest(String url,Class<T> classOfT){
             String response = get(url,null);
-            if (response == null)
-                return null;
-            return serializeObjectFromJson(response,classOfT);
+            return (response == null)? null : serializeObjectFromJson(response,classOfT);
         }
 
+        public static boolean ok() {
+            return request.ok();
+        }
 
+        public static boolean badRequest() {
+            return request.badRequest();
+        }
 
-        private static boolean validateResponseCode(HttpRequest request){
-            try {
-                RESPONSE_CODE = request.getConnection().getResponseCode();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (request.badRequest() || request.notFound() || request.serverError())
-                return false;
-            return true;
+        public static boolean serverError() {
+            return request.serverError();
+        }
+
+        public static boolean notFound() {
+            return request.notFound();
         }
     }
 
@@ -136,25 +129,27 @@ public class APIRest {
      */
     public static class Async {
 
+        private static int RESPONSE_STATUS_CODE;
         /**
          * Create a new request get
          * @param url URl to fetch the JSON from
          * @param callback Interface Implement (IServerCallback)
          */
         public static void get(String url,final IServerCallback callback){
-            requestJsonObject(Request.Method.GET,constructURL(url),null,callback);
-        }
-
-        public static void getArray(String url,final IServerCallback callback){
-            requestJsonArray(constructURL(url),callback);
+            StringRequest(Request.Method.GET,constructURL(url),null,callback);
         }
 
         public static void post(String url,Map<String,String> params,final IServerCallback callback){
-
-            //requestJsonObject(Request.Method.POST,constructURL(url),params,callback);
             StringRequest(Request.Method.POST,constructURL(url),params,callback);
         }
 
+        /**
+         * Creates a new request.
+         * @param method GET, POST, PUT ....
+         * @param url URL
+         * @param params parametros
+         * @param callback
+         */
         private static void StringRequest(int method,String url,final Map<String,String> params, final IServerCallback callback){
             StringRequest postRequest = new StringRequest(method, constructURL(url),
                     new Response.Listener<String>()
@@ -168,20 +163,8 @@ public class APIRest {
                     {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            //RESPONSE_CODE = error.networkResponse.statusCode;
-                            final String data = new String(error.networkResponse.data);
-
-
-                            if (error.networkResponse.statusCode == HTTP_BAD_REQUEST){
-                                //callback.onBadRequest400(data);
-                            }
-                            //else
-                              //  callback.onError(error.getMessage(),error.networkResponse.statusCode,data);
-                            /*if (error.getMessage() != null)
-                                callback.onError(error.getMessage());
-                            else
-                                callback.onError(new String(error.networkResponse.data));*/
-
+                            RESPONSE_STATUS_CODE = error.networkResponse.statusCode;
+                            callback.onError(error.getMessage(),new String(error.networkResponse.data));
                         }
                     }
             ) {
@@ -194,55 +177,23 @@ public class APIRest {
             };
             AppController.getInstance().addToRequestQueue(postRequest);
         }
-        /**
-         * Creates a new request.
-         * @param method the HTTP method to use (com.android.volley.Request.Method.GET)
-         * @param url URL to fetch the JSON from
-         * @param jsonRequest A {@link JSONObject} to post with the request. Null is allowed and
-         *   indicates no parameters will be posted along with request.
-         */
-        private static void requestJsonObject(int method,String url,JSONObject jsonRequest, final IServerCallback callback){
-            jsonObject = null;
-            message_error = null;
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest(method, url, jsonRequest,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            callback.onSuccess(response.toString());
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // TODO Auto-generated method stub
-                            message_error = error.getMessage();
-                            //callback.onError(error.getMessage(),error.networkResponse.statusCode,new String(error.networkResponse.data));
-                        }
-                    });
-            AppController.getInstance().addToRequestQueue(jsObjRequest);
+
+        public static boolean ok() {
+            return RESPONSE_STATUS_CODE == HTTP_OK;
         }
-        /**
-         * Creates a new request.
-         * @param url URL to fetch the JSON from
-         */
-        private static void requestJsonArray(String url, final IServerCallback callback){
-            jsonArray = null;
-            message_error = null;
-            JsonArrayRequest req = new JsonArrayRequest(url,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            callback.onSuccess(response.toString());
-                            jsonArray = response;
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    message_error = error.getMessage();
-                    //callback.onError(error.getMessage(),error.networkResponse.statusCode,new String(error.networkResponse.data));
-                }
-            });
-            AppController.getInstance().addToRequestQueue(req);
+
+        public static boolean badRequest() {
+            return RESPONSE_STATUS_CODE == HTTP_BAD_REQUEST;
+        }
+
+        public static boolean serverError() {
+            return RESPONSE_STATUS_CODE == HTTP_INTERNAL_ERROR;
+        }
+
+        public static boolean notFound() {
+            return RESPONSE_STATUS_CODE == HTTP_NOT_FOUND;
         }
     }
+
+
 }
