@@ -1,13 +1,18 @@
 package co.com.neubs.shopneubs.classes;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.load.engine.Resource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
@@ -19,6 +24,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -29,7 +35,7 @@ import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
 import static java.net.HttpURLConnection.HTTP_NOT_MODIFIED;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
-import static java.net.HttpURLConnection.HTTP_SERVER_ERROR;
+import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 
 /**
  * Created by bikerlfh on 5/23/17.
@@ -114,6 +120,10 @@ public class APIRest {
             return request.badRequest();
         }
 
+        public static boolean timeOut() {
+            return request.code() == HTTP_CLIENT_TIMEOUT;
+        }
+
         public static boolean serverError() {
             return request.serverError();
         }
@@ -128,7 +138,6 @@ public class APIRest {
      *
      */
     public static class Async {
-
         private static int RESPONSE_STATUS_CODE;
         /**
          * Create a new request get
@@ -151,7 +160,10 @@ public class APIRest {
          * @param callback
          */
         private static void StringRequest(int method,String url,final Map<String,String> params, final IServerCallback callback){
-            StringRequest postRequest = new StringRequest(method, constructURL(url),
+            // TimeOut
+            final RetryPolicy policy = new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+            final StringRequest postRequest = (StringRequest) new StringRequest(method, constructURL(url),
                     new Response.Listener<String>()
                     {
                         @Override
@@ -163,8 +175,12 @@ public class APIRest {
                     {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            RESPONSE_STATUS_CODE = error.networkResponse.statusCode;
-                            callback.onError(error.getMessage(),new String(error.networkResponse.data));
+                            if (error.getClass() == TimeoutError.class) {
+                                RESPONSE_STATUS_CODE = HTTP_CLIENT_TIMEOUT;
+                            }
+                            else if (error.networkResponse != null)
+                                RESPONSE_STATUS_CODE = error.networkResponse.statusCode;
+                            callback.onError(error.getMessage(),error.networkResponse != null? new String(error.networkResponse.data) : null);
                         }
                     }
             ) {
@@ -174,16 +190,20 @@ public class APIRest {
                     Map<String,String> params1 = params == null? new HashMap<String, String>():params;
                     return params1;
                 }
-            };
+
+            }.setRetryPolicy(policy);
             AppController.getInstance().addToRequestQueue(postRequest);
         }
-
         public static boolean ok() {
             return RESPONSE_STATUS_CODE == HTTP_OK;
         }
 
         public static boolean badRequest() {
             return RESPONSE_STATUS_CODE == HTTP_BAD_REQUEST;
+        }
+
+        public static boolean timeOut() {
+            return RESPONSE_STATUS_CODE == HTTP_CLIENT_TIMEOUT;
         }
 
         public static boolean serverError() {
