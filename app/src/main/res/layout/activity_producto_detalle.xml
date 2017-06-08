@@ -42,9 +42,33 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
     </android.support.design.widget.AppBarLayout>
+    <include
+        layout="@layout/content_producto_detalle"
+        android:visibility="visible" />
 
-    <include layout="@layout/content_producto_detalle" />
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/colorWhite"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:paddingLeft="60sp"
+        android:paddingRight="60sp">
 
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorSecundary"
+            android:drawableLeft="@android:drawable/ic_menu_recent_history"
+            android:text="@string/agregar_carrito"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

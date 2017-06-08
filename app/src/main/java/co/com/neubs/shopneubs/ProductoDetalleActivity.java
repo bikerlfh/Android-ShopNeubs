@@ -50,7 +50,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
         title_descripcion = (TextView) findViewById(R.id.title_descripcion);
         nombreProducto = (TextView) findViewById(R.id.lbl_nombre_producto_detalle);
-        codigoProducto = (TextView) findViewById(R.id.lbl_codigo_producto_detalle);
+        //codigoProducto = (TextView) findViewById(R.id.lbl_codigo_producto_detalle);
         marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
         precioProducto = (TextView) findViewById(R.id.lbl_precio_producto_detalle);
 
@@ -77,7 +77,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
                         toolbarLayout.setTitle(producto.getNombre());
                         nombreProducto.setText(producto.getNombre());
-                        codigoProducto.setText(String.valueOf(producto.getNumeroProducto()));
+                        //codigoProducto.setText(String.valueOf(producto.getNumeroProducto()));
                         marcaProducto.setText(producto.getMarca().getDescripcion());
                         especificacionProducto.setText(producto.getEspecificacion());
 

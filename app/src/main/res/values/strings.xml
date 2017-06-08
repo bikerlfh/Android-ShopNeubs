@@ -37,6 +37,7 @@
     <string name="title_description">Description</string>
     <string name="title_specification">Specification</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="agregar_carrito">Add Cart</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
