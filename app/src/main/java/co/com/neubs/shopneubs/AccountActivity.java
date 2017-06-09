@@ -17,6 +17,7 @@ public class AccountActivity extends AppCompatActivity {
     private Button btnMisDatos;
     private Button btnPedidos;
     private Button btnLogout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,7 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validarInicioSesion()){
-
+                    // Abrir actividad mis pedidos
                 }
             }
         });
@@ -47,8 +48,7 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validarInicioSesion()){
-                    // Se abre la actividad de  mis datos
-                    //Intent intent = new Intent(AccountActivity.this,)
+                    // Abrir actividad mis datos
                 }
             }
         });
@@ -70,6 +70,7 @@ public class AccountActivity extends AppCompatActivity {
      * @return
      */
     private boolean validarInicioSesion(){
+
         return false;
     }
 

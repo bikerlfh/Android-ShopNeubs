@@ -51,6 +51,14 @@
         <activity
             android:name=".AccountActivity"
             android:label="@string/title_activity_account"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".OrdersActivity"
+            android:label="@string/title_activity_orders"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme"></activity>
     </application>
 
