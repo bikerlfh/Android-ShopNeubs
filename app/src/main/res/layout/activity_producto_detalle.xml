@@ -33,7 +33,6 @@
                 android:layout_height="350dp"
                 android:background="@color/colorWhite" />
 
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_producto_detalle"
                 android:layout_width="match_parent"
@@ -72,7 +71,7 @@
                     android:id="@+id/lbl_precio_anterior_detalle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="$ 0"
                     android:textAlignment="center"
                     android:textSize="12sp" />
 
@@ -81,9 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.34"
-
-                    android:gravity="center"
-                    android:text="$200.000"
+                    android:text="$ 0"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrecio"
                     android:textSize="20dp" />

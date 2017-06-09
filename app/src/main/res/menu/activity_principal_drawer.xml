@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/login"
+        android:icon="@drawable/ic_user"
+        android:title="Login"
+        />
+    <item
+        android:id="@+id/Registrarse"
+        android:icon="@drawable/ic_register"
+        android:title="Registrarse"
+        />
     <item android:title="Categorias">
         <menu>
             <group android:checkableBehavior="single" android:menuCategory="alternative">

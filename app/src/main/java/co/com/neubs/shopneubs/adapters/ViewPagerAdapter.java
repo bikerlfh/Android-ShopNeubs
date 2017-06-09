@@ -12,6 +12,7 @@ import java.util.List;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.Helper;
+import co.com.neubs.shopneubs.controls.ImageLoaderView;
 
 /**
  * Created by bikerlfh on 6/6/17.
@@ -43,7 +44,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         inflater = (LayoutInflater)activity.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.viewpager_item_producto_detalle,container,false);
 
-        ImageView image = (ImageView)itemView.findViewById(R.id.img_producto_detalle);
+        ImageLoaderView image = (ImageLoaderView)itemView.findViewById(R.id.img_producto_detalle);
        /* DisplayMetrics dis = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dis);
         int height = dis.heightPixels;
@@ -51,7 +52,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         image.setMinimumHeight(height);
         image.setMinimumWidth(width);*/
 
-        Helper.GetImageCached(activity,images.get(position),image);
+        //Helper.GetImageCached(activity,images.get(position),image);
+        image.setImageURL(images.get(position));
         //Glide.with(activity).load(images.get(position)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(image);
 
         container.addView(itemView);
