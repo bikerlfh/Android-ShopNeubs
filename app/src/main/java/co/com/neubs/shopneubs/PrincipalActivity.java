@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -170,10 +171,14 @@ public class PrincipalActivity extends AppCompatActivity
             case R.id.nav_tarjetas_video:
                 codigoCategoria = "14";
                 break;
-        }
+            case R.id.nav_my_account:
+                Intent intent = new Intent(this,AccountActivity.class);
+                this.startActivity(intent);
+                break;
 
+        }
         // Se valida que la categoria seleccionada no sea la que se esta visualizando
-        if (codigoCategoriaAnterior != codigoCategoria) {
+        if (codigoCategoria != null && codigoCategoriaAnterior != codigoCategoria) {
             // Se crea el argumento CODIGO_CATEGORIA para pasarle al fragment
             Bundle args = new Bundle();
             args.putString("CODIGO_CATEGORIA", codigoCategoria);

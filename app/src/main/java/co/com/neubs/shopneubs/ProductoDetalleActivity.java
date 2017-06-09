@@ -9,13 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +30,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
-    private TextView title_descripcion, nombreProducto, descripcionProducto, codigoProducto, marcaProducto, especificacionProducto, precioProducto, precioAnterior;
+    private TextView title_descripcion, nombreProducto, descripcionProducto, marcaProducto, especificacionProducto, precioProducto, precioAnterior;
 
     private CollapsingToolbarLayout toolbarLayout;
     private ViewPager viewPager;
@@ -54,7 +49,6 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
         title_descripcion = (TextView) findViewById(R.id.title_descripcion);
         nombreProducto = (TextView) findViewById(R.id.lbl_nombre_producto_detalle);
-        //codigoProducto = (TextView) findViewById(R.id.lbl_codigo_producto_detalle);
         marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
         precioProducto = (TextView) findViewById(R.id.lbl_precio_producto_detalle);
         precioAnterior = (TextView) findViewById(R.id.lbl_precio_anterior_detalle);
@@ -63,7 +57,6 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
         descripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
         especificacionProducto = (TextView) findViewById(R.id.lbl_especificacion_producto_detalle);
-        //imageView = (ImageView) findViewById(R.id.img_producto_detalle);
 
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
@@ -84,9 +77,8 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
                         toolbarLayout.setTitle(producto.getNombre());
                         nombreProducto.setText(producto.getNombre());
-                        //codigoProducto.setText(String.valueOf(producto.getNumeroProducto()));
                         marcaProducto.setText(producto.getMarca().getDescripcion());
-                        especificacionProducto.setText(producto.getEspecificacion());
+
 
                         if (saldoInventario.getPrecioOferta()>0){
                             precioProducto.setText(Helper.MoneyFormat(saldoInventario.getPrecioOferta()));
@@ -98,8 +90,10 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                             precioAnterior.setVisibility(View.GONE);
 
                         }
-                        if (producto.getDescripcion().length() > 0)
+                        if (producto.getDescripcion().length() > 0) {
                             descripcionProducto.setText(producto.getDescripcion());
+                            especificacionProducto.setText(producto.getEspecificacion());
+                        }
                         else{
                             title_descripcion.setText(R.string.title_specification);
                             descripcionProducto.setText(producto.getEspecificacion());
@@ -121,12 +115,8 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                 public void onError(String message_error, String response) {
                     Toast.makeText(ProductoDetalleActivity.this,message_error,Toast.LENGTH_SHORT).show();
                 }
-
             });
-
         }
-
-
     }
 
     @Override

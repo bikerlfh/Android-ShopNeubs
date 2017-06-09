@@ -47,6 +47,10 @@
         <activity
             android:name=".LoginRegisterActivity"
             android:label="@string/title_activity_login_register"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AccountActivity"
+            android:label="@string/title_activity_account"
             android:theme="@style/AppTheme"></activity>
     </application>
 
