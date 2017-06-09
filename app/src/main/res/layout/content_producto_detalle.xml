@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@drawable/gradient_drawable"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="co.com.neubs.shopneubs.ProductoDetalleActivity"
     tools:showIn="@layout/activity_producto_detalle">
@@ -30,16 +30,17 @@
             android:id="@+id/lbl_nombre_producto_detalle"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:gravity="center"
             android:text="TextView"
+            android:maxLines="2"
+            android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="17sp"
-            android:textStyle="bold"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true" />
-
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lbl_marca_producto_detalle"
@@ -95,15 +96,6 @@
             android:layout_below="@+id/title_especificacion"
             android:layout_marginTop="19dp"
             android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/title_especificacion"
-            android:layout_marginStart="19dp"
-             />
 
     </RelativeLayout>
 

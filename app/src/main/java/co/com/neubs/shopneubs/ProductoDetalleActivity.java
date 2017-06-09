@@ -1,12 +1,14 @@
 package co.com.neubs.shopneubs;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,13 +27,15 @@ import co.com.neubs.shopneubs.classes.models.Producto;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
+import static android.view.Gravity.CENTER;
+
 public class ProductoDetalleActivity extends AppCompatActivity {
 
     public final static String PARAM_ID_SALDO_INVENTARIO = "idSaldoInventario";
 
     private Toolbar toolbar;
 
-    private TextView title_descripcion, nombreProducto, descripcionProducto, codigoProducto, marcaProducto, especificacionProducto, precioProducto;
+    private TextView title_descripcion, nombreProducto, descripcionProducto, codigoProducto, marcaProducto, especificacionProducto, precioProducto, precioAnterior;
 
     private CollapsingToolbarLayout toolbarLayout;
     private ViewPager viewPager;
@@ -53,6 +57,9 @@ public class ProductoDetalleActivity extends AppCompatActivity {
         //codigoProducto = (TextView) findViewById(R.id.lbl_codigo_producto_detalle);
         marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
         precioProducto = (TextView) findViewById(R.id.lbl_precio_producto_detalle);
+        precioAnterior = (TextView) findViewById(R.id.lbl_precio_anterior_detalle);
+
+        precioAnterior.setPaintFlags(precioProducto.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
 
         descripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
         especificacionProducto = (TextView) findViewById(R.id.lbl_especificacion_producto_detalle);
@@ -81,7 +88,16 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                         marcaProducto.setText(producto.getMarca().getDescripcion());
                         especificacionProducto.setText(producto.getEspecificacion());
 
-                        precioProducto.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
+                        if (saldoInventario.getPrecioOferta()>0){
+                            precioProducto.setText(Helper.MoneyFormat(saldoInventario.getPrecioOferta()));
+                            precioAnterior.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
+                        }
+                        else {
+                            precioProducto.setGravity(CENTER);
+                            precioProducto.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
+                            precioAnterior.setVisibility(View.GONE);
+
+                        }
                         if (producto.getDescripcion().length() > 0)
                             descripcionProducto.setText(producto.getDescripcion());
                         else{
