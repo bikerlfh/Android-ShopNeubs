@@ -22,6 +22,7 @@ import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.Producto;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
+import co.com.neubs.shopneubs.controls.ImageLoaderView;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
@@ -40,7 +41,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     // The class viewHolder
     public static class ProductoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private ImageView imagen;
+        private ImageLoaderView imagen;
         private TextView nombre_producto;
         private TextView precio;
         private TextView oferta;
@@ -52,7 +53,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         public ProductoViewHolder(View itemView) {
 
             super(itemView);
-            imagen = (ImageView)itemView.findViewById(R.id.img_producto);
+            imagen = (ImageLoaderView)itemView.findViewById(R.id.img_producto);
             nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
             precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_card);
             oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card);
@@ -78,7 +79,8 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 oferta.setVisibility(View.GONE);
             }
             // Se obtiene la imagen y se guarda en el cache
-            Helper.GetImageCached(context,producto.getImagen(),imagen);
+            //Helper.GetImageCached(context,producto.getImagen(),imagen);
+            imagen.setImageURL(producto.getImagen());
             //Glide.with(context).load(producto.getImagen()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(imagen);
 
             imagen.setOnClickListener(this);

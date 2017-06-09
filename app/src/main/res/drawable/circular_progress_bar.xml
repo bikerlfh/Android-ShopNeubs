@@ -1,44 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fromDegrees="90"
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="0"
     android:pivotX="50%"
     android:pivotY="50%"
-    android:toDegrees="360">
-
-    <item android:id="@android:id/background">
-        <shape
-            android:shape="ring"
-            android:useLevel="false">
-            <solid android:color="@android:color/transparent"></solid>
-        </shape>
-    </item>
-
-    <item android:id="@android:id/progress">
-        <rotate android:fromDegrees="0"
-            android:toDegrees="360">
-        <shape
-            android:shape="ring"
-            android:useLevel="false">
-            <gradient android:color="@color/colorSecundary"
-                android:angle="0"
-                android:startColor="@color/colorSecundary"
-                android:type="sweep"
-                android:useLevel="false"></gradient>
-        </shape>
-        </rotate>
-    </item>
-
-    <!--shape android:innerRadiusRatio="3"
+    android:toDegrees="1080"
+    >
+    <shape
+        android:innerRadius="20dp"
         android:shape="ring"
-        android:thicknessRatio="7.0">
+        android:thickness="4dp"
+        android:useLevel="false">
+        <size
+            android:height="48dp"
+            android:width="48dp" />
         <gradient
+            android:centerColor="@color/colorSecundary"
+            android:startColor="@android:color/transparent"
+            android:endColor="@color/colorSecundary"
             android:angle="0"
-            android:centerColor="#007DD6"
-            android:endColor="#007DD6"
-            android:startColor="#007DD6"
+            android:centerY="0.5"
             android:type="sweep"
-            android:useLevel="false"></gradient>
-
-    </shape-->
-
-</layer-list>
+            android:useLevel="false"/>
+    </shape>
+</rotate>
