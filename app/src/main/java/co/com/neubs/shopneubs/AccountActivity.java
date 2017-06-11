@@ -15,6 +15,10 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
+import co.com.neubs.shopneubs.classes.models.Usuario;
+
 public class AccountActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -130,7 +134,10 @@ public class AccountActivity extends AppCompatActivity {
      * @return
      */
     private boolean validarInicioSesion(){
-
+        Usuario usuario = new Usuario(this);
+        if (usuario.getLoginUser()){
+            return true;
+        }
         return false;
     }
 

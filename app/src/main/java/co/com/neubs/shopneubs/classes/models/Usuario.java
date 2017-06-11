@@ -172,22 +172,17 @@ public class Usuario implements ICrud {
     }
 
     /**
-     * Consulta los usuarios que tengan el token guardado (que esten logeados)
-     * @return Listado de usuarios logeados
+     * Consulta el usuario que tengan el token guardado (que este logeado)
+     * @return True si encuentra un usuario logeado, de lo contrario false
      */
-    public List<Usuario> getLoginUser() {
-        List<Usuario> usuarios = null;
+    public boolean getLoginUser() {
         Cursor c = dbManager.RawQuery("SELECT * FROM Usuario WHERE token IS NOT NULL",null);
         if (c.moveToFirst())
         {
-            usuarios = new ArrayList<>();
-            do{
-                Usuario user = new Usuario(dbManager.context);
-                user.serialize(c);
-                usuarios.add(user);
-            }while(c.moveToNext());
+            serialize(c);
+            return true;
         }
-        return usuarios;
+        return false;
     }
 
     public List<Usuario> getAllUsuario(){

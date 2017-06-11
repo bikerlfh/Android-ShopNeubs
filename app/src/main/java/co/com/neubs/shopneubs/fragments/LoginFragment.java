@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,6 +140,14 @@ public class LoginFragment extends Fragment {
             APIRest.Async.post("rest-auth/login/", params1, new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
+                    try {
+                        JSONObject jsonObject =new JSONObject(json);
+                        String token = jsonObject.getString("token");
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getActivity(),json,Toast.LENGTH_LONG).show();
                     showProgress(false);
 
