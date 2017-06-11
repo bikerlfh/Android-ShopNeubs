@@ -19,8 +19,7 @@ import android.widget.TextView;
 import co.com.neubs.shopneubs.fragments.LoginFragment;
 
 public class LoginRegisterActivity extends AppCompatActivity {
-
-    /**
+     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
@@ -42,6 +41,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -113,7 +114,6 @@ public class LoginRegisterActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0){
-
                 return LoginFragment.newInstance();
             }
             return PlaceholderFragment.newInstance(R.layout.fragment_register);

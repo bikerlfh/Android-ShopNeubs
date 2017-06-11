@@ -3,6 +3,10 @@ package co.com.neubs.shopneubs.classes.models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import co.com.neubs.shopneubs.classes.DbManager;
 import co.com.neubs.shopneubs.interfaces.ICrud;
 import co.com.neubs.shopneubs.models.UsuarioModel;
@@ -13,6 +17,7 @@ import co.com.neubs.shopneubs.models.UsuarioModel;
 
 public class Usuario implements ICrud {
     private int idUsuario;
+    private int idCliente;
     private String username;
     private String email;
     private String nombre;
@@ -31,6 +36,14 @@ public class Usuario implements ICrud {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getUsername() {
@@ -81,11 +94,12 @@ public class Usuario implements ICrud {
     public boolean save() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(UsuarioModel.PK,idUsuario);
+        contentValues.put(UsuarioModel.ID_CLIENTE,idCliente);
         contentValues.put(UsuarioModel.USERNAME,username);
         contentValues.put(UsuarioModel.EMAIL,email);
         contentValues.put(UsuarioModel.NOMBRE,nombre);
         contentValues.put(UsuarioModel.APELLIDO,apellido);
-        contentValues.put(UsuarioModel.TOKEN,apellido);
+        contentValues.put(UsuarioModel.TOKEN,token);
 
         if(dbManager.Insert(UsuarioModel.NAME_TABLE,contentValues))
             return true;
@@ -94,6 +108,15 @@ public class Usuario implements ICrud {
 
     @Override
     public boolean update() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(UsuarioModel.ID_CLIENTE,idCliente);
+        contentValues.put(UsuarioModel.USERNAME,username);
+        contentValues.put(UsuarioModel.EMAIL,email);
+        contentValues.put(UsuarioModel.NOMBRE,nombre);
+        contentValues.put(UsuarioModel.APELLIDO,apellido);
+        contentValues.put(UsuarioModel.TOKEN,token);
+        if (dbManager.Update(UsuarioModel.NAME_TABLE,contentValues,UsuarioModel.PK+"=?",new String[]{String.valueOf(idUsuario)}))
+            return true;
         return false;
     }
 
@@ -104,6 +127,10 @@ public class Usuario implements ICrud {
 
     @Override
     public boolean exists() {
+        Cursor c = dbManager.Select(UsuarioModel.NAME_TABLE, new String[] { "*" },UsuarioModel.PK + "=?",new String[] {String.valueOf(idUsuario)});
+        if (c.moveToFirst()){
+            return true;
+        }
         return false;
     }
 
@@ -117,14 +144,65 @@ public class Usuario implements ICrud {
         return false;
     }
 
-    public boolean getAllUsuario(){
-        Cursor c = dbManager.SelectAll(UsuarioModel.NAME_TABLE);
-        if (c.moveToFirst())
-        {
+    public boolean getByIdCliente(int idCliente) {
+        Cursor c = dbManager.Select(UsuarioModel.NAME_TABLE, new String[] { "*" },UsuarioModel.PK + "=?",new String[] {String.valueOf(idCliente)});
+        if (c.moveToFirst()){
             serialize(c);
             return true;
         }
         return false;
+    }
+
+    public boolean getByEmail(String email) {
+        Cursor c = dbManager.Select(UsuarioModel.NAME_TABLE, new String[] { "*" },UsuarioModel.EMAIL + "=?",new String[] {email});
+        if (c.moveToFirst()){
+            serialize(c);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean getByUserName(String username) {
+        Cursor c = dbManager.Select(UsuarioModel.NAME_TABLE, new String[] { "*" },UsuarioModel.USERNAME + "=?",new String[] {username});
+        if (c.moveToFirst()){
+            serialize(c);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Consulta los usuarios que tengan el token guardado (que esten logeados)
+     * @return Listado de usuarios logeados
+     */
+    public List<Usuario> getLoginUser() {
+        List<Usuario> usuarios = null;
+        Cursor c = dbManager.RawQuery("SELECT * FROM Usuario WHERE token IS NOT NULL",null);
+        if (c.moveToFirst())
+        {
+            usuarios = new ArrayList<>();
+            do{
+                Usuario user = new Usuario(dbManager.context);
+                user.serialize(c);
+                usuarios.add(user);
+            }while(c.moveToNext());
+        }
+        return usuarios;
+    }
+
+    public List<Usuario> getAllUsuario(){
+        List<Usuario> usuarios = null;
+        Cursor c = dbManager.SelectAll(UsuarioModel.NAME_TABLE);
+        if (c.moveToFirst())
+        {
+            usuarios = new ArrayList<>();
+            do{
+                Usuario user = new Usuario(dbManager.context);
+                user.serialize(c);
+                usuarios.add(user);
+            }while(c.moveToNext());
+        }
+        return usuarios;
     }
 
     private void serialize(Cursor c){

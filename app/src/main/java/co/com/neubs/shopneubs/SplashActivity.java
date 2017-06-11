@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import co.com.neubs.shopneubs.classes.DbManager;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.Synchronize;
 
 public class SplashActivity extends Activity {
@@ -57,7 +58,7 @@ public class SplashActivity extends Activity {
      * Inicializa la APP
      */
     public void initApp(final boolean isFirstRun) {
-        if (!isConnected()){
+        if (!Helper.isConnected(this)){
             dialogNoInternetConnection(this,isFirstRun).show();
         }
         else {
@@ -88,17 +89,7 @@ public class SplashActivity extends Activity {
         return builder;
     }
 
-    /**
-     * Verifica la conexion a internet
-     * @return
-     */
-    public boolean isConnected() {
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting())
-            return true;
-        return false;
-    }
+
 
     public class AsyncSyncronize  extends AsyncTask<Void, Void, Boolean> {
 

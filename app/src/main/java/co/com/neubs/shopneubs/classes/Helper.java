@@ -1,6 +1,8 @@
 package co.com.neubs.shopneubs.classes;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -37,5 +39,17 @@ public class Helper {
      */
     public static void GetImageCached(Context context, String urlImage, ImageView imageView){
         Glide.with(context).load(urlImage).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(imageView);
+    }
+
+    /**
+     * Verifica la conexion a internet
+     * @return
+     */
+    public static boolean isConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting())
+            return true;
+        return false;
     }
 }

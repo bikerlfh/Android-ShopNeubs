@@ -8,6 +8,7 @@ public class UsuarioModel {
 
     public static final String NAME_TABLE = "Usuario";
     public static final String PK = "idUsuario";
+    public static final String ID_CLIENTE = "idCliente";
     public static final String USERNAME = "username";
     public static final String EMAIL = "email";
     public static final String NOMBRE = "nombre";
@@ -17,9 +18,10 @@ public class UsuarioModel {
 
     public static final String CREATE_TABLE = "create table " + NAME_TABLE + "("+
             PK + " integer primary key,"+
-            USERNAME + " text not null,"+
+            ID_CLIENTE + " integer null,"+
+            USERNAME + " text null,"+
             EMAIL + " text not null," +
-            NOMBRE + " text not null," +
-            APELLIDO + " text not null," +
-            TOKEN + " text not null)";
+            NOMBRE + " text null," +
+            APELLIDO + " text null," +
+            TOKEN + " text null)";
 }

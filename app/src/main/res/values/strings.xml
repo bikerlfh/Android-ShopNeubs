@@ -16,7 +16,7 @@
     <string name="text_loading">Loading...</string>
     <string name="categoria_01">Motherboards</string>
     <string name="categoria_02">Cases</string>
-    <string name="categoria_03">PCs</string>
+    <string name="categoria_03" translatable="false">PCs</string>
     <string name="categoria_04">Hard Drives</string>
     <string name="categoria_05">Power Supplies</string>
     <string name="categoria_06">Printers</string>
@@ -69,5 +69,9 @@
     <string name="title_activity_account">My Account</string>
     <string name="title_activity_orders">Orders</string>
     <string name="title_activity_edit_profile">Profile</string>
+    <string name="title_login_signin">Login or Sign up</string>
+    <string name="title_terminos_condiciones">Terms and conditions</string>
+    <string name="title_informacion_envio">Shipment information</string>
+    <string name="title_garantia">Warranty</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,13 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class AccountActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private Button btnMisDatos;
-    private Button btnPedidos;
     private Button btnLogout;
+    private TextView lblLoginSignup;
+    private TextView lblPedidos,lblPerfil,lblTerminosCondiciones,lblInformacionEnvio,lblGarantias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,28 +34,47 @@ public class AccountActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        btnPedidos = (Button) findViewById(R.id.btn_pedidos);
-        btnMisDatos = (Button) findViewById(R.id.btn_mis_datos);
+        lblPedidos = (TextView) findViewById(R.id.lbl_action_pedidos);
+        lblPerfil = (TextView) findViewById(R.id.lbl_action_perfil);
+        lblTerminosCondiciones = (TextView) findViewById(R.id.lbl_action_terminos);
+        lblInformacionEnvio = (TextView) findViewById(R.id.lbl_action_informacion_envio);
+        lblGarantias = (TextView) findViewById(R.id.lbl_action_garantias);
+
         btnLogout = (Button) findViewById(R.id.btn_logout);
+        lblLoginSignup = (TextView) findViewById(R.id.lbl_action_login_register);
 
 
-        btnPedidos.setOnClickListener(new View.OnClickListener() {
+        lblLoginSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirLoginRegister();
+            }
+        });
+
+        lblPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validarInicioSesion()){
                     // Abrir actividad mis pedidos
                 }
+                else
+                    abrirLoginRegister();
             }
         });
 
-        btnMisDatos.setOnClickListener(new View.OnClickListener() {
+       lblPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validarInicioSesion()){
                     // Abrir actividad mis datos
                 }
+                else
+                    abrirLoginRegister();
             }
         });
+        lblTerminosCondiciones.setOnClickListener(clickListenerLinks);
+        lblInformacionEnvio.setOnClickListener(clickListenerLinks);
+        lblGarantias.setOnClickListener(clickListenerLinks);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,9 +83,46 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
     }
+    private View.OnClickListener clickListenerLinks = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Uri uri = null;
+            switch (v.getId()){
+                case R.id.lbl_action_terminos:
+                    uri = Uri.parse("https://www.shopneubs.com/terminos-y-condiciones/");
+                    break;
+                case R.id.lbl_action_informacion_envio:
+                    uri = Uri.parse("https://www.shopneubs.com/informacion-envio/");
+                    break;
+                case R.id.lbl_action_garantias:
+                    uri = Uri.parse("https://www.shopneubs.com/garantia/");
+                    break;
+            }
+            if (uri != null) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(uri);
+                startActivity(intent);
+            }
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     private void cerrarSession() {
 
+    }
+
+    private void abrirLoginRegister(){
+        Intent intent = new Intent(AccountActivity.this,LoginRegisterActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -89,5 +149,8 @@ public class AccountActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
 }
