@@ -1,7 +1,5 @@
 package co.com.neubs.shopneubs.interfaces;
 
-import android.database.Cursor;
-
 /**
  * Created by bikerlfh on 6/4/17.
  */

@@ -1,8 +1,5 @@
 package co.com.neubs.shopneubs.classes;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -10,24 +7,15 @@ import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.bumptech.glide.load.engine.Resource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -39,7 +27,6 @@ import static java.net.HttpURLConnection.HTTP_NOT_MODIFIED;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
-import static java.net.HttpURLConnection.getFollowRedirects;
 
 /**
  * Created by bikerlfh on 5/23/17.
@@ -47,11 +34,11 @@ import static java.net.HttpURLConnection.getFollowRedirects;
 
 public class APIRest {
 
-    //public final static String PROTOCOL_URL_API = "https";
-    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    public final static String PROTOCOL_URL_API = "https";
+    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
-    public final static String PROTOCOL_URL_API = "http";
-    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
+    //public final static String PROTOCOL_URL_API = "http";
+    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
     // URLs de funcionalidad de la API
     public final static String URL_LOGIN = "rest-auth/login/";

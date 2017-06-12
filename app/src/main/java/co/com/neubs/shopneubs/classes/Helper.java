@@ -3,15 +3,8 @@ package co.com.neubs.shopneubs.classes;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 
 /**

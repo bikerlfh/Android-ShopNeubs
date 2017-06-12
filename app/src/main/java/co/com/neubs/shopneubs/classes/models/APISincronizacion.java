@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import co.com.neubs.shopneubs.classes.DbManager;

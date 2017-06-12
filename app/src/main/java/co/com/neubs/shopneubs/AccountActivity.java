@@ -3,8 +3,6 @@ package co.com.neubs.shopneubs;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -13,12 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.List;
-
 import co.com.neubs.shopneubs.classes.SessionManager;
-import co.com.neubs.shopneubs.classes.models.Usuario;
 
 public class AccountActivity extends AppCompatActivity {
 

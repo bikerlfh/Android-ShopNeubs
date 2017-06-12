@@ -1,6 +1,5 @@
 package co.com.neubs.shopneubs.classes;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 /**
