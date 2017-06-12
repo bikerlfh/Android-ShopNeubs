@@ -137,7 +137,7 @@ public class RegisterFragment extends Fragment {
             params1.put("email",email);
             params1.put("password",password);
 
-            APIRest.Async.post("register/", params1, new IServerCallback() {
+            APIRest.Async.post(APIRest.URL_REGISTER, params1, new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
                     Toast.makeText(getContext(),json,Toast.LENGTH_LONG).show();

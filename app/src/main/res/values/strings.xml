@@ -73,5 +73,6 @@
     <string name="title_terminos_condiciones">Terms and conditions</string>
     <string name="title_informacion_envio">Shipment information</string>
     <string name="title_garantia">Warranty</string>
+    <string name="error_connection_server">Server connection failed</string>
 
 </resources>

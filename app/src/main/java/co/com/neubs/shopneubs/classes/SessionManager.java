@@ -1,7 +1,13 @@
 package co.com.neubs.shopneubs.classes;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import co.com.neubs.shopneubs.classes.models.Usuario;
+import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
  * Created by bikerlfh on 6/11/17.
@@ -89,10 +95,26 @@ public class SessionManager {
      * @param context
      * @return
      */
-    public boolean closeUserSession(Context context){
+    public boolean closeUserSession(final Context context){
         try {
             Usuario usuario = new Usuario(context);
             if (usuario.getLoginUser()){
+
+                // Se envía la petición al servidor
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Token " + this.token);
+                APIRest.Async.post(APIRest.URL_LOGOUT, null, headers, new IServerCallback() {
+                    @Override
+                    public void onSuccess(String json) {
+                        Toast.makeText(context,"Logout success",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String message_error, String response) {
+                        Toast.makeText(context,"Logout unsuccess",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 usuario.setToken(null);
                 usuario.update();
             }

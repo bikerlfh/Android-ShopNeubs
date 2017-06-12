@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.adapters.ProductoAdapter;
@@ -94,8 +96,9 @@ public class FiltroProductoFragment extends Fragment {
                 .setAction("Action", null);
         snackbar.show();
 
-        String url = "search/?filtro=" + URLEncoder.encode(filtro);
-        APIRest.Async.get(url, new IServerCallback() {
+        Map<String, String> parametros = new HashMap<>();
+        parametros.put("filtro",filtro);
+        APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,parametros,null, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
                 final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
@@ -114,7 +117,10 @@ public class FiltroProductoFragment extends Fragment {
 
             @Override
             public void onError(String message_error, String response) {
-                Snackbar.make(view,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
+                if (APIRest.Async.badRequest())
+                    Snackbar.make(view,"Bad Request:"+response,Snackbar.LENGTH_INDEFINITE).show();
+                else
+                    Snackbar.make(view,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
                 snackbar.dismiss();
             }
         });

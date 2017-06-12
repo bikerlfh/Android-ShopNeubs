@@ -3,6 +3,7 @@ package co.com.neubs.shopneubs.classes;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -51,6 +53,12 @@ public class APIRest {
     public final static String PROTOCOL_URL_API = "http";
     public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
+    // URLs de funcionalidad de la API
+    public final static String URL_LOGIN = "rest-auth/login/";
+    public final static String URL_LOGOUT = "rest-auth/logout/";
+    public final static String URL_REGISTER = "register/";
+    public final static String URL_FILTRO_PRODUCTO = "search/";
+
     /**
      * Serialize a object from String(json format)
      * @param json The string json format
@@ -71,7 +79,37 @@ public class APIRest {
         return (!url.contains(URL_API))? URL_API + url : url;
     }
 
+    public static Object getObjectFromJson(String json, String key){
+        try{
+            JSONObject jsonObject = new JSONObject(json);
+            return jsonObject.get(key);
+        }
+        catch (Exception ex){
+            return null;
+        }
+    }
 
+    /**
+     * Convierte los parametros Map<String,String> a un String format: p1=value1&p2=value2
+     * @param param
+     * @return
+     */
+    private static String makeParams(Map<String,String> param){
+        try {
+            String parametros = null;
+            Set<String> keys = param.keySet();
+            for (String key : keys) {
+                if (parametros == null)
+                    parametros = key + "=" + URLEncoder.encode(String.valueOf(param.get(key)), "UTF-8");
+                else
+                    parametros += "&" + key + "=" + URLEncoder.encode(String.valueOf(param.get(key)), "UTF-8");
+            }
+            return parametros;
+        }
+        catch (Exception ex){
+            return null;
+        }
+    }
 
     /**
      * Clase de metodos sincronos
@@ -98,8 +136,12 @@ public class APIRest {
          * @return
          */
         public static  String post(String url,Map<String,String> params,Map<String,String> headers){
-            headers = headers !=  null? headers:new HashMap<String, String>();
-            request = HttpRequest.post(constructURL(url)).accept("application/json").send(makeParams(params)).headers(headers);
+            //headers = headers !=  null? headers:new HashMap<String, String>();
+            request = HttpRequest.post(constructURL(url)).accept("application/json");
+            if (params != null)
+                request = request.send(makeParams(params));
+            if (headers != null)
+                request = request.headers(headers);
             return request.body();
         }
 
@@ -114,22 +156,7 @@ public class APIRest {
             return (response == null)? null : serializeObjectFromJson(response,classOfT);
         }
 
-        /**
-         * Convierte los parametros Map<String,String> a un String format: p1=value1&p2=value2
-         * @param param
-         * @return
-         */
-        private static String makeParams(Map<String,String> param){
-            String parametros = null;
-            Set<String> keys = param.keySet();
-            for (String key: keys) {
-                if (parametros == null)
-                    parametros = key + "=" + String.valueOf(param.get(key));
-                else
-                    parametros += "&"+ key + "=" + String.valueOf(param.get(key));
-            }
-            return parametros;
-        }
+
 
         public static boolean ok() {
             return request.ok();
@@ -159,16 +186,46 @@ public class APIRest {
     public static class Async {
         private static int RESPONSE_STATUS_CODE;
         /**
-         * Create a new request get
+         * Crea un nuevo request GET
          * @param url URl to fetch the JSON from
          * @param callback Interface Implement (IServerCallback)
          */
-        public static void get(String url,final IServerCallback callback){
-            StringRequest(Request.Method.GET,constructURL(url),null,callback);
+        public static void get(final String url,final IServerCallback callback){
+            StringRequest(Request.Method.GET,constructURL(url),null,null,callback);
         }
 
+        /**
+         * Crea un nuevo request GET con parametros y headers
+         * @param url
+         * @param params
+         * @param headers
+         * @param callback
+         */
+        public static void get(String url,final Map<String,String> params,final Map<String,String> headers,final IServerCallback callback){
+            // Se formatean los parametros si es necesario
+            url = constructURL(url).concat((params != null)? ("?" + makeParams(params)) : "");
+            StringRequest(Request.Method.GET,url,null,headers,callback);
+        }
+
+        /**
+         * nueva peticion POST con parametros
+         * @param url
+         * @param params
+         * @param callback
+         */
         public static void post(String url,Map<String,String> params,final IServerCallback callback){
-            StringRequest(Request.Method.POST,constructURL(url),params,callback);
+            StringRequest(Request.Method.POST,constructURL(url),params,null,callback);
+        }
+
+        /**
+         * nueva peticion POST con parametros y headers
+         * @param url
+         * @param params
+         * @param headers
+         * @param callback
+         */
+        public static void post(String url,Map<String,String> params,Map<String,String> headers,final IServerCallback callback){
+            StringRequest(Request.Method.POST,constructURL(url),params,headers,callback);
         }
 
         /**
@@ -178,7 +235,7 @@ public class APIRest {
          * @param params parametros
          * @param callback
          */
-        private static void StringRequest(int method,String url,final Map<String,String> params, final IServerCallback callback){
+        private static void StringRequest(int method,String url,final Map<String,String> params,final Map<String,String> headers, final IServerCallback callback){
             // TimeOut
             final RetryPolicy policy = new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
@@ -204,12 +261,18 @@ public class APIRest {
                     }
             ) {
                 @Override
-                protected Map<String, String> getParams()
-                {
-                    Map<String,String> params1 = params == null? new HashMap<String, String>():params;
-                    return params1;
+                protected Map<String, String> getParams() throws AuthFailureError{
+                    Map<String,String> parms1 = params == null? new HashMap<String, String>() : params;
+                    return parms1;
+                    //return (params == null? super.getParams() : params);
                 }
 
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> headers1 = headers == null? new HashMap<String, String>() : headers;
+                    return headers1;
+                    //return (headers == null? super.getHeaders() : headers);
+                }
             }.setRetryPolicy(policy);
             AppController.getInstance().addToRequestQueue(postRequest);
         }

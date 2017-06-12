@@ -42,9 +42,6 @@
             android:label="@string/title_activity_principal" />
         <activity android:name=".ProductoDetalleActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".LoginRegisterActivity"
             android:label="@string/title_activity_login_register"
             android:theme="@style/AppTheme" />

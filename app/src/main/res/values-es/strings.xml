@@ -53,4 +53,5 @@
     <string name="title_terminos_condiciones">Terminos y condiciones</string>
     <string name="title_garantia">Garantia</string>
     <string name="title_informacion_envio">Información de Envío</string>
+    <string name="error_connection_server">No se ha logrado comunicarse con el servidor</string>
 </resources>

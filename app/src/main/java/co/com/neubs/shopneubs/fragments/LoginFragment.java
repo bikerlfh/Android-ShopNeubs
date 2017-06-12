@@ -7,8 +7,6 @@ import android.annotation.TargetApi;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
-import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,8 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -29,7 +25,6 @@ import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.Usuario;
-import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,8 +34,8 @@ import co.com.neubs.shopneubs.interfaces.IServerCallback;
 public class LoginFragment extends Fragment {
 
 
-    private EditText mUsename,mPassword;
-    private Button mBtnLogin;
+    private EditText txtUsername,txtPassword;
+    private Button btnLogin;
 
     private View mProgressView;
     private View mLoginFormView;
@@ -82,15 +77,14 @@ public class LoginFragment extends Fragment {
         mLoginFormView = view.findViewById(R.id.login_fragment_form);
         mProgressView = view.findViewById(R.id.login_fragment_progress);
 
-        mUsename = (EditText) view.findViewById(R.id.txt_username);
-        mPassword = (EditText) view.findViewById(R.id.txt_password);
-        mBtnLogin = (Button) view.findViewById(R.id.btn_login);
+        txtUsername = (EditText) view.findViewById(R.id.txt_username);
+        txtPassword = (EditText) view.findViewById(R.id.txt_password);
+        btnLogin = (Button) view.findViewById(R.id.btn_login);
 
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 attemptLogin();
-
             }
         });
         return view;
@@ -98,27 +92,27 @@ public class LoginFragment extends Fragment {
 
     private void attemptLogin() {
         // Reset errors.
-        mUsename.setError(null);
-        mPassword.setError(null);
+        txtUsername.setError(null);
+        txtPassword.setError(null);
 
         // Store values at the time of the login attempt.
-        String username = mUsename.getText().toString();
-        String password = mPassword.getText().toString();
+        String username = txtUsername.getText().toString();
+        String password = txtPassword.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPassword.setError(getString(R.string.error_invalid_password));
-            focusView = mPassword;
+            txtPassword.setError(getString(R.string.error_invalid_password));
+            focusView = txtPassword;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(username)) {
-            mUsename.setError(getString(R.string.error_field_required));
-            focusView = mUsename;
+            txtUsername.setError(getString(R.string.error_field_required));
+            focusView = txtUsername;
             cancel = true;
         }
         /*else if (!isEmailValid(username)) {
@@ -188,7 +182,6 @@ public class LoginFragment extends Fragment {
 
 
     private class TaskLogin extends AsyncTask<Map,Void,Boolean>{
-        private final String urlLogin = "rest-auth/login/";
 
         private String messageError;
 
@@ -202,12 +195,9 @@ public class LoginFragment extends Fragment {
         protected Boolean doInBackground(Map... params) {
             try {
                 Map<String, String> parametros = params[0];
-
-
-                String json = APIRest.Sync.post(urlLogin, parametros, null);
+                String json = APIRest.Sync.post(APIRest.URL_LOGIN, parametros, null);
                 if (APIRest.Sync.ok()) {
-                    JSONObject jsonObject = new JSONObject(json);
-                    String token = (String)jsonObject.get("key");
+                    String token = (String)APIRest.getObjectFromJson(json,"key");
                     //String email = parametros.get("email");
                     String username = parametros.get("username");
                     Usuario usuario = new Usuario(getActivity());
@@ -220,11 +210,10 @@ public class LoginFragment extends Fragment {
                         usuario = APIRest.serializeObjectFromJson(json, Usuario.class);
                         if (usuario != null) {
                             usuario.initDbManager(getActivity());
-                            if(!usuario.save())
-                                messageError = "No se logró registrar el usuario";
-                        }else{
-                            messageError = "Usuario no encontrado";
+                            usuario.save();
                         }
+                        else
+                            return false;
                     }
 
                     // Se guarda la session
@@ -232,8 +221,6 @@ public class LoginFragment extends Fragment {
                     if (session.createUserSession(getActivity(), usuario.getIdUsuario(), token)) {
                         return true;
                     }
-                } else if (APIRest.Sync.badRequest()) {
-
                 }
             }
             catch (Exception e){
@@ -248,8 +235,14 @@ public class LoginFragment extends Fragment {
             showProgress(false);
             if (result) {
                 getActivity().finish();
-            }else{
-                Toast.makeText(getActivity(),"No se logró hacer login",Toast.LENGTH_LONG).show();
+            }
+            else{
+                if (APIRest.Sync.badRequest()){
+                    txtPassword.setError(getString(R.string.error_incorrect_password));
+                    txtPassword.requestFocus();
+                }
+                else
+                    Toast.makeText(getActivity(),getString(R.string.error_connection_server),Toast.LENGTH_LONG).show();
             }
         }
     }
