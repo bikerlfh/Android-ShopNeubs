@@ -4,6 +4,7 @@ package co.com.neubs.shopneubs.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import java.util.Map;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
+import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
@@ -29,6 +33,7 @@ import co.com.neubs.shopneubs.interfaces.IServerCallback;
 public class RegisterFragment extends Fragment {
 
     private EditText txtUsername, txtEmail,txtPassword,txtPasword1;
+    private Button btnRegister;
 
     private View mProgressView;
     private View mRegisterFormView;
@@ -46,7 +51,7 @@ public class RegisterFragment extends Fragment {
      * @return A new instance of fragment RegisterFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RegisterFragment newInstance(String param1, String param2) {
+    public static RegisterFragment newInstance() {
         RegisterFragment fragment = new RegisterFragment();
         return fragment;
     }
@@ -66,13 +71,21 @@ public class RegisterFragment extends Fragment {
         txtEmail = (EditText) view.findViewById(R.id.txt_email_register);
         txtPassword = (EditText) view.findViewById(R.id.txt_password_register);
         txtPasword1 = (EditText) view.findViewById(R.id.txt_password1_register);
+        btnRegister = (Button) view.findViewById(R.id.btn_register);
 
         mRegisterFormView = view.findViewById(R.id.register_fragment_form);
         mProgressView = view.findViewById(R.id.register_fragment_progress);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrar();
+            }
+        });
         return view;
     }
 
-    private void attemptLogin() {
+    private void registrar() {
         // Reset errors.
         txtUsername.setError(null);
         txtEmail.setError(null);
@@ -81,7 +94,7 @@ public class RegisterFragment extends Fragment {
 
         // Store values at the time of the login attempt.
         String username = txtUsername.getText().toString();
-        String email = txtUsername.getText().toString();
+        String email = txtEmail.getText().toString();
         String password = txtPassword.getText().toString();
         String password1 = txtPasword1.getText().toString();
 
@@ -99,7 +112,7 @@ public class RegisterFragment extends Fragment {
             focusView = txtEmail;
             cancel = true;
         }
-        else if (!isEmailValid(username)) {
+        else if (!isEmailValid(email)) {
             txtEmail.setError(getString(R.string.error_invalid_email));
             focusView = txtEmail;
             cancel = true;
@@ -111,7 +124,7 @@ public class RegisterFragment extends Fragment {
             cancel = true;
         }
 
-        if (!TextUtils.isEmpty(password1) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password1) && !isPasswordValid(password1)) {
             txtPasword1.setError(getString(R.string.error_invalid_password));
             focusView = txtPasword1;
             cancel = true;
@@ -127,40 +140,85 @@ public class RegisterFragment extends Fragment {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-        } else {
+        }
+        else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
 
-            Map<String,String> params1 = new HashMap<String, String>();
-            params1.put("username",username);
-            params1.put("email",email);
-            params1.put("password",password);
+            Map<String,String> params = new HashMap<String, String>();
+            params.put("username",username);
+            params.put("email",email);
+            params.put("password",password);
 
-            APIRest.Async.post(APIRest.URL_REGISTER, params1, new IServerCallback() {
+            /*TaskRegistro taskRegistro =new TaskRegistro();
+            taskRegistro.execute(params);*/
+
+            APIRest.Async.post(APIRest.URL_REGISTER, params, new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
-                    Toast.makeText(getContext(),json,Toast.LENGTH_LONG).show();
                     showProgress(false);
-
+                    Toast.makeText(getActivity(),getString(R.string.created_register),Toast.LENGTH_LONG).show();
+                    getActivity().finish();
                 }
 
                 @Override
                 public void onError(String message_error, String response) {
                     showProgress(false);
-                    if(APIRest.Async.badRequest()){
+                    if (APIRest.Async.badRequest()){
+                        final APIValidations apiValidations = APIRest.serializeObjectFromJson(response, APIValidations.class);
 
+                        // Si no hay errores de campos, se visualiza el error de credenciales
+                        if (apiValidations.isNoFieldError())
+                            Toast.makeText(getActivity(),apiValidations.getValidationNonFieldError(),Toast.LENGTH_LONG).show();
+                        else {
+                            if (apiValidations.isEmail()) {
+                                txtEmail.setError(apiValidations.getValidationEmail());
+                                txtEmail.requestFocus();
+                            }
+                            if (apiValidations.isUsername()) {
+                                txtUsername.setError(apiValidations.getValidationUsername());
+                                txtUsername.requestFocus();
+                            }
+                        }
                     }
-                    else{
-                        Toast.makeText(getContext(), "ERRROR:" + message_error, Toast.LENGTH_LONG).show();
-                    }
+                    else
+                        Toast.makeText(getActivity(),getString(R.string.error_default),Toast.LENGTH_LONG).show();
                 }
             });
         }
     }
+
+    private class TaskRegistro extends AsyncTask<Map,Void,Boolean>{
+
+        @Override
+        protected void onPreExecute() {
+            showProgress(true);
+        }
+
+        @Override
+        protected Boolean doInBackground(Map... params) {
+            Map<String,String> params1 = params[0];
+            return APIRest.Sync.postCreate(APIRest.URL_REGISTER,params1,null);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            showProgress(false);
+            if (success){
+                Toast.makeText(getActivity(),getString(R.string.created_register),Toast.LENGTH_LONG).show();
+                getActivity().finish();
+            }
+            else{
+                Toast.makeText(getActivity(),getString(R.string.error_default),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     private boolean isPasswordValid(String password) {
         return password.length() > 7;
     }
+
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");

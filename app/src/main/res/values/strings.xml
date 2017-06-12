@@ -13,7 +13,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="ofertas_title">Offer</string>
-    <string name="text_loading">Loading...</string>
+    <string name="text_loading">Loading&#8230;</string>
     <string name="categoria_01">Motherboards</string>
     <string name="categoria_02">Cases</string>
     <string name="categoria_03" translatable="false">PCs</string>
@@ -74,5 +74,7 @@
     <string name="title_informacion_envio">Shipment information</string>
     <string name="title_garantia">Warranty</string>
     <string name="error_connection_server">Server connection failed</string>
+    <string name="created_register">Registration completed. We\'ve sent you an email to activate your account.</string>
+    <string name="error_default">Request not completed. Please try again later.</string>
 
 </resources>

@@ -11,8 +11,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -34,11 +37,11 @@ import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 
 public class APIRest {
 
-    public final static String PROTOCOL_URL_API = "https";
-    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    //public final static String PROTOCOL_URL_API = "https";
+    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
-    //public final static String PROTOCOL_URL_API = "http";
-    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
+    public final static String PROTOCOL_URL_API = "http";
+    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
     // URLs de funcionalidad de la API
     public final static String URL_LOGIN = "rest-auth/login/";
@@ -66,6 +69,12 @@ public class APIRest {
         return (!url.contains(URL_API))? URL_API + url : url;
     }
 
+    /**
+     * Retorna el valor de una key de un json
+     * @param json json
+     * @param key del parametro
+     * @return
+     */
     public static Object getObjectFromJson(String json, String key){
         try{
             JSONObject jsonObject = new JSONObject(json);
@@ -83,15 +92,12 @@ public class APIRest {
      */
     private static String makeParams(Map<String,String> param){
         try {
-            String parametros = null;
+            String parms = null;
             Set<String> keys = param.keySet();
             for (String key : keys) {
-                if (parametros == null)
-                    parametros = key + "=" + URLEncoder.encode(String.valueOf(param.get(key)), "UTF-8");
-                else
-                    parametros += "&" + key + "=" + URLEncoder.encode(String.valueOf(param.get(key)), "UTF-8");
+                parms = (parms == null)? key + "=" + URLEncoder.encode(String.valueOf(param.get(key)), "UTF-8"): parms + "&" + key + "=" + URLEncoder.encode(String.valueOf(param.get(key)), "UTF-8");
             }
-            return parametros;
+            return parms;
         }
         catch (Exception ex){
             return null;
@@ -130,6 +136,20 @@ public class APIRest {
             if (headers != null)
                 request = request.headers(headers);
             return request.body();
+        }
+
+        /**
+         * Realiza una petición POST para crear un registro
+         * @param url
+         * @param params Parametros del "formulario"
+         * @param headers
+         * @return True si es creado, de lo contrario False.
+         */
+        public static boolean postCreate(String url,Map<String,String> params,Map<String,String> headers){
+            request = HttpRequest.post(constructURL(url)).accept("application/json").form(params);
+            if (headers != null)
+                request = request.headers(headers);
+            return request.created();
         }
 
         /**
@@ -227,15 +247,13 @@ public class APIRest {
             final RetryPolicy policy = new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
             final StringRequest postRequest = (StringRequest) new StringRequest(method, constructURL(url),
-                    new Response.Listener<String>()
-                    {
+                    new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             callback.onSuccess(response);
                         }
                     },
-                    new Response.ErrorListener()
-                    {
+                    new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.getClass() == TimeoutError.class) {
@@ -248,7 +266,7 @@ public class APIRest {
                     }
             ) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError{
+                protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> parms1 = params == null? new HashMap<String, String>() : params;
                     return parms1;
                     //return (params == null? super.getParams() : params);
@@ -266,6 +284,8 @@ public class APIRest {
         public static boolean ok() {
             return RESPONSE_STATUS_CODE == HTTP_OK;
         }
+
+        public static boolean created() { return  RESPONSE_STATUS_CODE == HTTP_CREATED; }
 
         public static boolean badRequest() {
             return RESPONSE_STATUS_CODE == HTTP_BAD_REQUEST;

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import co.com.neubs.shopneubs.fragments.LoginFragment;
+import co.com.neubs.shopneubs.fragments.RegisterFragment;
 
 public class LoginRegisterActivity extends AppCompatActivity {
      /**
@@ -125,7 +126,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
             if (position == 0){
                 return LoginFragment.newInstance();
             }
-            return PlaceholderFragment.newInstance(R.layout.fragment_register);
+            return RegisterFragment.newInstance();
         }
 
         @Override

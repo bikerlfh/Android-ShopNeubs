@@ -4,7 +4,7 @@
     <string name="search_title">Buscar</string>
     <string name="settings_title">Configuración</string>
     <string name="welcome_title">Bienvenido a ShopNeubs</string>
-    <string name="text_loading">Cargando...</string>
+    <string name="text_loading">Cargando&#8230;</string>
     <string name="categoria_02">Cajas</string>
     <string name="categoria_04">Discos Duros</string>
     <string name="categoria_05">Fuentes de Poder</string>
@@ -54,4 +54,6 @@
     <string name="title_garantia">Garantia</string>
     <string name="title_informacion_envio">Información de Envío</string>
     <string name="error_connection_server">No se ha logrado comunicarse con el servidor</string>
+    <string name="created_register">Registro completado. Te hemos enviado un email para que actives tu cuenta.</string>
+    <string name="error_default">Solicitud no completada. Vuelve a intentarlo más tarde.</string>
 </resources>
