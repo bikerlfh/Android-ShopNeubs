@@ -45,8 +45,7 @@
     <string name="prompt_password_repeat">Contraseña (confirmación)</string>
     <string name="error_invalid_password1">Las constraseñas no coinciden</string>
     <string name="title_logout"></string>
-    <string name="title_year_derecho_reservado"></string>
-    <string name="title_derechos_reservados">Todos los Derechos Reservados</string>
+    <string name="title_derechos_reservados">© 2017 - Neubs S.A.S Todos los Derechos Reservados</string>
     <string name="title_activity_account">Mi cuenta</string>
     <string name="title_activity_orders">Pedidos</string>
     <string name="title_activity_edit_profile">Perfil</string>

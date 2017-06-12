@@ -10,6 +10,7 @@
         <item name="actionMenuTextColor">@color/textColorPrimary</item>
         <item name="android:actionMenuTextColor">@color/textColorPrimary</item>
         <item name="android:windowBackground">@color/colorBackground</item>
+
         <!--item name="android:selectableItemBackground">?android:attr/selectableItemBackground</item-->
     </style>
 

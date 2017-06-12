@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,66 +13,132 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/register_fragment_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8sp"
+        android:layout_marginTop="8sp"
+        android:paddingBottom="12sp"
+        android:paddingLeft="8sp"
+        android:paddingRight="8sp"
+        android:paddingTop="26sp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="276dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:elevation="2dp"
+                android:paddingBottom="20sp"
+                app:srcCompat="@drawable/logo_login_200x38" />
+            <LinearLayout
+                android:layout_width="291dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8sp"
+                android:layout_marginTop="8sp"
+                android:background="@color/colorWhite"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:paddingBottom="12sp"
+                android:paddingLeft="8sp"
+                android:paddingRight="8sp"
+                android:paddingTop="12sp">-->
+
+            <!--android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"-->
 
                 <EditText
                     android:id="@+id/txt_username_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_username" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="2sp"
+                    android:layout_marginTop="8sp"
+                    android:elevation="2dp"
+                    android:hint="@string/prompt_username"
+                    android:inputType="textCapWords"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="4sp"
+                    android:paddingRight="4sp"
+                    android:paddingTop="5sp" />
+            <!--/android.support.design.widget.TextInputLayout-->
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!--android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"-->
 
                 <EditText
                     android:id="@+id/txt_email_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="2sp"
+                    android:elevation="2dp"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textCapWords"
+                    android:paddingBottom="10sp"
+                    android:paddingLeft="4sp"
+                    android:paddingRight="4sp"
+                    android:paddingTop="5sp" />
+            <!--/android.support.design.widget.TextInputLayout-->
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!--android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"-->
 
                 <EditText
                     android:id="@+id/txt_password_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="2sp"
+                    android:elevation="2dp"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textPassword"
+                    android:paddingBottom="10sp"
+                    android:paddingLeft="4sp"
+                    android:paddingRight="4sp"
+                    android:paddingTop="5sp" />
+            <!--/android.support.design.widget.TextInputLayout-->
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!--android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"-->
 
                 <EditText
                     android:id="@+id/txt_password1_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password_repeat" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8sp"
+                    android:elevation="2dp"
+                    android:hint="@string/prompt_password_repeat"
+                    android:inputType="textPassword"
+                    android:paddingBottom="10sp"
+                    android:paddingLeft="4sp"
+                    android:paddingRight="4sp"
+                    android:paddingTop="5sp" />
+            <!--/android.support.design.widget.TextInputLayout-->
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_register"
-                android:layout_width="match_parent"
+                android:layout_width="254dp"
                 android:layout_height="wrap_content"
-                android:text="@string/title_register" />
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorSecundary"
+                android:text="@string/title_register"
+                android:textColor="@color/colorWhite" />
         </LinearLayout>
-        </ScrollView>
+    </ScrollView>
 </FrameLayout>

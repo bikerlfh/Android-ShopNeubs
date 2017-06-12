@@ -64,8 +64,7 @@
     <string name="prompt_email">Email</string>
     <string name="error_invalid_password1">The passwords do not match</string>
     <string name="title_logout">Logout</string>
-    <string name="title_derechos_reservados">All right reserverd.</string>
-    <string name="title_year_derecho_reservado" translatable="false">© 2017 - Neubs S.A.S</string>
+    <string name="title_derechos_reservados">© 2017 - Neubs S.A.S All right reserverd.</string>
     <string name="title_activity_account">My Account</string>
     <string name="title_activity_orders">Orders</string>
     <string name="title_activity_edit_profile">Profile</string>

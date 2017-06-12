@@ -18,7 +18,10 @@
     <ScrollView
         android:id="@+id/login_fragment_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="26sp">
+
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -28,9 +31,11 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                app:srcCompat="@drawable/logo" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingBottom="20sp"
+                app:srcCompat="@drawable/logo_login_200x38" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -38,9 +43,12 @@
 
                 <EditText
                     android:id="@+id/txt_username"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_username" />
+                    android:layout_gravity="center"
+                    android:hint="@string/prompt_username"
+                    android:inputType="textCapWords"
+                    android:textColorLink="@color/colorTextLink" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -50,18 +58,24 @@
 
                 <EditText
                     android:id="@+id/txt_password"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:hint="@string/prompt_password"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:textColorLink="@color/colorTextLink" />
 
             </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="match_parent"
+                android:layout_width="262dp"
                 android:layout_height="wrap_content"
-                android:text="@string/action_sign_in_short" />
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorSecundary"
+                android:text="@string/action_sign_in_short"
+                android:textColor="@color/colorWhite"
+                android:textColorLink="@color/colorTextLink" />
 
         </LinearLayout>
     </ScrollView>
