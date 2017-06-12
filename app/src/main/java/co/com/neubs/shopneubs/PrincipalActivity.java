@@ -15,7 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
+import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.fragments.OfertasFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
 import co.com.neubs.shopneubs.fragments.FiltroProductoFragment;
@@ -24,6 +27,9 @@ public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ProductosCategoriaFragment.OnFragmentInteractionListener,OfertasFragment.OnFragmentInteractionListener, FiltroProductoFragment.OnFragmentInteractionListener {
 
     private String codigoCategoria = null;
+    private TextView lblHeaderWelcome;
+
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +39,6 @@ public class PrincipalActivity extends AppCompatActivity
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -54,7 +51,24 @@ public class PrincipalActivity extends AppCompatActivity
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new OfertasFragment()).commit();
 
+        sessionManager = SessionManager.getInstance();
 
+        View header = navigationView.getHeaderView(0);
+        lblHeaderWelcome = (TextView) header.findViewById(R.id.lbl_header_welcome);
+        visualizarControlesSession(sessionManager.isAuthenticated(this));
+    }
+
+    private void visualizarControlesSession(boolean isActiva) {
+        if (isActiva)
+            lblHeaderWelcome.setText(sessionManager.getEmail());
+        else
+            lblHeaderWelcome.setText(getString(R.string.welcome_title));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        visualizarControlesSession(sessionManager.isAuthenticated(this));
     }
 
     @Override
@@ -119,7 +133,7 @@ public class PrincipalActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Fragment fragment = null;
+        Fragment fragment;
         String codigoCategoriaAnterior = codigoCategoria;
         switch (item.getItemId()){
             case R.id.nav_board:
@@ -177,7 +191,7 @@ public class PrincipalActivity extends AppCompatActivity
 
         }
         // Se valida que la categoria seleccionada no sea la que se esta visualizando
-        if (codigoCategoria != null && codigoCategoriaAnterior != codigoCategoria) {
+        if (codigoCategoria != null && codigoCategoriaAnterior.equals(codigoCategoria)) {
             // Se crea el argumento CODIGO_CATEGORIA para pasarle al fragment
             Bundle args = new Bundle();
             args.putString("CODIGO_CATEGORIA", codigoCategoria);
