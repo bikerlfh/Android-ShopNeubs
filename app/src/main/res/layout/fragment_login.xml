@@ -12,67 +12,99 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <ScrollView
         android:id="@+id/login_fragment_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="26sp">
+        android:clipToPadding="false">
 
         <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginLeft="8sp"
+            android:layout_marginRight="8sp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:weightSum="1">
 
+
+            <!--android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"-->
 
             <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:id="@+id/imageView5"
+                android:layout_width="216dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:paddingBottom="20sp"
-                app:srcCompat="@drawable/logo_login_200x38" />
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="12sp"
+                android:layout_weight="0.31"
+                app:srcCompat="@drawable/logo_login_250x48" />
 
-            <android.support.design.widget.TextInputLayout
+            <EditText
+                android:id="@+id/txt_username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorWhite"
+                android:drawableRight="@drawable/ic_avatar"
+                android:elevation="2dp"
+                android:hint="@string/prompt_username"
+                android:inputType="textCapWords"
+                android:paddingBottom="8dp"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:paddingTop="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textColorLink="@color/colorTextLink" />
 
-                <EditText
-                    android:id="@+id/txt_username"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:hint="@string/prompt_username"
-                    android:inputType="textCapWords"
-                    android:textColorLink="@color/colorTextLink" />
+            <!--/android.support.design.widget.TextInputLayout-->
 
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
+            <!--android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"-->
 
-                <EditText
-                    android:id="@+id/txt_password"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:hint="@string/prompt_password"
-                    android:inputType="textPassword"
-                    android:textColorLink="@color/colorTextLink" />
+            <EditText
+                android:id="@+id/txt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="4dp"
+                android:background="@color/colorWhite"
+                android:drawableRight="@drawable/ic_locked"
+                android:elevation="2dp"
+                android:hint="@string/prompt_password"
+                android:inputType="textPassword"
+                android:paddingBottom="8sp"
+                android:paddingLeft="12sp"
+                android:paddingRight="5sp"
+                android:paddingTop="8sp"
+                android:textAlignment="center"
+                android:textColorLink="@color/colorTextLink" />
 
-            </android.support.design.widget.TextInputLayout>
+            <!--/android.support.design.widget.TextInputLayout-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="Forgot password?"
+                android:textAlignment="center" />
 
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="262dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/colorSecundary"
+                android:layout_marginTop="23sp"
+                android:backgroundTint="@color/colorTextLink"
                 android:text="@string/action_sign_in_short"
                 android:textColor="@color/colorWhite"
                 android:textColorLink="@color/colorTextLink" />
