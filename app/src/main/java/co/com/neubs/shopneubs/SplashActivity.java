@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import co.com.neubs.shopneubs.classes.DbManager;
 import co.com.neubs.shopneubs.classes.Helper;
+import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.Synchronize;
 
 public class SplashActivity extends Activity {
@@ -118,6 +119,8 @@ public class SplashActivity extends Activity {
                 if(synchronize.SyncronizeAPI(true)==-1)
                     return false;
             }
+            // Se verifica si existe un usuario autenticado
+            SessionManager.getInstance().isAuthenticated(SplashActivity.this);
             return true;
         }
 

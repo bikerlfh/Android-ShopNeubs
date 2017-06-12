@@ -4,10 +4,14 @@ package co.com.neubs.shopneubs.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.BoolRes;
+import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +27,8 @@ import java.util.Map;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.SessionManager;
+import co.com.neubs.shopneubs.classes.models.Usuario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
@@ -91,8 +97,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void attemptLogin() {
-
-        mBtnLogin.setEnabled(false);
         // Reset errors.
         mUsename.setError(null);
         mPassword.setError(null);
@@ -137,38 +141,9 @@ public class LoginFragment extends Fragment {
             params1.put("username",username);
             params1.put("password",password);
 
-            APIRest.Async.post("rest-auth/login/", params1, new IServerCallback() {
-                @Override
-                public void onSuccess(String json) {
-                    try {
-                        JSONObject jsonObject =new JSONObject(json);
-                        String token = jsonObject.getString("token");
+            TaskLogin taskLogin = new TaskLogin();
+            taskLogin.execute(params1);
 
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(getActivity(),json,Toast.LENGTH_LONG).show();
-                    showProgress(false);
-
-                }
-
-                @Override
-                public void onError(String message_error, String response) {
-                    showProgress(false);
-                    if(APIRest.Async.badRequest()){
-                        mPassword.setError(getString(R.string.error_incorrect_password));
-                        mPassword.requestFocus();
-                    }
-                    else if(APIRest.Async.timeOut()){
-                        Toast.makeText(getActivity(), getString(R.string.error_timeout_api), Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        Toast.makeText(getActivity(), "ERRROR:" + message_error, Toast.LENGTH_LONG).show();
-                    }
-                    mBtnLogin.setEnabled(true);
-                }
-            });
         }
     }
     private boolean isPasswordValid(String password) {
@@ -208,6 +183,74 @@ public class LoginFragment extends Fragment {
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+
+
+    private class TaskLogin extends AsyncTask<Map,Void,Boolean>{
+        private final String urlLogin = "rest-auth/login/";
+
+        private String messageError;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgress(true);
+        }
+
+        @Override
+        protected Boolean doInBackground(Map... params) {
+            try {
+                Map<String, String> parametros = params[0];
+
+
+                String json = APIRest.Sync.post(urlLogin, parametros, null);
+                if (APIRest.Sync.ok()) {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String token = (String)jsonObject.get("key");
+                    //String email = parametros.get("email");
+                    String username = parametros.get("username");
+                    Usuario usuario = new Usuario(getActivity());
+                    // Si no existe el usuaro, se debe consultar y guardar
+                    //if (!usuario.getByEmail(email) && !usuario.getByUserName(username)) {
+                    if (!usuario.getByUserName(username)) {
+                        // Se consulta el usuario;
+                        String url = "usuario/"+ username+"/";
+                        json = APIRest.Sync.get(url, null);
+                        usuario = APIRest.serializeObjectFromJson(json, Usuario.class);
+                        if (usuario != null) {
+                            usuario.initDbManager(getActivity());
+                            if(!usuario.save())
+                                messageError = "No se logró registrar el usuario";
+                        }else{
+                            messageError = "Usuario no encontrado";
+                        }
+                    }
+
+                    // Se guarda la session
+                    SessionManager session = SessionManager.getInstance();
+                    if (session.createUserSession(getActivity(), usuario.getIdUsuario(), token)) {
+                        return true;
+                    }
+                } else if (APIRest.Sync.badRequest()) {
+
+                }
+            }
+            catch (Exception e){
+                Log.d("TASKLOGIN",e.getMessage());
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            showProgress(false);
+            if (result) {
+                getActivity().finish();
+            }else{
+                Toast.makeText(getActivity(),"No se logró hacer login",Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

@@ -17,14 +17,17 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
+import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 
 public class AccountActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private Button btnLogout;
-    private TextView lblLoginSignup;
     private TextView lblPedidos,lblPerfil,lblTerminosCondiciones,lblInformacionEnvio,lblGarantias;
+    private TextView lblWelcome;
+
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,10 @@ public class AccountActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        sessionManager = SessionManager.getInstance();
 
+
+        lblWelcome = (TextView) findViewById(R.id.lbl_welcome_account);
         lblPedidos = (TextView) findViewById(R.id.lbl_action_pedidos);
         lblPerfil = (TextView) findViewById(R.id.lbl_action_perfil);
         lblTerminosCondiciones = (TextView) findViewById(R.id.lbl_action_terminos);
@@ -45,20 +51,11 @@ public class AccountActivity extends AppCompatActivity {
         lblGarantias = (TextView) findViewById(R.id.lbl_action_garantias);
 
         btnLogout = (Button) findViewById(R.id.btn_logout);
-        lblLoginSignup = (TextView) findViewById(R.id.lbl_action_login_register);
-
-
-        lblLoginSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirLoginRegister();
-            }
-        });
 
         lblPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validarInicioSesion()){
+                if (validarSession()){
                     // Abrir actividad mis pedidos
                 }
                 else
@@ -69,7 +66,7 @@ public class AccountActivity extends AppCompatActivity {
        lblPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validarInicioSesion()){
+                if (validarSession()){
                     // Abrir actividad mis datos
                 }
                 else
@@ -83,10 +80,15 @@ public class AccountActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cerrarSession();
+                if(sessionManager.closeUserSession(AccountActivity.this)){
+                    visualizarControlesSession(false);
+                }
             }
         });
+
+        visualizarControlesSession(validarSession());
     }
+
     private View.OnClickListener clickListenerLinks = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -110,18 +112,19 @@ public class AccountActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    private void cerrarSession() {
-
+    /**
+     * Muestra los componentes segun el estado de la sesion
+     * @param isActiva
+     */
+    private void visualizarControlesSession(boolean isActiva){
+        if (isActiva){
+            lblWelcome.setText(sessionManager.getUsername().isEmpty()?sessionManager.getEmail() : sessionManager.getUsername());
+            btnLogout.setVisibility(View.VISIBLE);
+        }
+        else{
+            btnLogout.setVisibility(View.GONE);
+            lblWelcome.setText(getString(R.string.welcome_title));
+        }
     }
 
     private void abrirLoginRegister(){
@@ -133,12 +136,18 @@ public class AccountActivity extends AppCompatActivity {
      * Valida que el usuario tenga la sesión iniciada
      * @return
      */
-    private boolean validarInicioSesion(){
-        Usuario usuario = new Usuario(this);
-        if (usuario.getLoginUser()){
+    private boolean validarSession(){
+        if (sessionManager.isAuthenticated(this)){
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Se valida la sesión y se visualizan los controles segun su estado
+        visualizarControlesSession(validarSession());
     }
 
     @Override

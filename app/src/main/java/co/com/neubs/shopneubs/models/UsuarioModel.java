@@ -20,7 +20,7 @@ public class UsuarioModel {
             PK + " integer primary key,"+
             ID_CLIENTE + " integer null,"+
             USERNAME + " text null,"+
-            EMAIL + " text not null," +
+            EMAIL + " text null," +
             NOMBRE + " text null," +
             APELLIDO + " text null," +
             TOKEN + " text null)";

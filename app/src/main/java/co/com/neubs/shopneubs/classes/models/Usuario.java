@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import co.com.neubs.shopneubs.models.UsuarioModel;
  */
 
 public class Usuario implements ICrud {
+    @SerializedName("pk")
     private int idUsuario;
     private int idCliente;
     private String username;

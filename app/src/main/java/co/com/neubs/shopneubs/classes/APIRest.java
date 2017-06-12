@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.AppController;
@@ -36,6 +37,7 @@ import static java.net.HttpURLConnection.HTTP_NOT_MODIFIED;
 import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
+import static java.net.HttpURLConnection.getFollowRedirects;
 
 /**
  * Created by bikerlfh on 5/23/17.
@@ -43,11 +45,11 @@ import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 
 public class APIRest {
 
-    public final static String PROTOCOL_URL_API = "https";
-    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    //public final static String PROTOCOL_URL_API = "https";
+    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
-    //public final static String PROTOCOL_URL_API = "http";
-    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
+    public final static String PROTOCOL_URL_API = "http";
+    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
     /**
      * Serialize a object from String(json format)
@@ -97,7 +99,7 @@ public class APIRest {
          */
         public static  String post(String url,Map<String,String> params,Map<String,String> headers){
             headers = headers !=  null? headers:new HashMap<String, String>();
-            request = HttpRequest.post(constructURL(url),params,false).accept("application/json").headers(headers);
+            request = HttpRequest.post(constructURL(url)).accept("application/json").send(makeParams(params)).headers(headers);
             return request.body();
         }
 
@@ -110,6 +112,23 @@ public class APIRest {
         public static <T> T getSerializedObjectFromGETRequest(String url,Class<T> classOfT){
             String response = get(url,null);
             return (response == null)? null : serializeObjectFromJson(response,classOfT);
+        }
+
+        /**
+         * Convierte los parametros Map<String,String> a un String format: p1=value1&p2=value2
+         * @param param
+         * @return
+         */
+        private static String makeParams(Map<String,String> param){
+            String parametros = null;
+            Set<String> keys = param.keySet();
+            for (String key: keys) {
+                if (parametros == null)
+                    parametros = key + "=" + String.valueOf(param.get(key));
+                else
+                    parametros += "&"+ key + "=" + String.valueOf(param.get(key));
+            }
+            return parametros;
         }
 
         public static boolean ok() {
