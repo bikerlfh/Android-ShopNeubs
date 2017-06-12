@@ -55,4 +55,6 @@
     <string name="error_connection_server">No se ha logrado comunicarse con el servidor</string>
     <string name="created_register">Registro completado. Te hemos enviado un email para que actives tu cuenta.</string>
     <string name="error_default">Solicitud no completada. Vuelve a intentarlo más tarde.</string>
+    <string name="title_order">Pedido</string>
+    <string name="title_estado">Estado</string>
 </resources>

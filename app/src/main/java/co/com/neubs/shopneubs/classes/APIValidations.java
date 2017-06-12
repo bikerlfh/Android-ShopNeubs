@@ -17,6 +17,7 @@ public class APIValidations {
     private ArrayList<String> email;
     private ArrayList<String> password;
     private ArrayList<String> error;
+    private String detail;
 
     public ArrayList<String> getNonFieldError() {
         return nonFieldError;
@@ -56,6 +57,14 @@ public class APIValidations {
 
     public void setError(ArrayList<String> error) {
         this.error = error;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public boolean isNoFieldError(){

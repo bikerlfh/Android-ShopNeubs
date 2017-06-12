@@ -191,7 +191,7 @@ public class PrincipalActivity extends AppCompatActivity
 
         }
         // Se valida que la categoria seleccionada no sea la que se esta visualizando
-        if (codigoCategoria != null && codigoCategoriaAnterior.equals(codigoCategoria)) {
+        if (codigoCategoria != null && !codigoCategoria.equals(codigoCategoriaAnterior)) {
             // Se crea el argumento CODIGO_CATEGORIA para pasarle al fragment
             Bundle args = new Bundle();
             args.putString("CODIGO_CATEGORIA", codigoCategoria);

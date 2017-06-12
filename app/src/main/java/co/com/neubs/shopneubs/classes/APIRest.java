@@ -37,11 +37,11 @@ import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 
 public class APIRest {
 
-    //public final static String PROTOCOL_URL_API = "https";
-    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    public final static String PROTOCOL_URL_API = "https";
+    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
-    public final static String PROTOCOL_URL_API = "http";
-    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
+    //public final static String PROTOCOL_URL_API = "http";
+    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
     // URLs de funcionalidad de la API
     public final static String URL_LOGIN = "rest-auth/login/";
@@ -303,6 +303,4 @@ public class APIRest {
             return RESPONSE_STATUS_CODE == HTTP_NOT_FOUND;
         }
     }
-
-
 }

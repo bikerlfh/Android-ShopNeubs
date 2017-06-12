@@ -8,4 +8,14 @@
     tools:context="co.com.neubs.shopneubs.OrdersActivity"
     tools:showIn="@layout/activity_orders">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_view_orders"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>

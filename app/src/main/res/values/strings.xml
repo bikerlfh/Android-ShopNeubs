@@ -75,5 +75,7 @@
     <string name="error_connection_server">Server connection failed</string>
     <string name="created_register">Registration completed. We\'ve sent you an email to activate your account.</string>
     <string name="error_default">Request not completed. Please try again later.</string>
+    <string name="title_order">Order</string>
+    <string name="title_estado">State</string>
 
 </resources>
