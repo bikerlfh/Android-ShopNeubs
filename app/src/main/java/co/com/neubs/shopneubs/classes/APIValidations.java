@@ -18,6 +18,8 @@ public class APIValidations {
     private ArrayList<String> password;
     private ArrayList<String> error;
     private String detail;
+    // cuando el usuario no esta creado como cliente
+    private String usuarioNoCliente;
 
     public ArrayList<String> getNonFieldError() {
         return nonFieldError;
@@ -67,6 +69,14 @@ public class APIValidations {
         this.detail = detail;
     }
 
+    public String getUsuarioNoCliente() {
+        return usuarioNoCliente;
+    }
+
+    public void setUsuarioNoCliente(String usuarioNoCliente) {
+        this.usuarioNoCliente = usuarioNoCliente;
+    }
+
     public boolean isNoFieldError(){
         return nonFieldError != null && nonFieldError.size() > 0;
     }
@@ -86,6 +96,8 @@ public class APIValidations {
     public boolean isError(){
         return error != null && error.size() > 0;
     }
+
+    public boolean isUsuarioNoCliente(){ return usuarioNoCliente!=null && usuarioNoCliente.length() > 0;}
 
     public String getValidationNonFieldError(){
         return getMessges(nonFieldError);

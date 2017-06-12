@@ -7,9 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import co.com.neubs.shopneubs.R;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.Pedido;
 
 /**
@@ -18,9 +22,10 @@ import co.com.neubs.shopneubs.classes.models.Pedido;
 
 public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoViewHolder> {
 
-    private ArrayList<Pedido> listadoPedido;
+    private Pedido[] listadoPedido;
 
-    public PedidoAdapter(ArrayList<Pedido> listadoPedido) {
+    private Context context;
+    public PedidoAdapter(Context context ,Pedido[] listadoPedido) {
         this.listadoPedido = listadoPedido;
     }
 
@@ -32,12 +37,13 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
 
     @Override
     public void onBindViewHolder(PedidoViewHolder holder, int position) {
-        holder.bindPedido(listadoPedido.get(position));
+        Pedido pedido = listadoPedido[position];
+        holder.bindPedido(pedido);
     }
 
     @Override
     public int getItemCount() {
-        return listadoPedido.size();
+        return listadoPedido.length;
     }
 
     public static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -45,6 +51,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         private TextView lblFecha;
         private TextView lblEstado;
         private TextView lblValorTotal;
+        private TextView lblNumeroProductos;
 
         private Pedido pedido;
 
@@ -56,6 +63,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             lblEstado = (TextView) itemView.findViewById(R.id.lbl_estado);
             lblFecha = (TextView)itemView.findViewById(R.id.lbl_fecha);
             lblValorTotal = (TextView)itemView.findViewById(R.id.lbl_valor_total);
+            lblNumeroProductos = (TextView)itemView.findViewById(R.id.lbl_numero_productos);
             context = itemView.getContext();
         }
 
@@ -64,7 +72,8 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             lblNumeroPedido.setText(String.valueOf(pedido.getNumeroPedido()));
             lblEstado.setText(pedido.getEstado());
             lblFecha.setText(pedido.getFecha());
-            lblValorTotal.setText(String.valueOf(pedido.getValorTotal()));
+            lblNumeroProductos.setText(String.valueOf(pedido.getNumeroProductos()));
+            lblValorTotal.setText(Helper.MoneyFormat(pedido.getValorTotal()));
 
             itemView.setOnClickListener(this);
         }

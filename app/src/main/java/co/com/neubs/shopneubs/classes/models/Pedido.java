@@ -1,13 +1,17 @@
 package co.com.neubs.shopneubs.classes.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by bikerlfh on 6/12/17.
  */
 
 public class Pedido {
 
+    @SerializedName("pk")
     private int idPedidoVenta;
     private int numeroPedido;
+    @SerializedName("estadoPedidoVenta")
     private String estado;
     private String fecha;
     private int numeroProductos;

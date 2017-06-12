@@ -189,32 +189,6 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    private class TaskRegistro extends AsyncTask<Map,Void,Boolean>{
-
-        @Override
-        protected void onPreExecute() {
-            showProgress(true);
-        }
-
-        @Override
-        protected Boolean doInBackground(Map... params) {
-            Map<String,String> params1 = params[0];
-            return APIRest.Sync.postCreate(APIRest.URL_REGISTER,params1,null);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            showProgress(false);
-            if (success){
-                Toast.makeText(getActivity(),getString(R.string.created_register),Toast.LENGTH_LONG).show();
-                getActivity().finish();
-            }
-            else{
-                Toast.makeText(getActivity(),getString(R.string.error_default),Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
     private boolean isPasswordValid(String password) {
         return password.length() > 7;
     }

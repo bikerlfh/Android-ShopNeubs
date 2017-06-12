@@ -37,18 +37,18 @@ import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 
 public class APIRest {
 
-    public final static String PROTOCOL_URL_API = "https";
-    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    //public final static String PROTOCOL_URL_API = "https";
+    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
-    //public final static String PROTOCOL_URL_API = "http";
-    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
+    public final static String PROTOCOL_URL_API = "http";
+    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
     // URLs de funcionalidad de la API
     public final static String URL_LOGIN = "rest-auth/login/";
     public final static String URL_LOGOUT = "rest-auth/logout/";
     public final static String URL_REGISTER = "register/";
     public final static String URL_FILTRO_PRODUCTO = "search/";
-
+    public final static String URL_MIS_PEDIDOS = "mis-pedidos/";
     /**
      * Serialize a object from String(json format)
      * @param json The string json format
@@ -58,7 +58,6 @@ public class APIRest {
         Gson gson = new GsonBuilder().create();
         return (T) gson.fromJson(json, (Type)classOfT);
     }
-
 
     /**
      * Retorna la url valida
@@ -105,6 +104,20 @@ public class APIRest {
     }
 
     /**
+     * Retorna el header con el Token.
+     * @return
+     */
+    public static Map<String,String> addTokenHeader(Map<String,String> headers){
+        SessionManager sessionManager = SessionManager.getInstance();
+        if (sessionManager.getToken() != null && sessionManager.getToken().length() > 0)
+        {
+            if (headers == null)
+                headers = new HashMap<String,String>();
+            headers.put("Authorization","Token " + sessionManager.getToken());
+        }
+        return headers;
+    }
+    /**
      * Clase de metodos sincronos
      * los métodos de esta clase deben ser usados dentro de un AsyncTask, de lo contrario se Excepcionará
      */
@@ -116,6 +129,7 @@ public class APIRest {
          * @return
          */
         public static String get(String url,Map<String,String> headers){
+            headers = addTokenHeader(headers);
             headers = headers !=  null? headers:new HashMap<String, String>();
             request = HttpRequest.get(constructURL(url)).accept("application/json").headers(headers);
             return request.body();
@@ -128,28 +142,16 @@ public class APIRest {
          * @param headers
          * @return
          */
-        public static  String post(String url,Map<String,String> params,Map<String,String> headers){
+        public static String post(String url,Map<String,String> params,Map<String,String> headers){
             //headers = headers !=  null? headers:new HashMap<String, String>();
             request = HttpRequest.post(constructURL(url)).accept("application/json");
-            if (params != null)
-                request = request.send(makeParams(params));
+            // Se envian los parametros si existen
+            request = (params != null) ? request.send(makeParams(params)):request;
+
+            headers = addTokenHeader(headers);
             if (headers != null)
                 request = request.headers(headers);
             return request.body();
-        }
-
-        /**
-         * Realiza una petición POST para crear un registro
-         * @param url
-         * @param params Parametros del "formulario"
-         * @param headers
-         * @return True si es creado, de lo contrario False.
-         */
-        public static boolean postCreate(String url,Map<String,String> params,Map<String,String> headers){
-            request = HttpRequest.post(constructURL(url)).accept("application/json").form(params);
-            if (headers != null)
-                request = request.headers(headers);
-            return request.created();
         }
 
         /**
@@ -274,9 +276,8 @@ public class APIRest {
 
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String> headers1 = headers == null? new HashMap<String, String>() : headers;
-                    return headers1;
-                    //return (headers == null? super.getHeaders() : headers);
+                    Map<String,String> headers1 = addTokenHeader(headers);
+                    return (headers1 == null? super.getHeaders() : headers1);
                 }
             }.setRetryPolicy(policy);
             AppController.getInstance().addToRequestQueue(postRequest);

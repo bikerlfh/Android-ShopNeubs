@@ -50,6 +50,8 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validarSession()){
                     // Abrir actividad mis pedidos
+                    Intent intent   = new Intent(AccountActivity.this,OrdersActivity.class);
+                    startActivity(intent);
                 }
                 else
                     abrirLoginRegister();

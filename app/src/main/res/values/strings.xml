@@ -77,5 +77,6 @@
     <string name="error_default">Request not completed. Please try again later.</string>
     <string name="title_order">Order</string>
     <string name="title_estado">State</string>
+    <string name="title_num_products">N° Items</string>
 
 </resources>

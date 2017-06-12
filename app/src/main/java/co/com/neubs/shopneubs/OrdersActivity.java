@@ -8,16 +8,26 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import co.com.neubs.shopneubs.adapters.PedidoAdapter;
+import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.SessionManager;
+import co.com.neubs.shopneubs.classes.models.Pedido;
+import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class OrdersActivity extends AppCompatActivity {
 
     private final SessionManager sessionManager = SessionManager.getInstance();
 
     private RecyclerView recyclerView;
-
+    private PedidoAdapter pedidoAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +44,9 @@ public class OrdersActivity extends AppCompatActivity {
             }
         });*/
 
+        if(!sessionManager.isAuthenticated(this))
+            this.finish();
+
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_orders);
 
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(3), true));
@@ -43,11 +56,22 @@ public class OrdersActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(mLayoutManager);
 
-        if (sessionManager.isAuthenticated(this)){
 
-        }
-        else
-            this.finish();
+        // El header Token se agrega en el APIRest
+        APIRest.Async.get(APIRest.URL_MIS_PEDIDOS, new IServerCallback() {
+            @Override
+            public void onSuccess(String json) {
+                Pedido[] listadoPedidos  = APIRest.serializeObjectFromJson(json,Pedido[].class);
+                pedidoAdapter = new PedidoAdapter(OrdersActivity.this,listadoPedidos);
+                recyclerView.setAdapter(pedidoAdapter);
+            }
+
+            @Override
+            public void onError(String message_error, String response) {
+                Toast.makeText(OrdersActivity.this,response,Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     private int dpToPx(int dp) {
