@@ -21,6 +21,9 @@ public class APIValidations {
     // cuando el usuario no esta creado como cliente
     private String usuarioNoCliente;
 
+    // Guarda el response completo de la peticion
+    private transient String response;
+
     public ArrayList<String> getNonFieldError() {
         return nonFieldError;
     }
@@ -77,6 +80,14 @@ public class APIValidations {
         this.usuarioNoCliente = usuarioNoCliente;
     }
 
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
     public boolean isNoFieldError(){
         return nonFieldError != null && nonFieldError.size() > 0;
     }
@@ -98,6 +109,14 @@ public class APIValidations {
     }
 
     public boolean isUsuarioNoCliente(){ return usuarioNoCliente!=null && usuarioNoCliente.length() > 0;}
+
+    /**
+     * Evalua si el detail devuelve token invalido
+     * @return
+     */
+    public boolean isTokenInvalid(){
+        return (detail != null && detail.length() > 0 && detail.contains("Token"));
+    }
 
     public String getValidationNonFieldError(){
         return getMessges(nonFieldError);

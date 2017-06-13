@@ -17,6 +17,7 @@ import java.util.Map;
 
 import co.com.neubs.shopneubs.adapters.PedidoAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.Pedido;
@@ -67,8 +68,16 @@ public class OrdersActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError(String message_error, String response) {
-                Toast.makeText(OrdersActivity.this,response,Toast.LENGTH_LONG).show();
+            public void onError(String message_error, APIValidations apiValidations) {
+                if (apiValidations!=null){
+                    if (apiValidations.isTokenInvalid()){
+                        sessionManager.closeSessionExpired(OrdersActivity.this);
+                    }
+
+                    Toast.makeText(OrdersActivity.this,apiValidations.getResponse(),Toast.LENGTH_LONG).show();
+                }
+                else
+                    Toast.makeText(OrdersActivity.this,message_error,Toast.LENGTH_LONG).show();
             }
         });
 

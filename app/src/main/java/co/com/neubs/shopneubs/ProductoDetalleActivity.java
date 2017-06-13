@@ -16,6 +16,7 @@ import java.util.List;
 
 import co.com.neubs.shopneubs.adapters.ViewPagerAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.Imagen;
 import co.com.neubs.shopneubs.classes.models.Producto;
@@ -112,7 +113,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onError(String message_error, String response) {
+                public void onError(String message_error, APIValidations apiValidations) {
                     Toast.makeText(ProductoDetalleActivity.this,message_error,Toast.LENGTH_SHORT).show();
                 }
             });

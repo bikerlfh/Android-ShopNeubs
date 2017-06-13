@@ -4,7 +4,9 @@ import android.content.Context;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.APITabla;
 import co.com.neubs.shopneubs.classes.models.Categoria;
+import co.com.neubs.shopneubs.classes.models.Departamento;
 import co.com.neubs.shopneubs.classes.models.Marca;
+import co.com.neubs.shopneubs.classes.models.Municipio;
 import co.com.neubs.shopneubs.classes.models.Pais;
 import co.com.neubs.shopneubs.classes.models.TipoDocumento;
 
@@ -37,21 +39,21 @@ public class Synchronize {
      * Sincronización inicial (debe ser llamada cuando se abre la aplicación por primera vez)
      * @return
      */
-    public int InitialSyncronize(){
+    public int InitialSynchronize(){
         int totalRowSync = 0;
         try {
             // Se sincroniza la API
-            totalRowSync += SyncronizeAPI(false);
+            totalRowSync += SynchronizeAPI(false);
             // Se sincroniza la APITabla
-            totalRowSync += SyncronizeApiTabla();
+            totalRowSync += SynchronizeApiTabla();
             // Se sincroniza las categorias
-            totalRowSync += SyncronizeCategorias();
+            totalRowSync += SynchronizeCategorias();
             // Se sincroniza las marcas
-            totalRowSync += SyncronizeMarcas();
+            totalRowSync += SynchronizeMarcas();
             // Se sincroniza los tipos de documentos
-            //totalRowSync += SyncronizeTipoDocumento();
+            totalRowSync += SynchronizeTipoDocumento();
             // Se sincroniza los paises
-            //totalRowSync += SyncronizePais();
+            totalRowSync += SynchronizePais();
         }
         catch (Exception ex){
             message_error = ex.getMessage();
@@ -65,7 +67,7 @@ public class Synchronize {
      * Sincroniza ApiTabla
      * @return un el numero de sincronzaciones guardadas.
      */
-    public int SyncronizeApiTabla(){
+    public int SynchronizeApiTabla(){
         int numSincronizacion = 0;
 
         // Se consulta la api y se obtiene un arreglo tipo APITabla[]
@@ -87,7 +89,7 @@ public class Synchronize {
      * @param idApiTabla
      * @return
      */
-    public int SyncronizeAPI(int idApiTabla){
+    public int SynchronizeAPI(int idApiTabla){
         final String url = URL_API_SINCRONIZACION + "?tabla="+idApiTabla;
 
         APISincronizacion apiSincronizacion = APIRest.Sync.getSerializedObjectFromGETRequest(url,APISincronizacion.class);
@@ -104,7 +106,7 @@ public class Synchronize {
      * @param withTablas True, Sincroniza las tablas que la APISincronizacion especifique. False, solo sincroniza APISincronización
      * @return un el número de sincronzaciones guardadas.
      */
-    public int SyncronizeAPI(boolean withTablas) {
+    public int SynchronizeAPI(boolean withTablas) {
         int numSincronizacion = 0;
         try {
             final APISincronizacion[] listApiSincronizacion = APIRest.Sync.getSerializedObjectFromGETRequest(URL_API_SINCRONIZACION, APISincronizacion[].class);
@@ -129,7 +131,7 @@ public class Synchronize {
         return numSincronizacion;
     }
 
-    public int SyncronizeTipoDocumento(){
+    public int SynchronizeTipoDocumento(){
         int numSincronizacion = 0;
         final TipoDocumento[] listTipoDocumento = APIRest.Sync.getSerializedObjectFromGETRequest(URL_TIPO_DOCUMENTO,TipoDocumento[].class);
         if (listTipoDocumento != null && listTipoDocumento.length > 0) {
@@ -144,7 +146,7 @@ public class Synchronize {
         return numSincronizacion;
     }
 
-    public int SyncronizePais(){
+    public int SynchronizePais(){
         int numSincronizacion = 0;
         final Pais[] listPais = APIRest.Sync.getSerializedObjectFromGETRequest(URL_PAIS,Pais[].class);
         if (listPais != null && listPais.length > 0) {
@@ -160,10 +162,57 @@ public class Synchronize {
     }
 
     /**
+     * sincroniza los departamentos.
+     * Este método puede sincronizar todos los departamentos pasando como parametro idPais=0
+     * No debe sincronizarse todos los departamentos
+     * @param idPais
+     * @return
+     */
+    public int SynchronizeDepartamento(int idPais){
+        int numSincronizacion = 0;
+        String url = idPais > 0? URL_DEPARTAMENTO.concat("?idPais"+String.valueOf(idPais)):URL_DEPARTAMENTO;
+        final Departamento[] listDepartamento = APIRest.Sync.getSerializedObjectFromGETRequest(url,Departamento[].class);
+        if (listDepartamento != null && listDepartamento.length > 0) {
+            for (Departamento departamento : listDepartamento) {
+                departamento.initDbManager(context);
+                if (!departamento.exists()) {
+                    departamento.save();
+                    numSincronizacion++;
+                }
+            }
+        }
+        return numSincronizacion;
+    }
+
+
+    /**
+     * sincroniza los municipio.
+     * Este método puede sincronizar todos los municipio pasando como parametro idDepartamento=0
+     * No debe sincronizarse todos los municipio
+     * @param idDepartamento
+     * @return
+     */
+    public int SynchronizeMunicipio(int idDepartamento){
+        int numSincronizacion = 0;
+        String url = idDepartamento > 0? URL_MUNICIPIO.concat("?idPais"+String.valueOf(idDepartamento)):URL_MUNICIPIO;
+        final Municipio[] listMunicipio = APIRest.Sync.getSerializedObjectFromGETRequest(url,Municipio[].class);
+        if (listMunicipio != null && listMunicipio.length > 0) {
+            for (Municipio municipio : listMunicipio) {
+                municipio.initDbManager(context);
+                if (!municipio.exists()) {
+                    municipio.save();
+                    numSincronizacion++;
+                }
+            }
+        }
+        return numSincronizacion;
+    }
+
+    /**
      * Realiza la sincronización de las marcas
      * @return
      */
-    public int SyncronizeMarcas(){
+    public int SynchronizeMarcas(){
         int numSincronizacion = 0;
         final Marca[] listMarca = APIRest.Sync.getSerializedObjectFromGETRequest(URL_MARCA,Marca[].class);
         if (listMarca != null && listMarca.length > 0) {
@@ -182,7 +231,7 @@ public class Synchronize {
      * Realiza la sincronización de las Categorias
      * @return
      */
-    public int SyncronizeCategorias(){
+    public int SynchronizeCategorias(){
         int numSincronizacion = 0;
 
         final Categoria[] listCategoria = APIRest.Sync.getSerializedObjectFromGETRequest(URL_CATEGORIA,Categoria[].class);
@@ -209,15 +258,15 @@ public class Synchronize {
             switch (tabla.getCodigo()) {
                 // APITablas
                 case "01":
-                    numSincronizacion = SyncronizeApiTabla();
+                    numSincronizacion = SynchronizeApiTabla();
                     break;
                 // Categorias
                 case "02":
-                    numSincronizacion = SyncronizeCategorias();
+                    numSincronizacion = SynchronizeCategorias();
                     break;
                 // Marcas
                 case "03":
-                    numSincronizacion = SyncronizeMarcas();
+                    numSincronizacion = SynchronizeMarcas();
                     break;
                 // Productos
                 case "04":
@@ -226,7 +275,7 @@ public class Synchronize {
         }
         else{
             // Se sincroniza todas las tablas
-            numSincronizacion = InitialSyncronize();
+            numSincronizacion = InitialSynchronize();
         }
         return numSincronizacion;
     }

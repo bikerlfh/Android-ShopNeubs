@@ -38,40 +38,4 @@ public class Helper {
             return true;
         return false;
     }
-
-    public static boolean validarLogin(Context context){
-        Usuario usuario = new Usuario(context);
-        if (usuario.getLoginUser()) {
-            idUserLogin = usuario.getIdUsuario();
-            tokenUserLogin = usuario.getToken();
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean guardarLoginUser(Context context,String email, String username,String token){
-        Usuario usuario = new Usuario(context);
-        // Si ya hay un usuario logeado, se debe desloguear
-        if (usuario.getLoginUser()){
-            usuario.setToken(null);
-            usuario.save();
-        }
-        // Se valida que el email o el username exista
-        if (!email.isEmpty() || !username.isEmpty()) {
-            if (!usuario.getByEmail(email)) {
-                usuario.getByUserName(username);
-            }
-            // Si el usuario no esta guardado, se asigna el email y el username
-            if (usuario.getIdUsuario() == 0) {
-                usuario.setEmail(email);
-                usuario.setUsername(username);
-            }
-            // Se guarda el token y el usuario
-            usuario.setToken(token);
-            usuario.save();
-            return true;
-        }
-        return false;
-    }
-
 }

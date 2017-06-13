@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.adapters.ProductoAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.OnVerticalScrollListener;
@@ -125,7 +126,7 @@ public class ProductosCategoriaFragment extends Fragment {
             }
 
             @Override
-            public void onError(String message_error, String response) {
+            public void onError(String message_error, APIValidations apiValidations) {
                 Snackbar.make(view,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
                 spinner.setVisibility(View.GONE);
             }

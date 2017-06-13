@@ -36,7 +36,6 @@
     <string name="msg_sincronizando_datos">Synchronizing</string>
     <string name="title_description">Description</string>
     <string name="title_specification">Specification</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="agregar_carrito">Add Cart</string>
 
     <string name="title_activity_login">Sign in</string>
@@ -44,7 +43,6 @@
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is invalid</string>
@@ -54,7 +52,6 @@
         completions."
     </string>
     <string name="title_activity_login_register">Login | Register</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="title_login">login</string>
     <string name="title_register">Register</string>
@@ -78,5 +75,14 @@
     <string name="title_order">Order</string>
     <string name="title_estado">State</string>
     <string name="title_num_products">N° Items</string>
+    <string name="promp_nit" translatable="false">Nit</string>
+    <string name="promp_first_name">First Name</string>
+    <string name="promp_secund_name">Secund Name</string>
+    <string name="promp_first_last_name">First last</string>
+    <string name="promp_secund_last_name">Secund Last</string>
+    <string name="promp_address">Address</string>
+    <string name="promp_telephone">Telephone</string>
+    <string name="title_tipo_documento">Type Document</string>
+    <string name="msg_session_expired">Your session are expired</string>
 
 </resources>

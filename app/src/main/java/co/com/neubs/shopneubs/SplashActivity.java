@@ -110,11 +110,11 @@ public class SplashActivity extends Activity {
         protected Boolean doInBackground(Void... params) {
             // Se sincroniza toda la api
             if (isFirstRun){
-                if(synchronize.InitialSyncronize() == -1)
+                if(synchronize.InitialSynchronize() == -1)
                     return false;
             }
             else{
-                if(synchronize.SyncronizeAPI(true)==-1)
+                if(synchronize.SynchronizeAPI(true)==-1)
                     return false;
             }
             // Se verifica si existe un usuario autenticado

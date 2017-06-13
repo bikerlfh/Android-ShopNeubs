@@ -57,4 +57,13 @@
     <string name="error_default">Solicitud no completada. Vuelve a intentarlo más tarde.</string>
     <string name="title_order">Pedido</string>
     <string name="title_estado">Estado</string>
+    <string name="promp_secund_name">Segundo Nombre</string>
+    <string name="promp_first_name">Primer Nombre</string>
+    <string name="promp_first_last_name">Primer Apellido</string>
+    <string name="promp_secund_last_name">Segundo Apellido</string>
+    <string name="promp_address">Dirección</string>
+    <string name="promp_telephone">Teléfono</string>
+    <string name="title_tipo_documento">Tipo Documento</string>
+    <string name="action_sign_in_short"></string>
+    <string name="msg_session_expired">Su sesión ha expirado</string>
 </resources>

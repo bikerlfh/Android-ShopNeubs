@@ -58,6 +58,15 @@ public class TipoDocumento implements ICrud {
         this.descripcion = descripcion;
     }
 
+    /**
+     * Se rescribe el toString para el ArrayAdapter del spinner
+     * @return
+     */
+    @Override
+    public String toString() {
+        return codigo;
+    }
+
     public void initDbManager(Context context){
         this.dbManager = new DbManager(context);
     }

@@ -20,6 +20,7 @@ import co.com.neubs.shopneubs.models.MunicipioModel;
 public class Municipio implements ICrud {
     @SerializedName("pk")
     private int idMunicipio;
+    @SerializedName("departamento")
     private int idDepartamento;
     private String codigo;
     private String descripcion;
@@ -66,6 +67,11 @@ public class Municipio implements ICrud {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    @Override
+    public String toString() {
+        return this.descripcion;
     }
 
     public void initDbManager(Context context){

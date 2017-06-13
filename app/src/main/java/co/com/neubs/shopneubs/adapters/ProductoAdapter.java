@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import co.com.neubs.shopneubs.ProductoDetalleActivity;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.Producto;
@@ -153,7 +154,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 }
 
                 @Override
-                public void onError(String message_error, String response) {
+                public void onError(String message_error, APIValidations apiValidations) {
                     Log.d(TAG,"ERROR: " + message_error);
                     snackbar.dismiss();
                     spinner.setVisibility(View.GONE);

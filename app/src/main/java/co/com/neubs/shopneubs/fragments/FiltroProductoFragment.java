@@ -19,6 +19,7 @@ import java.util.Map;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.adapters.ProductoAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.OnVerticalScrollListener;
@@ -111,13 +112,14 @@ public class FiltroProductoFragment extends Fragment {
             }
 
             @Override
-            public void onError(String message_error, String response) {
-                if (APIRest.Async.badRequest())
-                    Snackbar.make(view,"Bad Request:"+response,Snackbar.LENGTH_INDEFINITE).show();
+            public void onError(String message_error, APIValidations apiValidations) {
+                if (apiValidations!= null)
+                    Snackbar.make(view,"Bad Request:"+apiValidations.getResponse(),Snackbar.LENGTH_INDEFINITE).show();
                 else
                     Snackbar.make(view,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
                 snackbar.dismiss();
             }
+
         });
         return view;
     }

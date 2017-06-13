@@ -163,11 +163,9 @@ public class RegisterFragment extends Fragment {
                 }
 
                 @Override
-                public void onError(String message_error, String response) {
+                public void onError(String message_error, APIValidations apiValidations) {
                     showProgress(false);
                     if (APIRest.Async.badRequest()){
-                        final APIValidations apiValidations = APIRest.serializeObjectFromJson(response, APIValidations.class);
-
                         // Si no hay errores de campos, se visualiza el error de credenciales
                         if (apiValidations.isNoFieldError())
                             Toast.makeText(getActivity(),apiValidations.getValidationNonFieldError(),Toast.LENGTH_LONG).show();

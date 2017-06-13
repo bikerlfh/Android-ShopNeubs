@@ -1,4 +1,5 @@
 package co.com.neubs.shopneubs.classes;
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -6,6 +7,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -99,22 +101,18 @@ public class SessionManager {
         try {
             Usuario usuario = new Usuario(context);
             if (usuario.getLoginUser()){
-
-                // Se envía la petición al servidor
-                Map<String,String> headers = new HashMap<>();
-                headers.put("Authorization","Token " + this.token);
-                APIRest.Async.post(APIRest.URL_LOGOUT, null, headers, new IServerCallback() {
+                APIRest.Async.post(APIRest.URL_LOGOUT, null, new IServerCallback() {
                     @Override
                     public void onSuccess(String json) {
-                        Toast.makeText(context,"Logout success",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context,"Logout success",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onError(String message_error, String response) {
-                        Toast.makeText(context,"Logout unsuccess",Toast.LENGTH_SHORT).show();
+                    public void onError(String message_error, APIValidations apiValidations) {
+                        /*if (apiValidations!=null && !apiValidations.isTokenInvalid())
+                            Toast.makeText(context,"Logout unsuccess",Toast.LENGTH_SHORT).show();*/
                     }
                 });
-
                 usuario.setToken(null);
                 usuario.update();
             }
@@ -127,6 +125,12 @@ public class SessionManager {
             Log.d(TAG,e.getMessage());
         }
         return false;
+    }
+
+    public void closeSessionExpired(Activity activity){
+        Toast.makeText(activity,activity.getString(R.string.msg_session_expired),Toast.LENGTH_SHORT).show();
+        closeUserSession(activity.getApplicationContext());
+        activity.finish();
     }
 
     private void llenarCampos(Usuario usuario){

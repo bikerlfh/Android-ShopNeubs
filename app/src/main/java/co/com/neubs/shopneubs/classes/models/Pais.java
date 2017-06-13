@@ -58,6 +58,11 @@ public class Pais implements ICrud {
         this.descripcion = descripcion;
     }
 
+    @Override
+    public String toString() {
+        return descripcion;
+    }
+
     public void initDbManager(Context context){
         this.dbManager = new DbManager(context);
     }

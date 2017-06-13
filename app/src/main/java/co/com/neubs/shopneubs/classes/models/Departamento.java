@@ -20,6 +20,7 @@ import co.com.neubs.shopneubs.models.DepartamentoModel;
 public class Departamento implements ICrud {
     @SerializedName("pk")
     private int idDepartamento;
+    @SerializedName("pais")
     private int idPais;
     private String codigo;
     private String descripcion;
@@ -66,6 +67,11 @@ public class Departamento implements ICrud {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    @Override
+    public String toString() {
+        return this.descripcion;
     }
 
     public void initDbManager(Context context){

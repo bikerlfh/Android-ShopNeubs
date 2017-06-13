@@ -23,6 +23,7 @@ import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
@@ -49,6 +50,9 @@ public class APIRest {
     public final static String URL_REGISTER = "register/";
     public final static String URL_FILTRO_PRODUCTO = "search/";
     public final static String URL_MIS_PEDIDOS = "mis-pedidos/";
+    public final static String URL_PERFIL = "profile/";
+
+
     /**
      * Serialize a object from String(json format)
      * @param json The string json format
@@ -175,6 +179,8 @@ public class APIRest {
             return request.badRequest();
         }
 
+        public static boolean unAuthorized() { return request.code() == HTTP_UNAUTHORIZED; }
+
         public static boolean timeOut() {
             return request.code() == HTTP_CLIENT_TIMEOUT;
         }
@@ -258,12 +264,18 @@ public class APIRest {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            APIValidations apiValidations = null;
                             if (error.getClass() == TimeoutError.class) {
                                 RESPONSE_STATUS_CODE = HTTP_CLIENT_TIMEOUT;
                             }
                             else if (error.networkResponse != null)
                                 RESPONSE_STATUS_CODE = error.networkResponse.statusCode;
-                            callback.onError(error.getMessage(),error.networkResponse != null? new String(error.networkResponse.data) : null);
+                            // Si es un badRequest se llena el apiValidations
+                            if (badRequest() || unAuthorized()){
+                                apiValidations = serializeObjectFromJson(new String(error.networkResponse.data),APIValidations.class);
+                                apiValidations.setResponse(new String(error.networkResponse.data));
+                            }
+                            callback.onError(error.getMessage(),apiValidations);
                         }
                     }
             ) {
@@ -291,6 +303,8 @@ public class APIRest {
         public static boolean badRequest() {
             return RESPONSE_STATUS_CODE == HTTP_BAD_REQUEST;
         }
+
+        public static boolean unAuthorized() { return RESPONSE_STATUS_CODE == HTTP_UNAUTHORIZED; }
 
         public static boolean timeOut() {
             return RESPONSE_STATUS_CODE == HTTP_CLIENT_TIMEOUT;
