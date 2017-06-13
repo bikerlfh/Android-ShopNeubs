@@ -35,8 +35,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="27dp"
-        app:layout_constraintHorizontal_bias="0.504"
+        android:layout_marginTop="18dp"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_logout"
@@ -62,8 +62,10 @@
 
     <TextView
         android:id="@+id/lbl_action_pedidos"
-        android:layout_width="304dp"
-        android:layout_height="37dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="12dp"
         android:background="@android:color/white"
         android:clickable="true"
@@ -75,7 +77,9 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="130dp" />
 
     <TextView
         android:id="@+id/lbl_action_perfil"
@@ -182,6 +186,7 @@
             android:layout_height="68dp"
             android:layout_marginTop="10dp"
             app:srcCompat="@drawable/ic_user"
+            tools:alpha="0.40"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="16dp" />
 
