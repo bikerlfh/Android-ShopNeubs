@@ -5,6 +5,8 @@ import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.APITabla;
 import co.com.neubs.shopneubs.classes.models.Categoria;
 import co.com.neubs.shopneubs.classes.models.Marca;
+import co.com.neubs.shopneubs.classes.models.Pais;
+import co.com.neubs.shopneubs.classes.models.TipoDocumento;
 
 /**
  * Created by bikerlfh on 6/2/17.
@@ -13,10 +15,14 @@ import co.com.neubs.shopneubs.classes.models.Marca;
 public class Synchronize {
 
     // VARIABLES URLS API
-    private final String URL_API_SINCRONIZACION = "api-sincronizacion/";
-    private final String URL_API_TABLA = "api-tabla/";
-    private final String URL_CATEGORIA = "categoria/";
-    private final String URL_MARCA = "marca/";
+    private final String URL_API_SINCRONIZACION = "sync/api-sincronizacion/";
+    private final String URL_API_TABLA = "sync/api-tabla/";
+    private final String URL_CATEGORIA = "sync/categoria/";
+    private final String URL_MARCA = "sync/marca/";
+    private final String URL_TIPO_DOCUMENTO = "sync/tipo-documento/";
+    private final String URL_PAIS = "sync/pais/";
+    private final String URL_DEPARTAMENTO = "sync/departamento/";
+    private final String URL_MUNICIPIO = "sync/municipio/";
 
     private Context context;
 
@@ -42,6 +48,10 @@ public class Synchronize {
             totalRowSync += SyncronizeCategorias();
             // Se sincroniza las marcas
             totalRowSync += SyncronizeMarcas();
+            // Se sincroniza los tipos de documentos
+            totalRowSync += SyncronizeTipoDocumento();
+            // Se sincroniza los paises
+            totalRowSync += SyncronizePais();
         }
         catch (Exception ex){
             message_error = ex.getMessage();
@@ -119,7 +129,35 @@ public class Synchronize {
         return numSincronizacion;
     }
 
+    public int SyncronizeTipoDocumento(){
+        int numSincronizacion = 0;
+        final TipoDocumento[] listTipoDocumento = APIRest.Sync.getSerializedObjectFromGETRequest(URL_TIPO_DOCUMENTO,TipoDocumento[].class);
+        if (listTipoDocumento != null && listTipoDocumento.length > 0) {
+            for (TipoDocumento tipoDocumento : listTipoDocumento) {
+                tipoDocumento.initDbManager(context);
+                if (!tipoDocumento.exists()) {
+                    tipoDocumento.save();
+                    numSincronizacion++;
+                }
+            }
+        }
+        return numSincronizacion;
+    }
 
+    public int SyncronizePais(){
+        int numSincronizacion = 0;
+        final Pais[] listPais = APIRest.Sync.getSerializedObjectFromGETRequest(URL_PAIS,Pais[].class);
+        if (listPais != null && listPais.length > 0) {
+            for (Pais pais : listPais) {
+                pais.initDbManager(context);
+                if (!pais.exists()) {
+                    pais.save();
+                    numSincronizacion++;
+                }
+            }
+        }
+        return numSincronizacion;
+    }
 
     /**
      * Realiza la sincronización de las marcas

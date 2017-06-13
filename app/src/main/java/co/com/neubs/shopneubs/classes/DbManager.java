@@ -9,10 +9,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import co.com.neubs.shopneubs.models.APISincronizacionModel;
 import co.com.neubs.shopneubs.models.APITablaModel;
 import co.com.neubs.shopneubs.models.CategoriaModel;
+import co.com.neubs.shopneubs.models.DepartamentoModel;
 import co.com.neubs.shopneubs.models.ItemCarModel;
 import co.com.neubs.shopneubs.models.MarcaModel;
+import co.com.neubs.shopneubs.models.MunicipioModel;
+import co.com.neubs.shopneubs.models.PaisModel;
 import co.com.neubs.shopneubs.models.ProductoModel;
 import co.com.neubs.shopneubs.models.SaldoInventarioModel;
+import co.com.neubs.shopneubs.models.TipoDocumentoModel;
 import co.com.neubs.shopneubs.models.UsuarioModel;
 
 /**
@@ -117,6 +121,10 @@ public class DbManager
             db.execSQL(APISincronizacionModel.CREATE_TABLE);
             db.execSQL(UsuarioModel.CREATE_TABLE);
             db.execSQL(ItemCarModel.CREATE_TABLE);
+            db.execSQL(TipoDocumentoModel.CREATE_TABLE);
+            db.execSQL(PaisModel.CREATE_TABLE);
+            db.execSQL(DepartamentoModel.CREATE_TABLE);
+            db.execSQL(MunicipioModel.CREATE_TABLE);
         }
 
         @Override

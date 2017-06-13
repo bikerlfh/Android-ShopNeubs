@@ -59,22 +59,6 @@ public class Marca implements ICrud {
         this.dbManager = new DbManager(context);
     }
 
-    public boolean getMarcaByCodigo(String codigo){
-        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.CODIGO + "=?",new String[] {codigo});
-        if (c.moveToFirst())
-        {
-            serialize(c);
-            return true;
-        }
-        return false;
-    }
-
-    private void serialize(Cursor c){
-        this.idMarca = c.getInt(c.getColumnIndex(MarcaModel.PK));
-        this.codigo = c.getString(c.getColumnIndex(MarcaModel.CODIGO));
-        this.descripcion = c.getString(c.getColumnIndex(MarcaModel.DESCRIPCION));
-    }
-
     @Override
     public boolean save() {
         ContentValues contentValues = new ContentValues();
@@ -111,5 +95,21 @@ public class Marca implements ICrud {
             return true;
         }
         return false;
+    }
+
+    public boolean getMarcaByCodigo(String codigo){
+        Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.CODIGO + "=?",new String[] {codigo});
+        if (c.moveToFirst())
+        {
+            serialize(c);
+            return true;
+        }
+        return false;
+    }
+
+    private void serialize(Cursor c){
+        this.idMarca = c.getInt(c.getColumnIndex(MarcaModel.PK));
+        this.codigo = c.getString(c.getColumnIndex(MarcaModel.CODIGO));
+        this.descripcion = c.getString(c.getColumnIndex(MarcaModel.DESCRIPCION));
     }
 }
