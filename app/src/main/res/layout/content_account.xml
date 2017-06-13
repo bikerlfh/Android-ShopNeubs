@@ -186,7 +186,6 @@
             android:layout_height="68dp"
             android:layout_marginTop="10dp"
             app:srcCompat="@drawable/ic_user"
-            tools:alpha="0.40"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="16dp" />
 
