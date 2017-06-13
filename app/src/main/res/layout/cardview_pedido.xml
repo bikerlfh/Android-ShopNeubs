@@ -8,19 +8,18 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_height="110dp"
         android:elevation="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="22dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
             android:orientation="horizontal"
+            android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:paddingTop="24dp"
             android:weightSum="1">
 
             <TextView
@@ -30,7 +29,8 @@
                 android:paddingLeft="6dp"
                 android:text="@string/title_activity_orders"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -38,89 +38,89 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="3dp"
                 android:text="N°"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/lbl_numero_pedido"
-                android:layout_width="95dp"
+                android:layout_width="53dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textColor="@color/colorPrimaryDark" />
-
-            <TextView
-                android:id="@+id/lbl_fecha"
-                android:layout_width="93dp"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_marginTop="20dp"
-            android:elevation="3dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="47dp"
-                android:layout_height="17dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="@string/title_estado"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                app:layout_constraintVertical_bias="0.384"
-                tools:layout_editor_absoluteX="-2dp" />
-
-            <TextView
-                android:id="@+id/lbl_estado"
-                android:layout_width="81dp"
-                android:layout_height="17dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/textView3"
-                app:layout_constraintLeft_toRightOf="@+id/textView3"
-                app:layout_constraintTop_toTopOf="@+id/textView3"
-                app:layout_constraintVertical_bias="0.0" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/lbl_valor_total"
-                android:layout_width="92dp"
+                android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginBottom="3dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:gravity="right"
                 android:text="TextView"
-                android:textAlignment="center"
+                android:textAlignment="textEnd"
                 android:textColor="@color/colorPrecio"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.818"
                 app:layout_constraintLeft_toRightOf="@+id/lbl_estado"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="16dp" />
+
+        </LinearLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="50dp"
+            android:elevation="3dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="6dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="47dp"
+                android:layout_height="18dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="165dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/title_estado"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_estado"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/lbl_estado"
+                android:layout_width="94dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginRight="138dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="66dp"
-                android:layout_height="19dp"
+                android:layout_width="57dp"
+                android:layout_height="17dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginLeft="-4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/title_num_products"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_numero_productos"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/textView3"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -128,26 +128,32 @@
                 android:id="@+id/lbl_numero_productos"
                 android:layout_width="56dp"
                 android:layout_height="16dp"
-                android:layout_marginBottom="61dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
+                android:layout_marginBottom="-3dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:text="Total"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_valor_total"
-                app:layout_constraintLeft_toLeftOf="@+id/lbl_valor_total"
-                app:layout_constraintRight_toRightOf="@+id/lbl_valor_total" />
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/lbl_estado" />
+
+            <TextView
+                android:id="@+id/lbl_fecha"
+                android:layout_width="128dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="165dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
