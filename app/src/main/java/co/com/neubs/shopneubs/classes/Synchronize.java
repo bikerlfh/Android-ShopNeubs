@@ -49,9 +49,9 @@ public class Synchronize {
             // Se sincroniza las marcas
             totalRowSync += SyncronizeMarcas();
             // Se sincroniza los tipos de documentos
-            totalRowSync += SyncronizeTipoDocumento();
+            //totalRowSync += SyncronizeTipoDocumento();
             // Se sincroniza los paises
-            totalRowSync += SyncronizePais();
+            //totalRowSync += SyncronizePais();
         }
         catch (Exception ex){
             message_error = ex.getMessage();
