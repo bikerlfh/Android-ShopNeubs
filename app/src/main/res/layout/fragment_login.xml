@@ -24,9 +24,9 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8sp"
-            android:layout_marginRight="8sp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="59dp"
             android:orientation="vertical"
             android:weightSum="1">
 
@@ -40,10 +40,10 @@
                 android:layout_width="184dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="50dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/logo_login_200x38"
-                android:layout_weight="0.15" />
+                android:layout_weight="0.15"
+                android:background="@drawable/logo_login_200x38" />
 
             <EditText
                 android:id="@+id/txt_username"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/colorWhite"
                 android:drawableRight="@drawable/ic_avatar"
-                android:elevation="1dp"
+                android:elevation="3dp"
                 android:hint="@string/prompt_username"
                 android:inputType="textCapWords"
                 android:paddingBottom="8dp"
@@ -63,7 +63,7 @@
                 android:paddingTop="8dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
-                 />
+                android:textColorLink="@color/colorPrimary" />
 
             <!--/android.support.design.widget.TextInputLayout-->
 
@@ -79,7 +79,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@color/colorWhite"
                 android:drawableRight="@drawable/ic_locked"
-                android:elevation="1dp"
+                android:elevation="3dp"
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
                 android:paddingBottom="8sp"
@@ -87,7 +87,7 @@
                 android:paddingRight="5sp"
                 android:paddingTop="8sp"
                 android:textAlignment="center"
-                 />
+                android:textColorLink="@color/colorPrimary" />
 
             <!--/android.support.design.widget.TextInputLayout-->
 
@@ -105,9 +105,9 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="23sp"
                 android:backgroundTint="@color/colorSecundary"
+                android:elevation="8dp"
                 android:text="@string/action_sign_in_short"
-                android:textColor="@color/textColorPrimary"
-                 />
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
     </ScrollView>

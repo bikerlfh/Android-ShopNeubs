@@ -12,13 +12,13 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp">
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_tipo_documento"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="71dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -188,7 +188,7 @@
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_pais"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="71dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -207,15 +207,14 @@
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_departamento"
-            android:layout_width="164dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="0dp"
+            android:layout_height="71dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spn_pais"
-            app:layout_constraintVertical_bias="0.0"
             app:ms_arrowColor="@color/colorSecundary"
             app:ms_arrowSize="15dp"
             app:ms_floatingLabelColor="#A9A9A9"
@@ -226,38 +225,36 @@
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_municipio"
-            android:layout_width="171dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="0dp"
+            android:layout_height="71dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.142"
-            app:layout_constraintLeft_toRightOf="@+id/spn_departamento"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spn_pais"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@+id/spn_departamento"
             app:ms_arrowColor="@color/colorSecundary"
             app:ms_arrowSize="15dp"
             app:ms_floatingLabelColor="#A9A9A9"
             app:ms_floatingLabelText="@string/promp_municipio"
             app:ms_hint="@string/promp_municipio"
             app:ms_hintColor="#000000"
-            app:ms_multiline="true" />
+            app:ms_multiline="true"
+            tools:layout_editor_absoluteX="16dp" />
 
         <Button
             android:id="@+id/btn_guardar_perfil"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
+            android:backgroundTint="@color/colorSecundary"
             android:text="@string/title_save"
-            app:layout_constraintHorizontal_bias="0.498"
+            android:textColor="@color/textColorPrimary"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spn_departamento" />
+            app:layout_constraintTop_toBottomOf="@+id/spn_municipio" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

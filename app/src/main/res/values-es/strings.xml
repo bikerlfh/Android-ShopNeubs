@@ -38,7 +38,7 @@
     <string name="error_invalid_email">La dirección de email no es valida</string>
     <string name="error_invalid_password">La contraseña invalida</string>
     <string name="title_activity_login_register">Iniciar Sesión | Registrarse</string>
-    <string name="categoria_03"></string>
+    <string name="categoria_03">PCs</string>
     <string name="title_register">Registrarse</string>
     <string name="error_timeout_api">Tiempo de espera agotado. Favor intentar de nuevo mas tarde</string>
     <string name="prompt_email">Correo Elecrónico</string>

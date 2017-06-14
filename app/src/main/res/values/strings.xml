@@ -16,7 +16,7 @@
     <string name="text_loading">Loading&#8230;</string>
     <string name="categoria_01">Motherboards</string>
     <string name="categoria_02">Cases</string>
-    <string name="categoria_03" translatable="false">PCs</string>
+    <string name="categoria_03">PCs</string>
     <string name="categoria_04">Hard Drives</string>
     <string name="categoria_05">Power Supplies</string>
     <string name="categoria_06">Printers</string>

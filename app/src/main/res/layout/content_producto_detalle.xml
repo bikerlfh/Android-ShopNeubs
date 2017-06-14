@@ -9,12 +9,13 @@
     tools:context="co.com.neubs.shopneubs.ProductoDetalleActivity"
     tools:showIn="@layout/activity_producto_detalle">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:background="@color/colorBackground"
-        android:paddingBottom="80dp"
+        android:orientation="vertical"
+        android:paddingBottom="75dp"
         tools:layout_editor_absoluteX="9dp"
         tools:layout_editor_absoluteY="8dp">
 
@@ -28,8 +29,8 @@
 
         <TextView
             android:id="@+id/lbl_nombre_producto_detalle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -44,7 +45,7 @@
 
         <TextView
             android:id="@+id/lbl_marca_producto_detalle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
@@ -57,16 +58,19 @@
         <TextView
             android:id="@+id/title_descripcion"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="38dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/lbl_marca_producto_detalle"
+            android:layout_marginBottom="1dp"
             android:layout_marginTop="16dp"
+            android:background="@color/colorWhite"
+            android:elevation="1dp"
             android:gravity="center_vertical"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
+            android:paddingTop="5dp"
             android:text="@string/title_description"
-            android:textColor="@color/textColorSecundary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/lbl_descripcion_producto_detalle"
@@ -75,8 +79,8 @@
             android:layout_alignEnd="@+id/title_descripcion"
             android:layout_alignStart="@+id/title_descripcion"
             android:layout_below="@+id/title_descripcion"
-            android:layout_marginTop="17dp"
-            android:elevation="3dp"
+            android:background="@color/colorWhite"
+            android:elevation="1dp"
             android:ellipsize="end"
             android:maxLines="8"
             android:paddingBottom="8dp"
@@ -88,16 +92,19 @@
         <TextView
             android:id="@+id/title_especificacion"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_alignEnd="@+id/lbl_descripcion_producto_detalle"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_descripcion_producto_detalle"
+            android:layout_marginBottom="1dp"
             android:layout_marginTop="14dp"
+            android:background="@color/colorWhite"
+            android:elevation="1dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
-            android:text="Especificaciones"
-            android:textColor="@color/textColorSecundary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:paddingTop="5dp"
+            android:text="@string/title_specification"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/lbl_especificacion_producto_detalle"
@@ -106,15 +113,22 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/title_especificacion"
-            android:layout_marginTop="19dp"
-            android:elevation="3dp"
+            android:background="@color/colorWhite"
+            android:elevation="1dp"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="8dp"
             android:text="TextView" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+
+    </LinearLayout>
 
 
 </android.support.v4.widget.NestedScrollView>
