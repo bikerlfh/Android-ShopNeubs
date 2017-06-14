@@ -141,7 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="23sp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorSecundary"
             android:text="@string/title_register"
             android:textColor="@color/colorWhite" />
     </LinearLayout>

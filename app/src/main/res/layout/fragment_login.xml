@@ -63,7 +63,7 @@
                 android:paddingTop="8dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
-                android:textColorLink="@color/colorTextLink" />
+                 />
 
             <!--/android.support.design.widget.TextInputLayout-->
 
@@ -87,7 +87,7 @@
                 android:paddingRight="5sp"
                 android:paddingTop="8sp"
                 android:textAlignment="center"
-                android:textColorLink="@color/colorTextLink" />
+                 />
 
             <!--/android.support.design.widget.TextInputLayout-->
 
@@ -104,10 +104,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="23sp"
-                android:backgroundTint="@color/colorTextLink"
+                android:backgroundTint="@color/colorSecundary"
                 android:text="@string/action_sign_in_short"
-                android:textColor="@color/colorWhite"
-                android:textColorLink="@color/colorTextLink" />
+                android:textColor="@color/textColorPrimary"
+                 />
 
         </LinearLayout>
     </ScrollView>

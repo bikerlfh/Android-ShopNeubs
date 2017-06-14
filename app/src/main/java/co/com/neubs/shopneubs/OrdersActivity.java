@@ -49,7 +49,6 @@ public class OrdersActivity extends AppCompatActivity {
             this.finish();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_orders);
-
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(3), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);

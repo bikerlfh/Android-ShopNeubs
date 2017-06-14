@@ -29,7 +29,7 @@
     <string name="msg_sincronizando_datos">Sincronizando</string>
     <string name="title_description">Descripción</string>
     <string name="title_specification">Especificación</string>
-    <string name="agregar_carrito">Agregar al Carrito</string>
+    <string name="agregar_carrito">Agregar</string>
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_username">Username</string>
