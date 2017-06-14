@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import co.com.neubs.shopneubs.classes.DbManager;
@@ -18,12 +20,17 @@ public class SplashActivity extends Activity {
     private final int TIME_SPLASH = 2000;
 
     private AsyncSyncronize asyncSyncronizeData;
+    private ImageView imgSplash;
+    private boolean isRunning=false;
+    boolean isFirstRun;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+        imgSplash = (ImageView) findViewById(R.id.img_splash);
+        isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isfirstrun", true);
 
         if (isFirstRun)
@@ -50,6 +57,15 @@ public class SplashActivity extends Activity {
                 finish();
             }
         },TIME_SPLASH);*/
+
+        imgSplash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isRunning){
+                    initApp(isFirstRun);
+                }
+            }
+        });
     }
 
 
@@ -61,6 +77,7 @@ public class SplashActivity extends Activity {
             dialogNoInternetConnection(this,isFirstRun).show();
         }
         else {
+            isRunning = true;
             asyncSyncronizeData = new AsyncSyncronize(this,isFirstRun);
             asyncSyncronizeData.execute();
         }
@@ -90,7 +107,7 @@ public class SplashActivity extends Activity {
 
 
 
-    public class AsyncSyncronize  extends AsyncTask<Void, Void, Boolean> {
+    private class AsyncSyncronize  extends AsyncTask<Void, Void, Boolean> {
 
         private Synchronize synchronize;
         final Context context;
@@ -124,13 +141,14 @@ public class SplashActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            isRunning = false;
             if(result) {
                 Intent intent = new Intent(SplashActivity.this,PrincipalActivity.class);
                 startActivity(intent);
                 finish();
             }
             else {
-                Toast.makeText(SplashActivity.this, synchronize.message_error, Toast.LENGTH_LONG).show();
+                Toast.makeText(SplashActivity.this, getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
                 // Se elimina la base de datos
                 context.deleteDatabase(DbManager.DbHelper.DB_NAME);
             }
