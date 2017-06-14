@@ -63,7 +63,10 @@
     <string name="promp_secund_last_name">Segundo Apellido</string>
     <string name="promp_address">Dirección</string>
     <string name="promp_telephone">Teléfono</string>
-    <string name="title_tipo_documento">Tipo Documento</string>
+    <string name="promp_type_document">Tipo Documento</string>
     <string name="action_sign_in_short"></string>
     <string name="msg_session_expired">Su sesión ha expirado</string>
+    <string name="prompt_contry">Pais</string>
+    <string name="promp_contry">Pais</string>
+    <string name="promp_department">Departamento</string>
 </resources>

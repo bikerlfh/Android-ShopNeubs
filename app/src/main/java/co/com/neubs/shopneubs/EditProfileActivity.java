@@ -35,16 +35,24 @@ import co.com.neubs.shopneubs.classes.models.Pais;
 import co.com.neubs.shopneubs.classes.models.Perfil;
 import co.com.neubs.shopneubs.classes.models.TipoDocumento;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
+import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private final SessionManager sessionManager = SessionManager.getInstance();
 
-    private Spinner spnTipoDocumento,spnPais,spnDepartamento,spnMunicipio;
+    private MaterialSpinner spnTipoDocumento,spnPais,spnDepartamento,spnMunicipio;
     private EditText txtNit,txtPrimerNombre,txtSegundoNombre,txtPrimerApellido,txtSegundoApellido,txtDireccion,txtTelefono;
 
     private TipoDocumento tipoDocumento;
     private Pais pais;
+    private Departamento departamento;
+    private Municipio municipio;
+
+    List<Pais> listadoPais;
+    List<Departamento> listadoDepartamento;
+    List<Municipio> listadoMunicipio;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +61,10 @@ public class EditProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        spnTipoDocumento = (Spinner) findViewById(R.id.spn_tipo_documento);
-        spnPais = (Spinner) findViewById(R.id.spn_pais);
-        spnDepartamento = (Spinner) findViewById(R.id.spn_departamento);
-        spnMunicipio = (Spinner) findViewById(R.id.spn_municipio);
+        spnTipoDocumento = (MaterialSpinner) findViewById(R.id.spn_tipo_documento);
+        spnPais = (MaterialSpinner) findViewById(R.id.spn_pais);
+        spnDepartamento = (MaterialSpinner) findViewById(R.id.spn_departamento);
+        spnMunicipio = (MaterialSpinner) findViewById(R.id.spn_municipio);
 
         txtNit = (EditText) findViewById(R.id.txt_nit);
         txtPrimerNombre = (EditText) findViewById(R.id.txt_primer_nombre);
@@ -72,23 +80,49 @@ public class EditProfileActivity extends AppCompatActivity {
         spinnerAdapterTipoDocumento.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnTipoDocumento.setAdapter(spinnerAdapterTipoDocumento);
 
+        // se carga el spinner pais
+        pais = new Pais(this);
+        listadoPais = pais.getAll();
+        ArrayAdapter adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listadoPais);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnPais.setAdapter(adapter);
 
-        spnTipoDocumento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Evento Spinner Pais
+        spnPais.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TipoDocumento tipoDocumento = (TipoDocumento)parent.getItemAtPosition(position);
+                if (position != -1){
+                    final Pais pais = (Pais)parent.getItemAtPosition(position);
+
+                    TaskCargarSpinner taskCargarSpinner = new TaskCargarSpinner(spnDepartamento,pais.getIdPais(),departamento);
+                    taskCargarSpinner.execute();
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                spnDepartamento.setAdapter(null);
+                spnMunicipio.setAdapter(null);
             }
         });
 
-        Pais pais = new Pais(this);
-        ArrayAdapter adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, pais.getAll());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnPais.setAdapter(adapter);
+        // Evento Spinner Departamento
+        spnDepartamento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != -1) {
+                    final Departamento departamento = (Departamento) parent.getItemAtPosition(position);
+                    TaskCargarSpinner taskCargarSpinner = new TaskCargarSpinner(spnMunicipio, departamento.getIdDepartamento(),municipio);
+                    taskCargarSpinner.execute();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                if (spnMunicipio.getAdapter() != null)
+                    spnMunicipio.setAdapter(null);
+            }
+        });
 
         APIRest.Async.get(APIRest.URL_PERFIL, new IServerCallback() {
             @Override
@@ -112,40 +146,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     Toast.makeText(EditProfileActivity.this,message_error,Toast.LENGTH_SHORT).show();
             }
         });
-
-        // Evento Spinner Pais
-        spnPais.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                final Pais pais = (Pais)parent.getItemAtPosition(position);
-
-                TaskCargarSpinner taskCargarSpinner = new TaskCargarSpinner(R.id.spn_departamento,pais.getIdPais());
-                taskCargarSpinner.execute();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                spnDepartamento.setAdapter(null);
-                spnMunicipio.setAdapter(null);
-            }
-        });
-
-        // Evento Spinner Departamento
-        spnDepartamento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                final Departamento departamento = (Departamento) parent.getItemAtPosition(position);
-
-                TaskCargarSpinner taskCargarSpinner = new TaskCargarSpinner(R.id.spn_municipio,departamento.getIdDepartamento());
-                taskCargarSpinner.execute();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                spnMunicipio.setAdapter(null);
-            }
-        });
-
     }
 
     private void visualizarPerfil(Perfil perfil){
@@ -156,12 +156,33 @@ public class EditProfileActivity extends AppCompatActivity {
         txtSegundoApellido.setText(perfil.getSegundoApellido());
         txtDireccion.setText(perfil.getDireccion());
         txtTelefono.setText(perfil.getTelefono());
+
+
+
+        if (perfil.getIdPais() > 0){
+            for (int i=0; i<listadoPais.size();i++) {
+                if (listadoPais.get(i).getIdPais() == perfil.getIdPais()) {
+                    spnPais.setSelection(i+1);
+                    break;
+                }
+            }
+        }
+
+        if (perfil.getIdDepartamento() > 0){
+            departamento = new Departamento(this);
+            departamento.getById(perfil.getIdDepartamento());
+        }
+        if (perfil.getIdMunicipio() > 0){
+            municipio = new Municipio(this);
+            municipio.getById(perfil.getIdMunicipio());
+
+        }
     }
 
 
     private List<Departamento> cargarDepartamentos(int idPais){
         Departamento departamento = new Departamento(EditProfileActivity.this);
-        List<Departamento> listadoDepartamento = departamento.getByIdPais(idPais);
+        listadoDepartamento = departamento.getByIdPais(idPais);
         if (listadoDepartamento == null){
             Synchronize synchronize= new Synchronize(EditProfileActivity.this);
             if(synchronize.SynchronizeDepartamento(idPais) > 0){
@@ -173,54 +194,53 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private List<Municipio> cargarMunicipio(int idDeparamento){
         Municipio municipio = new Municipio(EditProfileActivity.this);
-        List<Municipio> listadoMunicipio = municipio.getByIdDepartamento(idDeparamento);
+        listadoMunicipio = municipio.getByIdDepartamento(idDeparamento);
         if (listadoMunicipio == null){
             Synchronize synchronize= new Synchronize(EditProfileActivity.this);
-            if(synchronize.SynchronizeDepartamento(idDeparamento) > 0){
+            if(synchronize.SynchronizeMunicipio(idDeparamento) > 0){
                 listadoMunicipio = municipio.getByIdDepartamento(idDeparamento);
             }
         }
         return listadoMunicipio;
     }
 
-    private class TaskCargarSpinner extends AsyncTask<Void,Integer,Boolean>{
-        private List<Departamento> listadoDepartamento;
-        private List<Municipio> listadoMunicipio;
-
+    private class TaskCargarSpinner<T> extends AsyncTask<T,Integer,Boolean>{
+        private List<T> listado;
+        private T objectSelection;
+        private Spinner spinner;
         private int idSpinner;
         private int idFiltro;
-        private final int spinnerDepartamento = R.id.spn_departamento;
-        private final int spinnerMunicipio = R.id.spn_municipio;
 
 
-        public TaskCargarSpinner(int idSpinner,int idFiltro){
-            this.idSpinner = idSpinner;
+        public TaskCargarSpinner(Spinner spinner,int idFiltro, T objectSelection){
+            this.idSpinner = spinner.getId();
             this.idFiltro = idFiltro;
+            this.spinner = spinner;
+            this.objectSelection = objectSelection;
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            if (idSpinner == spinnerDepartamento){
-                listadoDepartamento = cargarDepartamentos(idFiltro);
-            }
-            else if(idSpinner == spinnerMunicipio){
-                listadoMunicipio = cargarMunicipio(idFiltro);
-            }
-            if (listadoDepartamento != null || listadoMunicipio != null)
+        protected Boolean doInBackground(T... params){
+            if (idSpinner == R.id.spn_departamento)
+                listado = (List<T>)cargarDepartamentos(idFiltro);
+            else if(idSpinner == R.id.spn_municipio)
+                listado = (List<T>)cargarMunicipio(idFiltro);
+
+            if (listado != null)
                 return true;
             return false;
         }
 
         @Override
-        protected void onPostExecute(Boolean success) {
+        protected void onPostExecute(Boolean success){
             if (success) {
-                ArrayAdapter adapter = null;
-                if (listadoDepartamento != null)
-                    adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listadoDepartamento);
-                else
-                    adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listadoMunicipio);
+                ArrayAdapter adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listado);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spnDepartamento.setAdapter(adapter);
+                spinner.setAdapter(adapter);
+                if (objectSelection != null) {
+                    int position= adapter.getPosition(objectSelection);
+                    spinner.setSelection(position);
+                }
             }
         }
     }

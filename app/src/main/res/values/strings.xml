@@ -82,7 +82,11 @@
     <string name="promp_secund_last_name">Secund Last</string>
     <string name="promp_address">Address</string>
     <string name="promp_telephone">Telephone</string>
-    <string name="title_tipo_documento">Type Document</string>
+    <string name="promp_type_document">Type Document</string>
     <string name="msg_session_expired">Your session are expired</string>
+    <string name="prompt_contry">Contry</string>
+    <string name="promp_contry">Contry</string>
+    <string name="promp_department">Department</string>
+    <string name="promp_municipio" translatable="false">Municipio</string>
 
 </resources>
