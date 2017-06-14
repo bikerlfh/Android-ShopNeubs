@@ -69,4 +69,5 @@
     <string name="prompt_contry">Pais</string>
     <string name="promp_contry">Pais</string>
     <string name="promp_department">Departamento</string>
+    <string name="title_save">Guardar</string>
 </resources>

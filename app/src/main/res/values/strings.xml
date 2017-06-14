@@ -88,5 +88,5 @@
     <string name="promp_contry">Contry</string>
     <string name="promp_department">Department</string>
     <string name="promp_municipio" translatable="false">Municipio</string>
-
+    <string name="title_save">Save</string>
 </resources>
