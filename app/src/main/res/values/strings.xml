@@ -89,4 +89,6 @@
     <string name="promp_department">Department</string>
     <string name="promp_municipio" translatable="false">Municipio</string>
     <string name="title_save">Save</string>
+    <string name="msg_save_success">Save success</string>
+    <string name="msg_save_error">Save Error</string>
 </resources>

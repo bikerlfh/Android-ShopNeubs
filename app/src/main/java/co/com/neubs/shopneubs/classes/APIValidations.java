@@ -119,22 +119,22 @@ public class APIValidations {
     }
 
     public String getValidationNonFieldError(){
-        return getMessges(nonFieldError);
+        return getMessages(nonFieldError);
     }
     public String getValidationUsername() {
-        return getMessges(username);
+        return getMessages(username);
     }
     public String getValidationEmail() {
-        return getMessges(email);
+        return getMessages(email);
     }
     public String getValidationPassword() {
-        return getMessges(password);
+        return getMessages(password);
     }
     public String getValidationError() {
-        return getMessges(error);
+        return getMessages(error);
     }
 
-    private String getMessges(ArrayList<String> field){
+    private String getMessages(ArrayList<String> field){
         String message = null;
         for (String m: field) {
             message = (message == null)? m : message + ";" + m;

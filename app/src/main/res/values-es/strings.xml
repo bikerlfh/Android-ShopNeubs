@@ -70,4 +70,6 @@
     <string name="promp_contry">Pais</string>
     <string name="promp_department">Departamento</string>
     <string name="title_save">Guardar</string>
+    <string name="msg_save_success">Se guardó corrrectamente</string>
+    <string name="msg_save_error">No se ha podido guardar</string>
 </resources>

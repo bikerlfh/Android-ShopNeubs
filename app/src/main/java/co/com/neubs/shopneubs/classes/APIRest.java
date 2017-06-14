@@ -51,6 +51,8 @@ public class APIRest {
     public final static String URL_FILTRO_PRODUCTO = "search/";
     public final static String URL_MIS_PEDIDOS = "mis-pedidos/";
     public final static String URL_PERFIL = "profile/";
+    public final static String URL_PERFIL_CREATE = "profile/create/";
+    public final static String URL_PERFIL_EDIT = "profile/edit/";
 
 
     /**

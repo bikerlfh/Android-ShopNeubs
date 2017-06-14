@@ -23,7 +23,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
@@ -35,6 +37,7 @@ import co.com.neubs.shopneubs.classes.models.Municipio;
 import co.com.neubs.shopneubs.classes.models.Pais;
 import co.com.neubs.shopneubs.classes.models.Perfil;
 import co.com.neubs.shopneubs.classes.models.TipoDocumento;
+import co.com.neubs.shopneubs.classes.models.Usuario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -228,7 +231,41 @@ public class EditProfileActivity extends AppCompatActivity {
             focusView.requestFocus();
         }
         else{
+            String url = (perfil != null)? APIRest.URL_PERFIL_EDIT:APIRest.URL_PERFIL_CREATE;
+            Map<String,String> params = new HashMap<>();
+            params.put("idTipoDocumento",String.valueOf(((TipoDocumento)spnTipoDocumento.getSelectedItem()).getIdTipoDocumento()));
+            params.put("nit",txtNit.getText().toString());
+            params.put("primerNombre",txtPrimerNombre.getText().toString());
+            params.put("segundoNombre",txtSegundoNombre.getText().toString());
+            params.put("primerApellido",txtPrimerApellido.getText().toString());
+            params.put("segundoApellido",txtSegundoApellido.getText().toString());
+            params.put("direccion",txtDireccion.getText().toString());
+            params.put("telefono",txtTelefono.getText().toString());
+            params.put("idMunicipio",String.valueOf(((Municipio)spnMunicipio.getSelectedItem()).getIdMunicipio()));
 
+
+            APIRest.Async.post(url, params, new IServerCallback() {
+                @Override
+                public void onSuccess(String json) {
+                    // si se guardó el perfil, se guarda el idCliente en el usuario
+                    if (perfil == null){
+                        Usuario usuario = new Usuario(EditProfileActivity.this);
+                        usuario.getById(sessionManager.getIdUsuario());
+                        usuario.setIdCliente((int)APIRest.getObjectFromJson(json,"idCliente"));
+                        usuario.update();
+                    }
+                    Toast.makeText(EditProfileActivity.this,getString(R.string.msg_save_success),Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
+                @Override
+                public void onError(String message_error, APIValidations apiValidations) {
+                    if (apiValidations != null)
+                        Toast.makeText(EditProfileActivity.this,apiValidations.getDetail(),Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(EditProfileActivity.this,getString(R.string.msg_save_error),Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
