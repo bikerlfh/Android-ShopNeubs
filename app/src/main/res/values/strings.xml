@@ -63,7 +63,7 @@
     <string name="title_logout">Logout</string>
     <string name="title_derechos_reservados">© 2017 - Neubs S.A.S All right reserverd.</string>
     <string name="title_activity_account">My Account</string>
-    <string name="title_activity_orders">Orders</string>
+    <string name="title_activity_orders">Order</string>
     <string name="title_activity_edit_profile">Profile</string>
     <string name="title_login_signin">Login or Sign up</string>
     <string name="title_terminos_condiciones">Terms and conditions</string>
