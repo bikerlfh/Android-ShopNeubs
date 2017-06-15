@@ -28,10 +28,16 @@ import static android.view.Gravity.CENTER;
 public class ProductoDetalleActivity extends AppCompatActivity {
 
     public final static String PARAM_ID_SALDO_INVENTARIO = "idSaldoInventario";
+    public final static String PARAM_NOMBRE_PRODUCTO = "nombreProducto";
+    public final static String PARAM_PRECIO_OFERTA = "precioOferta";
+    public final static String PARAM_PRECIO_VENTA_UNITARIO = "precioValorUnitario";
+    public final static String PARAM_ESTADO = "estado";
+
+
 
     private Toolbar toolbar;
 
-    private TextView title_descripcion, nombreProducto, descripcionProducto, marcaProducto, especificacionProducto, precioProducto, precioAnterior;
+    private TextView titleDescripcion,titleEspecificacion, nombreProducto, descripcionProducto, marcaProducto, especificacionProducto, precioProducto, precioAnterior;
 
     private CollapsingToolbarLayout toolbarLayout;
     private ViewPager viewPager;
@@ -48,7 +54,8 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
         viewPager = (ViewPager)findViewById(R.id.viewPager_producto_detalle);
 
-        title_descripcion = (TextView) findViewById(R.id.title_descripcion);
+        titleDescripcion = (TextView) findViewById(R.id.title_descripcion);
+        titleEspecificacion = (TextView) findViewById(R.id.title_especificacion);
         nombreProducto = (TextView) findViewById(R.id.lbl_nombre_producto_detalle);
         marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
         precioProducto = (TextView) findViewById(R.id.lbl_precio_producto_detalle);
@@ -65,7 +72,25 @@ public class ProductoDetalleActivity extends AppCompatActivity {
         if (intentExtra.getExtras().isEmpty())
             finish();
 
-        int idSaldoInventario = intentExtra.getExtras().getInt(PARAM_ID_SALDO_INVENTARIO,0);
+        final int idSaldoInventario = intentExtra.getExtras().getInt(PARAM_ID_SALDO_INVENTARIO,0);
+        final String nomProducto = intentExtra.getExtras().getString(PARAM_NOMBRE_PRODUCTO,"");
+        final float precioOferta = intentExtra.getExtras().getFloat(PARAM_PRECIO_OFERTA,0);
+        final float precioVentaUnitario = intentExtra.getExtras().getFloat(PARAM_PRECIO_VENTA_UNITARIO,0);
+        final boolean estado = intentExtra.getExtras().getBoolean(PARAM_ESTADO,false);
+
+        toolbarLayout.setTitle(nomProducto);
+        nombreProducto.setText(nomProducto);
+
+        // Si hay precio oferta, este se debe mostrar como el precio actual
+        if (precioOferta>0){
+            precioProducto.setText(Helper.MoneyFormat(precioOferta));
+            precioAnterior.setText(Helper.MoneyFormat(precioVentaUnitario));
+        }
+        else {
+            precioProducto.setGravity(CENTER);
+            precioProducto.setText(Helper.MoneyFormat(precioVentaUnitario));
+            precioAnterior.setVisibility(View.GONE);
+        }
 
         if (idSaldoInventario > 0){
             APIRest.Async.get("producto/"+String.valueOf(idSaldoInventario), new IServerCallback() {
@@ -76,35 +101,24 @@ public class ProductoDetalleActivity extends AppCompatActivity {
                         final Producto producto = saldoInventario.getProducto();
                         producto.initDbManager(ProductoDetalleActivity.this);
 
-                        toolbarLayout.setTitle(producto.getNombre());
-                        nombreProducto.setText(producto.getNombre());
                         marcaProducto.setText(producto.getMarca().getDescripcion());
 
-
-                        if (saldoInventario.getPrecioOferta()>0){
-                            precioProducto.setText(Helper.MoneyFormat(saldoInventario.getPrecioOferta()));
-                            precioAnterior.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
-                        }
-                        else {
-                            precioProducto.setGravity(CENTER);
-                            precioProducto.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
-                            precioAnterior.setVisibility(View.GONE);
-
-                        }
                         if (producto.getDescripcion().length() > 0) {
                             descripcionProducto.setText(producto.getDescripcion());
                             especificacionProducto.setText(producto.getEspecificacion());
                         }
                         else{
-                            title_descripcion.setText(R.string.title_specification);
+                            titleDescripcion.setText(R.string.title_specification);
                             descripcionProducto.setText(producto.getEspecificacion());
                         }
 
-                        final ArrayList<Imagen> listadoImagenes = producto.getImagenes();
-                        // Se obtiene la imagen y se guarda en el cache
-                        //Glide.with(ProductoDetalleActivity.this).load(listadoImagenes.get(0).getUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(imageView);
+                        if (producto.getEspecificacion() == null || producto.getEspecificacion().length() == 0){
+                            titleEspecificacion.setVisibility(View.GONE);
+                            especificacionProducto.setVisibility(View.GONE);
+                        }
+
                         List<String> images = new ArrayList<>();
-                        for (Imagen img: listadoImagenes) {
+                        for (Imagen img: producto.getImagenes()) {
                             images.add(img.getUrl());
                         }
                         viewPagerAdapter = new ViewPagerAdapter(ProductoDetalleActivity.this,images);
@@ -121,12 +135,8 @@ public class ProductoDetalleActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case  android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public boolean onSupportNavigateUp() {
+        finishAfterTransition();
+        return true;
     }
 }

@@ -94,6 +94,10 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             //Toast.makeText(v.getContext(),"position " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(v.getContext(),ProductoDetalleActivity.class);
             intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,this.saldoInventario.getIdSaldoInventario());
+            intent.putExtra(ProductoDetalleActivity.PARAM_NOMBRE_PRODUCTO,this.saldoInventario.getProducto().getNombre());
+            intent.putExtra(ProductoDetalleActivity.PARAM_PRECIO_OFERTA,this.saldoInventario.getPrecioOferta());
+            intent.putExtra(ProductoDetalleActivity.PARAM_PRECIO_VENTA_UNITARIO,this.saldoInventario.getPrecioVentaUnitario());
+            intent.putExtra(ProductoDetalleActivity.PARAM_ESTADO,this.saldoInventario.getEstado());
             v.getContext().startActivity(intent);
         }
     }
