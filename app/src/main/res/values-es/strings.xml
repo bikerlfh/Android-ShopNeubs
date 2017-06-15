@@ -22,7 +22,6 @@
     <string name="categoria_17">Electrónica</string>
     <string name="categoria_18">Tarjetas Digitalizadoras</string>
     <string name="ofertas_title">Ofertas</string>
-    <string name="action_settings">Configuración</string>
     <string name="msg_no_internet">No hay conexión a Internet disponible. Presiona ok para recargar</string>
     <string name="navigation_drawer_close">No hay conexión a Internet disponible</string>
     <string name="title_no_internet">No hay conexión a Internet</string>
@@ -33,18 +32,18 @@
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_username">Username</string>
-    <string name="title_activity_login">Login</string>
+    <string name="title_activity_login">Iniciar Sesión</string>
     <string name="error_field_required">Esta fila es requerida</string>
     <string name="error_invalid_email">La dirección de email no es valida</string>
     <string name="error_invalid_password">La contraseña invalida</string>
-    <string name="title_activity_login_register">Iniciar Sesión | Registrarse</string>
+    <string name="title_activity_login_register">Iniciar sesión | Crear cuenta</string>
     <string name="categoria_03">PCs</string>
-    <string name="title_register">Registrarse</string>
+    <string name="title_register">Crear cuenta</string>
     <string name="error_timeout_api">Tiempo de espera agotado. Favor intentar de nuevo mas tarde</string>
     <string name="prompt_email">Correo Electrónico</string>
     <string name="prompt_password_repeat">Contraseña (confirmación)</string>
     <string name="error_invalid_password1">Las constraseñas no coinciden</string>
-    <string name="title_logout"></string>
+    <string name="title_logout">Salir</string>
     <string name="title_derechos_reservados">© 2017 - Neubs S.A.S Todos los Derechos Reservados</string>
     <string name="title_activity_account">Mi cuenta</string>
     <string name="title_activity_orders">Mis Pedidos</string>
@@ -64,7 +63,6 @@
     <string name="promp_address">Dirección</string>
     <string name="promp_telephone">Teléfono</string>
     <string name="promp_type_document">Tipo Documento</string>
-    <string name="action_sign_in_short"></string>
     <string name="msg_session_expired">Su sesión ha expirado</string>
     <string name="prompt_contry">Pais</string>
     <string name="promp_contry">Pais</string>
@@ -73,4 +71,6 @@
     <string name="msg_save_success">Se guardó corrrectamente</string>
     <string name="msg_save_error">No se ha podido guardar</string>
     <string name="title_pedido">Pedido N°</string>
+    <string name="title_login">Iniciar sesión</string>
+    <string name="title_num_products">N° Productos</string>
 </resources>

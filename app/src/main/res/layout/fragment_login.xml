@@ -109,7 +109,7 @@
                 android:layout_marginTop="23sp"
                 android:backgroundTint="@color/colorSecundary"
                 android:elevation="8dp"
-                android:text="@string/action_sign_in_short"
+                android:text="@string/title_login"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
