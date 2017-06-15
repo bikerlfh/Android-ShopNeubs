@@ -62,6 +62,8 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/lbl_marca_producto_detalle"
             android:layout_marginBottom="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:background="@color/colorWhite"
             android:elevation="1dp"
@@ -79,6 +81,8 @@
             android:layout_alignEnd="@+id/title_descripcion"
             android:layout_alignStart="@+id/title_descripcion"
             android:layout_below="@+id/title_descripcion"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:background="@color/colorWhite"
             android:elevation="1dp"
             android:ellipsize="end"
@@ -97,6 +101,8 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_descripcion_producto_detalle"
             android:layout_marginBottom="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="14dp"
             android:background="@color/colorWhite"
             android:elevation="1dp"
@@ -113,6 +119,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/title_especificacion"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:background="@color/colorWhite"
             android:elevation="1dp"
             android:paddingBottom="8dp"
@@ -122,7 +130,6 @@
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/lbl_nombre_producto_pedido_detalle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
