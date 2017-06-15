@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.com.neubs.shopneubs.classes.DbManager;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.interfaces.ICrud;
 import co.com.neubs.shopneubs.models.CategoriaModel;
 
@@ -58,7 +59,7 @@ public class Categoria implements ICrud{
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return Helper.EncodingUTF8(descripcion);
     }
 
     public void setDescripcion(String descripcion) {

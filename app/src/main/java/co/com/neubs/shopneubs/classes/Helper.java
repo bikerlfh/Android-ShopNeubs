@@ -3,6 +3,8 @@ package co.com.neubs.shopneubs.classes;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
 import java.util.Locale;
 import co.com.neubs.shopneubs.classes.models.Usuario;
@@ -37,5 +39,14 @@ public class Helper {
         if (netInfo != null && netInfo.isConnectedOrConnecting())
             return true;
         return false;
+    }
+
+    public static String EncodingUTF8(String text){
+        try {
+            return new String(text.getBytes("ISO-8859-1"),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return text;
     }
 }

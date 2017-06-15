@@ -6,9 +6,12 @@ import android.database.Cursor;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import co.com.neubs.shopneubs.classes.DbManager;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.interfaces.ICrud;
 import co.com.neubs.shopneubs.models.ProductoModel;
 
@@ -91,7 +94,7 @@ public class Producto implements ICrud {
     }
 
     public String getNombre() {
-        return nombre;
+        return Helper.EncodingUTF8(nombre);
     }
 
     public void setNombre(String nombre) {
@@ -99,7 +102,7 @@ public class Producto implements ICrud {
     }
 
     public String getDescripcion() {
-        return descripcion;
+       return Helper.EncodingUTF8(descripcion);
     }
 
     public void setDescripcion(String descripcion) {
@@ -107,7 +110,7 @@ public class Producto implements ICrud {
     }
 
     public String getEspecificacion() {
-        return especificacion;
+        return Helper.EncodingUTF8(especificacion);
     }
 
     public void setEspecificacion(String especificacion) {

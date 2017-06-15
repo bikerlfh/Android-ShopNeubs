@@ -7,6 +7,7 @@ import android.database.Cursor;
 import com.google.gson.annotations.SerializedName;
 
 import co.com.neubs.shopneubs.classes.DbManager;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.interfaces.ICrud;
 import co.com.neubs.shopneubs.models.MarcaModel;
 
@@ -48,7 +49,7 @@ public class Marca implements ICrud {
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return Helper.EncodingUTF8(descripcion);
     }
 
     public void setDescripcion(String descripcion) {
