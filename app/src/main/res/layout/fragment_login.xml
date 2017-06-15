@@ -24,16 +24,15 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="59dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/border"
+            android:elevation="3dp"
             android:orientation="vertical"
+            android:paddingBottom="10dp"
             android:weightSum="1">
 
-
-            <!--android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"-->
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -45,51 +44,55 @@
                 android:layout_weight="0.15"
                 android:background="@drawable/logo_login_200x38" />
 
-            <EditText
-                android:id="@+id/txt_username"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorWhite"
-                android:drawableRight="@drawable/ic_avatar"
-                android:elevation="3dp"
-                android:hint="@string/prompt_username"
-                android:inputType="textCapWords"
-                android:paddingBottom="8dp"
-                android:paddingLeft="9dp"
-                android:paddingRight="9dp"
-                android:paddingTop="8dp"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimary"
-                android:textColorLink="@color/colorPrimary" />
+                android:layout_height="wrap_content">
 
-            <!--/android.support.design.widget.TextInputLayout-->
+                <EditText
+                    android:id="@+id/txt_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="8dp"
+                    android:elevation="3dp"
+                    android:hint="@string/prompt_username"
+                    android:inputType="textCapWords"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="9dp"
+                    android:paddingRight="9dp"
+                    android:paddingTop="8dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorLink="@color/colorPrimary" />
 
-            <!--android.support.design.widget.TextInputLayout
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"-->
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/txt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
-                android:background="@color/colorWhite"
-                android:drawableRight="@drawable/ic_locked"
-                android:elevation="3dp"
-                android:hint="@string/prompt_password"
-                android:inputType="textPassword"
-                android:paddingBottom="8sp"
-                android:paddingLeft="12sp"
-                android:paddingRight="5sp"
-                android:paddingTop="8sp"
-                android:textAlignment="center"
-                android:textColorLink="@color/colorPrimary" />
+                <EditText
+                    android:id="@+id/txt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginStart="9dp"
+                    android:elevation="3dp"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textPassword"
+                    android:paddingBottom="8sp"
+                    android:paddingLeft="9dp"
+                    android:paddingRight="9dp"
+                    android:paddingTop="8sp"
+                    android:textAlignment="center"
+                    android:textColorLink="@color/colorPrimary" />
 
-            <!--/android.support.design.widget.TextInputLayout-->
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"

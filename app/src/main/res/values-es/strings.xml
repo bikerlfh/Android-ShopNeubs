@@ -41,7 +41,7 @@
     <string name="categoria_03">PCs</string>
     <string name="title_register">Registrarse</string>
     <string name="error_timeout_api">Tiempo de espera agotado. Favor intentar de nuevo mas tarde</string>
-    <string name="prompt_email">Correo Elecrónico</string>
+    <string name="prompt_email">Correo Electrónico</string>
     <string name="prompt_password_repeat">Contraseña (confirmación)</string>
     <string name="error_invalid_password1">Las constraseñas no coinciden</string>
     <string name="title_logout"></string>
