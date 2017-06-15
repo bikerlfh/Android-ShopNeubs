@@ -15,7 +15,9 @@
         android:layout_marginTop="2dp"
         android:elevation="2dp"
         app:cardBackgroundColor="@color/colorBackground"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +29,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="24dp"
-            android:weightSum="1">
+            android:weightSum="1"
+            >
 
             <TextView
                 android:id="@+id/textView10"
@@ -37,17 +40,18 @@
                 android:text="@string/title_pedido"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                />
 
             <TextView
                 android:id="@+id/lbl_numero_pedido"
                 android:layout_width="53dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/lbl_fecha"
+                android:id="@+id/lbl_fecha_pedido_detalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -56,7 +60,7 @@
                 android:text="TextView"
                 android:textSize="18sp"
                 app:layout_constraintHorizontal_bias="0.818"
-                app:layout_constraintLeft_toRightOf="@+id/lbl_estado"
+                app:layout_constraintLeft_toRightOf="@+id/lbl_estado_pedido_detalle"
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -88,7 +92,7 @@
                 app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
-                android:id="@+id/lbl_estado"
+                android:id="@+id/lbl_estado_pedido_detalle"
                 android:layout_width="94dp"
                 android:layout_height="16dp"
                 android:layout_marginTop="0dp"
@@ -100,7 +104,8 @@
                 android:layout_marginRight="8dp"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginLeft="8dp"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
 
             <TextView
                 android:id="@+id/textView2"
@@ -116,7 +121,7 @@
                 android:layout_marginTop="8dp" />
 
             <TextView
-                android:id="@+id/lbl_numero_productos"
+                android:id="@+id/lbl_numero_productos_pedido_detalle"
                 android:layout_width="56dp"
                 android:layout_height="16dp"
                 android:layout_marginLeft="8dp"
@@ -128,7 +133,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
-                android:id="@+id/lbl_valor_total"
+                android:id="@+id/lbl_costo_total"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
                 android:layout_marginRight="16dp"

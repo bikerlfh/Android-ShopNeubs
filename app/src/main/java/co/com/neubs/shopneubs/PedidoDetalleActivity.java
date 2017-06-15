@@ -13,48 +13,69 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import co.com.neubs.shopneubs.adapters.PedidoDetalleAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.PedidoVenta;
+import co.com.neubs.shopneubs.classes.models.PedidoVentaPosicion;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class PedidoDetalleActivity extends AppCompatActivity {
 
-    public static final String PARAM_URL = "param_url";
-    private String url;
+    public static final String PARAM_PEDIDO_VENTA= "pedidoVenta";
 
     private RecyclerView recyclerView;
+    private TextView lblFecha,lblEstado,lblCostoTotal,lblNumeroProductos;
+
     private PedidoVenta pedidoVenta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_pedido_detalle);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycle_view_pedido_detalle);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(3), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mLayoutManager);
 
         Intent intentExtra = getIntent();
         if (intentExtra.getExtras().isEmpty())
             finish();
 
-        APIRest.Async.get(intentExtra.getExtras().getString(PARAM_URL,""), new IServerCallback() {
+        // Se obtiene el pedido venta
+        pedidoVenta = (PedidoVenta)intentExtra.getExtras().get(PARAM_PEDIDO_VENTA);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_pedido_detalle);
+        toolbar.setTitle(getString(R.string.title_pedido).concat(String.valueOf(pedidoVenta.getNumeroPedido())));
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        lblEstado= (TextView) findViewById(R.id.lbl_estado_pedido_detalle);
+        lblFecha = (TextView) findViewById(R.id.lbl_fecha_pedido_detalle);
+        lblCostoTotal= (TextView) findViewById(R.id.lbl_costo_total_pedido_detalle);
+        lblNumeroProductos = (TextView) findViewById(R.id.lbl_numero_productos_pedido_detalle);
+        recyclerView = (RecyclerView) findViewById(R.id.recycle_view_pedido_detalle);
+        // ajustes en el recycleview
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(3), true));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        lblEstado.setText(pedidoVenta.getEstado());
+        lblFecha.setText(pedidoVenta.getFecha());
+        lblCostoTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
+        lblNumeroProductos.setText(getString(R.string.title_num_products) + " (" + (String.valueOf(pedidoVenta.getNumeroProductos())) + ")");
+
+        APIRest.Async.get(pedidoVenta.getUrlDetalle(), new IServerCallback() {
             @Override
             public void onSuccess(String json) {
-                pedidoVenta = APIRest.serializeObjectFromJson(json,PedidoVenta.class);
+                PedidoVenta pedidoVenta= APIRest.serializeObjectFromJson(json,PedidoVenta.class);
                 final PedidoDetalleAdapter pedidoDetalleAdapter = new PedidoDetalleAdapter(PedidoDetalleActivity.this,pedidoVenta.getPedidoVentaPosicion());
                 recyclerView.setAdapter(pedidoDetalleAdapter);
             }
@@ -76,8 +97,8 @@ public class PedidoDetalleActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-
-        return super.onSupportNavigateUp();
+        finishAfterTransition();
+        return true;
     }
 
     private int dpToPx(int dp) {

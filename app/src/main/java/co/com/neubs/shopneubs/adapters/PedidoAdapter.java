@@ -47,7 +47,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         private TextView lblNumeroPedido;
         private TextView lblFecha;
         private TextView lblEstado;
-        private TextView lblValorTotal;
+        private TextView lblCostoTotal;
         private TextView lblNumeroProductos;
 
         private PedidoVenta pedidoVenta;
@@ -57,10 +57,10 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             super(itemView);
 
             lblNumeroPedido = (TextView)itemView.findViewById(R.id.lbl_numero_pedido);
-            lblEstado = (TextView) itemView.findViewById(R.id.lbl_estado);
-            lblFecha = (TextView)itemView.findViewById(R.id.lbl_fecha);
-            lblValorTotal = (TextView)itemView.findViewById(R.id.lbl_valor_total);
-            lblNumeroProductos = (TextView)itemView.findViewById(R.id.lbl_numero_productos);
+            lblEstado = (TextView) itemView.findViewById(R.id.lbl_estado_pedido_detalle);
+            lblFecha = (TextView)itemView.findViewById(R.id.lbl_fecha_pedido_detalle);
+            lblCostoTotal = (TextView)itemView.findViewById(R.id.lbl_costo_total);
+            lblNumeroProductos = (TextView)itemView.findViewById(R.id.lbl_numero_productos_pedido_detalle);
             context = itemView.getContext();
         }
 
@@ -70,17 +70,23 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             lblEstado.setText(pedidoVenta.getEstado());
             lblFecha.setText(pedidoVenta.getFecha());
             lblNumeroProductos.setText(String.valueOf(pedidoVenta.getNumeroProductos()));
-            lblValorTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
+            lblCostoTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            // Aca se debe abrir la actividad de visualización del producto detalle
-            //Toast.makeText(v.getContext(),"position " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
+            //Pair[] pairs = new Pair[1];
+            //pairs[0]=Pair.create(lblEstado,"estado_pedido_detalle_shared");
+            //pairs[1]=Pair.create(lblFecha,"fecha_pedido_shared");
+            //pairs[3]=Pair.create(lblCostoTotal,"numero_pedido_shared");
+            //pairs[1] = new Pair<View,String>(lblFecha,"fecha_shared");
+            //pairs[2] = new Pair<View,String>(lblCostoTotal,"costo_total_shared");
+            //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) v.getContext(),pairs);
             Intent intent = new Intent(v.getContext(),PedidoDetalleActivity.class);
-            intent.putExtra(PedidoDetalleActivity.PARAM_URL,this.pedidoVenta.getDetalle());
+            intent.putExtra(PedidoDetalleActivity.PARAM_PEDIDO_VENTA,pedidoVenta);
+            //v.getContext().startActivity(intent,options.toBundle())
             v.getContext().startActivity(intent);
         }
     }

@@ -8,6 +8,7 @@ public class PedidoVentaPosicion {
     private long idPedidoVentaPosicion;
     private Producto producto;
     private int cantidad;
+    private int idSaldoInventario;
     private float costoTotal;
     private boolean cancelado;
     private String motivoCancelacionPedidoVenta;
@@ -34,6 +35,14 @@ public class PedidoVentaPosicion {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public int getIdSaldoInventario() {
+        return idSaldoInventario;
+    }
+
+    public void setIdSaldoInventario(int idSaldoInventario) {
+        this.idSaldoInventario = idSaldoInventario;
     }
 
     public float getCostoTotal() {
