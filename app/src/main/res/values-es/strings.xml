@@ -47,7 +47,7 @@
     <string name="title_logout"></string>
     <string name="title_derechos_reservados">© 2017 - Neubs S.A.S Todos los Derechos Reservados</string>
     <string name="title_activity_account">Mi cuenta</string>
-    <string name="title_activity_orders">Pedido</string>
+    <string name="title_activity_orders">Mis Pedidos</string>
     <string name="title_activity_edit_profile">Perfil</string>
     <string name="title_terminos_condiciones">Terminos y condiciones</string>
     <string name="title_garantia">Garantia</string>
@@ -72,4 +72,5 @@
     <string name="title_save">Guardar</string>
     <string name="msg_save_success">Se guardó corrrectamente</string>
     <string name="msg_save_error">No se ha podido guardar</string>
+    <string name="title_pedido">Pedido N°</string>
 </resources>

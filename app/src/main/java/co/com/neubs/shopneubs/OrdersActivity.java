@@ -11,17 +11,12 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import co.com.neubs.shopneubs.adapters.PedidoAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.SessionManager;
-import co.com.neubs.shopneubs.classes.models.Pedido;
+import co.com.neubs.shopneubs.classes.models.PedidoVenta;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class OrdersActivity extends AppCompatActivity {
@@ -63,8 +58,8 @@ public class OrdersActivity extends AppCompatActivity {
         APIRest.Async.get(APIRest.URL_MIS_PEDIDOS, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
-                Pedido[] listadoPedidos  = APIRest.serializeObjectFromJson(json,Pedido[].class);
-                pedidoAdapter = new PedidoAdapter(OrdersActivity.this,listadoPedidos);
+                PedidoVenta[] listadoPedidoVenta = APIRest.serializeObjectFromJson(json,PedidoVenta[].class);
+                pedidoAdapter = new PedidoAdapter(OrdersActivity.this, listadoPedidoVenta);
                 recyclerView.setAdapter(pedidoAdapter);
             }
 

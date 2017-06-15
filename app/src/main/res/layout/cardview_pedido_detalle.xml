@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
+
+            <co.com.neubs.shopneubs.controls.ImageLoaderView
+                android:id="@+id/img_pedido_detalle"
+                android:layout_width="67dp"
+                android:layout_height="65dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lbl_nombre_producto_pedido_detalle"
+                android:layout_width="302dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="48dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toRightOf="@+id/img_pedido_detalle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lbl_cantidad_pedido_detalle"
+                android:layout_width="107dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="13dp"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                app:layout_constraintLeft_toRightOf="@+id/img_pedido_detalle"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_nombre_producto_pedido_detalle" />
+
+            <TextView
+                android:id="@+id/lbl_costo_total_pedido_detalle"
+                android:layout_width="165dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center_vertical|end"
+                android:text="TextView"
+                app:layout_constraintHorizontal_bias="0.656"
+                app:layout_constraintLeft_toRightOf="@+id/lbl_cantidad_pedido_detalle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lbl_cantidad_pedido_detalle"
+                tools:layout_editor_absoluteX="203dp" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

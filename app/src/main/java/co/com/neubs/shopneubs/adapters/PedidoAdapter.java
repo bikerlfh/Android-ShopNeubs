@@ -1,20 +1,17 @@
 package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import co.com.neubs.shopneubs.PedidoDetalleActivity;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.Helper;
-import co.com.neubs.shopneubs.classes.models.Pedido;
+import co.com.neubs.shopneubs.classes.models.PedidoVenta;
 
 /**
  * Created by bikerlfh on 6/12/17.
@@ -22,11 +19,11 @@ import co.com.neubs.shopneubs.classes.models.Pedido;
 
 public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoViewHolder> {
 
-    private Pedido[] listadoPedido;
+    private PedidoVenta[] listadoPedidoVenta;
 
     private Context context;
-    public PedidoAdapter(Context context ,Pedido[] listadoPedido) {
-        this.listadoPedido = listadoPedido;
+    public PedidoAdapter(Context context ,PedidoVenta[] listadoPedidoVenta) {
+        this.listadoPedidoVenta = listadoPedidoVenta;
     }
 
     @Override
@@ -37,13 +34,13 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
 
     @Override
     public void onBindViewHolder(PedidoViewHolder holder, int position) {
-        Pedido pedido = listadoPedido[position];
-        holder.bindPedido(pedido);
+        PedidoVenta pedidoVenta = listadoPedidoVenta[position];
+        holder.bindPedido(pedidoVenta);
     }
 
     @Override
     public int getItemCount() {
-        return listadoPedido.length;
+        return listadoPedidoVenta.length;
     }
 
     public static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -53,7 +50,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         private TextView lblValorTotal;
         private TextView lblNumeroProductos;
 
-        private Pedido pedido;
+        private PedidoVenta pedidoVenta;
 
         private Context context;
         public PedidoViewHolder(View itemView) {
@@ -67,13 +64,13 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             context = itemView.getContext();
         }
 
-        public void bindPedido(Pedido pedido) {
-            this.pedido = pedido;
-            lblNumeroPedido.setText(String.valueOf(pedido.getNumeroPedido()));
-            lblEstado.setText(pedido.getEstado());
-            lblFecha.setText(pedido.getFecha());
-            lblNumeroProductos.setText(String.valueOf(pedido.getNumeroProductos()));
-            lblValorTotal.setText(Helper.MoneyFormat(pedido.getValorTotal()));
+        public void bindPedido(PedidoVenta pedidoVenta) {
+            this.pedidoVenta = pedidoVenta;
+            lblNumeroPedido.setText(String.valueOf(pedidoVenta.getNumeroPedido()));
+            lblEstado.setText(pedidoVenta.getEstado());
+            lblFecha.setText(pedidoVenta.getFecha());
+            lblNumeroProductos.setText(String.valueOf(pedidoVenta.getNumeroProductos()));
+            lblValorTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
 
             itemView.setOnClickListener(this);
         }
@@ -82,9 +79,9 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         public void onClick(View v) {
             // Aca se debe abrir la actividad de visualización del producto detalle
             //Toast.makeText(v.getContext(),"position " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
-            //Intent intent = new Intent(v.getContext(),ProductoDetalleActivity.class);
-            //intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,this.saldoInventario.getIdSaldoInventario());
-            //v.getContext().startActivity(intent);
+            Intent intent = new Intent(v.getContext(),PedidoDetalleActivity.class);
+            intent.putExtra(PedidoDetalleActivity.PARAM_URL,this.pedidoVenta.getDetalle());
+            v.getContext().startActivity(intent);
         }
     }
 }

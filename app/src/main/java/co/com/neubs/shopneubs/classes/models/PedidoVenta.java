@@ -2,11 +2,13 @@ package co.com.neubs.shopneubs.classes.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by bikerlfh on 6/12/17.
  */
 
-public class Pedido {
+public class PedidoVenta {
 
     @SerializedName("pk")
     private int idPedidoVenta;
@@ -16,6 +18,10 @@ public class Pedido {
     private String fecha;
     private int numeroProductos;
     private float valorTotal;
+    private String detalle;
+
+    @SerializedName("pedidoVentaPosicion")
+    private ArrayList<PedidoVentaPosicion> pedidoVentaPosicion;
 
     public int getIdPedidoVenta() {
         return idPedidoVenta;
@@ -63,5 +69,21 @@ public class Pedido {
 
     public void setValorTotal(float valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
+    }
+
+    public ArrayList<PedidoVentaPosicion> getPedidoVentaPosicion() {
+        return pedidoVentaPosicion;
+    }
+
+    public void setPedidoVentaPosicion(ArrayList<PedidoVentaPosicion> pedidoVentaPosicion) {
+        this.pedidoVentaPosicion = pedidoVentaPosicion;
     }
 }

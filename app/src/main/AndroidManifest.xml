@@ -56,6 +56,10 @@
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PedidoDetalleActivity"
+            android:label="@string/title_activity_pedido_detalle"
             android:theme="@style/AppTheme"></activity>
     </application>
 

@@ -122,7 +122,7 @@
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/lbl_nombre_producto_pedido_detalle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

@@ -34,17 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="6dp"
-                android:text="@string/title_activity_orders"
+                android:text="@string/title_pedido"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="3dp"
-                android:text="N°"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp" />
 
@@ -53,18 +44,17 @@
                 android:layout_width="53dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/lbl_fecha"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:gravity="right"
                 android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 app:layout_constraintHorizontal_bias="0.818"
                 app:layout_constraintLeft_toRightOf="@+id/lbl_estado"
                 app:layout_constraintRight_toRightOf="parent"
@@ -86,79 +76,67 @@
                 android:id="@+id/textView3"
                 android:layout_width="47dp"
                 android:layout_height="18dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="165dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/title_estado"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_estado"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/lbl_estado"
                 android:layout_width="94dp"
                 android:layout_height="16dp"
-                android:layout_marginBottom="0dp"
-                android:layout_marginRight="138dp"
+                android:layout_marginTop="0dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="57dp"
                 android:layout_height="17dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/title_num_products"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_numero_productos"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/textView3"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:id="@+id/lbl_numero_productos"
                 android:layout_width="56dp"
                 android:layout_height="16dp"
-                android:layout_marginBottom="-3dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginTop="3dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/lbl_estado" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/lbl_valor_total"
-                android:layout_width="128dp"
+                android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="165dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="22dp"
                 android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/colorPrecio"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
