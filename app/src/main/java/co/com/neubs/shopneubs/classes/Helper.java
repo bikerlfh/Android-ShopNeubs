@@ -41,9 +41,14 @@ public class Helper {
         return false;
     }
 
+    /**
+     * Encode un texto a UTF-8
+     * @param text
+     * @return
+     */
     public static String EncodingUTF8(String text){
         try {
-            return new String(text.getBytes("ISO-8859-1"),"UTF-8");
+            return text!=null? new String(text.getBytes("ISO-8859-1"), "UTF-8"):null;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
