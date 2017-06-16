@@ -47,8 +47,8 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
+                android:paddingEnd="2dp"
+                android:paddingStart="2dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
@@ -64,21 +64,23 @@
                 <TextView
                     android:id="@+id/lbl_precio_producto_card"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_weight="0.93"
-                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.48"
+                    android:paddingBottom="@dimen/padding_Boton"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="2dp"
                     android:text="TextView"
-                    android:textAlignment="center"
+                    android:textAlignment="textEnd"
                     android:textColor="@color/colorPrecio"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/lbl_precio_anterior_card"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    android:layout_marginRight="4sp"
-                    android:gravity="center"
+                    android:paddingBottom="@dimen/padding_Boton"
+                    android:paddingEnd="2dp"
+                    android:paddingStart="4dp"
                     android:text="TextView" />
 
             </LinearLayout>

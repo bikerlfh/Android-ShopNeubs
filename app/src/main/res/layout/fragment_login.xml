@@ -54,19 +54,17 @@
                     android:id="@+id/txt_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="9dp"
                     android:layout_marginStart="9dp"
                     android:layout_marginTop="8dp"
-                    android:elevation="3dp"
+                    android:elevation="4dp"
                     android:hint="@string/prompt_username"
-                    android:inputType="textCapWords"
+                    android:inputType="none|textCapWords"
                     android:paddingBottom="8dp"
                     android:paddingLeft="9dp"
                     android:paddingRight="9dp"
                     android:paddingTop="8dp"
-                    android:textAlignment="center"
                     android:textColor="@color/colorPrimary"
                     android:textColorLink="@color/colorPrimary" />
 
@@ -80,7 +78,6 @@
                     android:id="@+id/txt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="9dp"
                     android:layout_marginStart="9dp"
@@ -91,7 +88,6 @@
                     android:paddingLeft="9dp"
                     android:paddingRight="9dp"
                     android:paddingTop="8sp"
-                    android:textAlignment="center"
                     android:textColorLink="@color/colorPrimary" />
 
             </android.support.design.widget.TextInputLayout>
