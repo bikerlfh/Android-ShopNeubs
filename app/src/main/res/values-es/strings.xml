@@ -72,5 +72,5 @@
     <string name="msg_save_error">No se ha podido guardar</string>
     <string name="title_pedido">Pedido N°</string>
     <string name="title_login">Iniciar sesión</string>
-    <string name="title_num_products">N° Productos</string>
+    <string name="title_num_products">Cantidades</string>
 </resources>

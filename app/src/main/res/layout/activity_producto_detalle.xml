@@ -87,7 +87,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_agregar_item_car"
                 android:layout_width="134dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.60"

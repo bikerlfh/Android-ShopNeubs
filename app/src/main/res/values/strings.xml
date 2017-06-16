@@ -71,7 +71,7 @@
     <string name="error_default">Request not completed. Please try again later.</string>
     <string name="title_order">Order</string>
     <string name="title_estado">State</string>
-    <string name="title_num_products">N° Items</string>
+    <string name="title_num_products">Counts</string>
     <string name="promp_nit" translatable="false">Nit</string>
     <string name="promp_first_name">First Name</string>
     <string name="promp_secund_name">Secund Name</string>
