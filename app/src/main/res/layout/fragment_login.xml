@@ -24,13 +24,15 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginEnd="@dimen/margin_End"
+            android:layout_marginStart="@dimen/margin_Start"
+            android:layout_marginTop="@dimen/margin_top"
             android:background="@drawable/border"
             android:elevation="3dp"
             android:orientation="vertical"
             android:paddingBottom="10dp"
+            android:paddingEnd="@dimen/padding_End"
+            android:paddingStart="@dimen/padding_Start"
             android:weightSum="1">
 
 

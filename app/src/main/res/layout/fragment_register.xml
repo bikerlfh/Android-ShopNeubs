@@ -18,25 +18,20 @@
     <ScrollView
         android:id="@+id/register_fragment_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:paddingBottom="12sp"
-        android:paddingLeft="8sp"
-        android:paddingRight="8sp"
-        android:paddingTop="8sp">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/margin_End"
+            android:layout_marginStart="@dimen/margin_Start"
+            android:layout_marginTop="@dimen/margin_top"
             android:background="@drawable/border"
             android:elevation="3dp"
             android:orientation="vertical"
-            android:paddingBottom="12dp"
+            android:paddingEnd="@dimen/padding_End"
+            android:paddingStart="@dimen/padding_Start"
             android:weightSum="1">
 
             <ImageView
@@ -58,16 +53,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
                     android:elevation="2dp"
                     android:hint="@string/prompt_username"
                     android:inputType="textCapWords"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="9dp"
-                    android:paddingRight="9dp"
-                    android:paddingTop="8dp"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorLink="@android:color/darker_gray" />
@@ -84,15 +72,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
                     android:elevation="2dp"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="9dp"
-                    android:paddingRight="9dp"
-                    android:paddingTop="8dp"
                     android:textAlignment="center" />
             </android.support.design.widget.TextInputLayout>
 
@@ -106,15 +88,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
                     android:elevation="2dp"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="9dp"
-                    android:paddingRight="9dp"
-                    android:paddingTop="8dp"
                     android:textAlignment="center" />
             </android.support.design.widget.TextInputLayout>
 
@@ -128,15 +104,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
                     android:elevation="2dp"
                     android:hint="@string/prompt_password_repeat"
                     android:inputType="textPassword"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="9dp"
-                    android:paddingRight="9dp"
-                    android:paddingTop="8dp"
                     android:textAlignment="center" />
             </android.support.design.widget.TextInputLayout>
 
