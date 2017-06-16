@@ -60,6 +60,8 @@ public class SessionManager {
     }
 
     public ArrayList<ItemCar> getShopCar() {
+        if (shopCar == null)
+            shopCar = new ArrayList<>();
         return shopCar;
     }
 
@@ -79,9 +81,9 @@ public class SessionManager {
         }
         else{
             Usuario usuario = new Usuario(context);
+            cargarShopCar(context);
             if (usuario.getLoginUser()){
                 llenarCampos(usuario);
-                cargarShopCar(context);
                 return true;
             }
         }
@@ -252,5 +254,19 @@ public class SessionManager {
                     return item;
             }
         return null;
+    }
+
+    /**
+     * Obtiene el valor total del carro
+     * @return
+     */
+    public float getValorTotalShopCar(){
+        float valorTotal = 0;
+        if (this.shopCar != null){
+            for (ItemCar item: shopCar) {
+                valorTotal += item.getValorTotal();
+            }
+        }
+        return valorTotal;
     }
 }

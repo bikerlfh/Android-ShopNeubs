@@ -123,7 +123,9 @@ public class PrincipalActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
        if (id == R.id.action_cart) {
-            return true;
+           Intent intent = new Intent(PrincipalActivity.this,ShopCarActivity.class);
+           startActivity(intent);
+           return true;
         }
 
         return super.onOptionsItemSelected(item);

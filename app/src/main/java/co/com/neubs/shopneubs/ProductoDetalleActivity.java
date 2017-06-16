@@ -3,6 +3,7 @@ package co.com.neubs.shopneubs;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -162,13 +163,13 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             itemCar.setCantidad(1);
             itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
             if (sessionManager.addItemCar(itemCar)) {
-                Toast.makeText(this,"Se agregó el item al carro",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,getString(R.string.title_item_added),Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(this,"No se agregó el item al carro",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();
             }
         }
         else
-            Toast.makeText(this,"EL item ya esta agregado en el carro",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.error_item_in_car),Toast.LENGTH_SHORT).show();
     }
 }

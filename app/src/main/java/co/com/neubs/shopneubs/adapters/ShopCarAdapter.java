@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import co.com.neubs.shopneubs.R;
+import co.com.neubs.shopneubs.ShopCarActivity;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
@@ -25,7 +27,8 @@ import co.com.neubs.shopneubs.controls.ImageLoaderView;
 
 public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarViewHolder> {
 
-    private ArrayList<ItemCar> listadoItemCar = SessionManager.getInstance().getShopCar();
+    private SessionManager sessionManager = SessionManager.getInstance();
+    private ArrayList<ItemCar> listadoItemCar = sessionManager.getShopCar();
     private Context context;
 
     public ShopCarAdapter(Context context){
@@ -39,8 +42,22 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarV
     }
 
     @Override
-    public void onBindViewHolder(ShopCarViewHolder holder, int position) {
-        ItemCar itemCar = listadoItemCar.get(position);
+    public void onBindViewHolder(final ShopCarViewHolder holder, int position) {
+        final ItemCar itemCar = listadoItemCar.get(position);
+        holder.setOnClickListenerDeleteItem(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // button eliminar
+                if (sessionManager.deleteItemShopCar(itemCar)){
+                    notifyItemRemoved(holder.getAdapterPosition());
+                    Toast.makeText(context,context.getString(R.string.title_item_deleted),Toast.LENGTH_SHORT).show();
+                    ShopCarActivity shopCarActivity = (ShopCarActivity)context;
+                    shopCarActivity.calcularValorTotal();
+                }
+                else
+                    Toast.makeText(context,context.getString(R.string.error_default),Toast.LENGTH_SHORT).show();
+            }
+        });
         holder.bindProducto(itemCar);
     }
 
@@ -50,14 +67,14 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarV
     }
 
 
-    public static class ShopCarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ShopCarViewHolder extends RecyclerView.ViewHolder{
 
-        private SessionManager sessionManager = SessionManager.getInstance();
+
         private ImageLoaderView imagen;
         private TextView lblNombreProducto,lblValorTotalItemCard,lblMarca;
         private ImageButton btnEliminar;
 
-        private ItemCar itemCar;
+        private View.OnClickListener onClickListenerDeleteItem;
 
         public ShopCarViewHolder(View itemView) {
             super(itemView);
@@ -69,7 +86,6 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarV
         }
 
         public void bindProducto(ItemCar itemCar) {
-            this.itemCar = itemCar;
             lblNombreProducto.setText(itemCar.getNombreProducto());
             lblValorTotalItemCard.setText(Helper.MoneyFormat(itemCar.getValorTotal()));
             final Marca marca = itemCar.getMarca();
@@ -82,21 +98,16 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarV
             if (urlImagen != null && !urlImagen.isEmpty())
                 imagen.setImageURL(urlImagen);
 
-            btnEliminar.setOnClickListener(this);
+            // Se asigna el listener al boton eliminar.
+            btnEliminar.setOnClickListener(this.onClickListenerDeleteItem);
         }
 
-        @Override
-        public void onClick(View v) {
-            // button eliminar
-            if (v.getId() == btnEliminar.getId()){
-                if (sessionManager.deleteItemShopCar(itemCar)){
-                    Toast.makeText(v.getContext(),"Item eliminado",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(v.getContext(),"No se pudo eliminar el item",Toast.LENGTH_SHORT).show();
-                }
-            }
+        /**
+         * Asigna el OnClickListener cuando se da click en el boton de eliminar item
+         * @param onClickListener
+         */
+        public void setOnClickListenerDeleteItem(View.OnClickListener onClickListener){
+            this.onClickListenerDeleteItem = onClickListener;
         }
     }
 }

@@ -74,4 +74,7 @@
     <string name="title_login">Iniciar sesión</string>
     <string name="title_num_products">Cantidades</string>
     <string name="title_activity_shop_car">Mi carrito</string>
+    <string name="title_item_deleted">Producto eliminado</string>
+    <string name="error_item_in_car">El producto ya está en el carrito</string>
+    <string name="title_item_added">Producto agregado</string>
 </resources>

@@ -93,4 +93,7 @@
     <string name="text_view_empy" translatable="false">----</string>
     <string name="title_activity_shop_car">My car</string>
     <string name="title_resumen">Summary</string>
+    <string name="title_item_deleted">Item deleted</string>
+    <string name="error_item_in_car">The product is already in the cart</string>
+    <string name="title_item_added">Item added</string>
 </resources>
