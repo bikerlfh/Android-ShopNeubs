@@ -19,9 +19,14 @@ public class ItemCar implements ICrud {
     private int idItemCar;
     private String fecha;
     private int idSaldoInventario;
+    private String nombreProducto;
+    private int idMarca;
+    private String image;
     private int cantidad;
     private float precioVentaUnitario;
 
+
+    private transient Marca marca;
     private transient DbManager dbManager;
 
     public ItemCar(Context context) {
@@ -52,6 +57,30 @@ public class ItemCar implements ICrud {
         this.idSaldoInventario = idSaldoInventario;
     }
 
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public int getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
@@ -68,6 +97,18 @@ public class ItemCar implements ICrud {
         this.precioVentaUnitario = precioVentaUnitario;
     }
 
+    public float getValorTotal(){
+        return this.cantidad * this.precioVentaUnitario;
+    }
+
+    public Marca getMarca(){
+        if (marca == null && idMarca >0){
+            marca = new Marca(dbManager.context);
+            marca.getById(idMarca);
+        }
+        return marca;
+    }
+
     public void initDbManager(Context context){
         this.dbManager = new DbManager(context);
     }
@@ -75,9 +116,11 @@ public class ItemCar implements ICrud {
     @Override
     public boolean save() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ItemCarModel.PK,idItemCar);
         contentValues.put(ItemCarModel.FECHA,fecha);
         contentValues.put(ItemCarModel.ID_SALDO_INVENTARIO,idSaldoInventario);
+        contentValues.put(ItemCarModel.NOMBRE_PRODUCTO,nombreProducto);
+        contentValues.put(ItemCarModel.ID_MARCA,idMarca);
+        contentValues.put(ItemCarModel.IMAGEN,image);
         contentValues.put(ItemCarModel.CANTIDAD,cantidad);
         contentValues.put(ItemCarModel.PRECIO_VENTA_UNITARIO,precioVentaUnitario);
 
@@ -142,6 +185,9 @@ public class ItemCar implements ICrud {
         this.idItemCar = c.getInt(c.getColumnIndex(ItemCarModel.PK));
         this.fecha = c.getString(c.getColumnIndex(ItemCarModel.FECHA));
         this.idSaldoInventario = c.getInt(c.getColumnIndex(ItemCarModel.ID_SALDO_INVENTARIO));
+        this.nombreProducto = c.getString(c.getColumnIndex(ItemCarModel.NOMBRE_PRODUCTO));
+        this.idMarca = c.getInt(c.getColumnIndex(ItemCarModel.ID_MARCA));
+        this.image = c.getString(c.getColumnIndex(ItemCarModel.IMAGEN));
         this.cantidad = c.getInt(c.getColumnIndex(ItemCarModel.CANTIDAD));
         this.precioVentaUnitario = c.getFloat(c.getColumnIndex(ItemCarModel.PRECIO_VENTA_UNITARIO));
     }

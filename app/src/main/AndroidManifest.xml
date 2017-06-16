@@ -60,6 +60,10 @@
         <activity
             android:name=".PedidoDetalleActivity"
             android:label="@string/title_activity_pedido_detalle"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ShopCarActivity"
+            android:label="@string/title_activity_shop_car"
             android:theme="@style/AppTheme"></activity>
     </application>
 

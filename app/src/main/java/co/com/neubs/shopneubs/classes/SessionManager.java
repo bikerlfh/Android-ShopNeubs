@@ -4,10 +4,15 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import co.com.neubs.shopneubs.R;
+import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -22,6 +27,9 @@ public class SessionManager {
     private String username;
     private String email;
     private String token;
+
+    // Guarda el carrito
+    private ArrayList<ItemCar> shopCar;
 
     private static SessionManager instance = null;
 
@@ -51,6 +59,14 @@ public class SessionManager {
         return token;
     }
 
+    public ArrayList<ItemCar> getShopCar() {
+        return shopCar;
+    }
+
+    public void setShopCar(ArrayList<ItemCar> shopCar) {
+        this.shopCar = shopCar;
+    }
+
     /**
      * Valida si el usuario está autenticado
      * en caso que el atributo no exista, se consulta en la db si existe un usuario con el token asignado
@@ -65,6 +81,7 @@ public class SessionManager {
             Usuario usuario = new Usuario(context);
             if (usuario.getLoginUser()){
                 llenarCampos(usuario);
+                cargarShopCar(context);
                 return true;
             }
         }
@@ -138,5 +155,102 @@ public class SessionManager {
         this.username = usuario.getUsername();
         this.email = usuario.getEmail();
         this.token = usuario.getToken();
+    }
+
+
+    /***************************************************************************/
+    //                        FUNCIONALIDAD DEL CARRO                          //
+    /***************************************************************************/
+
+    /**
+     * Consulta el carrito
+     * @param context
+     */
+    private void cargarShopCar(Context context){
+        final ItemCar itemCar = new ItemCar(context);
+        this.shopCar = itemCar.getAllItemCar();
+    }
+
+    /**
+     * Agrega un ItemCar al carrito
+     * @param itemCar
+     */
+    public boolean addItemCar(ItemCar itemCar){
+        if (this.shopCar == null)
+            this.shopCar = new ArrayList<>();
+
+        // Se valida que el saldoInventairo no esté agregado en el carro
+        if (this.getItemCarByIdSaldoInventario(itemCar.getIdSaldoInventario()) == null) {
+            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+            itemCar.setFecha(df.format(new Date()));
+
+            if (itemCar.save()) {
+                this.shopCar.add(itemCar);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Elimina el item del carro que tenga id = idItemCar
+     * @param pk del ItemCar
+     * @return -1 si no encuentra el item en el carrito. 0 - si no se logró guardar y 1 si guardó
+     */
+    public boolean deleteItemShopCar(int pk){
+        if (shopCar != null && shopCar.size() > 0){
+            ItemCar itemDelete = getItemCarById(pk);
+            if (itemDelete != null){
+                if (!itemDelete.delete())
+                    return false;
+            }
+            return shopCar.remove(itemDelete);
+        }
+        return false;
+    }
+
+    /**
+     * Elimina el item del carro
+     * @param item
+     * @return
+     */
+    public boolean deleteItemShopCar(ItemCar item){
+        if (shopCar != null && shopCar.size() > 0) {
+            if (shopCar.remove(item)) {
+                if (!item.delete()) {
+                    shopCar.add(item);
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Obtiene un ItemCar por el id
+     * @param id
+     * @return
+     */
+    public ItemCar getItemCarById(int id){
+        if (shopCar != null)
+            for (ItemCar item: shopCar) {
+                if (item.getIdItemCar() == id)
+                    return item;
+            }
+        return null;
+    }
+    /**
+     * Obtiene un ItemCar por el idSaldoInventario
+     * @param idSaldoInventario
+     * @return
+     */
+    public ItemCar getItemCarByIdSaldoInventario(int idSaldoInventario){
+        if (shopCar != null)
+            for (ItemCar item: shopCar) {
+                if (item.getIdSaldoInventario() == idSaldoInventario)
+                    return item;
+            }
+        return null;
     }
 }

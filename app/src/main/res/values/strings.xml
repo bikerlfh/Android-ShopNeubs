@@ -90,5 +90,7 @@
     <string name="msg_save_error">Save Error</string>
     <string name="title_activity_pedido_detalle">PedidoDetalleActivity</string>
     <string name="title_pedido">Order N°</string>
-    <string name="text_view_empy">----</string>
+    <string name="text_view_empy" translatable="false">----</string>
+    <string name="title_activity_shop_car">My car</string>
+    <string name="title_resumen">Summary</string>
 </resources>

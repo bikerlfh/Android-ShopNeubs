@@ -73,4 +73,5 @@
     <string name="title_pedido">Pedido N°</string>
     <string name="title_login">Iniciar sesión</string>
     <string name="title_num_products">Cantidades</string>
+    <string name="title_activity_shop_car">Mi carrito</string>
 </resources>

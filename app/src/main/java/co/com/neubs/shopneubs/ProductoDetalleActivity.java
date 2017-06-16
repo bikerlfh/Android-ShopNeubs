@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -18,14 +19,16 @@ import co.com.neubs.shopneubs.adapters.ViewPagerAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.Helper;
+import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.Imagen;
+import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.Producto;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 import static android.view.Gravity.CENTER;
 
-public class ProductoDetalleActivity extends AppCompatActivity {
+public class ProductoDetalleActivity extends AppCompatActivity implements View.OnClickListener {
 
     public final static String PARAM_ID_SALDO_INVENTARIO = "idSaldoInventario";
     public final static String PARAM_NOMBRE_PRODUCTO = "nombreProducto";
@@ -34,10 +37,13 @@ public class ProductoDetalleActivity extends AppCompatActivity {
     public final static String PARAM_ESTADO = "estado";
 
 
+    private SessionManager sessionManager = SessionManager.getInstance();
+    private SaldoInventario saldoInventario;
 
     private Toolbar toolbar;
 
     private TextView titleDescripcion,titleEspecificacion, nombreProducto, descripcionProducto, marcaProducto, especificacionProducto, precioProducto, precioAnterior;
+    private Button btnAgregarItemCar;
 
     private CollapsingToolbarLayout toolbarLayout;
     private ViewPager viewPager;
@@ -65,6 +71,9 @@ public class ProductoDetalleActivity extends AppCompatActivity {
 
         descripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
         especificacionProducto = (TextView) findViewById(R.id.lbl_especificacion_producto_detalle);
+
+        btnAgregarItemCar = (Button) findViewById(R.id.btn_agregar_item_car);
+        btnAgregarItemCar.setOnClickListener(this);
 
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
@@ -96,7 +105,7 @@ public class ProductoDetalleActivity extends AppCompatActivity {
             APIRest.Async.get("producto/"+String.valueOf(idSaldoInventario), new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
-                    final SaldoInventario saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
+                    saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
                     if (saldoInventario != null){
                         final Producto producto = saldoInventario.getProducto();
                         producto.initDbManager(ProductoDetalleActivity.this);
@@ -138,5 +147,28 @@ public class ProductoDetalleActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finishAfterTransition();
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        // Se agrega el item al carrito
+        if (sessionManager.getItemCarByIdSaldoInventario(saldoInventario.getIdSaldoInventario()) == null) {
+            ItemCar itemCar = new ItemCar(this);
+            itemCar.setNombreProducto(saldoInventario.getProducto().getNombre());
+            itemCar.setIdSaldoInventario(saldoInventario.getIdSaldoInventario());
+            itemCar.setImage(saldoInventario.getProducto().getImagenes().get(0).getUrl());
+            itemCar.setIdMarca(saldoInventario.getProducto().getIdMarca());
+            itemCar.setCantidad(1);
+            itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
+            if (sessionManager.addItemCar(itemCar)) {
+                Toast.makeText(this,"Se agregó el item al carro",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this,"No se agregó el item al carro",Toast.LENGTH_SHORT).show();
+            }
+        }
+        else
+            Toast.makeText(this,"EL item ya esta agregado en el carro",Toast.LENGTH_SHORT).show();
     }
 }

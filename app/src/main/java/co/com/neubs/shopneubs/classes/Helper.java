@@ -1,8 +1,11 @@
 package co.com.neubs.shopneubs.classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
@@ -53,5 +56,15 @@ public class Helper {
             e.printStackTrace();
         }
         return text;
+    }
+
+    /**
+     * Se usa en los recycleview
+     * @param dp
+     * @param context
+     * @return
+     */
+    public static int dpToPx(int dp, Context context) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics()));
     }
 }

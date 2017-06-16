@@ -6,8 +6,6 @@ import android.database.Cursor;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import co.com.neubs.shopneubs.classes.DbManager;

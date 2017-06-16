@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import co.com.neubs.shopneubs.adapters.PedidoAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.PedidoVenta;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
@@ -46,7 +48,7 @@ public class OrdersActivity extends AppCompatActivity {
             this.finish();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_orders);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(3), true));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, Helper.dpToPx(3,this), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
@@ -77,11 +79,6 @@ public class OrdersActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
     @Override
