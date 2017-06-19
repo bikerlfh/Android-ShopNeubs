@@ -39,6 +39,8 @@ public class ShopCarActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_shop_car);
         lblValorTotal = (TextView) findViewById(R.id.lbl_valor_total);
         btnRealizarPedido = (Button) findViewById(R.id.btn_realizar_pedido);

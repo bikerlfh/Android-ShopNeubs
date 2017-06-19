@@ -51,7 +51,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
     private ViewPagerAdapter viewPagerAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producto_detalle);
         toolbar = (Toolbar) findViewById(R.id.toolbar_producto_detalle);
@@ -91,19 +91,11 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         toolbarLayout.setTitle(nomProducto);
         nombreProducto.setText(nomProducto);
 
-        // Si hay precio oferta, este se debe mostrar como el precio actual
-        if (precioOferta>0){
-            precioProducto.setText(Helper.MoneyFormat(precioOferta));
-            precioAnterior.setText(Helper.MoneyFormat(precioVentaUnitario));
-        }
-        else {
-            precioProducto.setGravity(CENTER);
-            precioProducto.setText(Helper.MoneyFormat(precioVentaUnitario));
-            precioAnterior.setVisibility(View.GONE);
-        }
+        // SE asignan los precios
+        asignarPrecio(precioVentaUnitario,precioOferta);
 
         if (idSaldoInventario > 0){
-            APIRest.Async.get("producto/"+String.valueOf(idSaldoInventario), new IServerCallback() {
+            APIRest.Async.get(APIRest.URL_PRODUCTO_DETALLE + String.valueOf(idSaldoInventario), new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
                     saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
@@ -126,6 +118,11 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                             titleEspecificacion.setVisibility(View.GONE);
                             especificacionProducto.setVisibility(View.GONE);
                         }
+                        // Se validan los precios que se reciben del servidor con los que se pasaron a la actividad
+                        if (precioVentaUnitario != saldoInventario.getPrecioVentaUnitario() ||
+                            precioOferta != saldoInventario.getPrecioOferta()){
+                            asignarPrecio(saldoInventario.getPrecioVentaUnitario(),saldoInventario.getPrecioOferta());
+                        }
 
                         List<String> images = new ArrayList<>();
                         for (Imagen img: producto.getImagenes()) {
@@ -141,6 +138,18 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                     Toast.makeText(ProductoDetalleActivity.this,message_error,Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+    private void asignarPrecio(float precioVentaUnitario,float precioOferta){
+        // Si hay precio oferta, este se debe mostrar como el precio actual
+        if (precioOferta > 0){
+            precioProducto.setText(Helper.MoneyFormat(precioOferta));
+            precioAnterior.setText(Helper.MoneyFormat(precioVentaUnitario));
+        }
+        else {
+            precioProducto.setGravity(CENTER);
+            precioProducto.setText(Helper.MoneyFormat(precioVentaUnitario));
+            precioAnterior.setVisibility(View.GONE);
         }
     }
 

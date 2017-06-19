@@ -49,6 +49,7 @@ public class APIRest {
     public final static String URL_LOGOUT = "rest-auth/logout/";
     public final static String URL_REGISTER = "register/";
     public final static String URL_FILTRO_PRODUCTO = "search/";
+    public final static String URL_PRODUCTO_DETALLE = "producto/";
     public final static String URL_MIS_PEDIDOS = "mis-pedidos/";
     public final static String URL_PERFIL = "profile/";
     public final static String URL_PERFIL_CREATE = "profile/create/";
