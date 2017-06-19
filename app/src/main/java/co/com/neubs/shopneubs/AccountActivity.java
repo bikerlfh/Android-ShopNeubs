@@ -33,8 +33,7 @@ public class AccountActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        sessionManager = SessionManager.getInstance();
-
+        sessionManager = SessionManager.getInstance(this);
 
         lblWelcome = (TextView) findViewById(R.id.lbl_welcome_account);
         lblPedidos = (TextView) findViewById(R.id.lbl_action_pedidos);
@@ -134,7 +133,7 @@ public class AccountActivity extends AppCompatActivity {
      * @return
      */
     private boolean validarSession(){
-        if (sessionManager.isAuthenticated(this)){
+        if (sessionManager.isAuthenticated()){
             return true;
         }
         return false;

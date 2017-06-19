@@ -2,12 +2,10 @@ package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +27,7 @@ import co.com.neubs.shopneubs.controls.ImageLoaderView;
 
 public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarViewHolder> {
 
-    private SessionManager sessionManager = SessionManager.getInstance();
+    private SessionManager sessionManager = SessionManager.getInstance(null);
     private ArrayList<ItemCar> listadoItemCar = sessionManager.getShopCar();
     private Context context;
 
@@ -72,6 +70,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarV
     public static class ShopCarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
+        private SessionManager sessionManager = SessionManager.getInstance(null);
         private ItemCar item;
         private ImageLoaderView imagen;
         private TextView lblNombreProducto,lblValorTotalItemCard,lblMarca,lblCantidad;
@@ -114,25 +113,37 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarV
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ajustarCantidad(1);
-                    ((ShopCarActivity)v.getContext()).calcularValorTotal();
+                    if(ajustarCantidad(1))
+                        ((ShopCarActivity)v.getContext()).calcularValorTotal();
 
                 }
             });
             btnSubtract.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ajustarCantidad(-1);
-                    ((ShopCarActivity)v.getContext()).calcularValorTotal();
+                    if(ajustarCantidad(-1))
+                        ((ShopCarActivity)v.getContext()).calcularValorTotal();
+
                 }
             });
         }
-        private void ajustarCantidad(int cantidad){
+
+        /**
+         * Ajusta la cantidad del item
+         * @param cantidad
+         * @return
+         */
+        private boolean ajustarCantidad(int cantidad){
             if (item.getCantidad()+cantidad > 0) {
                 item.setCantidad(item.getCantidad() + cantidad);
-                lblCantidad.setText(String.valueOf(item.getCantidad()));
-                lblValorTotalItemCard.setText(Helper.MoneyFormat(item.getValorTotal()));
+                // Se realiza un update al itemCar
+                if(item.update()){
+                    lblCantidad.setText(String.valueOf(item.getCantidad()));
+                    lblValorTotalItemCard.setText(Helper.MoneyFormat(item.getValorTotal()));
+                    return true;
+                }
             }
+            return false;
         }
         /**
          * Asigna el OnClickListener cuando se da click en el boton de eliminar item

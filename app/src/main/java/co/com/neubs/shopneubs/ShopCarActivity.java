@@ -26,7 +26,7 @@ import co.com.neubs.shopneubs.classes.models.ItemCar;
 public class ShopCarActivity extends AppCompatActivity {
 
 
-    private SessionManager sessionManager = SessionManager.getInstance();
+    private SessionManager sessionManager;
 
     private RecyclerView recyclerView;
     private TextView lblValorTotal;
@@ -40,6 +40,8 @@ public class ShopCarActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        sessionManager = SessionManager.getInstance(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_shop_car);
         lblValorTotal = (TextView) findViewById(R.id.lbl_valor_total);

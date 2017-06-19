@@ -46,6 +46,9 @@ public class SplashActivity extends Activity {
             }
         }
 
+        // Se obtiene la instancia del sessionManager
+        // para que consulte el usuario y el carro
+        SessionManager.getInstance(this);
         initApp(isFirstRun);
 
         /*new Handler().postDelayed(new Runnable() {
@@ -134,8 +137,6 @@ public class SplashActivity extends Activity {
                 if(synchronize.SynchronizeAPI(true)==-1)
                     return false;
             }
-            // Se verifica si existe un usuario autenticado
-            SessionManager.getInstance().isAuthenticated(SplashActivity.this);
             return true;
         }
 

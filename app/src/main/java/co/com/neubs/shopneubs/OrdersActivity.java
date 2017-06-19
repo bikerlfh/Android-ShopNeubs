@@ -23,7 +23,7 @@ import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class OrdersActivity extends AppCompatActivity {
 
-    private final SessionManager sessionManager = SessionManager.getInstance();
+    private SessionManager sessionManager;
 
     private RecyclerView recyclerView;
     private PedidoAdapter pedidoAdapter;
@@ -44,7 +44,8 @@ public class OrdersActivity extends AppCompatActivity {
             }
         });*/
 
-        if(!sessionManager.isAuthenticated(this))
+        sessionManager = SessionManager.getInstance(this);
+        if(!sessionManager.isAuthenticated())
             this.finish();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_orders);

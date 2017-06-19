@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
@@ -33,13 +35,22 @@ public class SessionManager {
 
     private static SessionManager instance = null;
 
-    public SessionManager() {
+    public SessionManager(Context context) {
         token = null;
+        Usuario usuario = new Usuario(context);
+        cargarShopCar(context);
+        if (usuario.getLoginUser())
+            llenarCampos(usuario);
     }
 
-    public static SessionManager getInstance(){
+    /**
+     * Se obtiene la instancia
+     * @param context puede ser null.
+     * @return
+     */
+    public static SessionManager getInstance(Context context){
         if (instance==null)
-            instance = new SessionManager();
+            instance = new SessionManager(context);
         return instance;
     }
 
@@ -72,22 +83,10 @@ public class SessionManager {
     /**
      * Valida si el usuario está autenticado
      * en caso que el atributo no exista, se consulta en la db si existe un usuario con el token asignado
-     * @param context
      * @return
      */
-    public boolean isAuthenticated(Context context){
-        if (token != null && !token.isEmpty()){
-            return true;
-        }
-        else{
-            Usuario usuario = new Usuario(context);
-            cargarShopCar(context);
-            if (usuario.getLoginUser()){
-                llenarCampos(usuario);
-                return true;
-            }
-        }
-        return false;
+    public boolean isAuthenticated(){
+        return (token != null && !token.isEmpty());
     }
 
     /**
@@ -190,23 +189,6 @@ public class SessionManager {
                 this.shopCar.add(itemCar);
                 return true;
             }
-        }
-        return false;
-    }
-
-    /**
-     * Elimina el item del carro que tenga id = idItemCar
-     * @param pk del ItemCar
-     * @return -1 si no encuentra el item en el carrito. 0 - si no se logró guardar y 1 si guardó
-     */
-    public boolean deleteItemShopCar(int pk){
-        if (shopCar != null && shopCar.size() > 0){
-            ItemCar itemDelete = getItemCarById(pk);
-            if (itemDelete != null){
-                if (!itemDelete.delete())
-                    return false;
-            }
-            return shopCar.remove(itemDelete);
         }
         return false;
     }

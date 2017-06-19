@@ -39,6 +39,7 @@ public class PrincipalActivity extends AppCompatActivity
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        sessionManager = SessionManager.getInstance(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -51,11 +52,9 @@ public class PrincipalActivity extends AppCompatActivity
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new OfertasFragment()).commit();
 
-        sessionManager = SessionManager.getInstance();
-
         View header = navigationView.getHeaderView(0);
         lblHeaderWelcome = (TextView) header.findViewById(R.id.lbl_header_welcome);
-        visualizarControlesSession(sessionManager.isAuthenticated(this));
+        visualizarControlesSession(sessionManager.isAuthenticated());
     }
 
     private void visualizarControlesSession(boolean isActiva) {
@@ -68,7 +67,7 @@ public class PrincipalActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        visualizarControlesSession(sessionManager.isAuthenticated(this));
+        visualizarControlesSession(sessionManager.isAuthenticated());
     }
 
     @Override

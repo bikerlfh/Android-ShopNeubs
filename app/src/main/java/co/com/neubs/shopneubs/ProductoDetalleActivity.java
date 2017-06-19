@@ -38,7 +38,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
     public final static String PARAM_ESTADO = "estado";
 
 
-    private SessionManager sessionManager = SessionManager.getInstance();
+    private SessionManager sessionManager;
     private SaldoInventario saldoInventario;
 
     private Toolbar toolbar;
@@ -59,6 +59,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        sessionManager = SessionManager.getInstance(this);
         viewPager = (ViewPager)findViewById(R.id.viewPager_producto_detalle);
 
         titleDescripcion = (TextView) findViewById(R.id.title_descripcion);

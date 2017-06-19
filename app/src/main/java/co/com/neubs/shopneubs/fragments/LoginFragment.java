@@ -215,7 +215,7 @@ public class LoginFragment extends Fragment {
                     }
 
                     // Se guarda la session
-                    SessionManager session = SessionManager.getInstance();
+                    SessionManager session = SessionManager.getInstance(getContext());
                     if (session.createUserSession(getActivity(), usuario.getIdUsuario(), token)) {
                         return true;
                     }

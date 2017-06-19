@@ -115,7 +115,7 @@ public class APIRest {
      * @return
      */
     public static Map<String,String> addTokenHeader(Map<String,String> headers){
-        SessionManager sessionManager = SessionManager.getInstance();
+        SessionManager sessionManager = SessionManager.getInstance(null);
         if (sessionManager.getToken() != null && sessionManager.getToken().length() > 0)
         {
             if (headers == null)

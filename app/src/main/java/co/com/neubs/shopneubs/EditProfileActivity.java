@@ -44,7 +44,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private final SessionManager sessionManager = SessionManager.getInstance();
+    private SessionManager sessionManager;
 
     private MaterialSpinner spnTipoDocumento,spnPais,spnDepartamento,spnMunicipio;
     private EditText txtNit,txtPrimerNombre,txtSegundoNombre,txtPrimerApellido,txtSegundoApellido,txtDireccion,txtTelefono;
@@ -64,6 +64,8 @@ public class EditProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        sessionManager = SessionManager.getInstance(this);
 
         spnTipoDocumento = (MaterialSpinner) findViewById(R.id.spn_tipo_documento);
         spnPais = (MaterialSpinner) findViewById(R.id.spn_pais);
