@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingTop="0dp"
-                android:text="TextView"
+                android:text="@string/text_view_empy"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="16dp"
                 app:layout_constraintLeft_toRightOf="@+id/img_producto_card_shop_card"
