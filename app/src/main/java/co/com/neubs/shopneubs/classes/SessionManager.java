@@ -212,6 +212,19 @@ public class SessionManager {
     }
 
     /**
+     * Elimina todos los items del Carrito
+     * este método debe ser llamado cuando el pedido se ha guardado con exito
+     */
+    public void deleteShopCar(){
+        if (shopCar != null && shopCar.size() > 0){
+            for(ItemCar item:shopCar){
+                item.delete();
+            }
+            shopCar = new ArrayList<>();
+        }
+    }
+
+    /**
      * Obtiene un ItemCar por el id
      * @param id
      * @return

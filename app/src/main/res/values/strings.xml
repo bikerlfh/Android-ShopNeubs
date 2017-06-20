@@ -97,4 +97,6 @@
     <string name="error_item_in_car">The product is already in the cart</string>
     <string name="title_item_added">Item added</string>
     <string name="textView">TextView</string>
+    <string name="msg_pedido_generado" translatable="false">Se ha generado el pedido número</string>
+    <string name="msg_generando_pedido" translatable="false">Generando pedido...</string>
 </resources>

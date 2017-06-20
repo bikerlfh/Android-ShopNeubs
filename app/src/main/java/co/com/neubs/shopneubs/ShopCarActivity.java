@@ -1,5 +1,6 @@
 package co.com.neubs.shopneubs;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -40,7 +41,7 @@ public class ShopCarActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView lblValorTotal;
     private Button btnRealizarPedido;
-
+    private  ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,27 +70,44 @@ public class ShopCarActivity extends AppCompatActivity {
         recyclerView.setAdapter(shopCarAdapter);
 
 
+
+
         btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(ShopCarActivity.this);
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage(getString(R.string.msg_generando_pedido));
+                progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
+                progressDialog.setProgress(0);
+                progressDialog.setMax(100);
+                progressDialog.show();
+
                 Gson gson = new GsonBuilder().create();
-                String json =  gson.toJson(sessionManager.getShopCar().get(0));
+                String json =  gson.toJson(sessionManager.getShopCar());
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("data",json);
+
                 APIRest.Async.post(APIRest.URL_SOLICITUD_PEDIDO, params, new IServerCallback() {
                     @Override
                     public void onSuccess(String json) {
-                        Toast.makeText(ShopCarActivity.this,json,Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        int numeroPedido = (int)APIRest.getObjectFromJson(json,"numeroPedido");
+                        Toast.makeText(ShopCarActivity.this,getString(R.string.msg_pedido_generado) + " " + String.valueOf(numeroPedido),Toast.LENGTH_SHORT).show();
+                        sessionManager.deleteShopCar();
+                        finishAfterTransition();
+
                     }
 
                     @Override
                     public void onError(String message_error, APIValidations apiValidations) {
+                        progressDialog.dismiss();
                         if (apiValidations != null)
                             Toast.makeText(ShopCarActivity.this,apiValidations.getDetail(),Toast.LENGTH_SHORT).show();
-                        Toast.makeText(ShopCarActivity.this,message_error,Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(ShopCarActivity.this,message_error,Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
         calcularValorTotal();
