@@ -16,7 +16,7 @@ import co.com.neubs.shopneubs.models.ItemCarModel;
 
 public class ItemCar implements ICrud {
 
-    private transient int idItemCar;
+    private transient long idItemCar;
     private transient String fecha;
     private int idSaldoInventario;
     private transient String nombreProducto;
@@ -33,11 +33,11 @@ public class ItemCar implements ICrud {
         initDbManager(context);
     }
 
-    public int getIdItemCar() {
+    public long getIdItemCar() {
         return idItemCar;
     }
 
-    public void setIdItemCar(int idItemCar) {
+    public void setIdItemCar(long idItemCar) {
         this.idItemCar = idItemCar;
     }
 
@@ -124,8 +124,10 @@ public class ItemCar implements ICrud {
         contentValues.put(ItemCarModel.CANTIDAD,cantidad);
         contentValues.put(ItemCarModel.PRECIO_VENTA_UNITARIO,precioVentaUnitario);
 
-        if(dbManager.Insert(ItemCarModel.NAME_TABLE,contentValues))
+        if(dbManager.Insert(ItemCarModel.NAME_TABLE,contentValues)) {
+            idItemCar = dbManager.getIdentity();
             return true;
+        }
         return false;
     }
 
@@ -182,7 +184,7 @@ public class ItemCar implements ICrud {
 
 
     private void serialize(Cursor c){
-        this.idItemCar = c.getInt(c.getColumnIndex(ItemCarModel.PK));
+        this.idItemCar = c.getLong(c.getColumnIndex(ItemCarModel.PK));
         this.fecha = c.getString(c.getColumnIndex(ItemCarModel.FECHA));
         this.idSaldoInventario = c.getInt(c.getColumnIndex(ItemCarModel.ID_SALDO_INVENTARIO));
         this.nombreProducto = c.getString(c.getColumnIndex(ItemCarModel.NOMBRE_PRODUCTO));

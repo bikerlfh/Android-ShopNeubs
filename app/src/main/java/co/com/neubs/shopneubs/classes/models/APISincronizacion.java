@@ -152,11 +152,10 @@ public class APISincronizacion implements ICrud {
     }
     /**
      * Obtiene la ultima sincronización realizada
-     *
      * @return
      */
-    public boolean getLast() {
-        Cursor c = dbManager.Select(APISincronizacionModel.NAME_TABLE, new String[]{"*"}, "ultima = ?", new String[]{"1"});
+    public boolean getLastGeneral() {
+        Cursor c = dbManager.RawQuery("SELECT * FROM "+ APISincronizacionModel.NAME_TABLE +" WHERE " + APISincronizacionModel.ID_APITABLA + " IS NULL AND " + APISincronizacionModel.ULTIMA + " = 1",null);
         if (c.moveToFirst()) {
             serialize(c);
             return true;
@@ -189,7 +188,7 @@ public class APISincronizacion implements ICrud {
     private void serialize(Cursor c){
         this.idApiSincronizacion = c.getInt(c.getColumnIndex(APISincronizacionModel.PK));
         this.fecha = c.getString(c.getColumnIndex(APISincronizacionModel.FECHA));
-        this.ultima = boolean.class.cast(c.getInt(c.getColumnIndex(APISincronizacionModel.ULTIMA)));
+        this.ultima = c.getInt(c.getColumnIndex(APISincronizacionModel.ULTIMA)) ==1? true:false;
         int idApiTabla = c.getInt(c.getColumnIndex(APISincronizacionModel.ID_APITABLA));
         if (idApiTabla > 0){
             this.tabla = new APITabla(this.dbManager.context);

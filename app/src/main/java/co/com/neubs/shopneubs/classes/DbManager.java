@@ -32,6 +32,16 @@ public class DbManager
 
     //public static final String QueryInsertFormatos = "insert into formato(codigo)";
 
+    private long identity;
+
+    /**
+     * Obtiene el pk de la insersión
+     * @return
+     */
+    public long getIdentity() {
+        return identity;
+    }
+
     public DbManager(Context context) {
         this.context = context;
         dbHelper = new DbHelper(context);
@@ -40,7 +50,8 @@ public class DbManager
 
     public boolean Insert(String table,ContentValues values)
     {
-        if(db.insert(table, null, values) > 0)
+        identity = db.insert(table, null, values);
+        if(identity > 0)
             return true;
         return false;
     }
@@ -96,6 +107,12 @@ public class DbManager
      * @return
      */
     public boolean exists(String NAME_TABLE,String COLUMN_PK,int pk_value){
+        Cursor c = Select(NAME_TABLE, new String[] { "*" },COLUMN_PK + "=?",new String[] {String.valueOf(pk_value)});
+        if (c.moveToFirst())
+            return true;
+        return false;
+    }
+    public boolean exists(String NAME_TABLE,String COLUMN_PK,long pk_value){
         Cursor c = Select(NAME_TABLE, new String[] { "*" },COLUMN_PK + "=?",new String[] {String.valueOf(pk_value)});
         if (c.moveToFirst())
             return true;

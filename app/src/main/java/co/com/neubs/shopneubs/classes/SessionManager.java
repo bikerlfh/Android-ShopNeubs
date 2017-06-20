@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import co.com.neubs.shopneubs.R;
+import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
@@ -170,6 +172,36 @@ public class SessionManager {
     private void cargarShopCar(Context context){
         final ItemCar itemCar = new ItemCar(context);
         this.shopCar = itemCar.getAllItemCar();
+
+        if (this.shopCar != null && this.shopCar.size() > 0){
+            APISincronizacion apiSincronizacion = new APISincronizacion(context);
+            // Se consulta la ultima sincronzacion general
+            if(apiSincronizacion.getLastGeneral()){
+                for(final ItemCar item:shopCar){
+                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    try {
+                        Date fechaItem = df.parse(item.getFecha());
+                        Date fechaSincronizacion = df.parse(apiSincronizacion.getFecha());
+                        // si la fecha del itemCar es menor al de la sincronización, se actualiza el precio
+                        if (fechaItem.before(fechaSincronizacion)){
+                            APIRest.Async.get("", new IServerCallback() {
+                                @Override
+                                public void onSuccess(String json) {
+
+                                }
+
+                                @Override
+                                public void onError(String message_error, APIValidations apiValidations) {
+                                    item.delete();
+                                }
+                            });
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -182,7 +214,7 @@ public class SessionManager {
 
         // Se valida que el saldoInventairo no esté agregado en el carro
         if (this.getItemCarByIdSaldoInventario(itemCar.getIdSaldoInventario()) == null) {
-            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             itemCar.setFecha(df.format(new Date()));
 
             if (itemCar.save()) {
