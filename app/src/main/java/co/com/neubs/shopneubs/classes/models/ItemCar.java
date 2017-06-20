@@ -16,14 +16,14 @@ import co.com.neubs.shopneubs.models.ItemCarModel;
 
 public class ItemCar implements ICrud {
 
-    private int idItemCar;
-    private String fecha;
+    private transient int idItemCar;
+    private transient String fecha;
     private int idSaldoInventario;
-    private String nombreProducto;
-    private int idMarca;
-    private String image;
+    private transient String nombreProducto;
+    private transient int idMarca;
+    private transient String image;
     private int cantidad;
-    private float precioVentaUnitario;
+    private transient float precioVentaUnitario;
 
 
     private transient Marca marca;

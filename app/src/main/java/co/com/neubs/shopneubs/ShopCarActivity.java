@@ -14,14 +14,23 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import co.com.neubs.shopneubs.adapters.ShopCarAdapter;
+import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
+import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class ShopCarActivity extends AppCompatActivity {
 
@@ -63,6 +72,23 @@ public class ShopCarActivity extends AppCompatActivity {
         btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Gson gson = new GsonBuilder().create();
+                String json =  gson.toJson(sessionManager.getShopCar().get(0));
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("data",json);
+                APIRest.Async.post(APIRest.URL_SOLICITUD_PEDIDO, params, new IServerCallback() {
+                    @Override
+                    public void onSuccess(String json) {
+                        Toast.makeText(ShopCarActivity.this,json,Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String message_error, APIValidations apiValidations) {
+                        if (apiValidations != null)
+                            Toast.makeText(ShopCarActivity.this,apiValidations.getDetail(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShopCarActivity.this,message_error,Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         });
