@@ -77,4 +77,5 @@
     <string name="title_item_deleted">Producto eliminado</string>
     <string name="error_item_in_car">El producto ya está en el carrito</string>
     <string name="title_item_added">Producto agregado</string>
+    <string name="comprar">Comprar</string>
 </resources>

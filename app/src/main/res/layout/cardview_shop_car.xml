@@ -9,123 +9,140 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="2dp"
-        android:elevation="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardBackgroundColor="@color/colorBackground"
-        app:cardElevation="8dp">
+        app:cardElevation="4dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorWhite">
 
             <TextView
                 android:id="@+id/lbl_nombre_producto_card_shop_car"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="202dp"
+                android:layout_height="22dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="16dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingTop="24dp"
+                android:maxLines="1"
+                android:paddingEnd="26dp"
+                android:paddingRight="26dp"
+                android:paddingStart="8dp"
                 android:text="@string/text_view_empy"
-                android:textSize="18sp"
-                app:layout_constraintLeft_toRightOf="@+id/img_producto_card_shop_card"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/textColorSecundary"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/img_btn_eliminar_item_car"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/lbl_marca_card_shop_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
+                android:paddingStart="8dp"
                 android:text="TextView"
-                tools:layout_editor_absoluteX="80dp"
-                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toRightOf="@+id/img_producto_card_shop_card"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_nombre_producto_card_shop_car" />
 
             <TextView
                 android:id="@+id/lbl_valor_total_item_card_shop_card"
-                android:layout_width="89dp"
-                android:layout_height="21dp"
-                android:layout_marginBottom="1dp"
+                android:layout_width="90dp"
+                android:layout_height="27dp"
+                android:layout_marginBottom="-9dp"
+                android:layout_marginRight="1dp"
                 android:gravity="right|center_vertical"
                 android:paddingBottom="8dp"
                 android:paddingEnd="16dp"
                 android:text="TextView"
-                android:textColor="@color/colorPrecio"
+                android:textColor="@color/textColorSecundary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
                 android:id="@+id/lbl_cantidad_card_shop_car"
-                android:layout_width="30dp"
-                android:layout_height="28dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginStart="17dp"
+                android:layout_width="22dp"
+                android:layout_height="21dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="6dp"
                 android:gravity="center"
-                android:paddingBottom="8dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="@string/text_view_empy"
                 android:textColor="@color/textColorSecundary"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="115dp"
-                tools:layout_editor_absoluteY="60dp" />
+                app:layout_constraintLeft_toRightOf="@+id/img_btn_menos_card_shop_car"
+                tools:layout_editor_absoluteY="66dp" />
 
             <ImageButton
                 android:id="@+id/img_btn_eliminar_item_car"
-                android:layout_width="38dp"
-                android:layout_height="45dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="0dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@android:color/transparent"
-                android:paddingEnd="16dp"
-                android:paddingTop="24dp"
+                android:tint="@color/colorPrimaryLight"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toRightOf="@+id/img_btn_eliminar_item_car"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-                tools:layout_editor_absoluteX="278dp" />
+                app:srcCompat="@drawable/ic_cancel" />
 
             <ImageButton
                 android:id="@+id/img_btn_mas_card_shop_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                android:layout_marginEnd="140dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="140dp"
-                android:layout_marginStart="8dp"
-                android:background="@android:color/transparent"
-                android:paddingBottom="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="4dp"
+                android:background="@color/colorSecundary"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="3dp"
+                android:tint="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintLeft_toRightOf="@+id/lbl_cantidad_card_shop_car"
-                app:layout_constraintRight_toRightOf="parent"
-                app:srcCompat="@drawable/ic_plus" />
+                app:srcCompat="@drawable/ic_adds" />
 
             <ImageButton
                 android:id="@+id/img_btn_menos_card_shop_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:paddingBottom="8dp"
-                android:paddingStart="16dp"
-                app:layout_constraintRight_toLeftOf="@+id/lbl_cantidad_card_shop_car"
-                app:srcCompat="@drawable/ic_minus"
-                tools:layout_editor_absoluteY="71dp"
-                android:layout_marginRight="-2dp" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="88dp"
+                android:layout_marginStart="88dp"
+                android:layout_marginTop="12dp"
+                android:background="?android:attr/colorControlHighlight"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="3dp"
+                android:tint="@color/colorPrimaryDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_marca_card_shop_car"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_substract" />
 
             <co.com.neubs.shopneubs.controls.ImageLoaderView
                 android:id="@+id/img_producto_card_shop_card"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:background="@android:color/white"
-                android:paddingBottom="8dp"
-                android:paddingTop="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.304" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

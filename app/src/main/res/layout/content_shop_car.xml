@@ -8,37 +8,47 @@
     tools:context="co.com.neubs.shopneubs.ShopCarActivity"
     tools:showIn="@layout/activity_shop_car">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_view_shop_car"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin_boton"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_shop_car"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="185dp"
+            tools:layout_editor_absoluteY="16dp" />
+    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_boton"
-        android:layout_marginEnd="@dimen/margin_End"
-        android:layout_marginStart="@dimen/margin_Start"
+        android:background="@android:color/white"
+        android:elevation="8dp"
         android:minHeight="25dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btn_realizar_pedido"
+        android:paddingEnd="@dimen/padding_End"
+        android:paddingStart="@dimen/padding_Start"
+        android:paddingTop="@dimen/padding_Top"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <TextView
             android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.70"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_weight="0.85"
             android:gravity="center_vertical|start"
             android:text="@string/title_resumen"
             android:textColor="@color/textColorSecundary"
@@ -46,30 +56,35 @@
 
         <TextView
             android:id="@+id/lbl_valor_total"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.85"
             android:gravity="center_vertical|end"
             android:text="@string/text_loading"
             android:textColor="@color/colorPrecio"
             android:textSize="18sp" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_realizar_pedido"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_boton"
-        android:layout_marginEnd="@dimen/margin_End"
-        android:layout_marginStart="@dimen/margin_Start"
-        android:background="@color/colorAccent"
-        android:text="Button"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/btn_realizar_pedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorSecundary"
+            android:elevation="9dp"
+            android:text="@string/comprar"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
