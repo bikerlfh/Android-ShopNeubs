@@ -69,9 +69,6 @@ public class ShopCarActivity extends AppCompatActivity {
         ShopCarAdapter shopCarAdapter = new ShopCarAdapter(this);
         recyclerView.setAdapter(shopCarAdapter);
 
-
-
-
         btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

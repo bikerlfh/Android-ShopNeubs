@@ -65,7 +65,7 @@ public class PedidoDetalleActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(3), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
 
         lblEstado.setText(pedidoVenta.getEstado());
         lblFecha.setText(pedidoVenta.getFecha());
