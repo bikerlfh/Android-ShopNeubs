@@ -60,8 +60,6 @@
             android:id="@+id/lbl_estado_pedido_detalle"
             android:layout_width="146dp"
             android:layout_height="35dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
             android:background="@color/colorWhite"
             android:paddingBottom="@dimen/padding_Boton"
             android:paddingTop="10dp"
@@ -74,8 +72,6 @@
             android:id="@+id/lbl_costo_total_pedido_detalle"
             android:layout_width="132dp"
             android:layout_height="35dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="0dp"
             android:background="@color/colorWhite"
             android:paddingBottom="10dp"
             android:paddingEnd="@dimen/padding_End"
@@ -91,8 +87,6 @@
             android:id="@+id/lbl_numero_productos_pedido_detalle"
             android:layout_width="188dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
             android:background="@color/colorWhite"
             android:paddingBottom="10dp"
             android:paddingStart="@dimen/padding_Start"
@@ -105,16 +99,18 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_top"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="@dimen/margin_top">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_view_pedido_detalle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 
 </LinearLayout>

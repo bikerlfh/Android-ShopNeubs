@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import co.com.neubs.shopneubs.ProductoDetalleActivity;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.PedidoVentaPosicion;
@@ -47,7 +49,7 @@ public class PedidoDetalleAdapter extends RecyclerView.Adapter<PedidoDetalleAdap
     }
 
 
-    class PedidoDetalleViewHolder  extends RecyclerView.ViewHolder{
+    class PedidoDetalleViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView txtNombreProducto,txtCantidad,txtCostoTotal;
         private ImageLoaderView imagenView;
@@ -62,6 +64,8 @@ public class PedidoDetalleAdapter extends RecyclerView.Adapter<PedidoDetalleAdap
             txtCostoTotal = (TextView) itemView.findViewById(R.id.lbl_costo_total_pedido_detalle);
             imagenView = (ImageLoaderView) itemView.findViewById(R.id.img_pedido_detalle);
             context = itemView.getContext();
+
+            itemView.setOnClickListener(this);
         }
 
         public void bindPedidoVentaPosicion(PedidoVentaPosicion pedidoVentaPosicion) {
@@ -71,6 +75,17 @@ public class PedidoDetalleAdapter extends RecyclerView.Adapter<PedidoDetalleAdap
             txtCantidad.setText(context.getString(R.string.title_num_products) + " ("+ String.valueOf(pedidoVentaPosicion.getCantidad())+")");
             txtCostoTotal.setText(Helper.MoneyFormat(pedidoVentaPosicion.getCostoTotal()));
             imagenView.setImageURL(producto.getImagen());
+
+
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(),ProductoDetalleActivity.class);
+            intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,this.pedidoVentaPosicion.getIdSaldoInventario());
+            intent.putExtra(ProductoDetalleActivity.PARAM_NOMBRE_PRODUCTO,this.pedidoVentaPosicion.getProducto().getNombre());
+            v.getContext().startActivity(intent);
         }
     }
 
