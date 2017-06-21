@@ -171,7 +171,10 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             itemCar.setImage(saldoInventario.getProducto().getImagenes().get(0).getUrl());
             itemCar.setIdMarca(saldoInventario.getProducto().getIdMarca());
             itemCar.setCantidad(1);
-            itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
+            if (saldoInventario.getPrecioOferta() > 0)
+                itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioOferta());
+            else
+                itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
             if (sessionManager.addItemCar(itemCar)) {
                 Toast.makeText(this,getString(R.string.title_item_added),Toast.LENGTH_SHORT).show();
             }

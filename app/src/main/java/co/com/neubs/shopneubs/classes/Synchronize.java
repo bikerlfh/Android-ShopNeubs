@@ -113,7 +113,7 @@ public class Synchronize {
             if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
                 for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
                     apiSincronizacion.initDbManager(context);
-                    if (apiSincronizacion != null && !apiSincronizacion.exists()) {
+                    if (!apiSincronizacion.exists()) {
                         apiSincronizacion.save();
                         numSincronizacion++;
 

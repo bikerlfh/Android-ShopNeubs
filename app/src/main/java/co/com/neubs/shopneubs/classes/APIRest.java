@@ -55,6 +55,7 @@ public class APIRest {
     public final static String URL_PERFIL_CREATE = "profile/create/";
     public final static String URL_PERFIL_EDIT = "profile/edit/";
     public final static String URL_SOLICITUD_PEDIDO = "ventas/solicitud/";
+    public final static String URL_PRODUCTO_SIMPLE = "producto-simple/";
 
 
     /**

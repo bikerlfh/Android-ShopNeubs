@@ -35,7 +35,7 @@ public class DbManager
     private long identity;
 
     /**
-     * Obtiene el pk de la insersión
+     * Obtiene el pk de la inserción
      * @return
      */
     public long getIdentity() {

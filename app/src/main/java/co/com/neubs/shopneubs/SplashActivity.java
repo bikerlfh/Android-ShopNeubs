@@ -23,6 +23,7 @@ public class SplashActivity extends Activity {
     private ImageView imgSplash;
     private boolean isRunning=false;
     boolean isFirstRun;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class SplashActivity extends Activity {
 
         // Se obtiene la instancia del sessionManager
         // para que consulte el usuario y el carro
-        SessionManager.getInstance(this);
+        sessionManager = SessionManager.getInstance(this);
         initApp(isFirstRun);
 
         /*new Handler().postDelayed(new Runnable() {
@@ -146,12 +147,18 @@ public class SplashActivity extends Activity {
             if(result) {
                 Intent intent = new Intent(SplashActivity.this,PrincipalActivity.class);
                 startActivity(intent);
+                // Se sincronizan los precios del carro
+                if (sessionManager.getShopCar().size() > 0){
+                    sessionManager.sincronizarPreciosShopCar(SplashActivity.this);
+                }
                 finish();
             }
             else {
                 Toast.makeText(SplashActivity.this, getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
-                // Se elimina la base de datos
-                context.deleteDatabase(DbManager.DbHelper.DB_NAME);
+                if (isFirstRun) {
+                    // Se elimina la base de datos
+                    context.deleteDatabase(DbManager.DbHelper.DB_NAME);
+                }
             }
         }
     }

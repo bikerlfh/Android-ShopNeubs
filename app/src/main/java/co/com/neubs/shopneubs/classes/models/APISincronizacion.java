@@ -78,7 +78,7 @@ public class APISincronizacion implements ICrud {
         contentValues.put(APISincronizacionModel.ULTIMA, ultima);
 
         // Si se va a guardar la ultima
-        // se modifica la api que este guardad como ultimo.
+        // se modifica la api que este guardado como ultimo.
         if (ultima){
             List<APISincronizacion> listadoApiSincronizacion = getUltimaApiSincronizacion(ultima);
             for (APISincronizacion apiSincronizacion: listadoApiSincronizacion) {

@@ -17,6 +17,7 @@ import java.util.function.UnaryOperator;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
+import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -172,36 +173,73 @@ public class SessionManager {
     private void cargarShopCar(Context context){
         final ItemCar itemCar = new ItemCar(context);
         this.shopCar = itemCar.getAllItemCar();
+    }
+    public void sincronizarPreciosShopCar(Context context){
+        APISincronizacion apiSincronizacion = new APISincronizacion(context);
+        // Se consulta la ultima sincronzacion general
+        if(apiSincronizacion.getLastGeneral()){
+            if (validarSincronizacionShopCar(apiSincronizacion.getFecha())) {
+                String data = "[";
+                for (final ItemCar item : shopCar) {
+                    data += "{\"idSaldoInventario\":" + item.getIdSaldoInventario() + "},";
+                }
+                data += "]";
 
-        if (this.shopCar != null && this.shopCar.size() > 0){
-            APISincronizacion apiSincronizacion = new APISincronizacion(context);
-            // Se consulta la ultima sincronzacion general
-            if(apiSincronizacion.getLastGeneral()){
-                for(final ItemCar item:shopCar){
-                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    try {
-                        Date fechaItem = df.parse(item.getFecha());
-                        Date fechaSincronizacion = df.parse(apiSincronizacion.getFecha());
-                        // si la fecha del itemCar es menor al de la sincronización, se actualiza el precio
-                        if (fechaItem.before(fechaSincronizacion)){
-                            APIRest.Async.get("", new IServerCallback() {
-                                @Override
-                                public void onSuccess(String json) {
+                Map<String, String> params = new HashMap<>();
+                params.put("data", data);
 
+                APIRest.Async.post(APIRest.URL_PRODUCTO_SIMPLE, params, new IServerCallback() {
+                    @Override
+                    public void onSuccess(String json) {
+                        SaldoInventario[] listadoSaldoInventario = APIRest.serializeObjectFromJson(json,SaldoInventario[].class);
+                        if (listadoSaldoInventario != null){
+                            for(SaldoInventario saldo:listadoSaldoInventario){
+                                ItemCar item = getItemCarByIdSaldoInventario(saldo.getIdSaldoInventario());
+                                if (item != null){
+                                    if (saldo.getPrecioOferta() > 0)
+                                        item.setPrecioVentaUnitario(saldo.getPrecioOferta());
+                                    else
+                                        item.setPrecioVentaUnitario(saldo.getPrecioVentaUnitario());
+                                    item.update();
                                 }
-
-                                @Override
-                                public void onError(String message_error, APIValidations apiValidations) {
-                                    item.delete();
-                                }
-                            });
+                            }
                         }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
                     }
+
+                    @Override
+                    public void onError(String message_error, APIValidations apiValidations) {
+                        // Se borran  el carro.
+                        deleteShopCar();
+                    }
+                });
+            }
+
+        }
+    }
+    /**
+     * Valida si hay algun item en el carro con una fecha anterior a la ultima sincronización
+     * de los precios
+     * @param fechaApiSincronizacion
+     * @return
+     */
+    private boolean validarSincronizacionShopCar(String fechaApiSincronizacion){
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        try {
+            Date fecha = df.parse(df.format(new Date()));
+            Date fechaItem = null;
+            for (ItemCar item:shopCar) {
+                fechaItem = df.parse(item.getFecha());
+                if(fechaItem.before(fecha)){
+                    fecha = fechaItem;
                 }
             }
+            Date fechaAPi = df.parse(fechaApiSincronizacion);
+            if (fechaItem.before(fechaAPi))
+                return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
     /**
