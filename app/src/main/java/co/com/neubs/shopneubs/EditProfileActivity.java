@@ -113,7 +113,11 @@ public class EditProfileActivity extends AppCompatActivity {
                     if (apiValidations.isTokenInvalid()) {
                         sessionManager.closeSessionExpired(EditProfileActivity.this);
                     }
-                    Toast.makeText(EditProfileActivity.this,apiValidations.getResponse(),Toast.LENGTH_SHORT).show();
+                    else if(apiValidations.getDetail() != null){
+                        Toast.makeText(EditProfileActivity.this,apiValidations.getDetail(),Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        Toast.makeText(EditProfileActivity.this,apiValidations.getResponse(),Toast.LENGTH_SHORT).show();
                 }
                 else
                     Toast.makeText(EditProfileActivity.this,message_error,Toast.LENGTH_SHORT).show();
