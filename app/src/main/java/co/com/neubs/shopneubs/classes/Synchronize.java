@@ -71,17 +71,22 @@ public class Synchronize {
         int numSincronizacion = 0;
 
         // Se consulta la api y se obtiene un arreglo tipo APITabla[]
-        final APITabla[] listadoAPITabla = APIRest.Sync.getSerializedObjectFromGETRequest(URL_API_TABLA,APITabla[].class);
-        if (listadoAPITabla != null && listadoAPITabla.length > 0) {
-            for (APITabla tabla : listadoAPITabla) {
-                tabla.initDbManager(context);
-                // Si la tabla no está creada en la base de datos se guarda
-                if (!tabla.exists()) {
-                    tabla.save();
-                    numSincronizacion++;
+        final String response = APIRest.Sync.get(URL_API_TABLA,null);
+        if (APIRest.Sync.ok()){
+            final APITabla[] listadoAPITabla = APIRest.serializeObjectFromJson(response,APITabla[].class);
+            if (listadoAPITabla != null && listadoAPITabla.length > 0) {
+                for (APITabla tabla : listadoAPITabla) {
+                    tabla.initDbManager(context);
+                    // Si la tabla no está creada en la base de datos se guarda
+                    if (!tabla.exists()) {
+                        tabla.save();
+                        numSincronizacion++;
+                    }
                 }
             }
         }
+        else
+            numSincronizacion = -1;
         return numSincronizacion;
     }
     /**
@@ -92,12 +97,17 @@ public class Synchronize {
     public int SynchronizeAPI(int idApiTabla){
         final String url = URL_API_SINCRONIZACION + "?tabla="+idApiTabla;
 
-        APISincronizacion apiSincronizacion = APIRest.Sync.getSerializedObjectFromGETRequest(url,APISincronizacion.class);
-        apiSincronizacion.initDbManager(context);
-        if (apiSincronizacion != null && !apiSincronizacion.exists()){
-            apiSincronizacion.save();
-            return 1;
+        final String response = APIRest.Sync.get(url,null);
+        if(APIRest.Sync.ok()) {
+            APISincronizacion apiSincronizacion = APIRest.serializeObjectFromJson(response, APISincronizacion.class);
+            apiSincronizacion.initDbManager(context);
+            if (apiSincronizacion != null && !apiSincronizacion.exists()) {
+                apiSincronizacion.save();
+                return 1;
+            }
         }
+        else
+            return -1;
         return 0;
     }
 
@@ -109,20 +119,25 @@ public class Synchronize {
     public int SynchronizeAPI(boolean withTablas) {
         int numSincronizacion = 0;
         try {
-            final APISincronizacion[] listApiSincronizacion = APIRest.Sync.getSerializedObjectFromGETRequest(URL_API_SINCRONIZACION, APISincronizacion[].class);
-            if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
-                for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
-                    apiSincronizacion.initDbManager(context);
-                    if (!apiSincronizacion.exists()) {
-                        apiSincronizacion.save();
-                        numSincronizacion++;
+            final String response = APIRest.Sync.get(URL_API_SINCRONIZACION,null);
+            if (APIRest.Sync.ok()) {
+                final APISincronizacion[] listApiSincronizacion = APIRest.serializeObjectFromJson(response, APISincronizacion[].class);
+                if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
+                    for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
+                        apiSincronizacion.initDbManager(context);
+                        if (!apiSincronizacion.exists()) {
+                            apiSincronizacion.save();
+                            numSincronizacion++;
 
-                        if (withTablas) {
-                            SynchronizeAPITabla(apiSincronizacion.getTabla());
+                            if (withTablas) {
+                                SynchronizeAPITabla(apiSincronizacion.getTabla());
+                            }
                         }
                     }
                 }
             }
+            else
+                numSincronizacion = -1;
         }
         catch (Exception ex){
             message_error = ex.getMessage();
@@ -133,31 +148,41 @@ public class Synchronize {
 
     public int SynchronizeTipoDocumento(){
         int numSincronizacion = 0;
-        final TipoDocumento[] listTipoDocumento = APIRest.Sync.getSerializedObjectFromGETRequest(URL_TIPO_DOCUMENTO,TipoDocumento[].class);
-        if (listTipoDocumento != null && listTipoDocumento.length > 0) {
-            for (TipoDocumento tipoDocumento : listTipoDocumento) {
-                tipoDocumento.initDbManager(context);
-                if (!tipoDocumento.exists()) {
-                    tipoDocumento.save();
-                    numSincronizacion++;
+        final String response = APIRest.Sync.get(URL_TIPO_DOCUMENTO,null);
+        if (APIRest.Sync.ok()) {
+            final TipoDocumento[] listTipoDocumento = APIRest.serializeObjectFromJson(response, TipoDocumento[].class);
+            if (listTipoDocumento != null && listTipoDocumento.length > 0) {
+                for (TipoDocumento tipoDocumento : listTipoDocumento) {
+                    tipoDocumento.initDbManager(context);
+                    if (!tipoDocumento.exists()) {
+                        tipoDocumento.save();
+                        numSincronizacion++;
+                    }
                 }
             }
         }
+        else
+            numSincronizacion = -1;
         return numSincronizacion;
     }
 
     public int SynchronizePais(){
         int numSincronizacion = 0;
-        final Pais[] listPais = APIRest.Sync.getSerializedObjectFromGETRequest(URL_PAIS,Pais[].class);
-        if (listPais != null && listPais.length > 0) {
-            for (Pais pais : listPais) {
-                pais.initDbManager(context);
-                if (!pais.exists()) {
-                    pais.save();
-                    numSincronizacion++;
+        final String response = APIRest.Sync.get(URL_PAIS,null);
+        if (APIRest.Sync.ok()) {
+            final Pais[] listPais = APIRest.serializeObjectFromJson(response, Pais[].class);
+            if (listPais != null && listPais.length > 0) {
+                for (Pais pais : listPais) {
+                    pais.initDbManager(context);
+                    if (!pais.exists()) {
+                        pais.save();
+                        numSincronizacion++;
+                    }
                 }
             }
         }
+        else
+            numSincronizacion = -1;
         return numSincronizacion;
     }
 
@@ -171,16 +196,21 @@ public class Synchronize {
     public int SynchronizeDepartamento(int idPais){
         int numSincronizacion = 0;
         String url = idPais > 0? URL_DEPARTAMENTO.concat("?idPais"+String.valueOf(idPais)):URL_DEPARTAMENTO;
-        final Departamento[] listDepartamento = APIRest.Sync.getSerializedObjectFromGETRequest(url,Departamento[].class);
-        if (listDepartamento != null && listDepartamento.length > 0) {
-            for (Departamento departamento : listDepartamento) {
-                departamento.initDbManager(context);
-                if (!departamento.exists()) {
-                    departamento.save();
-                    numSincronizacion++;
+        final String response = APIRest.Sync.get(url,null);
+        if (APIRest.Sync.ok()) {
+            final Departamento[] listDepartamento = APIRest.serializeObjectFromJson(response, Departamento[].class);
+            if (listDepartamento != null && listDepartamento.length > 0) {
+                for (Departamento departamento : listDepartamento) {
+                    departamento.initDbManager(context);
+                    if (!departamento.exists()) {
+                        departamento.save();
+                        numSincronizacion++;
+                    }
                 }
             }
         }
+        else
+            numSincronizacion = -1;
         return numSincronizacion;
     }
 
@@ -195,16 +225,21 @@ public class Synchronize {
     public int SynchronizeMunicipio(int idDepartamento){
         int numSincronizacion = 0;
         String url = idDepartamento > 0? URL_MUNICIPIO.concat("?idPais"+String.valueOf(idDepartamento)):URL_MUNICIPIO;
-        final Municipio[] listMunicipio = APIRest.Sync.getSerializedObjectFromGETRequest(url,Municipio[].class);
-        if (listMunicipio != null && listMunicipio.length > 0) {
-            for (Municipio municipio : listMunicipio) {
-                municipio.initDbManager(context);
-                if (!municipio.exists()) {
-                    municipio.save();
-                    numSincronizacion++;
+        final String response = APIRest.Sync.get(url,null);
+        if (APIRest.Sync.ok()) {
+            final Municipio[] listMunicipio = APIRest.serializeObjectFromJson(response, Municipio[].class);
+            if (listMunicipio != null && listMunicipio.length > 0) {
+                for (Municipio municipio : listMunicipio) {
+                    municipio.initDbManager(context);
+                    if (!municipio.exists()) {
+                        municipio.save();
+                        numSincronizacion++;
+                    }
                 }
             }
         }
+        else
+            numSincronizacion = -1;
         return numSincronizacion;
     }
 
@@ -214,16 +249,21 @@ public class Synchronize {
      */
     public int SynchronizeMarcas(){
         int numSincronizacion = 0;
-        final Marca[] listMarca = APIRest.Sync.getSerializedObjectFromGETRequest(URL_MARCA,Marca[].class);
-        if (listMarca != null && listMarca.length > 0) {
-            for (Marca marca : listMarca) {
-                marca.initDbManager(context);
-                if (!marca.exists()) {
-                    marca.save();
-                    numSincronizacion++;
+        final String response = APIRest.Sync.get(URL_MARCA,null);
+        if (APIRest.Sync.ok()) {
+            final Marca[] listMarca = APIRest.serializeObjectFromJson(response, Marca[].class);
+            if (listMarca != null && listMarca.length > 0) {
+                for (Marca marca : listMarca) {
+                    marca.initDbManager(context);
+                    if (!marca.exists()) {
+                        marca.save();
+                        numSincronizacion++;
+                    }
                 }
             }
         }
+        else
+            numSincronizacion = -1;
         return numSincronizacion;
     }
 
@@ -233,17 +273,21 @@ public class Synchronize {
      */
     public int SynchronizeCategorias(){
         int numSincronizacion = 0;
-
-        final Categoria[] listCategoria = APIRest.Sync.getSerializedObjectFromGETRequest(URL_CATEGORIA,Categoria[].class);
-        if (listCategoria != null && listCategoria.length > 0) {
-            for (Categoria cat : listCategoria) {
-                cat.initDbManager(context);
-                if (!cat.exists()) {
-                    cat.save();
-                    numSincronizacion++;
+        final String response = APIRest.Sync.get(URL_CATEGORIA,null);
+        if (APIRest.Sync.ok()) {
+            final Categoria[] listCategoria = APIRest.serializeObjectFromJson(response, Categoria[].class);
+            if (listCategoria != null && listCategoria.length > 0) {
+                for (Categoria cat : listCategoria) {
+                    cat.initDbManager(context);
+                    if (!cat.exists()) {
+                        cat.save();
+                        numSincronizacion++;
+                    }
                 }
             }
         }
+        else
+            numSincronizacion = -1;
         return numSincronizacion;
     }
 

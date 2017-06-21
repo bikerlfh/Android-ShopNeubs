@@ -12,10 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -126,12 +124,14 @@ public class APIRest {
         }
         return headers;
     }
+
     /**
      * Clase de metodos sincronos
      * los métodos de esta clase deben ser usados dentro de un AsyncTask, de lo contrario se Excepcionará
      */
     public static class Sync {
         private static HttpRequest request;
+        private static APIValidations apiValidations;
         /**
          * realiza una peticion a la API retornando un String en formato json
          * @param url
@@ -141,6 +141,8 @@ public class APIRest {
             headers = addTokenHeader(headers);
             headers = headers !=  null? headers:new HashMap<String, String>();
             request = HttpRequest.get(constructURL(url)).accept("application/json").headers(headers);
+            // Se valida si el request tiene error
+            validarRequest();
             return request.body();
         }
 
@@ -160,19 +162,26 @@ public class APIRest {
             headers = addTokenHeader(headers);
             if (headers != null)
                 request = request.headers(headers);
+            // Se valida si el request tiene error
+            validarRequest();
             return request.body();
         }
-
+        private static void validarRequest(){
+            apiValidations = null;
+            if (request != null && !request.ok()){
+                apiValidations = serializeObjectFromJson(request.body(),APIValidations.class);
+            }
+        }
         /**
          * Realiza una peticion a la API retornando un objeto serializado
          * @param url
          * @param classOfT Tipo de objeto a devolver (ejemplo Producto.class, Producto[].class)
          * @return
          */
-        public static <T> T getSerializedObjectFromGETRequest(String url,Class<T> classOfT){
+        /*public static <T> T getSerializedObjectFromGETRequest(String url,Class<T> classOfT){
             String response = get(url,null);
             return (response == null)? null : serializeObjectFromJson(response,classOfT);
-        }
+        }*/
 
 
 
