@@ -4,6 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
+import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
+import static java.net.HttpURLConnection.HTTP_CREATED;
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
+import static java.net.HttpURLConnection.HTTP_OK;
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
+import static java.net.HttpURLConnection.HTTP_UNAVAILABLE;
+
 /**
  * Created by bikerlfh on 6/12/17.
  */
@@ -23,6 +32,8 @@ public class APIValidations {
 
     // Guarda el response completo de la peticion
     private transient String response;
+
+    private transient int responseCode;
 
     public ArrayList<String> getNonFieldError() {
         return nonFieldError;
@@ -88,6 +99,14 @@ public class APIValidations {
         this.response = response;
     }
 
+    public int getResponseCode() {
+        return responseCode;
+    }
+
+    public void setResponseCode(int responseCode) {
+        this.responseCode = responseCode;
+    }
+
     public boolean isNoFieldError(){
         return nonFieldError != null && nonFieldError.size() > 0;
     }
@@ -112,10 +131,10 @@ public class APIValidations {
 
     /**
      * Evalua si el detail devuelve token invalido
-     * @return
+     * @return true si el token es invalido
      */
     public boolean isTokenInvalid(){
-        return (detail != null && detail.length() > 0 && detail.contains("Token"));
+        return (detail != null && detail.length() > 0 && detail.toUpperCase().contains("TOKEN"));
     }
 
     public String getValidationNonFieldError(){
@@ -141,4 +160,22 @@ public class APIValidations {
         }
         return message;
     }
+
+    public boolean ok() { return  responseCode == HTTP_OK; }
+
+    public boolean created() { return  responseCode == HTTP_CREATED; }
+
+    public boolean badRequest() { return responseCode == HTTP_BAD_REQUEST; }
+
+    public boolean unAuthorized() { return responseCode == HTTP_UNAUTHORIZED; }
+
+    /**
+     * Si hubo time out o el servidor no esta disponible
+     * @return true si timeOut o Unavaible
+     */
+    public boolean timeOut() { return responseCode == HTTP_CLIENT_TIMEOUT || responseCode == HTTP_UNAVAILABLE; }
+
+    public boolean serverError() { return responseCode == HTTP_INTERNAL_ERROR; }
+
+    public boolean notFound() { return responseCode == HTTP_NOT_FOUND; }
 }

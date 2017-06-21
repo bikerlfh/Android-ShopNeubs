@@ -12,7 +12,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,15 +23,9 @@ import java.util.Set;
 import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
-import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
-import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
-import static java.net.HttpURLConnection.HTTP_CREATED;
-import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
-import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
-import static java.net.HttpURLConnection.HTTP_NOT_MODIFIED;
-import static java.net.HttpURLConnection.HTTP_NO_CONTENT;
-import static java.net.HttpURLConnection.HTTP_OK;
 import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
+import static java.net.HttpURLConnection.HTTP_UNAVAILABLE;
 
 /**
  * Created by bikerlfh on 5/23/17.
@@ -55,6 +52,10 @@ public class APIRest {
     public final static String URL_SOLICITUD_PEDIDO = "ventas/solicitud/";
     public final static String URL_PRODUCTO_SIMPLE = "producto-simple/";
 
+    /**
+     * tiempo de espera maximo por petición
+     */
+    private final static int TIME_OUT = 30000;
 
     /**
      * Serialize a object from String(json format)
@@ -68,8 +69,8 @@ public class APIRest {
 
     /**
      * Retorna la url valida
-     * @param url
-     * @return
+     * @param url de la peticion
+     * @return url valida
      */
     protected static String constructURL(String url){
         return (!url.contains(URL_API))? URL_API + url : url;
@@ -79,7 +80,7 @@ public class APIRest {
      * Retorna el valor de una key de un json
      * @param json json
      * @param key del parametro
-     * @return
+     * @return Object
      */
     public static Object getObjectFromJson(String json, String key){
         try{
@@ -93,8 +94,8 @@ public class APIRest {
 
     /**
      * Convierte los parametros Map<String,String> a un String format: p1=value1&p2=value2
-     * @param param
-     * @return
+     * @param param para pasarlos por GET
+     * @return String parametros formato param1=valor1&param2=valor2...
      */
     private static String makeParams(Map<String,String> param){
         try {
@@ -112,14 +113,14 @@ public class APIRest {
 
     /**
      * Retorna el header con el Token.
-     * @return
+     * @return parametros con el token si existe
      */
     public static Map<String,String> addTokenHeader(Map<String,String> headers){
         SessionManager sessionManager = SessionManager.getInstance(null);
         if (sessionManager.getToken() != null && sessionManager.getToken().length() > 0)
         {
             if (headers == null)
-                headers = new HashMap<String,String>();
+                headers = new HashMap<>();
             headers.put("Authorization","Token " + sessionManager.getToken());
         }
         return headers;
@@ -131,73 +132,118 @@ public class APIRest {
      */
     public static class Sync {
         private static HttpRequest request;
-        private static APIValidations apiValidations;
+        public static APIValidations apiValidations;
+
         /**
          * realiza una peticion a la API retornando un String en formato json
-         * @param url
-         * @return
+         * @param url de la peticion
+         * @return response o null
+         */
+        public static String get(String url){
+            try {
+                Map<String, String> headers = addTokenHeader(null);
+                headers = headers != null ? headers : new HashMap<String, String>();
+                request = HttpRequest.get(constructURL(url)).accept("application/json").headers(headers).connectTimeout(TIME_OUT);
+                // Se valida si el request tiene error
+                return validarRequest()? request.body() : null;
+            }
+            catch (HttpRequest.HttpRequestException e){
+                makeException(e.getCause());
+                return null;
+            }
+        }
+
+        /**
+         * realiza una peticion a la API retornando un String en formato json
+         * @param url de la peticion
+         * @param headers de la peticion
+         * @return response o null
          */
         public static String get(String url,Map<String,String> headers){
-            headers = addTokenHeader(headers);
-            headers = headers !=  null? headers:new HashMap<String, String>();
-            request = HttpRequest.get(constructURL(url)).accept("application/json").headers(headers);
-            // Se valida si el request tiene error
-            validarRequest();
-            return request.body();
+            try {
+                headers = addTokenHeader(headers);
+                headers = headers != null ? headers : new HashMap<String, String>();
+                request = HttpRequest.get(constructURL(url)).accept("application/json").headers(headers).connectTimeout(TIME_OUT);
+                // Se valida si el request tiene error
+                return validarRequest()? request.body() : null;
+            }
+            catch (HttpRequest.HttpRequestException e){
+                makeException(e.getCause());
+                return null;
+            }
         }
 
         /**
          * Realiza una petición POST
          * @param url URL Api
          * @param params parametros conformados por K,Y
-         * @param headers
-         * @return
+         * @param headers de la peticion
+         * @return response o null
          */
         public static String post(String url,Map<String,String> params,Map<String,String> headers){
-            //headers = headers !=  null? headers:new HashMap<String, String>();
-            request = HttpRequest.post(constructURL(url)).accept("application/json");
-            // Se envian los parametros si existen
-            request = (params != null) ? request.send(makeParams(params)):request;
+            try {
+                //headers = headers !=  null? headers:new HashMap<String, String>();
+                request = HttpRequest.post(constructURL(url)).accept("application/json").connectTimeout(TIME_OUT);
+                // Se envian los parametros si existen
+                request = (params != null) ? request.send(makeParams(params)) : request;
 
-            headers = addTokenHeader(headers);
-            if (headers != null)
-                request = request.headers(headers);
-            // Se valida si el request tiene error
-            validarRequest();
-            return request.body();
-        }
-        private static void validarRequest(){
-            apiValidations = null;
-            if (request != null && !request.ok()){
-                apiValidations = serializeObjectFromJson(request.body(),APIValidations.class);
+                headers = addTokenHeader(headers);
+                if (headers != null)
+                    request = request.headers(headers);
+                // Se valida si el request tiene error
+                return validarRequest()? request.body() : null;
+            }
+            catch (HttpRequest.HttpRequestException e){
+                makeException(e.getCause());
+                return null;
             }
         }
+
         /**
-         * Realiza una peticion a la API retornando un objeto serializado
-         * @param url
-         * @param classOfT Tipo de objeto a devolver (ejemplo Producto.class, Producto[].class)
-         * @return
+         * Valida la respuesta de la petición
+         * si esta no es correcta, se crea el objeto apiValidations
          */
-        /*public static <T> T getSerializedObjectFromGETRequest(String url,Class<T> classOfT){
-            String response = get(url,null);
-            return (response == null)? null : serializeObjectFromJson(response,classOfT);
-        }*/
+        private static boolean validarRequest(){
+            apiValidations = null;
+            // Si la respuesta del request no es ok, se carga el objeto apiValidations
+            if (request != null && !request.ok() && !request.created()) {
+                if (!request.isBodyEmpty())
+                    apiValidations = serializeObjectFromJson(request.body(), APIValidations.class);
+                else
+                    apiValidations = new APIValidations();
+                apiValidations.setResponseCode(request.code());
+                return false;
+            }
+            return true;
+        }
 
+        /**
+         * Crea el objeto apiValidations dependiendo de la excepción generada
+         * @param ex excepción
+         */
+        private static void makeException(IOException ex){
+            apiValidations = new APIValidations();
+            // Si se excepcionó connectException
+            if (ex.getClass() == ConnectException.class)
+                apiValidations.setResponseCode(HTTP_UNAVAILABLE);
+            else if(ex.getClass() == SocketTimeoutException.class)
+                apiValidations.setResponseCode(HTTP_CLIENT_TIMEOUT);
 
+            apiValidations.setDetail(ex.getMessage());
+        }
 
         public static boolean ok() {
             return request.ok();
         }
 
+        /*
         public static boolean badRequest() {
             return request.badRequest();
         }
 
         public static boolean unAuthorized() { return request.code() == HTTP_UNAUTHORIZED; }
 
-        public static boolean timeOut() {
-            return request.code() == HTTP_CLIENT_TIMEOUT;
-        }
+        public boolean timeOut() { return request.code() == HTTP_CLIENT_TIMEOUT || request.code() == HTTP_UNAVAILABLE; }
 
         public static boolean serverError() {
             return request.serverError();
@@ -206,6 +252,7 @@ public class APIRest {
         public static boolean notFound() {
             return request.notFound();
         }
+        */
     }
 
     /**
@@ -213,7 +260,7 @@ public class APIRest {
      *
      */
     public static class Async {
-        private static int RESPONSE_STATUS_CODE;
+        private static int RESPONSE_CODE;
         /**
          * Crea un nuevo request GET
          * @param url URl to fetch the JSON from
@@ -225,10 +272,10 @@ public class APIRest {
 
         /**
          * Crea un nuevo request GET con parametros y headers
-         * @param url
-         * @param params
-         * @param headers
-         * @param callback
+         * @param url de la petición
+         * @param params de la peticion
+         * @param headers de la peticion
+         * @param callback intefaz para interactuar
          */
         public static void get(String url,final Map<String,String> params,final Map<String,String> headers,final IServerCallback callback){
             // Se formatean los parametros si es necesario
@@ -238,9 +285,9 @@ public class APIRest {
 
         /**
          * nueva peticion POST con parametros
-         * @param url
-         * @param params
-         * @param callback
+         * @param url de la petición
+         * @param params de la petición
+         * @param callback intefaz para interactuar
          */
         public static void post(String url,Map<String,String> params,final IServerCallback callback){
             StringRequest(Request.Method.POST,constructURL(url),params,null,callback);
@@ -248,10 +295,10 @@ public class APIRest {
 
         /**
          * nueva peticion POST con parametros y headers
-         * @param url
-         * @param params
-         * @param headers
-         * @param callback
+         * @param url de la petición
+         * @param params de la petición
+         * @param headers de la petición
+         * @param callback intefaz para interactuar
          */
         public static void post(String url,Map<String,String> params,Map<String,String> headers,final IServerCallback callback){
             StringRequest(Request.Method.POST,constructURL(url),params,headers,callback);
@@ -262,11 +309,11 @@ public class APIRest {
          * @param method GET, POST, PUT ....
          * @param url URL
          * @param params parametros
-         * @param callback
+         * @param callback intefaz para interactuar
          */
         private static void StringRequest(int method,String url,final Map<String,String> params,final Map<String,String> headers, final IServerCallback callback){
             // TimeOut
-            final RetryPolicy policy = new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            final RetryPolicy policy = new DefaultRetryPolicy(TIME_OUT, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
             final StringRequest postRequest = (StringRequest) new StringRequest(method, constructURL(url),
                     new Response.Listener<String>() {
@@ -280,14 +327,16 @@ public class APIRest {
                         public void onErrorResponse(VolleyError error) {
                             APIValidations apiValidations = null;
                             if (error.getClass() == TimeoutError.class) {
-                                RESPONSE_STATUS_CODE = HTTP_CLIENT_TIMEOUT;
+                                RESPONSE_CODE = HTTP_CLIENT_TIMEOUT;
+                                apiValidations = new APIValidations();
+                                apiValidations.setResponseCode(RESPONSE_CODE);
                             }
-                            else if (error.networkResponse != null)
-                                RESPONSE_STATUS_CODE = error.networkResponse.statusCode;
-                            // Si es un badRequest se llena el apiValidations
-                            if (badRequest() || unAuthorized()){
-                                apiValidations = serializeObjectFromJson(new String(error.networkResponse.data),APIValidations.class);
+                            else if (error.networkResponse != null) {
+                                RESPONSE_CODE = error.networkResponse.statusCode;
+                                // Si es un badRequest se llena el apiValidations
+                                apiValidations = serializeObjectFromJson(new String(error.networkResponse.data), APIValidations.class);
                                 apiValidations.setResponse(new String(error.networkResponse.data));
+                                apiValidations.setResponseCode(error.networkResponse.statusCode);
                             }
                             callback.onError(error.getMessage(),apiValidations);
                         }
@@ -295,9 +344,8 @@ public class APIRest {
             ) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> parms1 = params == null? new HashMap<String, String>() : params;
-                    return parms1;
-                    //return (params == null? super.getParams() : params);
+                    //Map<String,String> parms1 = params == null? new HashMap<String, String>() : params;
+                    return params == null? new HashMap<String, String>() : params;
                 }
 
                 @Override
@@ -309,28 +357,27 @@ public class APIRest {
             }.setRetryPolicy(policy);
             AppController.getInstance().addToRequestQueue(postRequest);
         }
+        /*
         public static boolean ok() {
-            return RESPONSE_STATUS_CODE == HTTP_OK;
+            return RESPONSE_CODE == HTTP_OK;
         }
 
-        public static boolean created() { return  RESPONSE_STATUS_CODE == HTTP_CREATED; }
+        public static boolean created() { return  RESPONSE_CODE == HTTP_CREATED; }
 
         public static boolean badRequest() {
-            return RESPONSE_STATUS_CODE == HTTP_BAD_REQUEST;
+            return RESPONSE_CODE == HTTP_BAD_REQUEST;
         }
 
-        public static boolean unAuthorized() { return RESPONSE_STATUS_CODE == HTTP_UNAUTHORIZED; }
+        public static boolean unAuthorized() { return RESPONSE_CODE == HTTP_UNAUTHORIZED; }
 
-        public static boolean timeOut() {
-            return RESPONSE_STATUS_CODE == HTTP_CLIENT_TIMEOUT;
-        }
+        public boolean timeOut() { return responseCode == HTTP_CLIENT_TIMEOUT || responseCode == HTTP_UNAVAILABLE; }
 
         public static boolean serverError() {
-            return RESPONSE_STATUS_CODE == HTTP_INTERNAL_ERROR;
+            return RESPONSE_CODE == HTTP_INTERNAL_ERROR;
         }
 
         public static boolean notFound() {
-            return RESPONSE_STATUS_CODE == HTTP_NOT_FOUND;
-        }
+            return RESPONSE_CODE == HTTP_NOT_FOUND;
+        }*/
     }
 }

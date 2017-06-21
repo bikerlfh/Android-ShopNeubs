@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.function.UnaryOperator;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
@@ -49,7 +47,7 @@ public class SessionManager {
     /**
      * Se obtiene la instancia
      * @param context puede ser null.
-     * @return
+     * @return instance
      */
     public static SessionManager getInstance(Context context){
         if (instance==null)
@@ -86,7 +84,7 @@ public class SessionManager {
     /**
      * Valida si el usuario está autenticado
      * en caso que el atributo no exista, se consulta en la db si existe un usuario con el token asignado
-     * @return
+     * @return true si esta autenticado de lo contrario false
      */
     public boolean isAuthenticated(){
         return (token != null && !token.isEmpty());
@@ -94,10 +92,10 @@ public class SessionManager {
 
     /**
      * Crea la sesión del usuario, actualizando el campo Token el usuario
-     * @param context
-     * @param idUsuario
-     * @param token
-     * @return
+     * @param context context
+     * @param idUsuario el id del usuario
+     * @param token el token
+     * @return true s se crea la sesión de lo contrario false
      */
     public boolean createUserSession(Context context, int idUsuario, String token){
         // Se cierran las sessiones que tenga el usuario abierto
@@ -115,8 +113,8 @@ public class SessionManager {
 
     /**
      * Cierra la sesión del usuario activo
-     * @param context
-     * @return
+     * @param context context
+     * @return true si se cierra la sesión de lo contrario false
      */
     public boolean closeUserSession(final Context context){
         try {
@@ -148,6 +146,10 @@ public class SessionManager {
         return false;
     }
 
+    /**
+     * Visualiza un mensaje de que la sessión a expirado, cierra la sesión y finaliza la actividad
+     * @param activity activity
+     */
     public void closeSessionExpired(Activity activity){
         Toast.makeText(activity,activity.getString(R.string.msg_session_expired),Toast.LENGTH_SHORT).show();
         closeUserSession(activity.getApplicationContext());
@@ -162,13 +164,13 @@ public class SessionManager {
     }
 
 
-    /***************************************************************************/
+    /**************************************************************************/
     //                        FUNCIONALIDAD DEL CARRO                          //
     /***************************************************************************/
 
     /**
      * Consulta el carrito
-     * @param context
+     * @param context context
      */
     private void cargarShopCar(Context context){
         final ItemCar itemCar = new ItemCar(context);
@@ -219,8 +221,8 @@ public class SessionManager {
     /**
      * Valida si hay algun item en el carro con una fecha anterior a la ultima sincronización
      * de los precios
-     * @param fechaApiSincronizacion
-     * @return
+     * @param fechaApiSincronizacion ultima fecha de la api
+     * @return true si se debe sincronizar
      */
     private boolean validarSincronizacionShopCar(String fechaApiSincronizacion){
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -244,7 +246,7 @@ public class SessionManager {
 
     /**
      * Agrega un ItemCar al carrito
-     * @param itemCar
+     * @param itemCar itemCar a agregar
      */
     public boolean addItemCar(ItemCar itemCar){
         if (this.shopCar == null)
@@ -265,8 +267,8 @@ public class SessionManager {
 
     /**
      * Elimina el item del carro
-     * @param item
-     * @return
+     * @param item a eliminar
+     * @return true si se elimina el item del carro
      */
     public boolean deleteItemShopCar(ItemCar item){
         if (shopCar != null && shopCar.size() > 0) {
@@ -296,8 +298,8 @@ public class SessionManager {
 
     /**
      * Obtiene un ItemCar por el id
-     * @param id
-     * @return
+     * @param id del carro a obtener
+     * @return itemCar o null
      */
     public ItemCar getItemCarById(int id){
         if (shopCar != null)
@@ -309,8 +311,8 @@ public class SessionManager {
     }
     /**
      * Obtiene un ItemCar por el idSaldoInventario
-     * @param idSaldoInventario
-     * @return
+     * @param idSaldoInventario del itemCar a obtener
+     * @return itemCar o null
      */
     public ItemCar getItemCarByIdSaldoInventario(int idSaldoInventario){
         if (shopCar != null)
@@ -323,7 +325,7 @@ public class SessionManager {
 
     /**
      * Obtiene el valor total del carro
-     * @return
+     * @return valorTotal
      */
     public float getValorTotalShopCar(){
         float valorTotal = 0;

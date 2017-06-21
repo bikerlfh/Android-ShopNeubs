@@ -37,7 +37,7 @@ public class Synchronize {
 
     /**
      * Sincronización inicial (debe ser llamada cuando se abre la aplicación por primera vez)
-     * @return
+     * @return numero de filas sincronizadas
      */
     public int InitialSynchronize(){
         int totalRowSync = 0;
@@ -67,11 +67,11 @@ public class Synchronize {
      * Sincroniza ApiTabla
      * @return un el numero de sincronzaciones guardadas.
      */
-    public int SynchronizeApiTabla(){
+    private int SynchronizeApiTabla(){
         int numSincronizacion = 0;
 
         // Se consulta la api y se obtiene un arreglo tipo APITabla[]
-        final String response = APIRest.Sync.get(URL_API_TABLA,null);
+        final String response = APIRest.Sync.get(URL_API_TABLA);
         if (APIRest.Sync.ok()){
             final APITabla[] listadoAPITabla = APIRest.serializeObjectFromJson(response,APITabla[].class);
             if (listadoAPITabla != null && listadoAPITabla.length > 0) {
@@ -91,17 +91,17 @@ public class Synchronize {
     }
     /**
      * Sincroniza el registro ApiSincronizacion segun el idApiTabla
-     * @param idApiTabla
-     * @return
+     * @param idApiTabla de la tabla
+     * @return numero de sincronizaciones guardadas
      */
     public int SynchronizeAPI(int idApiTabla){
         final String url = URL_API_SINCRONIZACION + "?tabla="+idApiTabla;
 
-        final String response = APIRest.Sync.get(url,null);
-        if(APIRest.Sync.ok()) {
+        final String response = APIRest.Sync.get(url);
+        if(response != null && APIRest.Sync.ok()) {
             APISincronizacion apiSincronizacion = APIRest.serializeObjectFromJson(response, APISincronizacion.class);
             apiSincronizacion.initDbManager(context);
-            if (apiSincronizacion != null && !apiSincronizacion.exists()) {
+            if (!apiSincronizacion.exists()) {
                 apiSincronizacion.save();
                 return 1;
             }
@@ -118,38 +118,37 @@ public class Synchronize {
      */
     public int SynchronizeAPI(boolean withTablas) {
         int numSincronizacion = 0;
-        try {
-            final String response = APIRest.Sync.get(URL_API_SINCRONIZACION,null);
-            if (APIRest.Sync.ok()) {
-                final APISincronizacion[] listApiSincronizacion = APIRest.serializeObjectFromJson(response, APISincronizacion[].class);
-                if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
-                    for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
-                        apiSincronizacion.initDbManager(context);
-                        if (!apiSincronizacion.exists()) {
-                            apiSincronizacion.save();
-                            numSincronizacion++;
 
-                            if (withTablas) {
-                                SynchronizeAPITabla(apiSincronizacion.getTabla());
-                            }
+        final String response = APIRest.Sync.get(URL_API_SINCRONIZACION);
+        if (response != null && APIRest.Sync.ok()) {
+            final APISincronizacion[] listApiSincronizacion = APIRest.serializeObjectFromJson(response, APISincronizacion[].class);
+            if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
+                for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
+                    apiSincronizacion.initDbManager(context);
+                    if (!apiSincronizacion.exists()) {
+                        apiSincronizacion.save();
+                        numSincronizacion++;
+
+                        if (withTablas) {
+                            SynchronizeAPITabla(apiSincronizacion.getTabla());
                         }
                     }
                 }
             }
-            else
-                numSincronizacion = -1;
         }
-        catch (Exception ex){
-            message_error = ex.getMessage();
+        else
             numSincronizacion = -1;
-        }
         return numSincronizacion;
     }
 
-    public int SynchronizeTipoDocumento(){
+    /**
+     * Sincroniza la tabla TipoDocumento
+     * @return numero de sincronizaciones guardadas
+     */
+    private int SynchronizeTipoDocumento(){
         int numSincronizacion = 0;
-        final String response = APIRest.Sync.get(URL_TIPO_DOCUMENTO,null);
-        if (APIRest.Sync.ok()) {
+        final String response = APIRest.Sync.get(URL_TIPO_DOCUMENTO);
+        if (response != null && APIRest.Sync.ok()) {
             final TipoDocumento[] listTipoDocumento = APIRest.serializeObjectFromJson(response, TipoDocumento[].class);
             if (listTipoDocumento != null && listTipoDocumento.length > 0) {
                 for (TipoDocumento tipoDocumento : listTipoDocumento) {
@@ -166,10 +165,14 @@ public class Synchronize {
         return numSincronizacion;
     }
 
-    public int SynchronizePais(){
+    /**
+     * Sincroniza la tabla PAIS
+     * @return numero de sincronizaciones guardadas
+     */
+    private int SynchronizePais(){
         int numSincronizacion = 0;
-        final String response = APIRest.Sync.get(URL_PAIS,null);
-        if (APIRest.Sync.ok()) {
+        final String response = APIRest.Sync.get(URL_PAIS);
+        if (response != null && APIRest.Sync.ok()) {
             final Pais[] listPais = APIRest.serializeObjectFromJson(response, Pais[].class);
             if (listPais != null && listPais.length > 0) {
                 for (Pais pais : listPais) {
@@ -190,14 +193,14 @@ public class Synchronize {
      * sincroniza los departamentos.
      * Este método puede sincronizar todos los departamentos pasando como parametro idPais=0
      * No debe sincronizarse todos los departamentos
-     * @param idPais
-     * @return
+     * @param idPais del pais
+     * @return numero de sincronizaciones guardadas
      */
     public int SynchronizeDepartamento(int idPais){
         int numSincronizacion = 0;
         String url = idPais > 0? URL_DEPARTAMENTO.concat("?idPais"+String.valueOf(idPais)):URL_DEPARTAMENTO;
-        final String response = APIRest.Sync.get(url,null);
-        if (APIRest.Sync.ok()) {
+        final String response = APIRest.Sync.get(url);
+        if (response != null && APIRest.Sync.ok()) {
             final Departamento[] listDepartamento = APIRest.serializeObjectFromJson(response, Departamento[].class);
             if (listDepartamento != null && listDepartamento.length > 0) {
                 for (Departamento departamento : listDepartamento) {
@@ -219,14 +222,14 @@ public class Synchronize {
      * sincroniza los municipio.
      * Este método puede sincronizar todos los municipio pasando como parametro idDepartamento=0
      * No debe sincronizarse todos los municipio
-     * @param idDepartamento
-     * @return
+     * @param idDepartamento del departamento
+     * @return numero de sincronizaciones guardadas
      */
     public int SynchronizeMunicipio(int idDepartamento){
         int numSincronizacion = 0;
         String url = idDepartamento > 0? URL_MUNICIPIO.concat("?idPais"+String.valueOf(idDepartamento)):URL_MUNICIPIO;
-        final String response = APIRest.Sync.get(url,null);
-        if (APIRest.Sync.ok()) {
+        final String response = APIRest.Sync.get(url);
+        if (response != null && APIRest.Sync.ok()) {
             final Municipio[] listMunicipio = APIRest.serializeObjectFromJson(response, Municipio[].class);
             if (listMunicipio != null && listMunicipio.length > 0) {
                 for (Municipio municipio : listMunicipio) {
@@ -245,12 +248,12 @@ public class Synchronize {
 
     /**
      * Realiza la sincronización de las marcas
-     * @return
+     * @return numero de sincronizaciones guardadas
      */
-    public int SynchronizeMarcas(){
+    private int SynchronizeMarcas(){
         int numSincronizacion = 0;
-        final String response = APIRest.Sync.get(URL_MARCA,null);
-        if (APIRest.Sync.ok()) {
+        final String response = APIRest.Sync.get(URL_MARCA);
+        if (response != null && APIRest.Sync.ok()) {
             final Marca[] listMarca = APIRest.serializeObjectFromJson(response, Marca[].class);
             if (listMarca != null && listMarca.length > 0) {
                 for (Marca marca : listMarca) {
@@ -269,12 +272,12 @@ public class Synchronize {
 
     /**
      * Realiza la sincronización de las Categorias
-     * @return
+     * @return numero de sincronizaciones guardadas
      */
-    public int SynchronizeCategorias(){
+    private int SynchronizeCategorias(){
         int numSincronizacion = 0;
-        final String response = APIRest.Sync.get(URL_CATEGORIA,null);
-        if (APIRest.Sync.ok()) {
+        final String response = APIRest.Sync.get(URL_CATEGORIA);
+        if (response != null && APIRest.Sync.ok()) {
             final Categoria[] listCategoria = APIRest.serializeObjectFromJson(response, Categoria[].class);
             if (listCategoria != null && listCategoria.length > 0) {
                 for (Categoria cat : listCategoria) {
@@ -293,8 +296,8 @@ public class Synchronize {
 
     /**
      * Sincroniza una tabla en especifico. Si la tabla es null, realiza una sincronización inicial
-     * @param tabla
-     * @return
+     * @param tabla APITabla a sincronizar
+     * @return numero de sincronizaciones guardadas
      */
     private int SynchronizeAPITabla(APITabla tabla){
         int numSincronizacion = 0;

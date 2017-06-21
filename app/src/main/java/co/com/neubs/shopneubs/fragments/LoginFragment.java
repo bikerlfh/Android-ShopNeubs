@@ -21,6 +21,7 @@ import java.util.Map;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 
@@ -49,12 +50,12 @@ public class LoginFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static LoginFragment newInstance() {
-        LoginFragment fragment = new LoginFragment();
+        //LoginFragment fragment = new LoginFragment();
         /*Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);*/
-        return fragment;
+        return new LoginFragment();
     }
 
     @Override
@@ -129,7 +130,7 @@ public class LoginFragment extends Fragment {
             // perform the user login attempt.
             showProgress(true);
 
-            Map<String,String> params1 = new HashMap<String, String>();
+            Map<String,String> params1 = new HashMap<>();
             params1.put("username",username);
             params1.put("password",password);
 
@@ -181,7 +182,7 @@ public class LoginFragment extends Fragment {
 
     private class TaskLogin extends AsyncTask<Map,Void,Boolean>{
 
-        private String messageError;
+        private APIValidations apiValidations = null;
 
         @Override
         protected void onPreExecute() {
@@ -193,9 +194,9 @@ public class LoginFragment extends Fragment {
         protected Boolean doInBackground(Map... params) {
             try {
                 Map<String, String> parametros = params[0];
-                String json = APIRest.Sync.post(APIRest.URL_LOGIN, parametros, null);
-                if (APIRest.Sync.ok()) {
-                    String token = (String)APIRest.getObjectFromJson(json,"key");
+                String response = APIRest.Sync.post(APIRest.URL_LOGIN, parametros, null);
+                if (response != null && APIRest.Sync.ok()) {
+                    String token = (String)APIRest.getObjectFromJson(response,"key");
                     //String email = parametros.get("email");
                     String username = parametros.get("username");
                     Usuario usuario = new Usuario(getActivity());
@@ -204,8 +205,8 @@ public class LoginFragment extends Fragment {
                     if (!usuario.getByUserName(username)) {
                         // Se consulta el usuario;
                         String url = "usuario/"+ username+"/";
-                        json = APIRest.Sync.get(url, null);
-                        usuario = APIRest.serializeObjectFromJson(json, Usuario.class);
+                        response = APIRest.Sync.get(url);
+                        usuario = APIRest.serializeObjectFromJson(response, Usuario.class);
                         if (usuario != null) {
                             usuario.initDbManager(getActivity());
                             usuario.save();
@@ -219,6 +220,10 @@ public class LoginFragment extends Fragment {
                     if (session.createUserSession(getActivity(), usuario.getIdUsuario(), token)) {
                         return true;
                     }
+                }
+                else {
+                    apiValidations = APIRest.Sync.apiValidations;
+                    return false;
                 }
             }
             catch (Exception e){
@@ -235,7 +240,7 @@ public class LoginFragment extends Fragment {
                 getActivity().finish();
             }
             else{
-                if (APIRest.Sync.badRequest()){
+                if (apiValidations == null || apiValidations.badRequest()){
                     txtPassword.setError(getString(R.string.error_incorrect_password));
                     txtPassword.requestFocus();
                 }

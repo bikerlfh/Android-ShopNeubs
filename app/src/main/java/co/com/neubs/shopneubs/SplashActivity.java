@@ -7,10 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.DbManager;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
@@ -38,7 +41,7 @@ public class SplashActivity extends Activity {
         {
             //DO SOMETHING
             getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                    .edit().putBoolean("isfirstrun", false).commit();
+                    .edit().putBoolean("isfirstrun", false).apply();
         }
         else {
             // Si no existe ninguna base de datos
@@ -89,8 +92,8 @@ public class SplashActivity extends Activity {
 
     /**
      * AlertDialog de no internet connection
-     * @param c
-     * @return
+     * @param c contexto
+     * @return AlertDialog.Builder
      */
     public AlertDialog.Builder dialogNoInternetConnection(Context c, final boolean isFirstRun) {
 
@@ -116,6 +119,7 @@ public class SplashActivity extends Activity {
         private Synchronize synchronize;
         final Context context;
         private boolean isFirstRun;
+        private APIValidations apiValidations;
 
         public AsyncSyncronize(Context context,boolean isFirstRun){
             this.context = context;
@@ -129,16 +133,21 @@ public class SplashActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
+            boolean result = true;
             // Se sincroniza toda la api
             if (isFirstRun){
                 if(synchronize.InitialSynchronize() == -1)
-                    return false;
+                    result = false;
             }
             else{
                 if(synchronize.SynchronizeAPI(true)==-1)
-                    return false;
+                    result = false;
             }
-            return true;
+            // Si el resultado false, se obtiene el apiValidations
+            if (!result){
+                apiValidations = APIRest.Sync.apiValidations;
+            }
+            return result;
         }
 
         @Override
@@ -153,8 +162,26 @@ public class SplashActivity extends Activity {
                 }
                 finish();
             }
-            else {
-                Toast.makeText(SplashActivity.this, getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
+            else
+            {
+                if (apiValidations != null){
+                    // Si el token es invalido o no esta authorizado y esta autenticado
+                    // se cierra la sesión y se vuelve a lanzar el asincrono
+                    if (apiValidations.isTokenInvalid() || (apiValidations.unAuthorized() && sessionManager.isAuthenticated())){
+                        Toast.makeText(SplashActivity.this, getString(R.string.msg_session_expired), Toast.LENGTH_LONG).show();
+                        sessionManager.closeUserSession(SplashActivity.this);
+                        isRunning = true;
+                        asyncSyncronizeData = new AsyncSyncronize(SplashActivity.this,isFirstRun);
+                        asyncSyncronizeData.execute();
+                    }
+                    else {
+                        Toast.makeText(SplashActivity.this, getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
+                        Log.d("AsyncSyncronize",apiValidations.getDetail());
+                    }
+                }
+                else
+                    Toast.makeText(SplashActivity.this, getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
+
                 if (isFirstRun) {
                     // Se elimina la base de datos
                     context.deleteDatabase(DbManager.DbHelper.DB_NAME);
@@ -162,6 +189,4 @@ public class SplashActivity extends Activity {
             }
         }
     }
-
-
 }

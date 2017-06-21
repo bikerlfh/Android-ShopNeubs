@@ -46,14 +46,11 @@ public class RegisterFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment RegisterFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static RegisterFragment newInstance() {
-        RegisterFragment fragment = new RegisterFragment();
-        return fragment;
+        return new RegisterFragment();
     }
 
     @Override
@@ -146,7 +143,7 @@ public class RegisterFragment extends Fragment {
             // perform the user login attempt.
             showProgress(true);
 
-            Map<String,String> params = new HashMap<String, String>();
+            Map<String,String> params = new HashMap<>();
             params.put("username",username);
             params.put("email",email);
             params.put("password",password);
@@ -165,7 +162,7 @@ public class RegisterFragment extends Fragment {
                 @Override
                 public void onError(String message_error, APIValidations apiValidations) {
                     showProgress(false);
-                    if (APIRest.Async.badRequest()){
+                    if (apiValidations.badRequest()){
                         // Si no hay errores de campos, se visualiza el error de credenciales
                         if (apiValidations.isNoFieldError())
                             Toast.makeText(getActivity(),apiValidations.getValidationNonFieldError(),Toast.LENGTH_LONG).show();
