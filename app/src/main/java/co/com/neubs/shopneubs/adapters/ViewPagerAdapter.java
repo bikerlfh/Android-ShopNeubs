@@ -51,11 +51,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         int width = dis.widthPixels;
         image.setMinimumHeight(height);
         image.setMinimumWidth(width);*/
-
-        //Helper.GetImageCached(activity,images.get(position),image);
         image.setImageURL(images.get(position));
-        //Glide.with(activity).load(images.get(position)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(image);
-
         container.addView(itemView);
         return itemView;
     }

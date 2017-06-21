@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.com.neubs.shopneubs.OrdersActivity">
+    tools:context="co.com.neubs.shopneubs.PedidosActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,6 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_orders" />
+    <include layout="@layout/content_pedidos" />
 
 </android.support.design.widget.CoordinatorLayout>

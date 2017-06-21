@@ -49,7 +49,7 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validarSession()){
                     // Abrir actividad mis pedidos
-                    Intent intent   = new Intent(AccountActivity.this,OrdersActivity.class);
+                    Intent intent   = new Intent(AccountActivity.this,PedidosActivity.class);
                     startActivity(intent);
                 }
                 else
@@ -62,7 +62,7 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validarSession()){
                     // Abrir actividad mis datos
-                    Intent intent   = new Intent(AccountActivity.this,EditProfileActivity.class);
+                    Intent intent   = new Intent(AccountActivity.this,PerfilActivity.class);
                     startActivity(intent);
                 }
                 else

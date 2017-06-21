@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -80,9 +79,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 oferta.setVisibility(View.GONE);
             }
             // Se obtiene la imagen y se guarda en el cache
-            //Helper.GetImageCached(context,producto.getImagen(),imagen);
             imagen.setImageURL(producto.getImagen());
-            //Glide.with(context).load(producto.getImagen()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.circular_progress_bar).into(imagen);
 
             imagen.setOnClickListener(this);
             itemView.setOnClickListener(this);
@@ -91,7 +88,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         @Override
         public void onClick(View v) {
             // Aca se debe abrir la actividad de visualización del producto detalle
-            //Toast.makeText(v.getContext(),"position " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(v.getContext(),ProductoDetalleActivity.class);
             intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,this.saldoInventario.getIdSaldoInventario());
             intent.putExtra(ProductoDetalleActivity.PARAM_NOMBRE_PRODUCTO,this.saldoInventario.getProducto().getNombre());
@@ -112,8 +108,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     @Override
     public ProductoViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         // inflate layout CartView
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout,null);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_producto,null);
         return new ProductoViewHolder(view);
     }
 

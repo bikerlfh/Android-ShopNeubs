@@ -50,11 +50,11 @@
             android:label="@string/title_activity_account"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".OrdersActivity"
+            android:name=".PedidosActivity"
             android:label="@string/title_activity_orders"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".PerfilActivity"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme" />
         <activity

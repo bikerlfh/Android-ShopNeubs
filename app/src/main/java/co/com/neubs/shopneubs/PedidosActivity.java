@@ -1,15 +1,11 @@
 package co.com.neubs.shopneubs;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import co.com.neubs.shopneubs.adapters.PedidoAdapter;
@@ -21,7 +17,7 @@ import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.PedidoVenta;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
-public class OrdersActivity extends AppCompatActivity {
+public class PedidosActivity extends AppCompatActivity {
 
     private SessionManager sessionManager;
 
@@ -30,7 +26,7 @@ public class OrdersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orders);
+        setContentView(R.layout.activity_pedidos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,7 +58,7 @@ public class OrdersActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String json) {
                 PedidoVenta[] listadoPedidoVenta = APIRest.serializeObjectFromJson(json,PedidoVenta[].class);
-                pedidoAdapter = new PedidoAdapter(OrdersActivity.this, listadoPedidoVenta);
+                pedidoAdapter = new PedidoAdapter(PedidosActivity.this, listadoPedidoVenta);
                 recyclerView.setAdapter(pedidoAdapter);
             }
 
@@ -70,13 +66,13 @@ public class OrdersActivity extends AppCompatActivity {
             public void onError(String message_error, APIValidations apiValidations) {
                 if (apiValidations!=null){
                     if (apiValidations.isTokenInvalid()){
-                        sessionManager.closeSessionExpired(OrdersActivity.this);
+                        sessionManager.closeSessionExpired(PedidosActivity.this);
                     }
 
-                    Toast.makeText(OrdersActivity.this,apiValidations.getResponse(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(PedidosActivity.this,apiValidations.getResponse(),Toast.LENGTH_LONG).show();
                 }
                 else
-                    Toast.makeText(OrdersActivity.this,message_error,Toast.LENGTH_LONG).show();
+                    Toast.makeText(PedidosActivity.this,message_error,Toast.LENGTH_LONG).show();
             }
         });
 

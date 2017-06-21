@@ -1,29 +1,17 @@
 package co.com.neubs.shopneubs;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.BoringLayout;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +20,6 @@ import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.Synchronize;
-import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.Departamento;
 import co.com.neubs.shopneubs.classes.models.Municipio;
 import co.com.neubs.shopneubs.classes.models.Pais;
@@ -42,7 +29,7 @@ import co.com.neubs.shopneubs.classes.models.Usuario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class PerfilActivity extends AppCompatActivity {
 
     private SessionManager sessionManager;
 
@@ -60,7 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_perfil);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,7 +75,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // se carga el spinner pais
         listadoPais = new Pais(this).getAll();
-        ArrayAdapter adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listadoPais);
+        ArrayAdapter adapter = new ArrayAdapter(PerfilActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listadoPais);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPais.setAdapter(adapter);
 
@@ -111,16 +98,16 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (apiValidations != null ) {
                     // Se cierra la sessión si el token es invalido
                     if (apiValidations.isTokenInvalid()) {
-                        sessionManager.closeSessionExpired(EditProfileActivity.this);
+                        sessionManager.closeSessionExpired(PerfilActivity.this);
                     }
                     else if(apiValidations.getDetail() != null){
-                        Toast.makeText(EditProfileActivity.this,apiValidations.getDetail(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PerfilActivity.this,apiValidations.getDetail(),Toast.LENGTH_SHORT).show();
                     }
                     else
-                        Toast.makeText(EditProfileActivity.this,apiValidations.getResponse(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PerfilActivity.this,apiValidations.getResponse(),Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(EditProfileActivity.this,message_error,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PerfilActivity.this,message_error,Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -257,21 +244,21 @@ public class EditProfileActivity extends AppCompatActivity {
                 public void onSuccess(String json) {
                     // si se guardó el perfil, se guarda el idCliente en el usuario
                     if (perfil == null){
-                        Usuario usuario = new Usuario(EditProfileActivity.this);
+                        Usuario usuario = new Usuario(PerfilActivity.this);
                         usuario.getById(sessionManager.getIdUsuario());
                         usuario.setIdCliente((int)APIRest.getObjectFromJson(json,"idCliente"));
                         usuario.update();
                     }
-                    Toast.makeText(EditProfileActivity.this,getString(R.string.msg_save_success),Toast.LENGTH_LONG).show();
+                    Toast.makeText(PerfilActivity.this,getString(R.string.msg_save_success),Toast.LENGTH_LONG).show();
                     finish();
                 }
 
                 @Override
                 public void onError(String message_error, APIValidations apiValidations) {
                     if (apiValidations != null)
-                        Toast.makeText(EditProfileActivity.this,apiValidations.getDetail(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(PerfilActivity.this,apiValidations.getDetail(),Toast.LENGTH_LONG).show();
                     else
-                        Toast.makeText(EditProfileActivity.this,getString(R.string.msg_save_error),Toast.LENGTH_LONG).show();
+                        Toast.makeText(PerfilActivity.this,getString(R.string.msg_save_error),Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -293,10 +280,10 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private List<Departamento> cargarDepartamentos(int idPais){
-        Departamento departamento = new Departamento(EditProfileActivity.this);
+        Departamento departamento = new Departamento(PerfilActivity.this);
         List<Departamento> listadoDepartamento = departamento.getByIdPais(idPais);
         if (listadoDepartamento == null){
-            Synchronize synchronize= new Synchronize(EditProfileActivity.this);
+            Synchronize synchronize= new Synchronize(PerfilActivity.this);
             if(synchronize.SynchronizeDepartamento(idPais) > 0){
                 listadoDepartamento = departamento.getByIdPais(idPais);
             }
@@ -305,10 +292,10 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private List<Municipio> cargarMunicipio(int idDeparamento){
-        Municipio municipio = new Municipio(EditProfileActivity.this);
+        Municipio municipio = new Municipio(PerfilActivity.this);
         List<Municipio> listadoMunicipio = municipio.getByIdDepartamento(idDeparamento);
         if (listadoMunicipio == null){
-            Synchronize synchronize= new Synchronize(EditProfileActivity.this);
+            Synchronize synchronize= new Synchronize(PerfilActivity.this);
             if(synchronize.SynchronizeMunicipio(idDeparamento) > 0){
                 listadoMunicipio = municipio.getByIdDepartamento(idDeparamento);
             }
@@ -380,7 +367,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success){
             if (success) {
-                ArrayAdapter adapter = new ArrayAdapter(EditProfileActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listado);
+                ArrayAdapter adapter = new ArrayAdapter(PerfilActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listado);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
                 if (idItemSelected > 0) {
