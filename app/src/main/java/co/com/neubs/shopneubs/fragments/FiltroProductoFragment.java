@@ -94,7 +94,7 @@ public class FiltroProductoFragment extends Fragment {
 
         Map<String, String> parametros = new HashMap<>();
         parametros.put("filtro",filtro);
-        APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,parametros,null, new IServerCallback() {
+        APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,parametros, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
                 final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);

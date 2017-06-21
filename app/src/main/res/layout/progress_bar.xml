@@ -14,5 +14,6 @@
         android:indeterminateDrawable="@drawable/circular_progress_bar"
         android:progress="20"
         android:max="100"
+        android:visibility="gone"
          />
 </RelativeLayout>

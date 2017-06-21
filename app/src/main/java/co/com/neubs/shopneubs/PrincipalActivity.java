@@ -85,6 +85,7 @@ public class PrincipalActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
         // Se obtiene el boton de search
+        /*
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView)MenuItemCompat.getActionView(searchItem);
 
@@ -110,24 +111,25 @@ public class PrincipalActivity extends AppCompatActivity
                 return false;
             }
         });
+        */
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        Intent intent = null;
+        switch (item.getItemId()){
+            case R.id.action_cart:
+                intent = new Intent(PrincipalActivity.this,ShopCarActivity.class);
 
-        //noinspection SimplifiableIfStatement
-       if (id == R.id.action_cart) {
-           Intent intent = new Intent(PrincipalActivity.this,ShopCarActivity.class);
-           startActivity(intent);
-           return true;
+                break;
+            case R.id.action_search:
+                intent = new Intent(PrincipalActivity.this,BusquedaActivity.class);
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
+        if (intent != null)
+            startActivity(intent);
+        return true;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

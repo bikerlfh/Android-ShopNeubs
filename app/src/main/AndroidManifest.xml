@@ -64,7 +64,8 @@
         <activity
             android:name=".ShopCarActivity"
             android:label="@string/title_activity_shop_car"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".BusquedaActivity"></activity>
     </application>
 
 </manifest>
