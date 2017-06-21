@@ -24,7 +24,9 @@ import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
-import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
+import static java.net.HttpURLConnection.HTTP_SERVER_ERROR;
 import static java.net.HttpURLConnection.HTTP_UNAVAILABLE;
 
 /**
@@ -46,11 +48,13 @@ public class APIRest {
     public final static String URL_FILTRO_PRODUCTO = "search/";
     public final static String URL_PRODUCTO_DETALLE = "producto/";
     public final static String URL_MIS_PEDIDOS = "mis-pedidos/";
+    public final static String URL_PEDIDO_DETALLE = "pedido/";
     public final static String URL_PERFIL = "profile/";
     public final static String URL_PERFIL_CREATE = "profile/create/";
     public final static String URL_PERFIL_EDIT = "profile/edit/";
     public final static String URL_SOLICITUD_PEDIDO = "ventas/solicitud/";
     public final static String URL_PRODUCTO_SIMPLE = "producto-simple/";
+
 
     /**
      * tiempo de espera maximo por petición
@@ -274,6 +278,17 @@ public class APIRest {
          * Crea un nuevo request GET con parametros y headers
          * @param url de la petición
          * @param params de la peticion
+         * @param callback intefaz para interactuar
+         */
+        public static void get(String url,final Map<String,String> params,final IServerCallback callback){
+            // Se formatean los parametros si es necesario
+            url = constructURL(url).concat((params != null)? ("?" + makeParams(params)) : "");
+            StringRequest(Request.Method.GET,url,null,null,callback);
+        }
+        /**
+         * Crea un nuevo request GET con parametros y headers
+         * @param url de la petición
+         * @param params de la peticion
          * @param headers de la peticion
          * @param callback intefaz para interactuar
          */
@@ -333,9 +348,14 @@ public class APIRest {
                             }
                             else if (error.networkResponse != null) {
                                 RESPONSE_CODE = error.networkResponse.statusCode;
-                                // Si es un badRequest se llena el apiValidations
-                                apiValidations = serializeObjectFromJson(new String(error.networkResponse.data), APIValidations.class);
-                                apiValidations.setResponse(new String(error.networkResponse.data));
+                                // Si no fue un error de no found o un server error
+                                // se serializan los datos
+                                if (RESPONSE_CODE != HTTP_NOT_FOUND  && RESPONSE_CODE != HTTP_INTERNAL_ERROR) {
+                                    apiValidations = serializeObjectFromJson(new String(error.networkResponse.data), APIValidations.class);
+                                    apiValidations.setResponse(new String(error.networkResponse.data));
+                                }
+                                else
+                                    apiValidations = new APIValidations();
                                 apiValidations.setResponseCode(error.networkResponse.statusCode);
                             }
                             callback.onError(error.getMessage(),apiValidations);

@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.com.neubs.shopneubs.adapters.PedidoDetalleAdapter;
 import co.com.neubs.shopneubs.adapters.ShopCarAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
@@ -31,6 +33,7 @@ import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
+import co.com.neubs.shopneubs.classes.models.PedidoVenta;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class ShopCarActivity extends AppCompatActivity {
@@ -72,6 +75,12 @@ public class ShopCarActivity extends AppCompatActivity {
         btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!sessionManager.isAuthenticated()){
+                    Intent intent = new Intent(ShopCarActivity.this,LoginRegisterActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+
                 progressDialog = new ProgressDialog(ShopCarActivity.this);
                 progressDialog.setCancelable(false);
                 progressDialog.setMessage(getString(R.string.msg_generando_pedido));
@@ -82,18 +91,22 @@ public class ShopCarActivity extends AppCompatActivity {
 
                 Gson gson = new GsonBuilder().create();
                 String json =  gson.toJson(sessionManager.getShopCar());
-                Map<String,String> params = new HashMap<String, String>();
+                Map<String,String> params = new HashMap<>();
                 params.put("data",json);
 
                 APIRest.Async.post(APIRest.URL_SOLICITUD_PEDIDO, params, new IServerCallback() {
                     @Override
                     public void onSuccess(String json) {
                         progressDialog.dismiss();
-                        int numeroPedido = (int)APIRest.getObjectFromJson(json,"numeroPedido");
-                        Toast.makeText(ShopCarActivity.this,getString(R.string.msg_pedido_generado) + " " + String.valueOf(numeroPedido),Toast.LENGTH_SHORT).show();
+                        final PedidoVenta pedidoVenta = APIRest.serializeObjectFromJson(json,PedidoVenta.class);
+                        Toast.makeText(ShopCarActivity.this,getString(R.string.msg_pedido_generado) + " " + String.valueOf(pedidoVenta.getNumeroPedido()),Toast.LENGTH_SHORT).show();
                         sessionManager.deleteShopCar();
-                        finishAfterTransition();
-
+                        // Se abre el pedido venta detalle
+                        Intent intent = new Intent(ShopCarActivity.this, PedidoDetalleActivity.class);
+                        intent.putExtra(PedidoDetalleActivity.PARAM_ID_PEDIDO_VENTA,pedidoVenta.getIdPedidoVenta());
+                        startActivity(intent);
+                        // se finaliza la actividad
+                        finish();
                     }
 
                     @Override

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class PedidoVenta implements Serializable {
 
-    @SerializedName("pk")
+    @SerializedName("idPedidoVenta")
     private int idPedidoVenta;
     private int numeroPedido;
     @SerializedName("estadoPedidoVenta")
