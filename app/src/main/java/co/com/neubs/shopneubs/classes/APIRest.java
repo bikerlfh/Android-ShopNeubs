@@ -341,12 +341,7 @@ public class APIRest {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             APIValidations apiValidations = null;
-                            if (error.getClass() == TimeoutError.class) {
-                                RESPONSE_CODE = HTTP_CLIENT_TIMEOUT;
-                                apiValidations = new APIValidations();
-                                apiValidations.setResponseCode(RESPONSE_CODE);
-                            }
-                            else if (error.networkResponse != null) {
+                            if (error.networkResponse != null) {
                                 RESPONSE_CODE = error.networkResponse.statusCode;
                                 // Si no fue un error de no found o un server error
                                 // se serializan los datos
@@ -357,6 +352,16 @@ public class APIRest {
                                 else
                                     apiValidations = new APIValidations();
                                 apiValidations.setResponseCode(error.networkResponse.statusCode);
+                            }
+                            else{
+                                apiValidations = new APIValidations();
+                                if (error.getCause().getClass() == ConnectException.class) {
+                                    RESPONSE_CODE = HTTP_UNAVAILABLE;
+                                }
+                                else if(error.getClass() == TimeoutError.class || error.getCause().getClass() == SocketTimeoutException.class) {
+                                    RESPONSE_CODE = HTTP_CLIENT_TIMEOUT;
+                                }
+                                apiValidations.setResponseCode(RESPONSE_CODE);
                             }
                             callback.onError(error.getMessage(),apiValidations);
                         }
