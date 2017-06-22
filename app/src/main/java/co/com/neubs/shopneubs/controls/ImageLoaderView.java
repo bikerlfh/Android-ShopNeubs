@@ -89,19 +89,10 @@ public class ImageLoaderView extends LinearLayout
         finally {
             a.recycle();
         }
-        progressBar.setVisibility(GONE);
+        progressBar.setVisibility(VISIBLE);
 
         addView(imageView);
         addView(progressBar);
-    }
-
-
-    private int getColor(int id){
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return getContext().getResources().getColor(id,getContext().getTheme());
-        }
-        return getContext().getColor(id);
     }
 
     public ImageView getImageView()

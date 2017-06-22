@@ -43,11 +43,11 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
     private Toolbar toolbar;
 
-    private TextView titleDescripcion,titleEspecificacion, nombreProducto, descripcionProducto, marcaProducto, especificacionProducto, precioProducto, precioAnterior;
-    private Button btnAgregarItemCar;
+    private TextView mTitleDescripcion,mTitleEspecificacion, mNombreProducto, mDescripcionProducto, mMarcaProducto, mEspecificacionProducto, mPrecioProducto, mPrecioAnterior;
+    private Button mBtnAgregarItemCar;
 
-    private CollapsingToolbarLayout toolbarLayout;
-    private ViewPager viewPager;
+    private CollapsingToolbarLayout mToolbarLayout;
+    private ViewPager mViewPager;
     private ViewPagerAdapter viewPagerAdapter;
 
     @Override
@@ -60,24 +60,26 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sessionManager = SessionManager.getInstance(this);
-        viewPager = (ViewPager)findViewById(R.id.viewPager_producto_detalle);
+        mViewPager = (ViewPager)findViewById(R.id.viewPager_producto_detalle);
 
-        titleDescripcion = (TextView) findViewById(R.id.title_descripcion);
-        titleEspecificacion = (TextView) findViewById(R.id.title_especificacion);
-        nombreProducto = (TextView) findViewById(R.id.lbl_nombre_producto_detalle);
-        marcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
-        precioProducto = (TextView) findViewById(R.id.lbl_precio_producto_detalle);
-        precioAnterior = (TextView) findViewById(R.id.lbl_precio_anterior_detalle);
+        mTitleDescripcion = (TextView) findViewById(R.id.title_descripcion);
+        mTitleEspecificacion = (TextView) findViewById(R.id.title_especificacion);
+        mNombreProducto = (TextView) findViewById(R.id.lbl_nombre_producto_detalle);
+        mMarcaProducto = (TextView) findViewById(R.id.lbl_marca_producto_detalle);
+        mPrecioProducto = (TextView) findViewById(R.id.lbl_precio_producto_detalle);
+        mPrecioAnterior = (TextView) findViewById(R.id.lbl_precio_anterior_detalle);
 
-        precioAnterior.setPaintFlags(precioProducto.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        mPrecioAnterior.setPaintFlags(mPrecioProducto.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
 
-        descripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
-        especificacionProducto = (TextView) findViewById(R.id.lbl_especificacion_producto_detalle);
+        mDescripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
+        mEspecificacionProducto = (TextView) findViewById(R.id.lbl_especificacion_producto_detalle);
 
-        btnAgregarItemCar = (Button) findViewById(R.id.btn_agregar_item_car);
-        btnAgregarItemCar.setOnClickListener(this);
+        mBtnAgregarItemCar = (Button) findViewById(R.id.btn_agregar_item_car);
 
-        toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mBtnAgregarItemCar.setEnabled(false);
+        mBtnAgregarItemCar.setOnClickListener(this);
+
+        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
         Intent intentExtra = getIntent();
         if (intentExtra.getExtras().isEmpty())
@@ -89,11 +91,13 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         final float precioVentaUnitario = intentExtra.getExtras().getFloat(PARAM_PRECIO_VENTA_UNITARIO,0);
         final boolean estado = intentExtra.getExtras().getBoolean(PARAM_ESTADO,false);
 
-        toolbarLayout.setTitle(nomProducto);
-        nombreProducto.setText(nomProducto);
+        if (estado)
+            mBtnAgregarItemCar.setEnabled(true);
+        mToolbarLayout.setTitle(nomProducto);
+        mNombreProducto.setText(nomProducto);
 
         // SE asignan los precios
-        asignarPrecio(precioVentaUnitario,precioOferta);
+        setPrecio(precioVentaUnitario,precioOferta);
 
         if (idSaldoInventario > 0){
             APIRest.Async.get(APIRest.URL_PRODUCTO_DETALLE + String.valueOf(idSaldoInventario), new IServerCallback() {
@@ -104,33 +108,44 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                         final Producto producto = saldoInventario.getProducto();
                         producto.initDbManager(ProductoDetalleActivity.this);
 
-                        marcaProducto.setText(producto.getMarca().getDescripcion());
+                        mMarcaProducto.setText(producto.getMarca().getDescripcion());
 
                         if (producto.getDescripcion().length() > 0) {
-                            descripcionProducto.setText(producto.getDescripcion());
-                            especificacionProducto.setText(producto.getEspecificacion());
+                            mDescripcionProducto.setText(producto.getDescripcion());
+                            mEspecificacionProducto.setText(producto.getEspecificacion());
+                        }
+                        else if(producto.getEspecificacion().length() > 0){
+
+                            mTitleDescripcion.setText(R.string.title_specification);
+                            mDescripcionProducto.setText(producto.getEspecificacion());
+                            // Se esconden los campos de especificacion
+                            setVisibilityCamposEspecificacion(View.GONE);
                         }
                         else{
-                            titleDescripcion.setText(R.string.title_specification);
-                            descripcionProducto.setText(producto.getEspecificacion());
+                            mDescripcionProducto.setText(getString(R.string.text_view_empy));
+                            // Se esconden los campos de especificacion
+                            setVisibilityCamposEspecificacion(View.GONE);
+                        }
+                        // Si no hay especificación, se esconden los respectivos campos
+                        if (producto.getEspecificacion() == null || producto.getEspecificacion().length() == 0){
+                            setVisibilityCamposEspecificacion(View.GONE);
                         }
 
-                        if (producto.getEspecificacion() == null || producto.getEspecificacion().length() == 0){
-                            titleEspecificacion.setVisibility(View.GONE);
-                            especificacionProducto.setVisibility(View.GONE);
-                        }
                         // Se validan los precios que se reciben del servidor con los que se pasaron a la actividad
                         if (precioVentaUnitario != saldoInventario.getPrecioVentaUnitario() ||
                             precioOferta != saldoInventario.getPrecioOferta()){
-                            asignarPrecio(saldoInventario.getPrecioVentaUnitario(),saldoInventario.getPrecioOferta());
+                            setPrecio(saldoInventario.getPrecioVentaUnitario(),saldoInventario.getPrecioOferta());
                         }
+                        // Se cambia el estado
+                        if (saldoInventario.getEstado())
+                            mBtnAgregarItemCar.setEnabled(true);
 
                         List<String> images = new ArrayList<>();
                         for (Imagen img: producto.getImagenes()) {
                             images.add(img.getUrl());
                         }
                         viewPagerAdapter = new ViewPagerAdapter(ProductoDetalleActivity.this,images);
-                        viewPager.setAdapter(viewPagerAdapter);
+                        mViewPager.setAdapter(viewPagerAdapter);
                     }
                 }
 
@@ -141,17 +156,32 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             });
         }
     }
-    private void asignarPrecio(float precioVentaUnitario,float precioOferta){
+
+    /**
+     * Asigna el precio a los campos
+     * @param precioVentaUnitario precio normal
+     * @param precioOferta precio de oferta
+     */
+    private void setPrecio(float precioVentaUnitario,float precioOferta){
         // Si hay precio oferta, este se debe mostrar como el precio actual
         if (precioOferta > 0){
-            precioProducto.setText(Helper.MoneyFormat(precioOferta));
-            precioAnterior.setText(Helper.MoneyFormat(precioVentaUnitario));
+            mPrecioProducto.setText(Helper.MoneyFormat(precioOferta));
+            mPrecioAnterior.setText(Helper.MoneyFormat(precioVentaUnitario));
         }
         else {
-            precioProducto.setGravity(CENTER);
-            precioProducto.setText(Helper.MoneyFormat(precioVentaUnitario));
-            precioAnterior.setVisibility(View.GONE);
+            mPrecioProducto.setGravity(CENTER);
+            mPrecioProducto.setText(Helper.MoneyFormat(precioVentaUnitario));
+            mPrecioAnterior.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * Cambia la visibilidad de los campos titleEspecificacion y especificacionProducto
+     * @param value View.GONE, View.VISIBLE
+     */
+    private void setVisibilityCamposEspecificacion(int value){
+        mTitleEspecificacion.setVisibility(value);
+        mEspecificacionProducto.setVisibility(value);
     }
 
     @Override
