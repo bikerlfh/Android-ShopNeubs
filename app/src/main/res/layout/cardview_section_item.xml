@@ -6,22 +6,22 @@
     android:layout_margin="8dp"
     android:orientation="vertical"
     app:cardCornerRadius="5dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgItem"
+        <co.com.neubs.shopneubs.controls.ImageLoaderView
+            android:id="@+id/img_card_section_item"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:src="@android:drawable/sym_def_app_icon" />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,22 +29,18 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtName"
+                android:id="@+id/lbl_nombre_producto_card_section_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:gravity="center"
+                android:maxLines="1"
                 android:paddingEnd="2dp"
                 android:paddingStart="2dp"
                 android:text="TextView"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="15dp" />
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorSecundary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +48,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/lbl_precio_producto_card"
+                    android:id="@+id/lbl_precio_producto_card_section_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/padding_Boton"
@@ -64,7 +60,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/lbl_precio_anterior_card"
+                    android:id="@+id/lbl_precio_anterior_card_section_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/padding_Boton"

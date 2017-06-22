@@ -26,12 +26,10 @@ import co.com.neubs.shopneubs.controls.ImageLoaderView;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
- * Created by bikerlfh on 5/24/17.
- * Adapter from view products (SaldoInventario)
+ * Created by bikerlfh on 6/22/17.
  */
 
-
-public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder> {
+public class ProductoSectionItemAdapter extends RecyclerView.Adapter<ProductoSectionItemAdapter.ProductoSectionItemViewHolder> {
     private final String TAG = "ProductoAdapter";
     private ArrayList<SaldoInventario> listado_saldo_inventario;
     private ConsultaPaginada consultaPaginada;
@@ -39,7 +37,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     private Context context;
 
     // The class viewHolder
-    public static class ProductoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ProductoSectionItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private ImageLoaderView imagen;
         private TextView nombre_producto;
@@ -50,13 +48,13 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
 
         private Context context;
 
-        public ProductoViewHolder(View itemView) {
+        public ProductoSectionItemViewHolder(View itemView) {
 
             super(itemView);
-            imagen = (ImageLoaderView)itemView.findViewById(R.id.img_producto);
-            nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
-            precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_card);
-            oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card);
+            imagen = (ImageLoaderView)itemView.findViewById(R.id.img_card_section_item);
+            nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card_section_item);
+            precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_card_section_item);
+            oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card_section_item);
             //Estilo Texto strikethrough
             oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
             context = itemView.getContext();
@@ -98,7 +96,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         }
     }
 
-    public  ProductoAdapter(Context context, ConsultaPaginada consultaPaginada){
+    public  ProductoSectionItemAdapter(Context context, ConsultaPaginada consultaPaginada){
         this.context = context;
         this.consultaPaginada = consultaPaginada;
         this.listado_saldo_inventario = this.consultaPaginada.getResults();
@@ -106,14 +104,14 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     }
 
     @Override
-    public ProductoViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+    public ProductoSectionItemViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         // inflate layout CartView
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_producto,null);
-        return new ProductoViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_section_item,null);
+        return new ProductoSectionItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ProductoViewHolder holder, final int position) {
+    public void onBindViewHolder(ProductoSectionItemViewHolder holder, final int position) {
         SaldoInventario saldoInventario = listado_saldo_inventario.get(position);
         holder.bindProducto(saldoInventario);
     }

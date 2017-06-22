@@ -12,10 +12,10 @@ import android.widget.AdapterViewFlipper;
 
 import java.util.ArrayList;
 
-import co.com.neubs.shopneubs.AdapterSection;
+import co.com.neubs.shopneubs.adapters.AdapterSection;
 import co.com.neubs.shopneubs.AdapterBanner;
 import co.com.neubs.shopneubs.R;
-import co.com.neubs.shopneubs.Section;
+import co.com.neubs.shopneubs.classes.models.Section;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,8 +72,9 @@ public class IndexFragment extends Fragment {
         rvSection=(RecyclerView) view.findViewById(R.id.rvSection);
         rvSection.setHasFixedSize(true);
 
-        sections=Section.getSection();
-        if(sections!=null){
+        sections=Section.getAllSections();
+
+        if(sections!=null) {
             adapterSection=new AdapterSection(sections);
             rvSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             rvSection.setAdapter(adapterSection);
