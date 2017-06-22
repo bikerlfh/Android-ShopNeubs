@@ -25,4 +25,5 @@
         app:itemTextAppearance="@drawable/menu_text_color"
         app:menu="@menu/activity_principal_drawer" />
 
+
 </android.support.v4.widget.DrawerLayout>

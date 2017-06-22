@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import co.com.neubs.shopneubs.classes.SessionManager;
+import co.com.neubs.shopneubs.fragments.IndexFragment;
 import co.com.neubs.shopneubs.fragments.OfertasFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
 import co.com.neubs.shopneubs.fragments.FiltroProductoFragment;
@@ -50,7 +51,7 @@ public class PrincipalActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new OfertasFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment()).commit();
 
         View header = navigationView.getHeaderView(0);
         lblHeaderWelcome = (TextView) header.findViewById(R.id.lbl_header_welcome);
