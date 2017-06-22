@@ -59,7 +59,7 @@ public class IndexFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_index, container, false);
-        mAdapterViewFlipper = (AdapterViewFlipper) view.findViewById(R.id.AVF);
+        mAdapterViewFlipper = (AdapterViewFlipper) view.findViewById(R.id.adpaterViewFlipper_banner);
         if (images.length > 0) {
             AdapterBanner customAdapter = new AdapterBanner(getContext(), names, images);
             mAdapterViewFlipper.setAdapter(customAdapter);

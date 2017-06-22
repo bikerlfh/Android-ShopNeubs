@@ -15,7 +15,7 @@
             android:orientation="vertical" >
 
             <AdapterViewFlipper
-                android:id="@+id/AVF"
+                android:id="@+id/adpaterViewFlipper_banner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:autoStart="true"
@@ -23,12 +23,13 @@
                 android:visibility="gone" >
             </AdapterViewFlipper>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvSection"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvSection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_boton">
 
-                </android.support.v7.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
