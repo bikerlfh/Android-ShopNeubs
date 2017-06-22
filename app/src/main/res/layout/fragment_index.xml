@@ -2,20 +2,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.IndexFragment">
+    tools:context=".fragments.IndexFragment"
+    >
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvSection"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+            <AdapterViewFlipper
+                android:id="@+id/AVF"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autoStart="true"
+                android:flipInterval="5000"
+                android:visibility="gone" >
+            </AdapterViewFlipper>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

@@ -40,6 +40,7 @@ public class ImageLoaderView extends LinearLayout
 {
     private ImageView imageView;
     private ProgressBar progressBar;
+    private int adapter;
 
     public ImageLoaderView(Context context){
         super(context);
@@ -174,5 +175,14 @@ public class ImageLoaderView extends LinearLayout
                         loadingImage(false);
                     }
                 });
+    }
+
+
+    public void setAdapter(int adapter) {
+        this.adapter = adapter;
+    }
+
+    public int getAdapter() {
+        return adapter;
     }
 }

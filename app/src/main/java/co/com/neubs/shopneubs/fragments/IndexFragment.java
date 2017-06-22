@@ -9,17 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterViewFlipper;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import co.com.neubs.shopneubs.AdapterSection;
+import co.com.neubs.shopneubs.AdapterBanner;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.Section;
-
-import static android.support.v7.widget.LinearLayoutManager.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,10 +27,10 @@ public class IndexFragment extends Fragment {
     ArrayList<Section> sections;
     AdapterSection adapterSection;
     RecyclerView rvSection;
+    AdapterViewFlipper mAdapterViewFlipper;
 
-    private AdapterViewFlipper AVF;
-    int[] images = {R.drawable.logo_bar, R.drawable.logo, R.drawable.logo_nuevo};
-    String[] names={"Imagen 1","Imagen2","Imagen3"};
+    int[] images={R.drawable.carousel3, R.drawable.carousel4};
+    String[] names={"Imagen 1","Imagen2"};
 
     public IndexFragment() {
         // Required empty public constructor
@@ -63,6 +59,16 @@ public class IndexFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_index, container, false);
+        mAdapterViewFlipper = (AdapterViewFlipper) view.findViewById(R.id.AVF);
+        if (images.length > 0) {
+            AdapterBanner customAdapter = new AdapterBanner(getContext(), names, images);
+            mAdapterViewFlipper.setAdapter(customAdapter);
+            //mAdapterViewFlipper.setFlipInterval(2000);
+            //mAdapterViewFlipper.setAutoStart(true);
+            mAdapterViewFlipper.setVisibility(View.VISIBLE);
+        }
+
+
         rvSection=(RecyclerView) view.findViewById(R.id.rvSection);
         rvSection.setHasFixedSize(true);
 
@@ -73,6 +79,7 @@ public class IndexFragment extends Fragment {
             rvSection.setAdapter(adapterSection);
         }
         return view;
+
     }
 
 }
