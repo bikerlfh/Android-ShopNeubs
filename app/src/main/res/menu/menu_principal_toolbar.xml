@@ -4,15 +4,15 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
 
     <item
-        android:id="@+id/action_cart"
-        android:title="@string/search_title"
-        android:icon="@drawable/ic_shopping_cart"
-        app:showAsAction="always"/>
-
-    <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_search_menu"
+        android:icon="@drawable/ic_menu_search"
         android:title="@string/search_title"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_cart"
+        android:title="@string/search_title"
+        android:icon="@drawable/ic_menu_shop_cart"
+        app:showAsAction="always"/>
 
 </menu>

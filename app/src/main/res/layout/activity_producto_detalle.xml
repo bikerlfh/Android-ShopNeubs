@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.60"
                 android:backgroundTint="@color/colorSecundary"
-                android:drawableStart="@drawable/ic_shopping_cart"
+                android:drawableStart="@drawable/ic_menu_shop_cart"
                 android:elevation="9dp"
                 android:text="@string/agregar_carrito"
                 android:textColor="@color/colorWhite" />

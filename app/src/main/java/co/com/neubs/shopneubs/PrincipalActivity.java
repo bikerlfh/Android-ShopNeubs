@@ -4,18 +4,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -25,13 +23,13 @@ import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.fragments.IndexFragment;
 import co.com.neubs.shopneubs.fragments.OfertasFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
-import co.com.neubs.shopneubs.fragments.FiltroProductoFragment;
 
 public class PrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,ProductosCategoriaFragment.OnFragmentInteractionListener,OfertasFragment.OnFragmentInteractionListener, FiltroProductoFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,ProductosCategoriaFragment.OnFragmentInteractionListener,OfertasFragment.OnFragmentInteractionListener {
 
     private String codigoCategoria = null;
     private TextView lblHeaderWelcome;
+    private DrawerLayout drawer;
 
     private SessionManager sessionManager;
     private MaterialSearchView searchView;
@@ -47,14 +45,17 @@ public class PrincipalActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+
+        // Se instancia el sessionManager
+        sessionManager = SessionManager.getInstance(this);
+
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         // Se consultan las sugerencias
         sugerenciaBusqueda = new SugerenciaBusqueda(this);
         searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
 
-        sessionManager = SessionManager.getInstance(this);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -63,14 +64,52 @@ public class PrincipalActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Se inicializa con el fragment Index
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment()).commit();
 
+        // Se consulta la vista del navigationView
         View header = navigationView.getHeaderView(0);
+        // Se asigna el lbl header welcome
         lblHeaderWelcome = (TextView) header.findViewById(R.id.lbl_header_welcome);
-        visualizarControlesSession(sessionManager.isAuthenticated());
+        setTextoWelcome(sessionManager.isAuthenticated());
+
+        // se inicializa la funcionalidad del SearchView
+        setListenersSearchView();
     }
 
-    private void visualizarControlesSession(boolean isActiva) {
+    /**
+     * Crea los listeners del SearchView
+     */
+    private void setListenersSearchView(){
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(PrincipalActivity.this,BusquedaActivity.class);
+                intent.putExtra(BusquedaActivity.PARAM_QUERY,query);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
+            }
+        });
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchView.setQuery(parent.getItemAtPosition(position).toString(),true);
+            }
+        });
+    }
+
+
+    /**
+     * Cambia el texto del lblHeaderWelcome que esta en el navigationView
+     * @param isActiva
+     */
+    private void setTextoWelcome(boolean isActiva) {
         if (isActiva)
             lblHeaderWelcome.setText(sessionManager.getEmail());
         else
@@ -80,17 +119,18 @@ public class PrincipalActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        visualizarControlesSession(sessionManager.isAuthenticated());
+        setTextoWelcome(sessionManager.isAuthenticated());
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+        if (drawer.isDrawerOpen(GravityCompat.START) || searchView.isSearchOpen()) {
+            if (searchView.isSearchOpen())
+                searchView.closeSearch();
+            else
+                drawer.closeDrawer(GravityCompat.START);
+        } else
             super.onBackPressed();
-        }
     }
 
     @Override
@@ -98,6 +138,7 @@ public class PrincipalActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
 
+        // Se asigna la accion search al searchView
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
         return true;
@@ -105,18 +146,10 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = null;
-        switch (item.getItemId()){
-            case R.id.action_cart:
-                intent = new Intent(PrincipalActivity.this,ShopCarActivity.class);
-
-                break;
-            case R.id.action_search:
-                intent = new Intent(PrincipalActivity.this,BusquedaActivity.class);
-                break;
-        }
-        if (intent != null)
+        if (item.getItemId() == R.id.action_cart){
+            Intent intent = new Intent(PrincipalActivity.this,ShopCarActivity.class);
             startActivity(intent);
+        }
         return true;
     }
 
@@ -193,7 +226,6 @@ public class PrincipalActivity extends AppCompatActivity
         }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

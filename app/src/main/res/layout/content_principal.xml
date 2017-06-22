@@ -1,4 +1,4 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@android:color/transparent">
 
         <FrameLayout
             android:id="@+id/toolbar_container"
@@ -28,7 +29,7 @@
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="20dp"
+                android:elevation="5dp"
                 android:visibility="visible" />
 
         </FrameLayout>
@@ -37,9 +38,9 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="co.com.neubs.shopneubs.PrincipalActivity"
         android:id="@+id/fragment_content">
 
         <android.support.v7.widget.RecyclerView
@@ -51,5 +52,5 @@
 
     </FrameLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
 

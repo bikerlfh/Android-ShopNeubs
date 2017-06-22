@@ -87,7 +87,7 @@ public class SugerenciaBusqueda implements ICrud {
     }
 
     /**
-     * consulta todas las sugerencias y las retorna en un arreglo
+     * consulta todas las sugerencias (incluidas las categorias y marcas)
      * @return arreglo de String con las sugerencias
      */
     public String[] getAllSugerencias(){
