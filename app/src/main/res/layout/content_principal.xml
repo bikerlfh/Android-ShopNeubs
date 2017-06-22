@@ -1,23 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="co.com.neubs.shopneubs.PrincipalActivity"
-    tools:showIn="@layout/app_bar_principal"
-    android:id="@+id/fragment_content">
+    tools:context="co.com.neubs.shopneubs.PrincipalActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_view_principal"
-        android:layout_width="344dp"
-        android:layout_height="495dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp"
+                app:logo="@drawable/logo_bar"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-</android.support.constraint.ConstraintLayout>
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="20dp"
+                android:visibility="visible" />
+
+        </FrameLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="co.com.neubs.shopneubs.PrincipalActivity"
+        android:id="@+id/fragment_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_principal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="vertical" />
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+

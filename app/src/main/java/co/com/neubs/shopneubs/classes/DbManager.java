@@ -16,6 +16,7 @@ import co.com.neubs.shopneubs.models.MunicipioModel;
 import co.com.neubs.shopneubs.models.PaisModel;
 import co.com.neubs.shopneubs.models.ProductoModel;
 import co.com.neubs.shopneubs.models.SaldoInventarioModel;
+import co.com.neubs.shopneubs.models.SugerenciaBusquedaModel;
 import co.com.neubs.shopneubs.models.TipoDocumentoModel;
 import co.com.neubs.shopneubs.models.UsuarioModel;
 
@@ -142,6 +143,7 @@ public class DbManager
             db.execSQL(PaisModel.CREATE_TABLE);
             db.execSQL(DepartamentoModel.CREATE_TABLE);
             db.execSQL(MunicipioModel.CREATE_TABLE);
+            db.execSQL(SugerenciaBusquedaModel.CREATE_TABLE);
         }
 
         @Override

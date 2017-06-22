@@ -23,7 +23,6 @@
     <string name="categoria_18">Tarjetas Digitalizadoras</string>
     <string name="ofertas_title">Ofertas</string>
     <string name="msg_no_internet">No hay conexión a Internet disponible. Presiona ok para recargar</string>
-    <string name="navigation_drawer_close">No hay conexión a Internet disponible</string>
     <string name="title_no_internet">No hay conexión a Internet</string>
     <string name="msg_sincronizando_datos">Sincronizando</string>
     <string name="title_description">Descripción</string>
@@ -78,4 +77,5 @@
     <string name="error_item_in_car">El producto ya está en el carrito</string>
     <string name="title_item_added">Producto agregado</string>
     <string name="comprar">Comprar</string>
+    <string name="title_resumen">Resumen</string>
 </resources>

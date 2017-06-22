@@ -16,4 +16,5 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBackgroundCardView">#fafafa</color>
     <color name="colorPrecio">#e01414</color>
+    <color name="colorControlActivated">#ffffff</color>
 </resources>

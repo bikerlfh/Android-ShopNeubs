@@ -18,7 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
 import co.com.neubs.shopneubs.classes.SessionManager;
+import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.fragments.IndexFragment;
 import co.com.neubs.shopneubs.fragments.OfertasFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
@@ -31,6 +34,9 @@ public class PrincipalActivity extends AppCompatActivity
     private TextView lblHeaderWelcome;
 
     private SessionManager sessionManager;
+    private MaterialSearchView searchView;
+
+    private SugerenciaBusqueda sugerenciaBusqueda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,12 @@ public class PrincipalActivity extends AppCompatActivity
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        // Se consultan las sugerencias
+        sugerenciaBusqueda = new SugerenciaBusqueda(this);
+        searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
+
         sessionManager = SessionManager.getInstance(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,34 +97,9 @@ public class PrincipalActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
-        // Se obtiene el boton de search
-        /*
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView)MenuItemCompat.getActionView(searchItem);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.d("QUERY SEARCH", query);
-                if (query.length() > 0) {
-
-                    Bundle args = new Bundle();
-                    args.putString("PARAM_FILTRO", query);
-
-                    Fragment fragment = new FiltroProductoFragment();
-                    fragment.setArguments(args);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment).commit();
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        */
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
         return true;
     }
 

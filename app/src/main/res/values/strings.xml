@@ -46,9 +46,6 @@
     <string name="error_invalid_password">This password is invalid</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
     <string name="title_activity_login_register">Login | Register</string>
 
     <string name="title_login">login</string>
@@ -102,5 +99,4 @@
     <string name="msg_generando_pedido" translatable="false">Generando pedido...</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
