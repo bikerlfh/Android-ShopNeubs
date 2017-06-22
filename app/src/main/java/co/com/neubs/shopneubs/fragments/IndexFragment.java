@@ -13,7 +13,7 @@ import android.widget.AdapterViewFlipper;
 import java.util.ArrayList;
 
 import co.com.neubs.shopneubs.adapters.AdapterSection;
-import co.com.neubs.shopneubs.AdapterBanner;
+import co.com.neubs.shopneubs.adapters.AdapterBanner;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.Section;
 
@@ -29,8 +29,6 @@ public class IndexFragment extends Fragment {
     RecyclerView rvSection;
     AdapterViewFlipper mAdapterViewFlipper;
 
-    int[] images={R.drawable.carousel3, R.drawable.carousel4};
-    String[] names={"Imagen 1","Imagen2"};
 
     public IndexFragment() {
         // Required empty public constructor
@@ -59,12 +57,14 @@ public class IndexFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_index, container, false);
+
+        ArrayList<String> images = new ArrayList<String>();
+        //images.add("http://192.168.1.50:8000/media/filer_public_thumbnails/filer_public/bb/0e/bb0eb875-1963-4416-a787-6c4c3e6f3a7e/img-carousel-1.jpg__1800x500_q85_crop_subsampling-2_upscale.jpg");
+
         mAdapterViewFlipper = (AdapterViewFlipper) view.findViewById(R.id.adpaterViewFlipper_banner);
-        if (images.length > 0) {
-            AdapterBanner customAdapter = new AdapterBanner(getContext(), names, images);
+        if (images.size() > 0) {
+            AdapterBanner customAdapter = new AdapterBanner(getContext(), images);
             mAdapterViewFlipper.setAdapter(customAdapter);
-            //mAdapterViewFlipper.setFlipInterval(2000);
-            //mAdapterViewFlipper.setAutoStart(true);
             mAdapterViewFlipper.setVisibility(View.VISIBLE);
         }
 

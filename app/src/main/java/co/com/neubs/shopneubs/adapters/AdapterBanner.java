@@ -1,4 +1,4 @@
-package co.com.neubs.shopneubs;
+package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.controls.ImageLoaderView;
 
 /**
@@ -15,24 +19,22 @@ import co.com.neubs.shopneubs.controls.ImageLoaderView;
 
 public class AdapterBanner extends BaseAdapter{
     Context context;
-    int[] images;
-    String[] names;
+    ArrayList<String> listImages;
     LayoutInflater inflater;
 
-    public AdapterBanner(Context applicationContext, String[] names, int[] images){
-        this.context = applicationContext;
-        this.images= images;
-        this.names= names;
-        inflater = (LayoutInflater.from(applicationContext));
+    public AdapterBanner(Context context, ArrayList<String> images){
+        this.context = context;
+        this.listImages = images;
+        inflater = (LayoutInflater.from(context));
     }
     @Override
     public int getCount() {
-        return names.length;
+        return listImages.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return listImages.get(position);
     }
 
     @Override
@@ -43,10 +45,8 @@ public class AdapterBanner extends BaseAdapter{
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         view = inflater.inflate(R.layout.content_item_banner,null);
-        TextView NameG= (TextView) view.findViewById(R.id.name);
-        ImageLoaderView ImageG= (ImageLoaderView) view.findViewById(R.id.img_banner);
-        NameG.setText(names[position]);
-        ImageG.setAdapter(images[position]);
+        ImageLoaderView imagen = (ImageLoaderView) view.findViewById(R.id.img_banner);
+        imagen.setImageURL(listImages.get(position));
         return view;
     }
 }
