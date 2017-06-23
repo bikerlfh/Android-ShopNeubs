@@ -128,7 +128,7 @@ public class SplashActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            synchronize = new Synchronize(SplashActivity.this);
+            synchronize = new Synchronize();
         }
 
         @Override
@@ -158,7 +158,7 @@ public class SplashActivity extends Activity {
                 startActivity(intent);
                 // Se sincronizan los precios del carro
                 if (sessionManager.getShopCar().size() > 0){
-                    sessionManager.sincronizarPreciosShopCar(SplashActivity.this);
+                    sessionManager.sincronizarPreciosShopCar();
                 }
                 finish();
             }
@@ -169,7 +169,7 @@ public class SplashActivity extends Activity {
                     // se cierra la sesión y se vuelve a lanzar el asincrono
                     if (apiValidations.isTokenInvalid() || (apiValidations.unAuthorized() && sessionManager.isAuthenticated())){
                         Toast.makeText(SplashActivity.this, getString(R.string.msg_session_expired), Toast.LENGTH_LONG).show();
-                        sessionManager.closeUserSession(SplashActivity.this);
+                        sessionManager.closeUserSession();
                         isRunning = true;
                         asyncSyncronizeData = new AsyncSyncronize(SplashActivity.this,isFirstRun);
                         asyncSyncronizeData.execute();

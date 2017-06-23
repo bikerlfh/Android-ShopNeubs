@@ -41,10 +41,9 @@ public class Producto implements ICrud {
 
     private transient Marca marca;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
-    public Producto(Context context){
-        initDbManager(context);
+    public Producto(){
     }
 
     public Producto(int idProducto,int idCategoria, int idMarca,int numeroProducto,
@@ -141,7 +140,7 @@ public class Producto implements ICrud {
 
     public Marca getMarca() {
         if (idMarca>0 && marca==null){
-            marca = new Marca(dbManager.context);
+            marca = new Marca();
             marca.getById(idMarca);
         }
         return marca;
@@ -149,10 +148,6 @@ public class Producto implements ICrud {
 
     public void setMarca(Marca marca) {
         this.marca = marca;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override

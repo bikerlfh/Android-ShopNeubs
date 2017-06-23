@@ -25,7 +25,7 @@ public class Categoria implements ICrud{
 
     public transient Categoria categoriaPadre;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
     public Categoria(int idCategoria,String codigo, String descripcion,int idCategoriaPadre){
         this.idCategoria = idCategoria;
@@ -33,13 +33,12 @@ public class Categoria implements ICrud{
         this.descripcion = descripcion;
         this.idCategoriaPadre = idCategoriaPadre;
         if (idCategoriaPadre > 0){
-            this.categoriaPadre = new Categoria(this.dbManager.context);
+            this.categoriaPadre = new Categoria();
             this.categoriaPadre.getById(idCategoriaPadre);
         }
     }
 
-    public Categoria(Context context){
-        this.initDbManager(context);
+    public Categoria(){
     }
 
     public int getIdCategoria() {
@@ -72,10 +71,6 @@ public class Categoria implements ICrud{
 
     public void setIdCategoriaPadre(int idCategoriaPadre) {
         this.idCategoriaPadre = idCategoriaPadre;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override
@@ -127,7 +122,7 @@ public class Categoria implements ICrud{
         Cursor c = dbManager.Select(CategoriaModel.NAME_TABLE, new String[] { "*" },CategoriaModel.CATEGORIA_PADRE + "=?",new String[] {String.valueOf(idCategoriaPadre)});
         if (c.moveToFirst()){
             do {
-                Categoria categoria = new Categoria(this.dbManager.context);
+                Categoria categoria = new Categoria();
                 categoria.serialize(c);
                 ListadoCategoria.add(categoria);
             }
@@ -142,7 +137,7 @@ public class Categoria implements ICrud{
         this.descripcion = cursor.getString(cursor.getColumnIndex(CategoriaModel.DESCRIPCION));
         int idCategoriaPadre = cursor.getInt(cursor.getColumnIndex(CategoriaModel.CATEGORIA_PADRE));
         if (idCategoriaPadre > 0){
-            this.categoriaPadre = new Categoria(this.dbManager.context);
+            this.categoriaPadre = new Categoria();
             this.categoriaPadre.getById(idCategoriaPadre);
         }
     }

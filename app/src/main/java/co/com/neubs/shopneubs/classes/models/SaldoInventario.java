@@ -24,10 +24,9 @@ public class SaldoInventario implements ICrud {
     private boolean estado;
 
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
-    public SaldoInventario(Context context){
-        this.dbManager = new DbManager(context);
+    public SaldoInventario(){
     }
 
     public int getIdSaldoInventario() {
@@ -113,7 +112,7 @@ public class SaldoInventario implements ICrud {
         this.precioOferta = c.getFloat(c.getColumnIndex(SaldoInventarioModel.PRECIO_OFERTA));
         this.estado = Boolean.parseBoolean(c.getString(c.getColumnIndex(SaldoInventarioModel.ESTADO)));
 
-        this.producto = new Producto(this.dbManager.context);
+        this.producto = new Producto();
         this.producto.getById(c.getInt(c.getColumnIndex(SaldoInventarioModel.ID_PRODUCTO)));
 
     }

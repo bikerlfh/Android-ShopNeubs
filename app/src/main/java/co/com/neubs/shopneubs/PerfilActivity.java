@@ -68,13 +68,13 @@ public class PerfilActivity extends AppCompatActivity {
         txtTelefono = (EditText) findViewById(R.id.txt_telefono);
         btnGuardar = (Button) findViewById(R.id.btn_guardar_perfil);
 
-        listadoTipoDocumento = new TipoDocumento(this).getAll();
+        listadoTipoDocumento = new TipoDocumento().getAll();
         ArrayAdapter spinnerAdapterTipoDocumento = new ArrayAdapter(this, android.R.layout.simple_spinner_item,android.R.id.text1, listadoTipoDocumento);
         spinnerAdapterTipoDocumento.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnTipoDocumento.setAdapter(spinnerAdapterTipoDocumento);
 
         // se carga el spinner pais
-        listadoPais = new Pais(this).getAll();
+        listadoPais = new Pais().getAll();
         ArrayAdapter adapter = new ArrayAdapter(PerfilActivity.this, android.R.layout.simple_spinner_item, android.R.id.text1, listadoPais);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPais.setAdapter(adapter);
@@ -244,7 +244,7 @@ public class PerfilActivity extends AppCompatActivity {
                 public void onSuccess(String json) {
                     // si se guardó el perfil, se guarda el idCliente en el usuario
                     if (perfil == null){
-                        Usuario usuario = new Usuario(PerfilActivity.this);
+                        Usuario usuario = new Usuario();
                         usuario.getById(sessionManager.getIdUsuario());
                         usuario.setIdCliente((int)APIRest.getObjectFromJson(json,"idCliente"));
                         usuario.update();
@@ -280,10 +280,10 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     private List<Departamento> cargarDepartamentos(int idPais){
-        Departamento departamento = new Departamento(PerfilActivity.this);
+        Departamento departamento = new Departamento();
         List<Departamento> listadoDepartamento = departamento.getByIdPais(idPais);
         if (listadoDepartamento == null){
-            Synchronize synchronize= new Synchronize(PerfilActivity.this);
+            Synchronize synchronize= new Synchronize();
             if(synchronize.SynchronizeDepartamento(idPais) > 0){
                 listadoDepartamento = departamento.getByIdPais(idPais);
             }
@@ -292,10 +292,10 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     private List<Municipio> cargarMunicipio(int idDeparamento){
-        Municipio municipio = new Municipio(PerfilActivity.this);
+        Municipio municipio = new Municipio();
         List<Municipio> listadoMunicipio = municipio.getByIdDepartamento(idDeparamento);
         if (listadoMunicipio == null){
-            Synchronize synchronize= new Synchronize(PerfilActivity.this);
+            Synchronize synchronize= new Synchronize();
             if(synchronize.SynchronizeMunicipio(idDeparamento) > 0){
                 listadoMunicipio = municipio.getByIdDepartamento(idDeparamento);
             }

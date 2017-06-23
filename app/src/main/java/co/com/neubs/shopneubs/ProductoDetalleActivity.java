@@ -104,7 +104,6 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                     saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
                     if (saldoInventario != null){
                         final Producto producto = saldoInventario.getProducto();
-                        producto.initDbManager(ProductoDetalleActivity.this);
 
                         mMarcaProducto.setText(producto.getMarca().getDescripcion());
 
@@ -193,7 +192,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
         // Se agrega el item al carrito
         if (sessionManager.getItemCarByIdSaldoInventario(saldoInventario.getIdSaldoInventario()) == null) {
-            ItemCar itemCar = new ItemCar(this);
+            ItemCar itemCar = new ItemCar();
             itemCar.setNombreProducto(saldoInventario.getProducto().getNombre());
             itemCar.setIdSaldoInventario(saldoInventario.getIdSaldoInventario());
             itemCar.setImage(saldoInventario.getProducto().getImagenes().get(0).getUrl());

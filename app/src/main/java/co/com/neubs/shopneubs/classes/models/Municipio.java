@@ -25,7 +25,7 @@ public class Municipio implements ICrud {
     private String codigo;
     private String descripcion;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
     public Municipio(int idMunicipio,int idDepartamento,String codigo, String descripcion){
         this.idMunicipio = idMunicipio;
@@ -33,8 +33,7 @@ public class Municipio implements ICrud {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
-    public Municipio(Context context){
-        initDbManager(context);
+    public Municipio(){
     }
 
     public int getIdMunicipio() {
@@ -72,10 +71,6 @@ public class Municipio implements ICrud {
     @Override
     public String toString() {
         return this.descripcion;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override
@@ -129,7 +124,7 @@ public class Municipio implements ICrud {
         if (c.moveToFirst()){
             listMunicipio = new ArrayList<>();
             do {
-                Municipio td = new Municipio(dbManager.context);
+                Municipio td = new Municipio();
                 td.serialize(c);
                 listMunicipio.add(td);
             }while (c.moveToNext());

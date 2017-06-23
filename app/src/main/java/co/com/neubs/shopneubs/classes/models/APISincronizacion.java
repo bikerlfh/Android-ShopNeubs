@@ -21,10 +21,10 @@ public class APISincronizacion implements ICrud {
     private String fecha;
     private boolean ultima;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
-    public APISincronizacion(Context context) {
-        this.initDbManager(context);
+    public APISincronizacion() {
+
     }
 
     public int getIdApiSincronizacion() {
@@ -59,14 +59,9 @@ public class APISincronizacion implements ICrud {
         this.ultima = ultima;
     }
 
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
-    }
-
     /**
      * Graba el registro en la DB
-     *
-     * @return
+     * @return true si guarda
      */
     @Override
     public boolean save() {
@@ -80,19 +75,15 @@ public class APISincronizacion implements ICrud {
         // Si se va a guardar la ultima
         // se modifica la api que este guardado como ultimo.
         if (ultima){
-            List<APISincronizacion> listadoApiSincronizacion = getUltimaApiSincronizacion(ultima);
+            List<APISincronizacion> listadoApiSincronizacion = getUltimaApiSincronizacion(true);
             for (APISincronizacion apiSincronizacion: listadoApiSincronizacion) {
                 if (tabla == apiSincronizacion.tabla){
                     apiSincronizacion.ultima = false;
-                    apiSincronizacion.initDbManager(dbManager.context);
                     apiSincronizacion.save();
                 }
             }
         }
-        if (dbManager.Insert(APISincronizacionModel.NAME_TABLE, contentValues)){
-            return true;
-        }
-        return false;
+        return (dbManager.Insert(APISincronizacionModel.NAME_TABLE, contentValues));
     }
 
     @Override
@@ -121,12 +112,12 @@ public class APISincronizacion implements ICrud {
     }
 
     public List<APISincronizacion> getApiSincronizacionByTabla(int idApiTabla, boolean ultima){
-        List<APISincronizacion> listadoApi = new ArrayList<APISincronizacion>();
+        List<APISincronizacion> listadoApi = new ArrayList<>();
         Cursor c = dbManager.Select(APISincronizacionModel.NAME_TABLE, new String[]{"*"}, APISincronizacionModel.ID_APITABLA +"=? AND "+APISincronizacionModel.ULTIMA + "=?",
                 new String[]{String.valueOf(idApiTabla),String.valueOf(ultima)});
         if (c.moveToFirst()){
             do{
-                APISincronizacion apiSincronizacion = new APISincronizacion(dbManager.context);
+                APISincronizacion apiSincronizacion = new APISincronizacion();
                 apiSincronizacion.serialize(c);
                 listadoApi.add(apiSincronizacion);
             }while(c.moveToNext());
@@ -135,11 +126,11 @@ public class APISincronizacion implements ICrud {
     }
 
     public List<APISincronizacion> getUltimaApiSincronizacion(boolean ultima){
-        List<APISincronizacion> listadoApi = new ArrayList<APISincronizacion>();
+        List<APISincronizacion> listadoApi = new ArrayList<>();
         Cursor c = dbManager.Select(APISincronizacionModel.NAME_TABLE, new String[]{"*"}, APISincronizacionModel.ULTIMA + "=?", new String[]{String.valueOf(ultima)});
         if (c.moveToFirst()){
             do{
-                APISincronizacion apiSincronizacion = new APISincronizacion(dbManager.context);
+                APISincronizacion apiSincronizacion = new APISincronizacion();
                 apiSincronizacion.serialize(c);
                 listadoApi.add(apiSincronizacion);
             }while(c.moveToNext());
@@ -148,7 +139,7 @@ public class APISincronizacion implements ICrud {
     }
     /**
      * Obtiene la ultima sincronización realizada
-     * @return
+     * @return true si encuentra la ultima sincronización
      */
     public boolean getLastGeneral() {
         Cursor c = dbManager.RawQuery("SELECT * FROM "+ APISincronizacionModel.NAME_TABLE +" WHERE " + APISincronizacionModel.ID_APITABLA + " IS NULL AND " + APISincronizacionModel.ULTIMA + " = 1",null);
@@ -161,12 +152,11 @@ public class APISincronizacion implements ICrud {
 
     /**
      * Obtiene la ultima sincronización realizada por el código de la ApiTabla
-     *
      * @param codigoApiTabla codigo de la ApiTabla
-     * @return
+     * @return true si encuentra la ultima sincronización
      */
     public boolean getLast(String codigoApiTabla) {
-        APITabla apiTabla = new APITabla(this.dbManager.context);
+        APITabla apiTabla = new APITabla();
         if (apiTabla.getAPITablaByCodigo(codigoApiTabla)) {
             Cursor c = dbManager.Select(APISincronizacionModel.NAME_TABLE, new String[]{"*"}, APISincronizacionModel.ID_APITABLA + "=? AND ultima = ?", new String[]{String.valueOf(apiTabla.getIdApiTabla()), "1"});
             if (c.moveToFirst()) {
@@ -184,10 +174,10 @@ public class APISincronizacion implements ICrud {
     private void serialize(Cursor c){
         this.idApiSincronizacion = c.getInt(c.getColumnIndex(APISincronizacionModel.PK));
         this.fecha = c.getString(c.getColumnIndex(APISincronizacionModel.FECHA));
-        this.ultima = c.getInt(c.getColumnIndex(APISincronizacionModel.ULTIMA)) ==1? true:false;
+        this.ultima = c.getInt(c.getColumnIndex(APISincronizacionModel.ULTIMA)) ==1;
         int idApiTabla = c.getInt(c.getColumnIndex(APISincronizacionModel.ID_APITABLA));
         if (idApiTabla > 0){
-            this.tabla = new APITabla(this.dbManager.context);
+            this.tabla = new APITabla();
             this.tabla.getById(idApiTabla);
         }
     }

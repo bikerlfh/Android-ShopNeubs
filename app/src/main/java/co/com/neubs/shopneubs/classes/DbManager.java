@@ -27,9 +27,11 @@ import co.com.neubs.shopneubs.models.UsuarioModel;
 
 public class DbManager
 {
+    // instancia
+    private static DbManager instance;
+
     private DbHelper dbHelper;
     private SQLiteDatabase db;
-
     public  Context context;
 
     //public static final String QueryInsertFormatos = "insert into formato(codigo)";
@@ -44,66 +46,69 @@ public class DbManager
         return identity;
     }
 
-    public DbManager(Context context) {
+    /**
+     * Inicializa la instancia
+     * @param context
+     */
+    public static synchronized void initInstance(Context context){
+        if (instance == null)
+            instance = new DbManager(context.getApplicationContext());
+    }
+
+    /**
+     * Obtiene la instancia. Si no esta inistanciada retorna una excepción
+     * @return instancia de DbManager
+     */
+    public static synchronized DbManager getInstance(){
+        if (instance == null)
+            throw new IllegalStateException(DbManager.class .getSimpleName() +
+                    " no esta inicializada, usted debe invocar primero el metodo initInstance");
+        return instance;
+    }
+
+    /**
+     * El constructor debe ser privado para evitar la instanciación directa
+     * @param context
+     */
+    private DbManager(Context context) {
         this.context = context;
         dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
     }
 
-    private void initDbWritable(){
-        if (db == null || !db.isOpen() || db.isReadOnly()) {
-            if (db.isOpen() && db.isReadOnly())
-                db.close();
-            db = dbHelper.getWritableDatabase();
-        }
-    }
-
-    private void initDbReadable(){
-        if (db == null || !db.isOpen())
-            db = dbHelper.getWritableDatabase();
-    }
-
-    public boolean Insert(String table,ContentValues values)
-    {
+    public boolean Insert(String table,ContentValues values){
         identity = db.insert(table, null, values);
         return (identity > 0);
     }
 
-    public boolean Update(String table, ContentValues values, String whereClause, String[] whereArgs)
-    {
+    public boolean Update(String table, ContentValues values, String whereClause, String[] whereArgs){
         //String table, ContentValues values, String whereClause, String[] whereArgs
         return (db.update(table, values, whereClause, whereArgs)>0);
     }
 
-    public boolean Delete(String table, String whereClause, String[] whereArgs)
-    {
+    public boolean Delete(String table, String whereClause, String[] whereArgs){
         return (db.delete(table, whereClause, whereArgs) > 0);
     }
 
     public Cursor Select(String table, String[] columns, String selection, String[] selectionArgs,
-                         String groupBy, String having, String orderBy, String limit)
-    {
+                         String groupBy, String having, String orderBy, String limit){
         return db.query(table, columns, selection, selectionArgs, groupBy,having, orderBy,null);
     }
 
-    public Cursor Select(String table, String[] columns, String selection, String[] selectionArgs)
-    {
+    public Cursor Select(String table, String[] columns, String selection, String[] selectionArgs){
         return db.query(table, columns, selection, selectionArgs, null,null, null,null);
     }
 
-    public Cursor Select(String table, String[] columns)
-    {
+    public Cursor Select(String table, String[] columns){
         return db.query(table, columns, null, null,null, null,null);
     }
 
-    public Cursor SelectAll(String table)
-    {
+    public Cursor SelectAll(String table){
         return db.query(table, new String[]{"*"}, null, null,null, null,null);
     }
 
 
-    public Cursor RawQuery(String sql, String[] selectionArgs)
-    {
+    public Cursor RawQuery(String sql, String[] selectionArgs){
         return db.rawQuery(sql, selectionArgs);
     }
 
@@ -156,8 +161,7 @@ public class DbManager
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            if (oldVersion < newVersion)
-            {
+            if (oldVersion < newVersion){
 
             }
         }

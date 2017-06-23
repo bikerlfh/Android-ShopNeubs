@@ -27,10 +27,9 @@ public class ItemCar implements ICrud {
 
 
     private transient Marca marca;
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
-    public ItemCar(Context context) {
-        initDbManager(context);
+    public ItemCar() {
     }
 
     public long getIdItemCar() {
@@ -103,14 +102,10 @@ public class ItemCar implements ICrud {
 
     public Marca getMarca(){
         if (marca == null && idMarca >0){
-            marca = new Marca(dbManager.context);
+            marca = new Marca();
             marca.getById(idMarca);
         }
         return marca;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override
@@ -133,7 +128,7 @@ public class ItemCar implements ICrud {
 
     /**
      * Solo se puede modificar la fecha, cantidad y precioVentaUnitario
-     * @return
+     * @return true si actualiza
      */
     @Override
     public boolean update() {
@@ -174,7 +169,7 @@ public class ItemCar implements ICrud {
         if (c.moveToFirst()){
             listShopCar = new ArrayList<>();
             do{
-                ItemCar item = new ItemCar(dbManager.context);
+                ItemCar item = new ItemCar();
                 item.serialize(c);
                 listShopCar.add(item);
             }while (c.moveToNext());

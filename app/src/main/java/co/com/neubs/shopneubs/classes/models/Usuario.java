@@ -27,10 +27,9 @@ public class Usuario implements ICrud {
     private String apellido;
     private String token;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
-    public Usuario(Context context){
-        this.initDbManager(context);
+    public Usuario(){
     }
 
     public int getIdUsuario() {
@@ -89,10 +88,6 @@ public class Usuario implements ICrud {
         this.token = token;
     }
 
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
-    }
-
     @Override
     public boolean save() {
         ContentValues contentValues = new ContentValues();
@@ -126,11 +121,7 @@ public class Usuario implements ICrud {
 
     @Override
     public boolean exists() {
-        Cursor c = dbManager.Select(UsuarioModel.NAME_TABLE, new String[] { "*" },UsuarioModel.PK + "=?",new String[] {String.valueOf(idUsuario)});
-        if (c.moveToFirst()){
-            return true;
-        }
-        return false;
+        return dbManager.exists(UsuarioModel.NAME_TABLE,UsuarioModel.PK ,idUsuario);
     }
 
     @Override
@@ -189,7 +180,7 @@ public class Usuario implements ICrud {
         if (c.moveToFirst()){
             usuarios = new ArrayList<>();
             do{
-                Usuario user = new Usuario(dbManager.context);
+                Usuario user = new Usuario();
                 user.serialize(c);
                 usuarios.add(user);
             }while(c.moveToNext());

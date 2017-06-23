@@ -25,7 +25,7 @@ public class Departamento implements ICrud {
     private String codigo;
     private String descripcion;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
     public Departamento(int idDepartamento,int idPais,String codigo, String descripcion){
         this.idDepartamento = idDepartamento;
@@ -33,8 +33,7 @@ public class Departamento implements ICrud {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
-    public Departamento(Context context){
-        initDbManager(context);
+    public Departamento(){
     }
 
     public int getIdDepartamento() {
@@ -72,10 +71,6 @@ public class Departamento implements ICrud {
     @Override
     public String toString() {
         return this.descripcion;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override
@@ -129,7 +124,7 @@ public class Departamento implements ICrud {
         if (c.moveToFirst()){
             listDepartamento = new ArrayList<>();
             do {
-                Departamento td = new Departamento(dbManager.context);
+                Departamento td = new Departamento();
                 td.serialize(c);
                 listDepartamento.add(td);
             }while (c.moveToNext());

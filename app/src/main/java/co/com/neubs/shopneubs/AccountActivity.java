@@ -42,7 +42,7 @@ public class AccountActivity extends AppCompatActivity {
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         // Se consultan las sugerencias
-        SugerenciaBusqueda sugerenciaBusqueda = new SugerenciaBusqueda(this);
+        SugerenciaBusqueda sugerenciaBusqueda = new SugerenciaBusqueda();
         searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
 
         lblWelcome = (TextView) findViewById(R.id.lbl_welcome_account);
@@ -86,7 +86,7 @@ public class AccountActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sessionManager.closeUserSession(AccountActivity.this)){
+                if(sessionManager.closeUserSession()){
                     visualizarControlesSession(false);
                 }
             }

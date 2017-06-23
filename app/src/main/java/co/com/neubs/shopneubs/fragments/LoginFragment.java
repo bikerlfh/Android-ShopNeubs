@@ -199,7 +199,7 @@ public class LoginFragment extends Fragment {
                     String token = (String)APIRest.getObjectFromJson(response,"key");
                     //String email = parametros.get("email");
                     String username = parametros.get("username");
-                    Usuario usuario = new Usuario(getActivity());
+                    Usuario usuario = new Usuario();
                     // Si no existe el usuaro, se debe consultar y guardar
                     //if (!usuario.getByEmail(email) && !usuario.getByUserName(username)) {
                     if (!usuario.getByUserName(username)) {
@@ -208,7 +208,6 @@ public class LoginFragment extends Fragment {
                         response = APIRest.Sync.get(url);
                         usuario = APIRest.serializeObjectFromJson(response, Usuario.class);
                         if (usuario != null) {
-                            usuario.initDbManager(getActivity());
                             usuario.save();
                         }
                         else
@@ -217,7 +216,7 @@ public class LoginFragment extends Fragment {
 
                     // Se guarda la session
                     SessionManager session = SessionManager.getInstance(getContext());
-                    if (session.createUserSession(getActivity(), usuario.getIdUsuario(), token)) {
+                    if (session.createUserSession(usuario.getIdUsuario(), token)) {
                         return true;
                     }
                 }

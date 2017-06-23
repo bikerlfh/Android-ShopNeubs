@@ -53,7 +53,7 @@ public class PrincipalActivity extends AppCompatActivity
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         // Se consultan las sugerencias
-        sugerenciaBusqueda = new SugerenciaBusqueda(this);
+        sugerenciaBusqueda = new SugerenciaBusqueda();
         searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
 
 

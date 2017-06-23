@@ -36,10 +36,12 @@ public class SessionManager {
 
     private static SessionManager instance = null;
 
-    public SessionManager(Context context) {
+    private SessionManager(Context context) {
+        // Se inicializa la instancia de dbManager
+        DbManager.initInstance(context.getApplicationContext());
         token = null;
-        Usuario usuario = new Usuario(context);
-        cargarShopCar(context);
+        Usuario usuario = new Usuario();
+        cargarShopCar();
         if (usuario.getLoginUser())
             llenarCampos(usuario);
     }
@@ -92,15 +94,14 @@ public class SessionManager {
 
     /**
      * Crea la sesión del usuario, actualizando el campo Token el usuario
-     * @param context context
      * @param idUsuario el id del usuario
      * @param token el token
      * @return true s se crea la sesión de lo contrario false
      */
-    public boolean createUserSession(Context context, int idUsuario, String token){
+    public boolean createUserSession(int idUsuario, String token){
         // Se cierran las sessiones que tenga el usuario abierto
-        closeUserSession(context);
-        Usuario usuario = new Usuario(context);
+        closeUserSession();
+        Usuario usuario = new Usuario();
         if (usuario.getById(idUsuario)) {
             usuario.setToken(token);
             usuario.update();
@@ -113,12 +114,11 @@ public class SessionManager {
 
     /**
      * Cierra la sesión del usuario activo
-     * @param context context
      * @return true si se cierra la sesión de lo contrario false
      */
-    public boolean closeUserSession(final Context context){
+    public boolean closeUserSession(){
         try {
-            Usuario usuario = new Usuario(context);
+            Usuario usuario = new Usuario();
             if (usuario.getLoginUser()){
                 APIRest.Async.post(APIRest.URL_LOGOUT, null, new IServerCallback() {
                     @Override
@@ -152,7 +152,7 @@ public class SessionManager {
      */
     public void closeSessionExpired(Activity activity){
         Toast.makeText(activity,activity.getString(R.string.msg_session_expired),Toast.LENGTH_SHORT).show();
-        closeUserSession(activity.getApplicationContext());
+        closeUserSession();
         activity.finish();
     }
 
@@ -170,14 +170,13 @@ public class SessionManager {
 
     /**
      * Consulta el carrito
-     * @param context context
      */
-    private void cargarShopCar(Context context){
-        final ItemCar itemCar = new ItemCar(context);
+    private void cargarShopCar(){
+        final ItemCar itemCar = new ItemCar();
         this.shopCar = itemCar.getAllItemCar();
     }
-    public void sincronizarPreciosShopCar(Context context){
-        APISincronizacion apiSincronizacion = new APISincronizacion(context);
+    public void sincronizarPreciosShopCar(){
+        APISincronizacion apiSincronizacion = new APISincronizacion();
         // Se consulta la ultima sincronzacion general
         if(apiSincronizacion.getLastGeneral()){
             if (validarSincronizacionShopCar(apiSincronizacion.getFecha())) {

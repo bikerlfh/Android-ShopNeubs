@@ -23,15 +23,14 @@ public class TipoDocumento implements ICrud {
     private String codigo;
     private String descripcion;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
     public TipoDocumento(int idTipoDocumento,String codigo, String descripcion){
         this.idTipoDocumento = idTipoDocumento;
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
-    public TipoDocumento(Context context){
-        initDbManager(context);
+    public TipoDocumento(){
     }
 
     public int getIdTipoDocumento() {
@@ -60,15 +59,11 @@ public class TipoDocumento implements ICrud {
 
     /**
      * Se rescribe el toString para el ArrayAdapter del spinner
-     * @return
+     * @return toString
      */
     @Override
     public String toString() {
         return codigo;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override
@@ -121,7 +116,7 @@ public class TipoDocumento implements ICrud {
         if (c.moveToFirst()){
             listTipoDocumento = new ArrayList<>();
             do {
-                TipoDocumento td = new TipoDocumento(dbManager.context);
+                TipoDocumento td = new TipoDocumento();
                 td.serialize(c);
                 listTipoDocumento.add(td);
             }while (c.moveToNext());

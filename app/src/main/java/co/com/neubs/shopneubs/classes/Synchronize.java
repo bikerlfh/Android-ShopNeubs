@@ -26,13 +26,12 @@ public class Synchronize {
     private final String URL_DEPARTAMENTO = "sync/departamento/";
     private final String URL_MUNICIPIO = "sync/municipio/";
 
-    private Context context;
 
     public String message_error;
 
 
-    public Synchronize(Context context) {
-        this.context = context;
+    public Synchronize() {
+
     }
 
     /**
@@ -76,7 +75,6 @@ public class Synchronize {
             final APITabla[] listadoAPITabla = APIRest.serializeObjectFromJson(response,APITabla[].class);
             if (listadoAPITabla != null && listadoAPITabla.length > 0) {
                 for (APITabla tabla : listadoAPITabla) {
-                    tabla.initDbManager(context);
                     // Si la tabla no está creada en la base de datos se guarda
                     if (!tabla.exists()) {
                         tabla.save();
@@ -100,7 +98,6 @@ public class Synchronize {
         final String response = APIRest.Sync.get(url);
         if(response != null && APIRest.Sync.ok()) {
             APISincronizacion apiSincronizacion = APIRest.serializeObjectFromJson(response, APISincronizacion.class);
-            apiSincronizacion.initDbManager(context);
             if (!apiSincronizacion.exists()) {
                 apiSincronizacion.save();
                 return 1;
@@ -124,7 +121,6 @@ public class Synchronize {
             final APISincronizacion[] listApiSincronizacion = APIRest.serializeObjectFromJson(response, APISincronizacion[].class);
             if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
                 for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
-                    apiSincronizacion.initDbManager(context);
                     if (!apiSincronizacion.exists()) {
                         apiSincronizacion.save();
                         numSincronizacion++;
@@ -152,7 +148,6 @@ public class Synchronize {
             final TipoDocumento[] listTipoDocumento = APIRest.serializeObjectFromJson(response, TipoDocumento[].class);
             if (listTipoDocumento != null && listTipoDocumento.length > 0) {
                 for (TipoDocumento tipoDocumento : listTipoDocumento) {
-                    tipoDocumento.initDbManager(context);
                     if (!tipoDocumento.exists()) {
                         tipoDocumento.save();
                         numSincronizacion++;
@@ -176,7 +171,6 @@ public class Synchronize {
             final Pais[] listPais = APIRest.serializeObjectFromJson(response, Pais[].class);
             if (listPais != null && listPais.length > 0) {
                 for (Pais pais : listPais) {
-                    pais.initDbManager(context);
                     if (!pais.exists()) {
                         pais.save();
                         numSincronizacion++;
@@ -204,7 +198,6 @@ public class Synchronize {
             final Departamento[] listDepartamento = APIRest.serializeObjectFromJson(response, Departamento[].class);
             if (listDepartamento != null && listDepartamento.length > 0) {
                 for (Departamento departamento : listDepartamento) {
-                    departamento.initDbManager(context);
                     if (!departamento.exists()) {
                         departamento.save();
                         numSincronizacion++;
@@ -233,7 +226,6 @@ public class Synchronize {
             final Municipio[] listMunicipio = APIRest.serializeObjectFromJson(response, Municipio[].class);
             if (listMunicipio != null && listMunicipio.length > 0) {
                 for (Municipio municipio : listMunicipio) {
-                    municipio.initDbManager(context);
                     if (!municipio.exists()) {
                         municipio.save();
                         numSincronizacion++;
@@ -257,7 +249,6 @@ public class Synchronize {
             final Marca[] listMarca = APIRest.serializeObjectFromJson(response, Marca[].class);
             if (listMarca != null && listMarca.length > 0) {
                 for (Marca marca : listMarca) {
-                    marca.initDbManager(context);
                     if (!marca.exists()) {
                         marca.save();
                         numSincronizacion++;
@@ -281,7 +272,6 @@ public class Synchronize {
             final Categoria[] listCategoria = APIRest.serializeObjectFromJson(response, Categoria[].class);
             if (listCategoria != null && listCategoria.length > 0) {
                 for (Categoria cat : listCategoria) {
-                    cat.initDbManager(context);
                     if (!cat.exists()) {
                         cat.save();
                         numSincronizacion++;

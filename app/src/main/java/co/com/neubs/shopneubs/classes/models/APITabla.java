@@ -20,10 +20,9 @@ public class APITabla implements ICrud {
     private String codigo;
     private String descripcion;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
-    public APITabla(Context context) {
-        initDbManager(context);
+    public APITabla() {
     }
 
     public int getIdApiTabla() {
@@ -50,10 +49,6 @@ public class APITabla implements ICrud {
         this.descripcion = descripcion;
     }
 
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
-    }
-
     @Override
     public boolean save() {
         ContentValues contentValues = new ContentValues();
@@ -61,9 +56,7 @@ public class APITabla implements ICrud {
         contentValues.put(APITablaModel.CODIGO,codigo);
         contentValues.put(APITablaModel.DESCRIPCION,descripcion);
 
-        if(dbManager.Insert(APITablaModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(APITablaModel.NAME_TABLE,contentValues));
     }
 
     @Override
@@ -84,7 +77,7 @@ public class APITabla implements ICrud {
     /**
      * Consulta la ApiTabla por ID
      * @param id idApiTabla
-     * @return
+     * @return true si encuentra el objeto
      */
     @Override
     public boolean getById(int id) {
@@ -99,7 +92,7 @@ public class APITabla implements ICrud {
     /**
      * Consulta la ApiTabla por Código
      * @param codigo de la ApiTabla
-     * @return
+     * @return true si encuentra el objeto
      */
     public boolean getAPITablaByCodigo(String codigo){
         Cursor c = dbManager.Select(APITablaModel.NAME_TABLE, new String[] { "*" },APITablaModel.CODIGO + "=?",new String[] { codigo });
@@ -112,25 +105,22 @@ public class APITabla implements ICrud {
 
     public List<APITabla> getAllAPITabla()
     {
-        List<APITabla> listadoAPITabla = new ArrayList<APITabla>();
+        List<APITabla> listadoAPITabla = new ArrayList<>();
         Cursor c = dbManager.SelectAll(APITablaModel.NAME_TABLE);
-        if (c.moveToFirst())
-        {
+        if (c.moveToFirst()){
             // Recorremos el cursor y llenamos el Objeto inf el cual se agrega a la ListadoMunicipio
-            do
-            {
-                APITabla tabla = new APITabla(this.dbManager.context);
+            do{
+                APITabla tabla = new APITabla();
                 tabla.serialize(c);
                 listadoAPITabla.add(tabla);
-            }
-            while (c.moveToNext());
+            }while (c.moveToNext());
         }
         return listadoAPITabla;
     }
     /**
      * Obtiene la primera tabla guardada
      * Este método se utiliza para saber si se ha guardado información en la base de datos
-     * @return
+     * @return true si encuentra la primera tabla guardada
      */
     public boolean getFirst(){
         Cursor c = dbManager.Select(APITablaModel.NAME_TABLE, new String[] { "TOP 1 *" });

@@ -21,15 +21,14 @@ public class Marca implements ICrud {
     private String codigo;
     private String descripcion;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
     public Marca(int idMarca,String codigo, String descripcion){
         this.idMarca = idMarca;
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
-    public Marca(Context context){
-        initDbManager(context);
+    public Marca(){
     }
 
     public int getIdMarca() {
@@ -54,10 +53,6 @@ public class Marca implements ICrud {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override

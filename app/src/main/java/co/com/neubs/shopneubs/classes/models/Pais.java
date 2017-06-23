@@ -23,15 +23,14 @@ public class Pais implements ICrud {
     private String codigo;
     private String descripcion;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
     public Pais(int idPais,String codigo, String descripcion){
         this.idPais = idPais;
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
-    public Pais(Context context){
-        initDbManager(context);
+    public Pais(){
     }
 
     public int getIdPais() {
@@ -61,10 +60,6 @@ public class Pais implements ICrud {
     @Override
     public String toString() {
         return descripcion;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override
@@ -117,7 +112,7 @@ public class Pais implements ICrud {
         if (c.moveToFirst()){
             listPais = new ArrayList<>();
             do {
-                Pais td = new Pais(dbManager.context);
+                Pais td = new Pais();
                 td.serialize(c);
                 listPais.add(td);
             }while (c.moveToNext());

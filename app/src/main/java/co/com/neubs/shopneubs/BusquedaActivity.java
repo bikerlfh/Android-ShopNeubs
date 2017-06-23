@@ -68,7 +68,7 @@ public class BusquedaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Se consultan las sugerencias y se pasan al git
-        sugerenciaBusqueda = new SugerenciaBusqueda(this);
+        sugerenciaBusqueda = new SugerenciaBusqueda();
         searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
 
         recycleView.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,this), true));

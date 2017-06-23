@@ -22,10 +22,9 @@ public class SugerenciaBusqueda implements ICrud {
     private int idSugerenciaBusqueda;
     private String sugerencia;
 
-    private transient DbManager dbManager;
+    private transient DbManager dbManager = DbManager.getInstance();
 
-    public SugerenciaBusqueda(Context context) {
-        initDbManager(context);
+    public SugerenciaBusqueda() {
     }
 
     public int getIdSugerenciaBusqueda() {
@@ -47,10 +46,6 @@ public class SugerenciaBusqueda implements ICrud {
     @Override
     public String toString() {
         return sugerencia;
-    }
-
-    public void initDbManager(Context context){
-        this.dbManager = new DbManager(context);
     }
 
     @Override
