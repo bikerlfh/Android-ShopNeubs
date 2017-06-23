@@ -21,10 +21,10 @@ import co.com.neubs.shopneubs.interfaces.IServerCallback;
  * Created by Tatiana on 21/06/2017.
  */
 
-public class AdapterSection extends RecyclerView.Adapter<AdapterSection.ViewHolder> {
+public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHolder> {
     public ArrayList<Section> sections;
 
-    public AdapterSection(ArrayList<Section> sections){
+    public SectionAdapter(ArrayList<Section> sections){
         this.sections=sections;
     }
 

@@ -12,8 +12,8 @@ import android.widget.AdapterViewFlipper;
 
 import java.util.ArrayList;
 
-import co.com.neubs.shopneubs.adapters.AdapterSection;
-import co.com.neubs.shopneubs.adapters.AdapterBanner;
+import co.com.neubs.shopneubs.adapters.SectionAdapter;
+import co.com.neubs.shopneubs.adapters.BannerAdapter;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.Section;
 
@@ -25,7 +25,7 @@ import co.com.neubs.shopneubs.classes.models.Section;
 public class IndexFragment extends Fragment {
 
     ArrayList<Section> sections;
-    AdapterSection adapterSection;
+    SectionAdapter sectionAdapter;
     RecyclerView rvSection;
     AdapterViewFlipper mAdapterViewFlipper;
 
@@ -64,7 +64,7 @@ public class IndexFragment extends Fragment {
         images.add("http://d37enp55yzymsd.cloudfront.net/images/Las-mejores-13-ofertas-en-cancun-para-nadar-con-delfines-554x247.jpg");
         mAdapterViewFlipper = (AdapterViewFlipper) view.findViewById(R.id.adpaterViewFlipper_banner);
         if (images.size() > 0) {
-            AdapterBanner customAdapter = new AdapterBanner(getContext(), images);
+            BannerAdapter customAdapter = new BannerAdapter(getContext(), images);
             mAdapterViewFlipper.setAdapter(customAdapter);
             mAdapterViewFlipper.setVisibility(View.VISIBLE);
         }
@@ -76,9 +76,9 @@ public class IndexFragment extends Fragment {
         sections=Section.getAllSections();
 
         if(sections!=null) {
-            adapterSection=new AdapterSection(sections);
+            sectionAdapter =new SectionAdapter(sections);
             rvSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-            rvSection.setAdapter(adapterSection);
+            rvSection.setAdapter(sectionAdapter);
         }
         return view;
 

@@ -193,8 +193,6 @@ public class ImageLoaderView extends LinearLayout
         Glide.with(getContext())
                 .load(resourceId)
                 .asBitmap()
-                //.placeholder(R.drawable.circular_progress_bar)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .error(R.mipmap.ic_launcher)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override

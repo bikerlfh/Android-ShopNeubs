@@ -107,11 +107,7 @@ public class APISincronizacion implements ICrud {
 
     @Override
     public boolean exists() {
-        Cursor c = dbManager.Select(APISincronizacionModel.NAME_TABLE, new String[]{"*"}, APISincronizacionModel.PK + "=?", new String[]{String.valueOf(idApiSincronizacion)});
-        if (c.moveToFirst()) {
-            return true;
-        }
-        return false;
+        return dbManager.exists(APISincronizacionModel.NAME_TABLE, APISincronizacionModel.PK ,idApiSincronizacion);
     }
 
     @Override

@@ -43,66 +43,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
      */
     private int idResourceLayoutToInflate;
 
-    // The class viewHolder
-    public static class ProductoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
-        private ImageLoaderView imagen;
-        private TextView nombre_producto;
-        private TextView precio;
-        private TextView oferta;
-
-        private SaldoInventario saldoInventario;
-
-        private Context context;
-
-        public ProductoViewHolder(View itemView) {
-
-            super(itemView);
-            imagen = (ImageLoaderView)itemView.findViewById(R.id.img_producto);
-            nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
-            precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_card);
-            oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card);
-            //Estilo Texto strikethrough
-            oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-            context = itemView.getContext();
-
-        }
-
-        public void bindProducto(SaldoInventario saldoInventario) {
-            this.saldoInventario = saldoInventario;
-            Producto producto = saldoInventario.getProducto();
-            nombre_producto.setText(producto.getNombre());
-
-
-
-            if (saldoInventario.getPrecioOferta() > 0){
-                oferta.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
-                precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioOferta()));
-            }
-            else{
-                precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
-                oferta.setVisibility(View.GONE);
-            }
-            // Se obtiene la imagen y se guarda en el cache
-            imagen.setImageURL(producto.getImagen());
-
-            imagen.setOnClickListener(this);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            // Aca se debe abrir la actividad de visualización del producto detalle
-            Intent intent = new Intent(v.getContext(),ProductoDetalleActivity.class);
-            intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,this.saldoInventario.getIdSaldoInventario());
-            intent.putExtra(ProductoDetalleActivity.PARAM_NOMBRE_PRODUCTO,this.saldoInventario.getProducto().getNombre());
-            intent.putExtra(ProductoDetalleActivity.PARAM_PRECIO_OFERTA,this.saldoInventario.getPrecioOferta());
-            intent.putExtra(ProductoDetalleActivity.PARAM_PRECIO_VENTA_UNITARIO,this.saldoInventario.getPrecioVentaUnitario());
-            intent.putExtra(ProductoDetalleActivity.PARAM_ESTADO,this.saldoInventario.getEstado());
-            v.getContext().startActivity(intent);
-        }
-    }
-
     /**
      * Constructor
      * @param context
@@ -171,6 +111,66 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                     spinner.setVisibility(View.GONE);
                 }
             });
+        }
+    }
+
+    // The class viewHolder
+    public static class ProductoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        private ImageLoaderView imagen;
+        private TextView nombre_producto;
+        private TextView precio;
+        private TextView oferta;
+
+        private SaldoInventario saldoInventario;
+
+        private Context context;
+
+        public ProductoViewHolder(View itemView) {
+
+            super(itemView);
+            imagen = (ImageLoaderView)itemView.findViewById(R.id.img_producto);
+            nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
+            precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_card);
+            oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card);
+            //Estilo Texto strikethrough
+            oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+            context = itemView.getContext();
+
+        }
+
+        public void bindProducto(SaldoInventario saldoInventario) {
+            this.saldoInventario = saldoInventario;
+            Producto producto = saldoInventario.getProducto();
+            nombre_producto.setText(producto.getNombre());
+
+
+
+            if (saldoInventario.getPrecioOferta() > 0){
+                oferta.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
+                precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioOferta()));
+            }
+            else{
+                precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
+                oferta.setVisibility(View.GONE);
+            }
+            // Se obtiene la imagen y se guarda en el cache
+            imagen.setImageURL(producto.getImagen());
+
+            imagen.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            // Aca se debe abrir la actividad de visualización del producto detalle
+            Intent intent = new Intent(v.getContext(),ProductoDetalleActivity.class);
+            intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,this.saldoInventario.getIdSaldoInventario());
+            intent.putExtra(ProductoDetalleActivity.PARAM_NOMBRE_PRODUCTO,this.saldoInventario.getProducto().getNombre());
+            intent.putExtra(ProductoDetalleActivity.PARAM_PRECIO_OFERTA,this.saldoInventario.getPrecioOferta());
+            intent.putExtra(ProductoDetalleActivity.PARAM_PRECIO_VENTA_UNITARIO,this.saldoInventario.getPrecioVentaUnitario());
+            intent.putExtra(ProductoDetalleActivity.PARAM_ESTADO,this.saldoInventario.getEstado());
+            v.getContext().startActivity(intent);
         }
     }
 }

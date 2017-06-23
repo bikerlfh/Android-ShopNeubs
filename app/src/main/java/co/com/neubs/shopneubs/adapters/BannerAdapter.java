@@ -17,15 +17,13 @@ import co.com.neubs.shopneubs.controls.ImageLoaderView;
  * Created by Tatiana on 22/06/2017.
  */
 
-public class AdapterBanner extends BaseAdapter{
+public class BannerAdapter extends BaseAdapter{
     Context context;
     ArrayList<String> listImages;
-    LayoutInflater inflater;
 
-    public AdapterBanner(Context context, ArrayList<String> images){
+    public BannerAdapter(Context context, ArrayList<String> images){
         this.context = context;
         this.listImages = images;
-        inflater = (LayoutInflater.from(context));
     }
     @Override
     public int getCount() {
@@ -44,7 +42,7 @@ public class AdapterBanner extends BaseAdapter{
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        view = inflater.inflate(R.layout.content_item_banner,null);
+        view = LayoutInflater.from(context).inflate(R.layout.content_item_banner,null);
         ImageLoaderView imagen = (ImageLoaderView) view.findViewById(R.id.img_banner);
         imagen.setImageURL(listImages.get(position));
         return view;

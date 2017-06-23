@@ -29,6 +29,7 @@ public class DbManager
 {
     private DbHelper dbHelper;
     private SQLiteDatabase db;
+
     public  Context context;
 
     //public static final String QueryInsertFormatos = "insert into formato(codigo)";
@@ -49,27 +50,34 @@ public class DbManager
         db = dbHelper.getWritableDatabase();
     }
 
+    private void initDbWritable(){
+        if (db == null || !db.isOpen() || db.isReadOnly()) {
+            if (db.isOpen() && db.isReadOnly())
+                db.close();
+            db = dbHelper.getWritableDatabase();
+        }
+    }
+
+    private void initDbReadable(){
+        if (db == null || !db.isOpen())
+            db = dbHelper.getWritableDatabase();
+    }
+
     public boolean Insert(String table,ContentValues values)
     {
         identity = db.insert(table, null, values);
-        if(identity > 0)
-            return true;
-        return false;
+        return (identity > 0);
     }
 
     public boolean Update(String table, ContentValues values, String whereClause, String[] whereArgs)
     {
         //String table, ContentValues values, String whereClause, String[] whereArgs
-        if(db.update(table, values, whereClause, whereArgs)>0)
-            return true;
-        return false;
+        return (db.update(table, values, whereClause, whereArgs)>0);
     }
 
     public boolean Delete(String table, String whereClause, String[] whereArgs)
     {
-        if(db.delete(table, whereClause, whereArgs) > 0)
-            return true;
-        return false;
+        return (db.delete(table, whereClause, whereArgs) > 0);
     }
 
     public Cursor Select(String table, String[] columns, String selection, String[] selectionArgs,
@@ -97,7 +105,6 @@ public class DbManager
     public Cursor RawQuery(String sql, String[] selectionArgs)
     {
         return db.rawQuery(sql, selectionArgs);
-
     }
 
     /**
@@ -108,16 +115,17 @@ public class DbManager
      * @return
      */
     public boolean exists(String NAME_TABLE,String COLUMN_PK,int pk_value){
-        Cursor c = Select(NAME_TABLE, new String[] { "*" },COLUMN_PK + "=?",new String[] {String.valueOf(pk_value)});
-        if (c.moveToFirst())
-            return true;
-        return false;
+        Cursor cursor = Select(NAME_TABLE, new String[] { "*" },COLUMN_PK + "=?",new String[] {String.valueOf(pk_value)});
+        return  (cursor.moveToFirst());
     }
     public boolean exists(String NAME_TABLE,String COLUMN_PK,long pk_value){
-        Cursor c = Select(NAME_TABLE, new String[] { "*" },COLUMN_PK + "=?",new String[] {String.valueOf(pk_value)});
-        if (c.moveToFirst())
-            return true;
-        return false;
+        Cursor cursor = Select(NAME_TABLE, new String[] { "*" },COLUMN_PK + "=?",new String[] {String.valueOf(pk_value)});
+        return  (cursor.moveToFirst());
+    }
+
+    public void close(){
+        if (db != null && db.isOpen())
+            db.close();
     }
 
     public class DbHelper extends SQLiteOpenHelper {
