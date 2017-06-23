@@ -78,9 +78,7 @@ public class TipoDocumento implements ICrud {
         contentValues.put(TipoDocumentoModel.CODIGO,this.codigo);
         contentValues.put(TipoDocumentoModel.DESCRIPCION,this.descripcion);
 
-        if(dbManager.Insert(TipoDocumentoModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(TipoDocumentoModel.NAME_TABLE,contentValues));
     }
 
     @Override

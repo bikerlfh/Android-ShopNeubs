@@ -60,7 +60,8 @@ public class IndexFragment extends Fragment {
 
         ArrayList<String> images = new ArrayList<String>();
         //images.add("http://192.168.1.50:8000/media/filer_public_thumbnails/filer_public/bb/0e/bb0eb875-1963-4416-a787-6c4c3e6f3a7e/img-carousel-1.jpg__1800x500_q85_crop_subsampling-2_upscale.jpg");
-
+        images.add("https://www.caprabo.com/export/shared/.galleries/cajas/ofertas-y-promociones-caprabo.png_796588431.png");
+        images.add("http://d37enp55yzymsd.cloudfront.net/images/Las-mejores-13-ofertas-en-cancun-para-nadar-con-delfines-554x247.jpg");
         mAdapterViewFlipper = (AdapterViewFlipper) view.findViewById(R.id.adpaterViewFlipper_banner);
         if (images.size() > 0) {
             AdapterBanner customAdapter = new AdapterBanner(getContext(), images);

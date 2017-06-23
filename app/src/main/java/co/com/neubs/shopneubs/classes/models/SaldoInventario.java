@@ -79,9 +79,7 @@ public class SaldoInventario implements ICrud {
         contentValues.put(SaldoInventarioModel.PRECIO_OFERTA,precioOferta);
         contentValues.put(SaldoInventarioModel.ESTADO,estado);
 
-        if(dbManager.Insert(SaldoInventarioModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(SaldoInventarioModel.NAME_TABLE,contentValues));
     }
 
     @Override

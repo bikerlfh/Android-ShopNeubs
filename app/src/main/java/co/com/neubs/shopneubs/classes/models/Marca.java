@@ -67,9 +67,7 @@ public class Marca implements ICrud {
         contentValues.put(MarcaModel.CODIGO,this.codigo);
         contentValues.put(MarcaModel.DESCRIPCION,this.descripcion);
 
-        if(dbManager.Insert(MarcaModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(MarcaModel.NAME_TABLE,contentValues));
     }
 
     @Override
@@ -90,8 +88,7 @@ public class Marca implements ICrud {
     @Override
     public boolean getById(int id) {
         Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.PK + "=?",new String[] {String.valueOf(id)});
-        if (c.moveToFirst())
-        {
+        if (c.moveToFirst()){
             serialize(c);
             return true;
         }
@@ -100,8 +97,7 @@ public class Marca implements ICrud {
 
     public boolean getMarcaByCodigo(String codigo){
         Cursor c = dbManager.Select(MarcaModel.NAME_TABLE, new String[] { "*" },MarcaModel.CODIGO + "=?",new String[] {codigo});
-        if (c.moveToFirst())
-        {
+        if (c.moveToFirst()){
             serialize(c);
             return true;
         }

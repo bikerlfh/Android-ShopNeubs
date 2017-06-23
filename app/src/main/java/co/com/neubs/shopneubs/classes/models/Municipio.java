@@ -86,9 +86,7 @@ public class Municipio implements ICrud {
         contentValues.put(MunicipioModel.CODIGO,this.codigo);
         contentValues.put(MunicipioModel.DESCRIPCION,this.descripcion);
 
-        if(dbManager.Insert(MunicipioModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(MunicipioModel.NAME_TABLE,contentValues));
     }
 
     @Override

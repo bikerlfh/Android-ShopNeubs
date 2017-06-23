@@ -165,9 +165,7 @@ public class Producto implements ICrud {
         contentValues.put(ProductoModel.ESPECIFICACION,especificacion);
         contentValues.put(ProductoModel.URL_DESCRIPCION,urlDescripcion);
 
-        if(dbManager.Insert(ProductoModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(ProductoModel.NAME_TABLE,contentValues));
     }
 
     @Override

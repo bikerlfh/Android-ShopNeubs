@@ -81,8 +81,7 @@ public class Categoria implements ICrud{
     @Override
     public boolean getById(int id) {
         Cursor c = dbManager.Select(CategoriaModel.NAME_TABLE, new String[] { "*" },CategoriaModel.PK + "=?",new String[] {String.valueOf(idCategoria)});
-        if (c.moveToFirst())
-        {
+        if (c.moveToFirst()){
             serialize(c);
             return true;
         }
@@ -96,10 +95,7 @@ public class Categoria implements ICrud{
         contentValues.put(CategoriaModel.CODIGO,codigo);
         contentValues.put(CategoriaModel.DESCRIPCION,descripcion);
         contentValues.put(CategoriaModel.CATEGORIA_PADRE,idCategoriaPadre);
-
-        if(dbManager.Insert(CategoriaModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(CategoriaModel.NAME_TABLE,contentValues));
     }
 
     @Override
@@ -119,8 +115,7 @@ public class Categoria implements ICrud{
 
     public boolean getCategoriaByCodigo(String codigo){
         Cursor c = dbManager.Select(CategoriaModel.NAME_TABLE, new String[] { "*" },CategoriaModel.CODIGO + "=?",new String[] {codigo});
-        if (c.moveToFirst())
-        {
+        if (c.moveToFirst()){
             serialize(c);
             return true;
         }
@@ -130,8 +125,7 @@ public class Categoria implements ICrud{
     public List<Categoria> getListCategoriaByCategoriaPadre(int idCategoriaPadre){
         List<Categoria> ListadoCategoria= new ArrayList<Categoria>();
         Cursor c = dbManager.Select(CategoriaModel.NAME_TABLE, new String[] { "*" },CategoriaModel.CATEGORIA_PADRE + "=?",new String[] {String.valueOf(idCategoriaPadre)});
-        if (c.moveToFirst())
-        {
+        if (c.moveToFirst()){
             do {
                 Categoria categoria = new Categoria(this.dbManager.context);
                 categoria.serialize(c);

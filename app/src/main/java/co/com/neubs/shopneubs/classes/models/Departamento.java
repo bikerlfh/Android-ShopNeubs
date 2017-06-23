@@ -86,9 +86,7 @@ public class Departamento implements ICrud {
         contentValues.put(DepartamentoModel.CODIGO,this.codigo);
         contentValues.put(DepartamentoModel.DESCRIPCION,this.descripcion);
 
-        if(dbManager.Insert(DepartamentoModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(DepartamentoModel.NAME_TABLE,contentValues));
     }
 
     @Override

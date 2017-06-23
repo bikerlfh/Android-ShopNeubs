@@ -27,6 +27,8 @@ import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ProductosCategoriaFragment.OnFragmentInteractionListener,OfertasFragment.OnFragmentInteractionListener {
 
+    private final String TAG_FRAGMENT = "FRAGMENT";
+
     private String codigoCategoria = null;
     private TextView lblHeaderWelcome;
     private DrawerLayout drawer;
@@ -104,7 +106,6 @@ public class PrincipalActivity extends AppCompatActivity
         });
     }
 
-
     /**
      * Cambia el texto del lblHeaderWelcome que esta en el navigationView
      * @param isActiva
@@ -129,7 +130,12 @@ public class PrincipalActivity extends AppCompatActivity
                 searchView.closeSearch();
             else
                 drawer.closeDrawer(GravityCompat.START);
-        } else
+        }
+        // Si no se está visualizando el IndexFragment, se carga
+        else if (getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT).getClass() != IndexFragment.class){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(),TAG_FRAGMENT).commit();
+        }
+        else
             super.onBackPressed();
     }
 
@@ -222,9 +228,8 @@ public class PrincipalActivity extends AppCompatActivity
 
             fragment = new ProductosCategoriaFragment();
             fragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment,TAG_FRAGMENT).commit();
         }
-
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

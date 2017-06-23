@@ -104,9 +104,7 @@ public class Usuario implements ICrud {
         contentValues.put(UsuarioModel.APELLIDO,apellido);
         contentValues.put(UsuarioModel.TOKEN,token);
 
-        if(dbManager.Insert(UsuarioModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(UsuarioModel.NAME_TABLE,contentValues));
     }
 
     @Override
@@ -118,9 +116,7 @@ public class Usuario implements ICrud {
         contentValues.put(UsuarioModel.NOMBRE,nombre);
         contentValues.put(UsuarioModel.APELLIDO,apellido);
         contentValues.put(UsuarioModel.TOKEN,token);
-        if (dbManager.Update(UsuarioModel.NAME_TABLE,contentValues,UsuarioModel.PK+"=?",new String[]{String.valueOf(idUsuario)}))
-            return true;
-        return false;
+        return dbManager.Update(UsuarioModel.NAME_TABLE,contentValues,UsuarioModel.PK+"=?",new String[]{String.valueOf(idUsuario)});
     }
 
     @Override
@@ -180,8 +176,7 @@ public class Usuario implements ICrud {
      */
     public boolean getLoginUser() {
         Cursor c = dbManager.RawQuery("SELECT * FROM Usuario WHERE token IS NOT NULL",null);
-        if (c.moveToFirst())
-        {
+        if (c.moveToFirst()){
             serialize(c);
             return true;
         }
@@ -191,8 +186,7 @@ public class Usuario implements ICrud {
     public List<Usuario> getAllUsuario(){
         List<Usuario> usuarios = null;
         Cursor c = dbManager.SelectAll(UsuarioModel.NAME_TABLE);
-        if (c.moveToFirst())
-        {
+        if (c.moveToFirst()){
             usuarios = new ArrayList<>();
             do{
                 Usuario user = new Usuario(dbManager.context);

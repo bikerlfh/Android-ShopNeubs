@@ -8,10 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
 import co.com.neubs.shopneubs.classes.SessionManager;
+import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -19,6 +23,7 @@ public class AccountActivity extends AppCompatActivity {
     private Button btnLogout;
     private TextView lblPedidos,lblPerfil,lblTerminosCondiciones,lblInformacionEnvio,lblGarantias;
     private TextView lblWelcome;
+    private MaterialSearchView searchView;
 
     private SessionManager sessionManager;
 
@@ -34,6 +39,11 @@ public class AccountActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sessionManager = SessionManager.getInstance(this);
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        // Se consultan las sugerencias
+        SugerenciaBusqueda sugerenciaBusqueda = new SugerenciaBusqueda(this);
+        searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
 
         lblWelcome = (TextView) findViewById(R.id.lbl_welcome_account);
         lblPedidos = (TextView) findViewById(R.id.lbl_action_pedidos);
@@ -83,6 +93,35 @@ public class AccountActivity extends AppCompatActivity {
         });
 
         visualizarControlesSession(validarSession());
+
+        setListenersSearchView();
+    }
+
+    /**
+     * Crea los listeners del SearchView
+     */
+    private void setListenersSearchView(){
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(AccountActivity.this,BusquedaActivity.class);
+                intent.putExtra(BusquedaActivity.PARAM_QUERY,query);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
+            }
+        });
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchView.setQuery(parent.getItemAtPosition(position).toString(),true);
+            }
+        });
     }
 
     private View.OnClickListener clickListenerLinks = new View.OnClickListener() {
@@ -133,10 +172,7 @@ public class AccountActivity extends AppCompatActivity {
      * @return
      */
     private boolean validarSession(){
-        if (sessionManager.isAuthenticated()){
-            return true;
-        }
-        return false;
+        return sessionManager.isAuthenticated();
     }
 
     @Override
@@ -149,20 +185,25 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
+
+        // Se asigna la accion search al searchView
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case  android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == R.id.action_cart){
+            Intent intent = new Intent(AccountActivity.this,ShopCarActivity.class);
+            startActivity(intent);
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
-
-
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        finishAfterTransition();
+        return true;
+    }
 }

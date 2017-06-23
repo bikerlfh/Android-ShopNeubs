@@ -74,9 +74,7 @@ public class Pais implements ICrud {
         contentValues.put(PaisModel.CODIGO,this.codigo);
         contentValues.put(PaisModel.DESCRIPCION,this.descripcion);
 
-        if(dbManager.Insert(PaisModel.NAME_TABLE,contentValues))
-            return true;
-        return false;
+        return (dbManager.Insert(PaisModel.NAME_TABLE,contentValues));
     }
 
     @Override
