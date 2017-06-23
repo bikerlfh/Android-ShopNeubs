@@ -100,7 +100,7 @@ public class BusquedaActivity extends AppCompatActivity {
                     public void onSuccess(String json) {
                         mProgressBar.setVisibility(View.GONE);
                         final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
-                        productoAdapter = new ProductoAdapter(BusquedaActivity.this,consultaPaginada);
+                        productoAdapter = new ProductoAdapter(BusquedaActivity.this,consultaPaginada,R.layout.cardview_producto);
                         recycleView.setAdapter(productoAdapter);
                         recycleView.addOnScrollListener(new OnVerticalScrollListener(){
                             @Override

@@ -38,6 +38,11 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     private String nextPage;
     private Context context;
 
+    /**
+     * ID del recurso XML Layout a cargar desde LayoutInflater
+     */
+    private int idResourceLayoutToInflate;
+
     // The class viewHolder
     public static class ProductoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -98,17 +103,24 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         }
     }
 
-    public  ProductoAdapter(Context context, ConsultaPaginada consultaPaginada){
+    /**
+     * Constructor
+     * @param context
+     * @param consultaPaginada
+     * @param idResourceLayoutToInflate ID del recurso XML Layout a cargar desde LayoutInflater
+     */
+    public  ProductoAdapter(Context context, ConsultaPaginada consultaPaginada,int idResourceLayoutToInflate){
         this.context = context;
         this.consultaPaginada = consultaPaginada;
         this.listado_saldo_inventario = this.consultaPaginada.getResults();
         this.nextPage = this.consultaPaginada.getNext();
+        this.idResourceLayoutToInflate = idResourceLayoutToInflate;
     }
 
     @Override
     public ProductoViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        // inflate layout CartView
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_producto,null);
+        // inflate layout
+        View view = LayoutInflater.from(parent.getContext()).inflate(this.idResourceLayoutToInflate ,null);
         return new ProductoViewHolder(view);
     }
 

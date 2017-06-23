@@ -74,7 +74,7 @@ public class AdapterSection extends RecyclerView.Adapter<AdapterSection.ViewHold
                 @Override
                 public void onSuccess(String json) {
                     final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
-                    ProductoSectionItemAdapter productoAdapter = new ProductoSectionItemAdapter(view.getContext(),consultaPaginada);
+                    ProductoAdapter productoAdapter = new ProductoAdapter(view.getContext(),consultaPaginada,R.layout.cardview_section_item);
                     rvItem.setAdapter(productoAdapter);
                 }
 

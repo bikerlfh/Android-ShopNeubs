@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
-            android:id="@+id/img_card_section_item"
+            android:id="@+id/img_producto"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/lbl_nombre_producto_card_section_item"
+                android:id="@+id/lbl_nombre_producto_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -48,7 +48,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/lbl_precio_producto_card_section_item"
+                    android:id="@+id/lbl_precio_producto_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/padding_Boton"
@@ -60,7 +60,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/lbl_precio_anterior_card_section_item"
+                    android:id="@+id/lbl_precio_anterior_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/padding_Boton"

@@ -111,7 +111,7 @@ public class ProductosCategoriaFragment extends Fragment {
             @Override
             public void onSuccess(String json) {
                 final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
-                productoAdapter = new ProductoAdapter(getActivity(),consultaPaginada);
+                productoAdapter = new ProductoAdapter(getActivity(),consultaPaginada,R.layout.cardview_producto);
                 recyclerView.setAdapter(productoAdapter);
                 recyclerView.addOnScrollListener(new OnVerticalScrollListener(){
                     @Override
