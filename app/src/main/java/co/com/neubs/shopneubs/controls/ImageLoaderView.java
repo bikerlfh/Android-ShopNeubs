@@ -165,7 +165,37 @@ public class ImageLoaderView extends LinearLayout
                 .load(url)
                 .asBitmap()
                 //.placeholder(R.drawable.circular_progress_bar)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .error(R.mipmap.ic_launcher)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                        // do something with the bitmap
+                        // for demonstration purposes, let's just set it to an ImageView
+                        imageView.setImageBitmap( bitmap );
+                        loadingImage(false);
+                    }
+                });
+    }
+
+    /**
+     * Carga la imagens desde un Resourse
+     * @param resourceId id del Drawable
+     */
+    public void setImagenResource(int resourceId){
+        // Se visualiza el progressBar
+        loadingImage(true);
+        // Se carga la imagen mediante Glide
+        // Se convierte en un bitMap.
+        /* el into es un SimpleTarget, esto con el fin de evitar errores de carga
+         * debido a la visibilidad del imageView (si se hace con el .listen no funciona)
+         */
+        Glide.with(getContext())
+                .load(resourceId)
+                .asBitmap()
+                //.placeholder(R.drawable.circular_progress_bar)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .error(R.mipmap.ic_launcher)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
