@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:orientation="vertical"
     app:cardCornerRadius="5dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:layout_width="130dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -43,17 +42,19 @@
                 android:textSize="15dp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <TextView
                     android:id="@+id/lbl_precio_producto_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:paddingBottom="@dimen/padding_Boton"
-                    android:paddingEnd="2dp"
-                    android:paddingStart="2dp"
+                    android:paddingRight="2dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorPrecio"
@@ -61,13 +62,12 @@
 
                 <TextView
                     android:id="@+id/lbl_precio_anterior_card"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
                     android:paddingBottom="@dimen/padding_Boton"
-                    android:paddingEnd="2dp"
-                    android:paddingStart="2dp"
                     android:text="TextView"
-                    android:textAlignment="textStart" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>

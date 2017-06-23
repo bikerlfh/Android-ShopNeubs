@@ -10,12 +10,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_boton"
         android:orientation="vertical"
-        app:cardElevation="4dp">
+        app:cardElevation="2dp">
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
                 android:id="@+id/img_banner"
                 android:layout_width="fill_parent"
-                android:layout_height="200dp"
+                android:layout_height="270dp"
                 android:layout_centerInParent="false"
                 android:layout_gravity="center"
                 android:layout_weight="1"
