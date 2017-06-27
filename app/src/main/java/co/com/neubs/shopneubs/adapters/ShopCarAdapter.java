@@ -53,6 +53,9 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ShopCarV
                     Toast.makeText(context,context.getString(R.string.title_item_deleted),Toast.LENGTH_SHORT).show();
                     ShopCarActivity shopCarActivity = (ShopCarActivity)context;
                     shopCarActivity.calcularValorTotal();
+                    if (getItemCount() <= 0){
+                        shopCarActivity.visualizarCarroVacio();
+                    }
                 }
                 else
                     Toast.makeText(context,context.getString(R.string.error_default),Toast.LENGTH_SHORT).show();

@@ -3,36 +3,31 @@ package co.com.neubs.shopneubs;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import co.com.neubs.shopneubs.adapters.PedidoDetalleAdapter;
 import co.com.neubs.shopneubs.adapters.ShopCarAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
-import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.PedidoVenta;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -45,6 +40,8 @@ public class ShopCarActivity extends AppCompatActivity {
     private TextView lblValorTotal;
     private Button btnRealizarPedido;
     private  ProgressDialog progressDialog;
+    private LinearLayout rootLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +50,8 @@ public class ShopCarActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        rootLayout = (LinearLayout)findViewById(R.id.root_layout_shop_car);
 
         sessionManager = SessionManager.getInstance(this);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_shop_car);
@@ -71,57 +70,84 @@ public class ShopCarActivity extends AppCompatActivity {
         ShopCarAdapter shopCarAdapter = new ShopCarAdapter(this);
         recyclerView.setAdapter(shopCarAdapter);
 
-        btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!sessionManager.isAuthenticated()){
-                    Intent intent = new Intent(ShopCarActivity.this,LoginRegisterActivity.class);
-                    startActivity(intent);
-                    return;
-                }
-
-                progressDialog = new ProgressDialog(ShopCarActivity.this);
-                progressDialog.setCancelable(false);
-                progressDialog.setMessage(getString(R.string.msg_generando_pedido));
-                progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
-                progressDialog.setProgress(0);
-                progressDialog.setMax(100);
-                progressDialog.show();
-
-                Gson gson = new GsonBuilder().create();
-                String json =  gson.toJson(sessionManager.getShopCar());
-                Map<String,String> params = new HashMap<>();
-                params.put("data",json);
-
-                APIRest.Async.post(APIRest.URL_SOLICITUD_PEDIDO, params, new IServerCallback() {
-                    @Override
-                    public void onSuccess(String json) {
-                        progressDialog.dismiss();
-                        final PedidoVenta pedidoVenta = APIRest.serializeObjectFromJson(json,PedidoVenta.class);
-                        Toast.makeText(ShopCarActivity.this,getString(R.string.msg_pedido_generado) + " " + String.valueOf(pedidoVenta.getNumeroPedido()),Toast.LENGTH_SHORT).show();
-                        sessionManager.deleteShopCar();
-                        // Se abre el pedido venta detalle
-                        Intent intent = new Intent(ShopCarActivity.this, PedidoDetalleActivity.class);
-                        intent.putExtra(PedidoDetalleActivity.PARAM_ID_PEDIDO_VENTA,pedidoVenta.getIdPedidoVenta());
+        if (shopCarAdapter.getItemCount() <= 0){
+            visualizarCarroVacio();
+            return;
+        }
+        else {
+            btnRealizarPedido.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!sessionManager.isAuthenticated()) {
+                        Intent intent = new Intent(ShopCarActivity.this, LoginRegisterActivity.class);
                         startActivity(intent);
-                        // se finaliza la actividad
-                        finish();
+                        return;
                     }
 
-                    @Override
-                    public void onError(String message_error, APIValidations apiValidations) {
-                        progressDialog.dismiss();
-                        if (apiValidations != null)
-                            Toast.makeText(ShopCarActivity.this,apiValidations.getDetail(),Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(ShopCarActivity.this,message_error,Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-        calcularValorTotal();
+                    progressDialog = new ProgressDialog(ShopCarActivity.this);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setMessage(getString(R.string.msg_generando_pedido));
+                    progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
+                    progressDialog.setProgress(0);
+                    progressDialog.setMax(100);
+                    progressDialog.show();
+
+                    Gson gson = new GsonBuilder().create();
+                    String json = gson.toJson(sessionManager.getShopCar());
+                    Map<String, String> params = new HashMap<>();
+                    params.put("data", json);
+
+                    APIRest.Async.post(APIRest.URL_SOLICITUD_PEDIDO, params, new IServerCallback() {
+                        @Override
+                        public void onSuccess(String json) {
+                            progressDialog.dismiss();
+                            final PedidoVenta pedidoVenta = APIRest.serializeObjectFromJson(json, PedidoVenta.class);
+                            Toast.makeText(ShopCarActivity.this, getString(R.string.msg_pedido_generado) + " " + String.valueOf(pedidoVenta.getNumeroPedido()), Toast.LENGTH_SHORT).show();
+                            sessionManager.deleteShopCar();
+                            // Se abre el pedido venta detalle
+                            Intent intent = new Intent(ShopCarActivity.this, PedidoDetalleActivity.class);
+                            intent.putExtra(PedidoDetalleActivity.PARAM_ID_PEDIDO_VENTA, pedidoVenta.getIdPedidoVenta());
+                            startActivity(intent);
+                            // se finaliza la actividad
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(String message_error, APIValidations apiValidations) {
+                            progressDialog.dismiss();
+                            if (apiValidations != null)
+                                Toast.makeText(ShopCarActivity.this, apiValidations.getDetail(), Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(ShopCarActivity.this, message_error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+            calcularValorTotal();
+        }
     }
 
+    /**
+     * Remueve todaslas vistas del rootLayout y visualiza la vista shop_cart_vacio
+     */
+    public void visualizarCarroVacio()
+    {
+        // Ser remueven todas las vistas del rootLayout
+        rootLayout.removeAllViews();
+        // Se infla el layout (shop_cart_vacio)
+        View view = getLayoutInflater().inflate(R.layout.shop_cart_vacio, null, false);
+        view.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.MATCH_PARENT));
+
+        Button btnComenzarAhora = (Button)view.findViewById(R.id.btn_comenzar_ahora);
+        btnComenzarAhora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAfterTransition();
+            }
+        });
+        //Se agrega la vista al rootLayout
+        rootLayout.addView(view);
+    }
     @Override
     public boolean onSupportNavigateUp() {
         finishAfterTransition();

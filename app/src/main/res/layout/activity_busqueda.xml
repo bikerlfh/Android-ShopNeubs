@@ -40,8 +40,9 @@
 
 
     <FrameLayout
+        android:id="@+id/root_layout_resultados_busqueda"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize">
 
         <android.support.v7.widget.RecyclerView

@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -47,11 +50,14 @@ public class BusquedaActivity extends AppCompatActivity {
     String query;
 
     private View rootView;
+    FrameLayout rootViewResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda);
+
+        rootViewResults = (FrameLayout)findViewById(R.id.root_layout_resultados_busqueda);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
@@ -62,7 +68,6 @@ public class BusquedaActivity extends AppCompatActivity {
         Intent intentExtra = getIntent();
         query = intentExtra.getExtras().getString(PARAM_QUERY,"");
 
-        toolbar.setTitle(query);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -91,24 +96,32 @@ public class BusquedaActivity extends AppCompatActivity {
     private void setListenersSearchView(){
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(final String query) {
+
+                getSupportActionBar().setTitle(query);
                 mProgressBar.setVisibility(View.VISIBLE);
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("filtro",query);
                 APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,parametros, new IServerCallback() {
                     @Override
                     public void onSuccess(String json) {
+                        visualizarBusquedaSinResultados(false);
                         mProgressBar.setVisibility(View.GONE);
                         final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
-                        productoAdapter = new ProductoAdapter(BusquedaActivity.this,consultaPaginada,R.layout.cardview_producto);
-                        recycleView.setAdapter(productoAdapter);
-                        recycleView.addOnScrollListener(new OnVerticalScrollListener(){
-                            @Override
-                            public void onScrolledToBottom() {
-                                super.onScrolledToBottom();
-                                productoAdapter.getNextPage(rootView);
-                            }
-                        });
+                        if (consultaPaginada.getResults().size() > 0) {
+                            productoAdapter = new ProductoAdapter(BusquedaActivity.this, consultaPaginada, R.layout.cardview_producto);
+                            recycleView.setAdapter(productoAdapter);
+                            recycleView.addOnScrollListener(new OnVerticalScrollListener() {
+                                @Override
+                                public void onScrolledToBottom() {
+                                    super.onScrolledToBottom();
+                                    productoAdapter.getNextPage(rootView);
+                                }
+                            });
+                        }
+                        else{
+                            visualizarBusquedaSinResultados(true);
+                        }
                     }
 
                     @Override
@@ -139,6 +152,24 @@ public class BusquedaActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Visualiza la busqueda sin resultados
+     */
+    private void visualizarBusquedaSinResultados(boolean visualizar)
+    {
+        // Se remueven todas las vistas
+        rootViewResults.removeAllViews();
+        if (visualizar) {
+            // Se infla el layout (shop_cart_vacio)
+            View view = getLayoutInflater().inflate(R.layout.producto_no_encontrado, null, false);
+            view.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT));
+            TextView lblFiltro = (TextView) view.findViewById(R.id.lbl_filtro);
+            lblFiltro.setText("\"" + getSupportActionBar().getTitle() + "\"");
+            rootViewResults.addView(view);
+        }
+        else
+            rootViewResults.addView(recycleView);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
