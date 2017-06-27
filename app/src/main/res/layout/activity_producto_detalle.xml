@@ -26,7 +26,8 @@
             app:expandedTitleTextAppearance="@style/transparentText"
             app:collapsedTitleGravity="center_vertical"
             app:expandedTitleGravity="top"
-            app:scrimVisibleHeightTrigger="250dp">
+            app:scrimVisibleHeightTrigger="250dp"
+            >
 
             <co.com.neubs.shopneubs.controls.ViewPagerNeubs
                 android:id="@+id/viewPager_producto_detalle"

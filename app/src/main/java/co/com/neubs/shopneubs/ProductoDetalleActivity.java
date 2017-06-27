@@ -54,7 +54,6 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producto_detalle);
         toolbar = (Toolbar) findViewById(R.id.toolbar_producto_detalle);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -80,6 +79,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
         mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
+
         Intent intentExtra = getIntent();
         if (intentExtra.getExtras().isEmpty())
             finish();
@@ -92,8 +92,8 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
         if (estado)
             mBtnAgregarItemCar.setEnabled(true);
-        mToolbarLayout.setTitle(nomProducto);
-        mNombreProducto.setText(nomProducto);
+            mToolbarLayout.setTitle(nomProducto);
+            mNombreProducto.setText(nomProducto);
 
         // SE asignan los precios
         setPrecio(precioVentaUnitario,precioOferta);
@@ -206,6 +206,8 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                 itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
             if (sessionManager.addItemCar(itemCar)) {
                 Toast.makeText(this,getString(R.string.title_item_added),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ProductoDetalleActivity.this,PrincipalActivity.class);
+                startActivity(intent);
             }
             else{
                 Toast.makeText(this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();
