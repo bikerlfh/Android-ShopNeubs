@@ -51,6 +51,7 @@ public class BusquedaActivity extends AppCompatActivity {
 
     private View rootView;
     FrameLayout rootViewResults;
+    View viewProductoNoEncontrado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,16 +100,18 @@ public class BusquedaActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(final String query) {
 
                 getSupportActionBar().setTitle(query);
+                recycleView.setAdapter(null);
+
                 mProgressBar.setVisibility(View.VISIBLE);
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("filtro",query);
                 APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,parametros, new IServerCallback() {
                     @Override
                     public void onSuccess(String json) {
-                        visualizarBusquedaSinResultados(false);
                         mProgressBar.setVisibility(View.GONE);
                         final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
                         if (consultaPaginada.getResults().size() > 0) {
+                            visualizarBusquedaSinResultados(false);
                             productoAdapter = new ProductoAdapter(BusquedaActivity.this, consultaPaginada, R.layout.cardview_producto);
                             recycleView.setAdapter(productoAdapter);
                             recycleView.addOnScrollListener(new OnVerticalScrollListener() {
@@ -127,8 +130,12 @@ public class BusquedaActivity extends AppCompatActivity {
                     @Override
                     public void onError(String message_error, APIValidations apiValidations) {
                         mProgressBar.setVisibility(View.GONE);
-                        if (apiValidations!= null)
-                            Snackbar.make(rootView,"Bad Request:"+apiValidations.getResponse(),Snackbar.LENGTH_INDEFINITE).show();
+                        if (apiValidations!= null){
+                            if (apiValidations.timeOut())
+                                Snackbar.make(rootView,getString(R.string.error_connection_server),Snackbar.LENGTH_INDEFINITE).show();
+                            else
+                                Snackbar.make(rootView,getString(R.string.error_default),Snackbar.LENGTH_INDEFINITE).show();
+                        }
                         else
                             Snackbar.make(rootView,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
                     }
@@ -157,18 +164,26 @@ public class BusquedaActivity extends AppCompatActivity {
      */
     private void visualizarBusquedaSinResultados(boolean visualizar)
     {
-        // Se remueven todas las vistas
-        rootViewResults.removeAllViews();
         if (visualizar) {
+            recycleView.setVisibility(View.GONE);
             // Se infla el layout (shop_cart_vacio)
-            View view = getLayoutInflater().inflate(R.layout.producto_no_encontrado, null, false);
-            view.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT));
-            TextView lblFiltro = (TextView) view.findViewById(R.id.lbl_filtro);
+            if (viewProductoNoEncontrado == null) {
+                viewProductoNoEncontrado = getLayoutInflater().inflate(R.layout.producto_no_encontrado, null, false);
+                viewProductoNoEncontrado.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT));
+
+                // Se agrega la vista al rootView
+                rootViewResults.addView(viewProductoNoEncontrado);
+            }
+            TextView lblFiltro = (TextView) viewProductoNoEncontrado.findViewById(R.id.lbl_filtro);
             lblFiltro.setText("\"" + getSupportActionBar().getTitle() + "\"");
-            rootViewResults.addView(view);
+
+            viewProductoNoEncontrado.setVisibility(View.VISIBLE);
         }
-        else
-            rootViewResults.addView(recycleView);
+        else {
+            recycleView.setVisibility(View.VISIBLE);
+            if (viewProductoNoEncontrado != null)
+                viewProductoNoEncontrado.setVisibility(View.GONE);
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
