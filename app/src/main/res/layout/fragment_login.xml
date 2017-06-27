@@ -24,15 +24,11 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_End"
-            android:layout_marginStart="@dimen/margin_Start"
-            android:layout_marginTop="@dimen/margin_top"
+            android:layout_margin="@dimen/margin_fragment"
             android:background="@drawable/border"
             android:elevation="3dp"
             android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingEnd="@dimen/padding_End"
-            android:paddingStart="@dimen/padding_Start"
+            android:padding="@dimen/padding_fragment"
             android:weightSum="1">
 
 
@@ -66,7 +62,8 @@
                     android:paddingRight="9dp"
                     android:paddingTop="8dp"
                     android:textColor="@color/colorPrimary"
-                    android:textColorLink="@color/colorPrimary" />
+                    android:textColorLink="@color/colorPrimary"
+                    android:textSize="@dimen/subheading" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -88,7 +85,8 @@
                     android:paddingLeft="9dp"
                     android:paddingRight="9dp"
                     android:paddingTop="8sp"
-                    android:textColorLink="@color/colorPrimary" />
+                    android:textColorLink="@color/colorPrimary"
+                    android:textSize="@dimen/subheading" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -97,7 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
                 android:text="Forgot password?"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="@dimen/body_1" />
 
             <Button
                 android:id="@+id/btn_login"
@@ -108,7 +107,8 @@
                 android:backgroundTint="@color/colorSecundary"
                 android:elevation="8dp"
                 android:text="@string/title_login"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/body_1" />
 
         </LinearLayout>
     </ScrollView>

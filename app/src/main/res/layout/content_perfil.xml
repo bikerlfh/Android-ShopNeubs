@@ -12,13 +12,10 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_End"
-        android:layout_marginStart="@dimen/padding_Start"
-        android:layout_marginTop="@dimen/margin_top"
+        android:layout_margin="@dimen/margin_fragment"
         android:background="@drawable/border"
         android:elevation="2dp"
-        android:paddingEnd="@dimen/padding_End"
-        android:paddingStart="@dimen/padding_Start">
+        android:padding="@dimen/padding_fragment">
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_tipo_documento"
@@ -56,7 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_nit"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="@dimen/subheading" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -75,7 +73,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_first_name"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textSize="@dimen/subheading" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -94,7 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_secund_name"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textSize="@dimen/subheading" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -113,7 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_first_last_name"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textSize="@dimen/subheading" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -134,7 +135,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_secund_last_name"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textSize="@dimen/subheading" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -154,7 +156,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_address"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textSize="@dimen/subheading" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -173,7 +176,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_telephone"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:textSize="@dimen/subheading" />
         </android.support.design.widget.TextInputLayout>
 
 

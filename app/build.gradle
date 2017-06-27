@@ -43,4 +43,6 @@ dependencies {
     compile 'com.github.ganfra:material-spinner:1.1.1'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     testCompile 'junit:junit:4.12'
+    compile 'at.blogc:expandabletextview:1.0.3'
+
 }

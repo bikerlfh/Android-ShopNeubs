@@ -29,9 +29,32 @@
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/btn_realizar_pedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorSecundary"
+            android:elevation="9dp"
+            android:text="@string/comprar"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/body_1" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
         android:background="@android:color/white"
         android:elevation="8dp"
         android:minHeight="25dp"
@@ -52,7 +75,7 @@
             android:gravity="center_vertical|start"
             android:text="@string/title_resumen"
             android:textColor="@color/textColorSecundary"
-            android:textSize="18sp" />
+            android:textSize="@dimen/title" />
 
         <TextView
             android:id="@+id/lbl_valor_total"
@@ -62,29 +85,8 @@
             android:gravity="center_vertical|end"
             android:text="@string/text_loading"
             android:textColor="@color/colorPrecio"
-            android:textSize="18sp" />
+            android:textSize="@dimen/title" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <Button
-            android:id="@+id/btn_realizar_pedido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorSecundary"
-            android:elevation="9dp"
-            android:text="@string/comprar"
-            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

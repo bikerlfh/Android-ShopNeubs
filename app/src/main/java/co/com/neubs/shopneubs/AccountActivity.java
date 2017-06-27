@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -31,11 +32,9 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-
-        setSupportActionBar(toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar_account);
-
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sessionManager = SessionManager.getInstance(this);
@@ -194,16 +193,24 @@ public class AccountActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_cart){
-            Intent intent = new Intent(AccountActivity.this,ShopCarActivity.class);
-            startActivity(intent);
+        switch (item.getItemId()) {
+            case R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_cart:
+                Intent intent = new Intent(AccountActivity.this,ShopCarActivity.class);
+                startActivity(intent);
         }
-        return true;
+        return super.onOptionsItemSelected(item);
+    }
+    private void action(int resid) {
+        Toast.makeText(this, getText(resid), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         finishAfterTransition();
-        return true;
+        return super.onSupportNavigateUp();
     }
+
 }

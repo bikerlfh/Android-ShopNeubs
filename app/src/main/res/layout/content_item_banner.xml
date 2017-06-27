@@ -8,28 +8,18 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_boton"
-        android:orientation="vertical"
-        app:cardElevation="2dp">
+        android:orientation="vertical">
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
-                android:id="@+id/img_banner"
-                android:layout_width="fill_parent"
-                android:layout_height="270dp"
-                android:layout_centerInParent="false"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY">
-        </co.com.neubs.shopneubs.controls.ImageLoaderView>
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:id="@+id/img_banner"
+            android:layout_width="fill_parent"
+            android:layout_height="270dp"
+            android:layout_centerInParent="false"
             android:layout_gravity="center"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/colorWhite" />
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"></co.com.neubs.shopneubs.controls.ImageLoaderView>
+
     </android.support.v7.widget.CardView>
 
 </LinearLayout>

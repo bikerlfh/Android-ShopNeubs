@@ -78,4 +78,10 @@
     <string name="title_item_added">Producto agregado</string>
     <string name="comprar">Comprar</string>
     <string name="title_resumen">Resumen</string>
+    <string name="title_result_search">Resultado de Búsqueda</string>
+    <string name="msg_result_search">No se han encontrado resultados para su busqueda. Intentalo de nuevo</string>
+    <string name="msg_try_again">Intentalo de nuevo</string>
+    <string name="title_your_cart_empty">Tu carrito de compras está vacío!</string>
+    <string name="msg_cart_empty">En nuestra tienda encontrarás los mejores productos tecnológicos al mejor precio, puedes agregar diversos artículos al mismo tiempo.</string>
+    <string name="title_start_buy">Comienza Ahora!</string>
 </resources>

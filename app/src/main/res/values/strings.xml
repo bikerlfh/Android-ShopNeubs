@@ -97,6 +97,11 @@
     <string name="comprar">Buy</string>
     <string name="msg_pedido_generado" translatable="false">Se ha generado el pedido número</string>
     <string name="msg_generando_pedido" translatable="false">Generando pedido...</string>
-
+    <string name="title_result_search">Search result</string>
+    <string name="msg_result_search">No results found for your search.</string>
+    <string name="msg_try_again">Try again</string>
+    <string name="title_your_cart_empty">Your cart shop is empty!</string>
+    <string name="msg_cart_empty">In our store you will find the best technological products at the best price, you can add different items at the same time.</string>
+    <string name="title_start_buy">Comienza Ahora !</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

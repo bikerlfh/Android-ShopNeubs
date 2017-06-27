@@ -7,9 +7,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:elevation="0dp"
-        android:padding="7dp">
+        android:layout_marginTop="@dimen/margin_top_title"
+        android:padding="@dimen/padding_title">
 
         <TextView
             android:id="@+id/txtTitle"
@@ -17,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="OFERTAS"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18dp" />
+            android:textSize="@dimen/title" />
 
         <TextView
             android:id="@+id/txtSubTitle"
@@ -29,7 +28,7 @@
             android:maxLines="1"
             android:text="Las mejores ofertas"
             android:textColor="@android:color/darker_gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/body_1" />
 
         <Button
             android:id="@+id/btnMore"
