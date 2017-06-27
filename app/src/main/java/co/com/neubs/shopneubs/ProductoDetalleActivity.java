@@ -23,6 +23,7 @@ import co.com.neubs.shopneubs.classes.models.Imagen;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.Producto;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
+import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 import static android.view.Gravity.CENTER;
@@ -45,7 +46,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
     private Button mBtnAgregarItemCar;
 
     private CollapsingToolbarLayout mToolbarLayout;
-    private ViewPager mViewPager;
+    private ViewPagerNeubs mViewPager;
     private ViewPagerAdapter viewPagerAdapter;
 
     @Override
@@ -58,7 +59,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sessionManager = SessionManager.getInstance(this);
-        mViewPager = (ViewPager)findViewById(R.id.viewPager_producto_detalle);
+        mViewPager = (ViewPagerNeubs)findViewById(R.id.viewPager_producto_detalle);
 
         mTitleDescripcion = (TextView) findViewById(R.id.title_descripcion);
         mTitleEspecificacion = (TextView) findViewById(R.id.title_especificacion);
@@ -142,7 +143,8 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                             images.add(img.getUrl());
                         }
                         viewPagerAdapter = new ViewPagerAdapter(ProductoDetalleActivity.this,images);
-                        mViewPager.setAdapter(viewPagerAdapter);
+                        //mViewPager.setAdapter(viewPagerAdapter);
+                        mViewPager.showGalleryImages(images);
                     }
                 }
 

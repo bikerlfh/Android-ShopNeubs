@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:neubs="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -27,11 +28,22 @@
             app:expandedTitleGravity="top"
             app:scrimVisibleHeightTrigger="250dp">
 
-            <android.support.v4.view.ViewPager
+            <co.com.neubs.shopneubs.controls.ViewPagerNeubs
                 android:id="@+id/viewPager_producto_detalle"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:background="@color/colorWhite" />
+                android:background="@android:color/white"
+                neubs:selectedIndicatorColor="@color/colorAccent"
+                neubs:defaultIndicatorColor="@color/colorPrimary"
+                neubs:indicatorPadding="2dp"
+                neubs:indicatorRadius="5dp"
+                neubs:viewPagerHeight="300dp"/>
+
+            <!--android.support.v4.view.ViewPager
+                android:id="@+id/viewPager_producto_detalle"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:background="@color/colorWhite" /-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_producto_detalle"

@@ -3,4 +3,11 @@
     <declare-styleable name="ImageLoaderView">
         <attr name="indeterminateDrawable" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="ViewPagerNeubs">
+        <attr name="viewPagerHeight" format="dimension"/>
+        <attr name="indicatorRadius" format="dimension"/>
+        <attr name="indicatorPadding" format="dimension"/>
+        <attr name="selectedIndicatorColor" format="color" />
+        <attr name="defaultIndicatorColor" format="color" />
+    </declare-styleable>
 </resources>
