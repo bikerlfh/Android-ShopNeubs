@@ -1,5 +1,6 @@
 package co.com.neubs.shopneubs.controls;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -19,14 +20,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import co.com.neubs.shopneubs.R;
 
 /**
  * Created by bikerlfh on 6/27/17.
+ * Alto del viewPager
+ * <attr name="viewPagerHeight" format="dimension"/>
+ * Radio de los indicadores
+ * <attr name="indicatorRadius" format="dimension"/>
+ * padding de los indicadores
+ * <attr name="indicatorPadding" format="dimension"/>
+ * color del indicador seleccionado
+ * <attr name="selectedIndicatorColor" format="color" />
+ * color del indicador que no esta seleccionado
+ * <attr name="defaultIndicatorColor" format="color" />
+ * Indica si se desea que el viewPager haga scroll automatico simulando un AdapterViewFlipper
+ * <attr name="autoScroll" format="boolean"/>
+ * Intervalo en milisegundos para realizar el Scroll automatico
+ * <attr name="flipInterval" format="integer"/>
  */
 
 public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageChangeListener {
@@ -38,30 +53,61 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
     @Dimension
     private int DEFAULT_VIEW_PAGER_HEIGHT_DPI = 200;
 
-    @Nullable
-    private WeakReference<PagerAdapter> pagerAdapterReference;
+    /**
+     * Ultima posición seleccionada
+     */
+    private int lastPositionSelected;
+
+    // AutoScroll
+    /**
+     * indica si se realiza el auto scroll o no
+     */
+    private boolean autoScroll;
+    /**
+     * timer para el autoscroll
+     */
+    private Timer timer;
+    /**
+     * Intervalo para realizar el autoscroll
+     */
+    private int FLIP_INTERVAL = 2000;
+
+
     /**
      * representa la posicion seleccionada
      */
-    private int oldPositionSelected;
     //endregion
 
     // region LayoutDots
     private LinearLayout mLinealLayoutDots;
     private List<IndicatorView> listIndicatorView;
 
+    /**
+     * padding por defecto del indicador
+     */
     @Dimension
     static final int DEFAULT_INDICATOR_PADDING_DIP = 9;
+    /**
+     * padding del indicador
+     */
     @Px
     private int indicatorPadding;
+    /**
+     * Radio del indicador
+     */
     @Px
     private int indicatorRadius;
+    /**
+     * Color del indicador no seleccionado
+     */
     @ColorInt
     private int unselectedIndicatorColor;
+    /**
+     * Color del indicador seleccionado
+     */
     @ColorInt
     private int selectedIndicatorColor;
     //endregion
-
 
     // region Constructor
     public ViewPagerNeubs(Context context) {
@@ -98,6 +144,12 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
         unselectedIndicatorColor = attributes.getColor(R.styleable.ViewPagerNeubs_defaultIndicatorColor,IndicatorView.DEFAULT_COLOR);
         selectedIndicatorColor = attributes.getColor(R.styleable.ViewPagerNeubs_selectedIndicatorColor,IndicatorView.DEFAULT_SELECTED_COLOR);
 
+
+        autoScroll = attributes.getBoolean(R.styleable.ViewPagerNeubs_autoScroll,false);
+        if (autoScroll){
+            FLIP_INTERVAL = attributes.getInt(R.styleable.ViewPagerNeubs_flipInterval,FLIP_INTERVAL);
+        }
+
         final int heightViewPager = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_viewPagerHeight, applyDimensionPixel(DEFAULT_VIEW_PAGER_HEIGHT_DPI));
 
         mViewPager = new ViewPager(context);
@@ -109,7 +161,7 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
 
         mLinealLayoutDots = new LinearLayout(context);
         LinearLayout.LayoutParams paramsLayoutDots = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsLayoutDots.setMargins(0,10,0,5);
+        paramsLayoutDots.setMargins(0,10,0,20);
         mLinealLayoutDots.setLayoutParams(paramsLayoutDots);
         mLinealLayoutDots.setOrientation(HORIZONTAL);
         mLinealLayoutDots.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
@@ -119,11 +171,10 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
     }
 
     public PagerAdapter getAdapter() {
-        return pagerAdapterReference != null? pagerAdapterReference.get() : null;
+        return mViewPager != null ? mViewPager.getAdapter() : null;
     }
 
     public void setAdapter(PagerAdapter adapter) {
-        this.pagerAdapterReference = new WeakReference<>(adapter);
         mViewPager.setAdapter(adapter);
         createDots();
     }
@@ -155,7 +206,7 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
      * Return the number of views available.
      */
     public int getCount(){
-        return pagerAdapterReference != null ? pagerAdapterReference.get().getCount() : 0;
+        return mViewPager.getAdapter().getCount();
     }
 
     /**
@@ -171,12 +222,16 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
             indicatorView.setRadius(indicatorRadius);
             indicatorView.setPadding(indicatorPadding, 0, indicatorPadding, 0);
             indicatorView.setColor((i == 0) ? selectedIndicatorColor : unselectedIndicatorColor);
+            indicatorView.invalidate();
             indicatorView.setOnClickListener(onClickListenerIndicator(i));
             listIndicatorView.add(i, indicatorView);
             mLinealLayoutDots.addView(indicatorView, params);
         }
-        oldPositionSelected = 0;
+        lastPositionSelected = 0;
         addView(mLinealLayoutDots);
+
+        if (autoScroll)
+            initAutoScroll();
     }
 
     private OnClickListener onClickListenerIndicator(final int position){
@@ -184,11 +239,57 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
 
             @Override
             public void onClick(View v) {
-                if (position != oldPositionSelected)
+                if (position != lastPositionSelected) {
                     mViewPager.setCurrentItem(position);
+                    // Si el authoScroll esta activado
+                    // se cancela y vuelve a iniciar,
+                    if (autoScroll)
+                        reinitializeAutoScroll();
+                }
             }
         };
     }
+
+
+    // region AUTOSCROLL
+    /**
+     * Inicializa el autoScroll
+     */
+    private void initAutoScroll(){
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTaskAutoScroll(),FLIP_INTERVAL,FLIP_INTERVAL);
+    }
+
+    /**
+     * cancela el timer y lo vuelve a iniciar
+     */
+    private void reinitializeAutoScroll(){
+        timer.cancel();
+        initAutoScroll();
+    }
+
+    /**
+     * clase para generar el timer del autoscroll
+     */
+    class TimerTaskAutoScroll extends java.util.TimerTask{
+
+        @Override
+        public void run() {
+            ((Activity)getContext()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    int position = lastPositionSelected;
+                    if (position < getCount()-1)
+                        position++;
+                    else
+                        position = 0;
+                    mViewPager.setCurrentItem(position);
+                    lastPositionSelected = position;
+                }
+            });
+        }
+    }
+    //endregion
 
 
     @Override
@@ -199,12 +300,12 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
     @Override
     public void onPageSelected(int position) {
         // Se cambia el Dot de la posicion anteriormente seleccionada
-        if (oldPositionSelected >= 0){
-            listIndicatorView.get(oldPositionSelected).setColor(unselectedIndicatorColor);
+        if (lastPositionSelected >= 0){
+            listIndicatorView.get(lastPositionSelected).setColor(unselectedIndicatorColor);
         }
         // Se cambia el Dot (selectedDot) a la nueva posicion seleccionada
         listIndicatorView.get(position).setColor(selectedIndicatorColor);
-        oldPositionSelected = position;
+        lastPositionSelected = position;
     }
 
     @Override
@@ -312,7 +413,10 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
 
         @Override
         public int getCount() {
-            return urlImages!=null? urlImages.size() : resourceImages.size();
+            if (urlImages != null)
+                return urlImages.size();
+            return resourceImages.size();
+            //return urlImages != null? urlImages.size() : resourceImages.size();
         }
 
         @Override

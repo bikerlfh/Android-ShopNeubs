@@ -16,6 +16,7 @@ import co.com.neubs.shopneubs.adapters.SectionAdapter;
 import co.com.neubs.shopneubs.adapters.BannerAdapter;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.Section;
+import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +28,7 @@ public class IndexFragment extends Fragment {
     ArrayList<Section> sections;
     SectionAdapter sectionAdapter;
     RecyclerView rvSection;
-    AdapterViewFlipper mAdapterViewFlipper;
+    ViewPagerNeubs mViewPagerBanner;
 
 
     public IndexFragment() {
@@ -56,17 +57,19 @@ public class IndexFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view =  inflater.inflate(R.layout.fragment_index, container, false);
 
         ArrayList<String> images = new ArrayList<String>();
         //images.add("http://192.168.1.50:8000/media/filer_public_thumbnails/filer_public/bb/0e/bb0eb875-1963-4416-a787-6c4c3e6f3a7e/img-carousel-1.jpg__1800x500_q85_crop_subsampling-2_upscale.jpg");
         images.add("https://www.caprabo.com/export/shared/.galleries/cajas/ofertas-y-promociones-caprabo.png_796588431.png");
         images.add("http://d37enp55yzymsd.cloudfront.net/images/Las-mejores-13-ofertas-en-cancun-para-nadar-con-delfines-554x247.jpg");
-        mAdapterViewFlipper = (AdapterViewFlipper) view.findViewById(R.id.adpaterViewFlipper_banner);
+        mViewPagerBanner = (ViewPagerNeubs) view.findViewById(R.id.adpaterViewFlipper_banner);
         if (images.size() > 0) {
-            BannerAdapter customAdapter = new BannerAdapter(getContext(), images);
-            mAdapterViewFlipper.setAdapter(customAdapter);
-            mAdapterViewFlipper.setVisibility(View.VISIBLE);
+            //BannerAdapter customAdapter = new BannerAdapter(getContext(), images);
+            //mAdapterViewFlipper.setAdapter(customAdapter);
+            mViewPagerBanner.showGalleryImages(images);
+            mViewPagerBanner.setVisibility(View.VISIBLE);
         }
 
 

@@ -9,5 +9,8 @@
         <attr name="indicatorPadding" format="dimension"/>
         <attr name="selectedIndicatorColor" format="color" />
         <attr name="defaultIndicatorColor" format="color" />
+
+        <attr name="autoScroll" format="boolean"/>
+        <attr name="flipInterval" format="integer"/>
     </declare-styleable>
 </resources>
