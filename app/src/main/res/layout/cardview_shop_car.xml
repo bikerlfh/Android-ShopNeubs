@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/margin_card_view"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardBackgroundColor="@color/colorBackground"
-        app:cardElevation="4dp">
+        app:cardElevation="2dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:text="TextView"
-                android:textSize="@dimen/subheading"
+                android:textSize="@dimen/body_1"
                 app:layout_constraintLeft_toRightOf="@+id/img_producto_card_shop_card"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_nombre_producto_card_shop_car" />
 

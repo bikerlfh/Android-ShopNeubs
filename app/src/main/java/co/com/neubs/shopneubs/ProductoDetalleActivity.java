@@ -7,7 +7,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -205,9 +207,20 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             else
                 itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
             if (sessionManager.addItemCar(itemCar)) {
-                Toast.makeText(this,getString(R.string.title_item_added),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ProductoDetalleActivity.this,PrincipalActivity.class);
-                startActivity(intent);
+                Toast toast = new Toast(this);
+                //usamos cualquier layout como Toast
+                View toast_layout = getLayoutInflater().inflate(R.layout.cutom_toast, (ViewGroup) findViewById(R.id.lytLayout));
+                toast.setView(toast_layout);
+
+                TextView textView = (TextView) toast_layout.findViewById(R.id.toastMessage);
+                textView.setText("Tu Producto ha sido agredado");
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER|Gravity.CENTER_VERTICAL,0,0);
+                toast.setView(toast_layout);
+                toast.show();
+
+                //Intent intent = new Intent(ProductoDetalleActivity.this,PrincipalActivity.class);
+                //startActivity(intent);
             }
             else{
                 Toast.makeText(this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();

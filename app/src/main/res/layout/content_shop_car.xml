@@ -55,44 +55,43 @@
             android:textSize="@dimen/body_1" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
-        android:background="@android:color/white"
-        android:elevation="8dp"
-        android:minHeight="25dp"
-        android:orientation="horizontal"
-        android:paddingEnd="@dimen/padding_End"
-        android:paddingStart="@dimen/padding_Start"
-        android:paddingTop="@dimen/padding_Top"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="8dp"
+            android:minHeight="25dp"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/padding_End"
+            android:paddingStart="@dimen/padding_Start"
+            android:paddingTop="@dimen/padding_Top"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_weight="0.85"
-            android:gravity="center_vertical|start"
-            android:text="@string/title_resumen"
-            android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/title" />
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_weight="0.85"
+                android:gravity="center_vertical|start"
+                android:text="@string/title_resumen"
+                android:textColor="@color/textColorSecundary"
+                android:textSize="@dimen/title" />
 
-        <TextView
-            android:id="@+id/lbl_valor_total"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.85"
-            android:gravity="center_vertical|end"
-            android:text="@string/text_loading"
-            android:textColor="@color/colorPrecio"
-            android:textSize="@dimen/title" />
+            <TextView
+                android:id="@+id/lbl_valor_total"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.85"
+                android:gravity="center_vertical|end"
+                android:text="@string/text_loading"
+                android:textColor="@color/colorPrecio"
+                android:textSize="@dimen/title" />
 
-    </LinearLayout>
+        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
