@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -90,8 +89,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             final Snackbar snackbar = Snackbar.make(view, R.string.text_loading, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null);
             snackbar.show();
-            final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.progress_bar);
-            spinner.setVisibility(View.VISIBLE);
             // Se consulta a la api la proxima pagina
             APIRest.Async.get(this.nextPage, new IServerCallback() {
                 @Override
@@ -101,14 +98,12 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                     // Se modifica nextPage asignandole la nueva (pagina siguiente)
                     nextPage = cPaginada.getNext();
                     snackbar.dismiss();
-                    spinner.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onError(String message_error, APIValidations apiValidations) {
                     Log.d(TAG,"ERROR: " + message_error);
                     snackbar.dismiss();
-                    spinner.setVisibility(View.GONE);
                 }
             });
         }
@@ -124,10 +119,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
 
         private SaldoInventario saldoInventario;
 
-        private Context context;
-
         public ProductoViewHolder(View itemView) {
-
             super(itemView);
             imagen = (ImageLoaderView)itemView.findViewById(R.id.img_producto);
             nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
@@ -135,8 +127,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card);
             //Estilo Texto strikethrough
             oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-            context = itemView.getContext();
-
         }
 
         public void bindProducto(SaldoInventario saldoInventario) {
@@ -144,11 +134,10 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             Producto producto = saldoInventario.getProducto();
             nombre_producto.setText(producto.getNombre());
 
-
-
             if (saldoInventario.getPrecioOferta() > 0){
                 oferta.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
                 precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioOferta()));
+                oferta.setVisibility(View.VISIBLE);
             }
             else{
                 precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));

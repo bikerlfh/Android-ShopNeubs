@@ -54,49 +54,35 @@
             android:layout_weight="0.25"
             android:background="@color/colorWhite"
             android:gravity="center_vertical"
-            android:paddingBottom="5dp"
-            android:paddingEnd="@dimen/padding_End_layout_detalle_producto"
-            android:paddingStart="@dimen/padding_Start_layout_detalle_producto"
             android:text="@string/title_description"
             android:textColor="@color/textColorSecundary"
-            android:textSize="18sp" />
+            android:textSize="@dimen/subheading" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/lbl_descripcion_producto_detalle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="0.25"
-            android:background="@android:color/white"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/lbl_descripcion_producto_detalle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorWhite"
-                android:paddingBottom="@dimen/padding_boton_layout_detalle_producto"
-                android:paddingEnd="@dimen/padding_End_layout_detalle_producto"
-                android:paddingStart="@dimen/padding_Start_layout_detalle_producto"
-                android:paddingTop="@dimen/padding_top_layout_detalle_producto"
-                android:text="@string/text_view_empy" />
-
-        </LinearLayout>
+            android:background="@color/colorWhite"
+            android:paddingBottom="@dimen/padding_boton_layout_detalle_producto"
+            android:paddingEnd="@dimen/padding_End_layout_detalle_producto"
+            android:paddingStart="@dimen/padding_Start_layout_detalle_producto"
+            android:paddingTop="@dimen/padding_top_layout_detalle_producto"
+            android:text="@string/text_view_empy"
+            android:textSize="@dimen/body_1" />
 
         <TextView
             android:id="@+id/title_especificacion"
             android:layout_width="match_parent"
             android:layout_height="38dp"
             android:layout_marginBottom="1dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:background="@color/colorWhite"
             android:elevation="0dp"
-            android:paddingBottom="5dp"
-            android:paddingEnd="@dimen/padding_End_layout_detalle_producto"
-            android:paddingStart="@dimen/padding_Start_layout_detalle_producto"
-            android:paddingTop="5dp"
+            android:gravity="center_vertical"
             android:text="@string/title_specification"
             android:textColor="@color/textColorSecundary"
-            android:textSize="18sp" />
+            android:textSize="@dimen/body_1" />
 
         <TextView
             android:id="@+id/lbl_especificacion_producto_detalle"
@@ -108,7 +94,8 @@
             android:paddingEnd="@dimen/padding_End_layout_detalle_producto"
             android:paddingStart="@dimen/padding_Start_layout_detalle_producto"
             android:paddingTop="@dimen/padding_top_layout_detalle_producto"
-            android:text="@string/text_view_empy" />
+            android:text="@string/text_view_empy"
+            android:textSize="@dimen/body_1" />
 
     </LinearLayout>
 

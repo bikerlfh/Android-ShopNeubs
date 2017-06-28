@@ -94,8 +94,8 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
         if (estado)
             mBtnAgregarItemCar.setEnabled(true);
-            mToolbarLayout.setTitle(nomProducto);
-            mNombreProducto.setText(nomProducto);
+        mToolbarLayout.setTitle(nomProducto);
+        mNombreProducto.setText(nomProducto);
 
         // SE asignan los precios
         setPrecio(precioVentaUnitario,precioOferta);
@@ -110,25 +110,18 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
                         mMarcaProducto.setText(producto.getMarca().getDescripcion());
 
-                        if (producto.getDescripcion().length() > 0) {
-                            mDescripcionProducto.setText(producto.getDescripcion());
-                            mEspecificacionProducto.setText(producto.getEspecificacion());
+                        mDescripcionProducto.setText(producto.getDescripcion());
+                        mEspecificacionProducto.setText(producto.getEspecificacion());
+                        // Si no hay descripcion se visualiza esconden los campos
+                        if (producto.getDescripcion().isEmpty()) {
+                            mTitleDescripcion.setVisibility(View.GONE);
+                            mDescripcionProducto.setVisibility(View.GONE);
                         }
-                        else if(producto.getEspecificacion().length() > 0){
 
-                            mTitleDescripcion.setText(R.string.title_specification);
-                            mDescripcionProducto.setText(producto.getEspecificacion());
-                            // Se esconden los campos de especificacion
-                            setVisibilityCamposEspecificacion(View.GONE);
-                        }
-                        else{
-                            mDescripcionProducto.setText(getString(R.string.text_view_empy));
-                            // Se esconden los campos de especificacion
-                            setVisibilityCamposEspecificacion(View.GONE);
-                        }
-                        // Si no hay especificación, se esconden los respectivos campos
-                        if (producto.getEspecificacion() == null || producto.getEspecificacion().length() == 0){
-                            setVisibilityCamposEspecificacion(View.GONE);
+                        // Si no hay especificación se visualiza esconden los campos
+                        if (producto.getEspecificacion().isEmpty()){
+                            mTitleEspecificacion.setVisibility(View.GONE);
+                            mEspecificacionProducto.setVisibility(View.GONE);
                         }
 
                         // Se validan los precios que se reciben del servidor con los que se pasaron a la actividad
@@ -152,7 +145,11 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
                 @Override
                 public void onError(String message_error, APIValidations apiValidations) {
-                    Toast.makeText(ProductoDetalleActivity.this,message_error,Toast.LENGTH_SHORT).show();
+                    if(apiValidations.notFound()){
+                        Toast.makeText(ProductoDetalleActivity.this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        Toast.makeText(ProductoDetalleActivity.this,message_error,Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -174,15 +171,6 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             mPrecioProducto.setText(Helper.MoneyFormat(precioVentaUnitario));
             mPrecioAnterior.setVisibility(View.GONE);
         }
-    }
-
-    /**
-     * Cambia la visibilidad de los campos titleEspecificacion y especificacionProducto
-     * @param value View.GONE, View.VISIBLE
-     */
-    private void setVisibilityCamposEspecificacion(int value){
-        mTitleEspecificacion.setVisibility(value);
-        mEspecificacionProducto.setVisibility(value);
     }
 
     @Override

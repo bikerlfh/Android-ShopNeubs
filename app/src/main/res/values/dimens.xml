@@ -30,7 +30,7 @@
     <dimen name="margin_card_view">2dp</dimen>
 
     <dimen name="title">18sp</dimen>
-    <dimen name="subheading">17sp</dimen>
-    <dimen name="body_1">14sp</dimen>
-    <dimen name="body_2">12sp</dimen>
+    <dimen name="subheading">12sp</dimen>
+    <dimen name="body_1">12sp</dimen>
+    <dimen name="body_2">10sp</dimen>
 </resources>
