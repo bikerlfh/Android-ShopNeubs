@@ -38,6 +38,11 @@ public class PrincipalActivity extends AppCompatActivity
 
     private SugerenciaBusqueda sugerenciaBusqueda;
 
+    /**
+     * representa el icono del menu filtro
+     */
+    private MenuItem itemMenuFiltro;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +139,8 @@ public class PrincipalActivity extends AppCompatActivity
         // Si no se está visualizando el IndexFragment, se carga
         else if (getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT).getClass() != IndexFragment.class){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(),TAG_FRAGMENT).commit();
+            // se esconde el icono del menu filtro
+            itemMenuFiltro.setVisible(false);
         }
         else
             super.onBackPressed();
@@ -143,6 +150,9 @@ public class PrincipalActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
+
+        itemMenuFiltro = menu.findItem(R.id.action_filtro);
+        itemMenuFiltro.setVisible(false);
 
         // Se asigna la accion search al searchView
         MenuItem item = menu.findItem(R.id.action_search);
@@ -229,6 +239,8 @@ public class PrincipalActivity extends AppCompatActivity
             fragment = new ProductosCategoriaFragment();
             fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment,TAG_FRAGMENT).commit();
+            // se visualiza el icono del menu filtro
+            itemMenuFiltro.setVisible(true);
         }
 
         drawer.closeDrawer(GravityCompat.START);

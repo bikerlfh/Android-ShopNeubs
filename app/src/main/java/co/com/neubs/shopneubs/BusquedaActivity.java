@@ -196,11 +196,19 @@ public class BusquedaActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_cart){
-            Intent intent = new Intent(BusquedaActivity.this,ShopCarActivity.class);
+        Intent intent = null;
+        switch (item.getItemId()){
+            case R.id.action_cart:
+                intent = new Intent(BusquedaActivity.this,ShopCarActivity.class);
+                break;
+            case R.id.action_filtro:
+                intent = new Intent(BusquedaActivity.this,FiltroActivity.class);
+                break;
+        }
+        if (intent != null){
             startActivity(intent);
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override

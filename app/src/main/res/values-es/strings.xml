@@ -84,5 +84,6 @@
     <string name="title_your_cart_empty">Tu carrito de compras está vacío!</string>
     <string name="msg_cart_empty">En nuestra tienda encontrarás los mejores productos tecnológicos al mejor precio, puedes agregar diversos artículos al mismo tiempo.</string>
     <string name="title_start_buy">Comienza Ahora!</string>
+    <string name="filtro_title">Filtro</string>
 
 </resources>

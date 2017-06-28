@@ -16,7 +16,6 @@
     <item
         android:id="@+id/action_filtro"
         android:icon="@drawable/ic_menu_filtro"
-        android:title="@string/filtro_title"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
 
 </menu>
