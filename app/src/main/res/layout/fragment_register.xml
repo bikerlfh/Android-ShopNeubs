@@ -53,10 +53,9 @@
                     android:elevation="2dp"
                     android:hint="@string/prompt_username"
                     android:inputType="textCapWords"
-                    android:textAlignment="center"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorLink="@android:color/darker_gray"
-                    android:textSize="@dimen/subheading" />
+                    android:textSize="@dimen/text_size_imput" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -73,8 +72,7 @@
                     android:elevation="2dp"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/subheading" />
+                    android:textSize="@dimen/text_size_imput" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -90,8 +88,7 @@
                     android:elevation="2dp"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/subheading" />
+                    android:textSize="@dimen/text_size_imput" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -107,8 +104,7 @@
                     android:elevation="2dp"
                     android:hint="@string/prompt_password_repeat"
                     android:inputType="textPassword"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/subheading" />
+                    android:textSize="@dimen/text_size_imput" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -121,7 +117,7 @@
                 android:elevation="8dp"
                 android:text="@string/title_register"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/body_1" />
+                android:textSize="@dimen/text_size_button" />
 
         </LinearLayout>
     </ScrollView>

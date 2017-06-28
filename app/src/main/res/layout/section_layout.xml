@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="OFERTAS"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/title" />
+            android:textSize="@dimen/title_section_item" />
 
         <TextView
             android:id="@+id/txtSubTitle"
@@ -28,7 +28,7 @@
             android:maxLines="1"
             android:text="Las mejores ofertas"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/body_1" />
+            android:textSize="@dimen/subtitle_section_layout" />
 
         <Button
             android:id="@+id/btnMore"

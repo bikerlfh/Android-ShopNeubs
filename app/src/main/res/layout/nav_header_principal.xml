@@ -28,5 +28,5 @@
         android:paddingTop="@dimen/nav_header_min_vertical_spacing"
         android:text="@string/welcome_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="@dimen/body_1" />
+        android:textSize="@dimen/text_size_button" />
 </LinearLayout>

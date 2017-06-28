@@ -36,7 +36,7 @@
                 android:paddingStart="8dp"
                 android:text="@string/text_view_empy"
                 android:textColor="@color/textColorSecundary"
-                android:textSize="@dimen/subheading"
+                android:textSize="@dimen/title_shop_cart"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/img_btn_eliminar_item_car"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:text="TextView"
-                android:textSize="@dimen/body_1"
+                android:textSize="@dimen/subtitle_shop_cart"
                 app:layout_constraintLeft_toRightOf="@+id/img_producto_card_shop_card"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_nombre_producto_card_shop_car" />
 
@@ -63,7 +63,7 @@
                 android:paddingEnd="16dp"
                 android:text="TextView"
                 android:textColor="@color/textColorSecundary"
-                android:textSize="@dimen/body_1"
+                android:textSize="@dimen/valor_total_shop_cart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
@@ -79,7 +79,7 @@
                 android:paddingRight="2dp"
                 android:text="@string/text_view_empy"
                 android:textColor="@color/textColorSecundary"
-                android:textSize="16sp"
+                android:textSize="@dimen/cantidad_shop_cart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/img_btn_menos_card_shop_car"
                 tools:layout_editor_absoluteY="66dp" />

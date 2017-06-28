@@ -63,7 +63,7 @@
                     android:paddingTop="8dp"
                     android:textColor="@color/colorPrimary"
                     android:textColorLink="@color/colorPrimary"
-                    android:textSize="@dimen/subheading" />
+                    android:textSize="@dimen/text_size_imput" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -86,7 +86,7 @@
                     android:paddingRight="9dp"
                     android:paddingTop="8sp"
                     android:textColorLink="@color/colorPrimary"
-                    android:textSize="@dimen/subheading" />
+                    android:textSize="@dimen/text_size_imput" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -96,7 +96,7 @@
                 android:layout_marginTop="17dp"
                 android:text="Forgot password?"
                 android:textAlignment="center"
-                android:textSize="@dimen/body_1" />
+                android:textSize="@dimen/text_size_forgot_passwrod" />
 
             <Button
                 android:id="@+id/btn_login"
@@ -108,7 +108,7 @@
                 android:elevation="8dp"
                 android:text="@string/title_login"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/body_1" />
+                android:textSize="@dimen/text_size_button" />
 
         </LinearLayout>
     </ScrollView>

@@ -29,8 +29,70 @@
     <dimen name="margin_fragment">10dp</dimen>
     <dimen name="margin_card_view">2dp</dimen>
 
-    <dimen name="title">18sp</dimen>
-    <dimen name="subheading">12sp</dimen>
-    <dimen name="body_1">12sp</dimen>
-    <dimen name="body_2">10sp</dimen>
+    <!-- Text Size content_producto_detalle -->
+    <dimen name="title_detalle_producto">17sp</dimen>
+    <dimen name="subtitle_detalle_producto">14sp</dimen>
+    <dimen name="body_detalle_producto">14sp</dimen>
+
+    <!-- Text Size cardview_section_item-->
+    <dimen name="title_section_item">12sp</dimen>
+    <dimen name="precio_producto_section_item">12sp</dimen>
+    <dimen name="precio_anterior_section_item">10sp</dimen>
+
+    <!-- Text Size cardView_shop_cart -->
+    <dimen name="title_shop_cart">14sp</dimen>
+    <dimen name="subtitle_shop_cart">12sp</dimen>
+    <dimen name="valor_total_shop_cart">14sp</dimen>
+    <dimen name="cantidad_shop_cart">16sp</dimen>
+
+    <!-- Text Size cardView_producto-->
+    <dimen name="title_producto">14sp</dimen>
+    <dimen name="precio_producto">13sp</dimen>
+    <dimen name="precio_anterior_producto">11sp</dimen>
+
+    <!-- Text Size cardView_pedido_detalle -->
+    <dimen name="title_producto_pedido_detalle">16sp</dimen>
+    <dimen name="cantidad_pedido_detalle">14sp</dimen>
+    <dimen name="costo_total_pedido_detalle">14sp</dimen>
+
+    <!-- Text Size cardView pedido-->
+    <dimen name="title_order_pedido">16sp</dimen>
+    <dimen name="numero_pedido">16sp</dimen>
+    <dimen name="fecha_pedido">16sp</dimen>
+    <dimen name="title_estado_pedido">14sp</dimen>
+    <dimen name="estado_pedido">14sp</dimen>
+    <dimen name="title_numero_producto_pedido">14sp</dimen>
+    <dimen name="numero_producto_pedido">14sp</dimen>
+    <dimen name="costo_total_pedido">14sp</dimen>
+    
+    <!-- Text Size content_account -->
+    <dimen name="title_welcome_account">16sp</dimen>
+    <dimen name="subtitle_action_account">14sp</dimen>
+    <dimen name="title_derechos_reservados_account">14sp</dimen>
+
+    <!-- Text Size fragment_login fragment_register y content_perfil -->
+    <dimen name="text_size_imput">14sp</dimen>
+    <dimen name="text_size_forgot_passwrod">14sp</dimen>
+
+    <!-- Text Size activity_pedido_detalle-->
+    <dimen name="title_estado_pedido_detalle">16sp</dimen>
+    <dimen name="estado_pedido_detalle">16sp</dimen>
+    <dimen name="numeros_producto_detalle">14sp</dimen>
+    <dimen name="total_pedido_detalle">14sp</dimen>
+    <dimen name="fecha_pedido_detalle">16sp</dimen>
+
+    <!--Text Size Botones-->
+    <dimen name="text_size_button">14sp</dimen>
+
+    <!--Text Size content_shop_cart -->
+    <dimen name="title_resumen_shop_cart">16sp</dimen>
+    <dimen name="lbl_valor_total_shop_cart">16sp</dimen>
+
+    <!--Text Size section_layout-->
+    <dimen name="title_section_layout">17sp</dimen>
+    <dimen name="subtitle_section_layout">14sp</dimen>
+
+    <!-- Text Size shop_cart_vacio -->
+    <dimen name="title_shop_cart_vacio">16sp</dimen>
+    <dimen name="body_shop_cart_vacio">14sp</dimen>
 </resources>

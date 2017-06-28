@@ -30,7 +30,7 @@
             android:text="@string/title_pedido"
             android:textAlignment="textStart"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/subheading" />
+            android:textSize="@dimen/title_order_pedido" />
 
         <TextView
             android:id="@+id/lbl_numero_pedido"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/text_view_empy"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="@dimen/numero_pedido" />
 
         <TextView
             android:id="@+id/lbl_fecha_pedido_detalle"
@@ -48,7 +48,7 @@
             android:layout_marginStart="8dp"
             android:gravity="end"
             android:text="@string/text_view_empy"
-            android:textSize="@dimen/subheading"
+            android:textSize="@dimen/fecha_pedido"
             app:layout_constraintHorizontal_bias="0.818"
             app:layout_constraintLeft_toRightOf="@+id/lbl_estado_pedido_detalle"
             app:layout_constraintRight_toRightOf="parent"
@@ -76,7 +76,7 @@
             android:gravity="center"
             android:text="@string/title_estado"
             android:textAlignment="center"
-            android:textSize="@dimen/subheading"
+            android:textSize="@dimen/title_estado_pedido"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -91,7 +91,7 @@
             android:text="@string/text_view_empy"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textSize="@dimen/body_1"
+            android:textSize="@dimen/estado_pedido"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -105,7 +105,7 @@
             android:gravity="center"
             android:text="@string/title_num_products"
             android:textAlignment="center"
-            android:textSize="@dimen/body_1"
+            android:textSize="@dimen/title_numero_producto_pedido"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -117,7 +117,7 @@
             android:layout_marginTop="3dp"
             android:text="@string/text_view_empy"
             android:textAlignment="center"
-            android:textSize="@dimen/body_1"
+            android:textSize="@dimen/numero_producto_pedido"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -133,7 +133,7 @@
             android:text="@string/text_view_empy"
             android:textAlignment="textEnd"
             android:textColor="@color/colorPrecio"
-            android:textSize="@dimen/body_1"
+            android:textSize="@dimen/costo_total_pedido"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/lbl_estado_pedido_detalle"
             app:layout_constraintRight_toRightOf="parent"

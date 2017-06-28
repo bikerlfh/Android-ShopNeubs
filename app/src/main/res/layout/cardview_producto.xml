@@ -52,7 +52,7 @@
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/subheading" />
+                android:textSize="@dimen/title_producto" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                     android:text="TextView"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorPrecio"
-                    android:textSize="@dimen/body_1" />
+                    android:textSize="@dimen/precio_producto" />
 
                 <TextView
                     android:id="@+id/lbl_precio_anterior_card"
@@ -82,7 +82,7 @@
                     android:paddingEnd="2dp"
                     android:paddingStart="4dp"
                     android:text="TextView"
-                    android:textSize="@dimen/body_1" />
+                    android:textSize="@dimen/precio_anterior_producto" />
 
             </LinearLayout>
 

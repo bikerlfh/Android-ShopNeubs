@@ -52,7 +52,7 @@
             android:elevation="9dp"
             android:text="@string/comprar"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/body_1" />
+            android:textSize="@dimen/text_size_button" />
     </LinearLayout>
 
         <LinearLayout
@@ -79,7 +79,7 @@
                 android:gravity="center_vertical|start"
                 android:text="@string/title_resumen"
                 android:textColor="@color/textColorSecundary"
-                android:textSize="@dimen/title" />
+                android:textSize="@dimen/title_resumen_shop_cart" />
 
             <TextView
                 android:id="@+id/lbl_valor_total"
@@ -89,7 +89,7 @@
                 android:gravity="center_vertical|end"
                 android:text="@string/text_loading"
                 android:textColor="@color/colorPrecio"
-                android:textSize="@dimen/title" />
+                android:textSize="@dimen/lbl_valor_total_shop_cart" />
 
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>

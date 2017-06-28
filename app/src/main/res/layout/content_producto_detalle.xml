@@ -32,7 +32,7 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="17sp"
+            android:textSize="@dimen/title_detalle_producto"
             android:textStyle="bold" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:paddingBottom="@dimen/padding_boton_layout_detalle_producto"
             android:text="@string/text_view_empy"
             android:textAlignment="center"
-            android:textSize="14sp" />
+            android:textSize="@dimen/subtitle_detalle_producto" />
 
         <TextView
             android:id="@+id/title_descripcion"
@@ -56,7 +56,7 @@
             android:gravity="center_vertical"
             android:text="@string/title_description"
             android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/subheading" />
+            android:textSize="@dimen/subtitle_detalle_producto" />
 
         <TextView
             android:id="@+id/lbl_descripcion_producto_detalle"
@@ -69,7 +69,7 @@
             android:paddingStart="@dimen/padding_Start_layout_detalle_producto"
             android:paddingTop="@dimen/padding_top_layout_detalle_producto"
             android:text="@string/text_view_empy"
-            android:textSize="@dimen/body_1" />
+            android:textSize="@dimen/body_detalle_producto" />
 
         <TextView
             android:id="@+id/title_especificacion"
@@ -82,7 +82,7 @@
             android:gravity="center_vertical"
             android:text="@string/title_specification"
             android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/body_1" />
+            android:textSize="@dimen/subtitle_detalle_producto" />
 
         <TextView
             android:id="@+id/lbl_especificacion_producto_detalle"
@@ -95,7 +95,7 @@
             android:paddingStart="@dimen/padding_Start_layout_detalle_producto"
             android:paddingTop="@dimen/padding_top_layout_detalle_producto"
             android:text="@string/text_view_empy"
-            android:textSize="@dimen/body_1" />
+            android:textSize="@dimen/body_detalle_producto" />
 
     </LinearLayout>
 

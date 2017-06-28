@@ -38,7 +38,7 @@
             android:text="@string/text_view_empy"
             android:textAlignment="textEnd"
             android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/subheading"
+            android:textSize="@dimen/fecha_pedido_detalle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,7 +52,7 @@
             android:paddingTop="10dp"
             android:text="@string/title_estado"
             android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/subheading"
+            android:textSize="@dimen/title_estado_pedido_detalle"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
             android:paddingBottom="@dimen/padding_Boton"
             android:paddingTop="10dp"
             android:text="@string/text_view_empy"
-            android:textSize="16sp"
+            android:textSize="@dimen/estado_pedido_detalle"
             app:layout_constraintLeft_toRightOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,7 +79,7 @@
             android:text="@string/text_view_empy"
             android:textAlignment="textEnd"
             android:textColor="@color/colorPrecio"
-            android:textSize="@dimen/subheading"
+            android:textSize="@dimen/costo_total_pedido_detalle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lbl_fecha_pedido_detalle" />
 
@@ -93,7 +93,7 @@
             android:paddingTop="@dimen/padding_Top"
             android:text="@string/title_num_products"
             android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/subheading"
+            android:textSize="@dimen/numeros_producto_detalle"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 

@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_nit"
                 android:inputType="number"
-                android:textSize="@dimen/subheading" />
+                android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_first_name"
                 android:inputType="textCapWords"
-                android:textSize="@dimen/subheading" />
+                android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_secund_name"
                 android:inputType="textCapWords"
-                android:textSize="@dimen/subheading" />
+                android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_first_last_name"
                 android:inputType="textCapWords"
-                android:textSize="@dimen/subheading" />
+                android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_secund_last_name"
                 android:inputType="textCapWords"
-                android:textSize="@dimen/subheading" />
+                android:textSize="@dimen/text_size_imput" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_address"
                 android:inputType="textCapWords"
-                android:textSize="@dimen/subheading" />
+                android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/promp_telephone"
                 android:inputType="phone"
-                android:textSize="@dimen/subheading" />
+                android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
 
 
