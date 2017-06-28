@@ -35,24 +35,25 @@
                 android:id="@+id/img_producto"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:layout_margin="5dp"
                 neubs:indeterminateDrawable="@drawable/circular_progress_bar" />
 
             <TextView
                 android:id="@+id/lbl_nombre_producto_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/img_producto"
                 android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:maxLines="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:maxLines="2"
                 android:paddingEnd="2dp"
                 android:paddingStart="2dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/title_producto" />
+                android:textSize="@dimen/title_producto_card" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,25 +65,27 @@
                 <TextView
                     android:id="@+id/lbl_precio_producto_card"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.48"
+                    android:gravity="center"
                     android:paddingBottom="@dimen/padding_Boton"
                     android:paddingEnd="4dp"
                     android:paddingStart="2dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorPrecio"
-                    android:textSize="@dimen/precio_producto" />
+                    android:textSize="@dimen/precio_producto_card" />
 
                 <TextView
                     android:id="@+id/lbl_precio_anterior_card"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:paddingBottom="@dimen/padding_Boton"
                     android:paddingEnd="2dp"
                     android:paddingStart="4dp"
                     android:text="TextView"
-                    android:textSize="@dimen/precio_anterior_producto" />
+                    android:textSize="@dimen/precio_anterior_producto_card" />
 
             </LinearLayout>
 

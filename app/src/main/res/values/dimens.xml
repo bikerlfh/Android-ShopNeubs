@@ -10,45 +10,22 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="height_boton">50dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
-    <dimen name="margin_End">10dp</dimen>
-    <dimen name="margin_Start">10dp</dimen>
-    <dimen name="margin_top">10dp</dimen>
-    <dimen name="margin_boton">10dp</dimen>
-    <dimen name="padding_Top">6dp</dimen>
-    <dimen name="padding_Boton">6dp</dimen>
-    <dimen name="padding_End">7dp</dimen>
-    <dimen name="padding_Start">7dp</dimen>
-    <dimen name="padding_End_layout_detalle_producto">13dp</dimen>
-    <dimen name="padding_Start_layout_detalle_producto">13dp</dimen>
-    <dimen name="padding_top_layout_detalle_producto">12dp</dimen>
-    <dimen name="padding_boton_layout_detalle_producto">12dp</dimen>
-
-    <dimen name="padding_title">7dp</dimen>
-    <dimen name="margin_top_title">5dp</dimen>
-    <dimen name="padding_fragment">7dp</dimen>
-    <dimen name="margin_fragment">10dp</dimen>
-    <dimen name="margin_card_view">2dp</dimen>
 
     <!-- Text Size content_producto_detalle -->
     <dimen name="title_detalle_producto">17sp</dimen>
-    <dimen name="subtitle_detalle_producto">14sp</dimen>
+    <dimen name="subtitle_detalle_producto">15sp</dimen>
     <dimen name="body_detalle_producto">14sp</dimen>
 
     <!-- Text Size cardview_section_item-->
-    <dimen name="title_section_item">12sp</dimen>
-    <dimen name="precio_producto_section_item">12sp</dimen>
-    <dimen name="precio_anterior_section_item">10sp</dimen>
+    <dimen name="title_producto_card">12sp</dimen>
+    <dimen name="precio_producto_card">13sp</dimen>
+    <dimen name="precio_anterior_producto_card">11sp</dimen>
 
     <!-- Text Size cardView_shop_cart -->
     <dimen name="title_shop_cart">14sp</dimen>
     <dimen name="subtitle_shop_cart">12sp</dimen>
     <dimen name="valor_total_shop_cart">14sp</dimen>
     <dimen name="cantidad_shop_cart">16sp</dimen>
-
-    <!-- Text Size cardView_producto-->
-    <dimen name="title_producto">14sp</dimen>
-    <dimen name="precio_producto">13sp</dimen>
-    <dimen name="precio_anterior_producto">11sp</dimen>
 
     <!-- Text Size cardView_pedido_detalle -->
     <dimen name="title_producto_pedido_detalle">16sp</dimen>
@@ -95,4 +72,33 @@
     <!-- Text Size shop_cart_vacio -->
     <dimen name="title_shop_cart_vacio">16sp</dimen>
     <dimen name="body_shop_cart_vacio">14sp</dimen>
+
+
+    <!-- Margin -Padding content_producto_detalle-->
+    <dimen name="padding_top_lbl_nombre_producto_detalle">12dp</dimen>
+    <dimen name="padding_top_lbl_marca_producto_detalle">12dp</dimen>
+    <dimen name="margin_top_title_descripcion_producto_detalle">8dp</dimen>
+    <dimen name="margin_botton_title_descripcion_producto_detalle">1dp</dimen>
+    <dimen name="padding_end_title_descripcion_producto">13dp</dimen>
+    <dimen name="padding_start_title_descripcion_producto">13dp</dimen>
+    <dimen name="padding_End_detalle_producto">13dp</dimen>
+    <dimen name="padding_Start_detalle_producto">13dp</dimen>
+    <dimen name="padding_top_detalle_producto">12dp</dimen>
+    <dimen name="padding_boton_detalle_producto">12dp</dimen>
+
+
+    <dimen name="margin_End">10dp</dimen>
+    <dimen name="margin_Start">10dp</dimen>
+    <dimen name="margin_top">10dp</dimen>
+    <dimen name="margin_boton">10dp</dimen>
+    <dimen name="padding_Top">6dp</dimen>
+    <dimen name="padding_Boton">6dp</dimen>
+    <dimen name="padding_End">7dp</dimen>
+    <dimen name="padding_Start">7dp</dimen>
+
+    <dimen name="padding_title">7dp</dimen>
+    <dimen name="margin_top_title">5dp</dimen>
+    <dimen name="padding_fragment">7dp</dimen>
+    <dimen name="margin_fragment">10dp</dimen>
+    <dimen name="margin_card_view">2dp</dimen>
 </resources>

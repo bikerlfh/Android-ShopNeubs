@@ -16,8 +16,7 @@
             android:layout_height="wrap_content"
             android:text="OFERTAS"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/title_section_item" />
-
+            android:textSize="@dimen/title_section_layout"/>
         <TextView
             android:id="@+id/txtSubTitle"
             android:layout_width="250dp"
