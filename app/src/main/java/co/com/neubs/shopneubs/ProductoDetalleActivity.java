@@ -2,10 +2,13 @@ package co.com.neubs.shopneubs;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +24,7 @@ import co.com.neubs.shopneubs.classes.models.Imagen;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.Producto;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
+import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -39,6 +43,9 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
     private SaldoInventario saldoInventario;
 
     private Toolbar toolbar;
+    private AppBarLayout appBarLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private IconNotificationBadge iconShopCart;
 
     private TextView mTitleDescripcion,mTitleEspecificacion, mNombreProducto, mDescripcionProducto, mMarcaProducto, mEspecificacionProducto, mPrecioProducto, mPrecioAnterior;
     private Button mBtnAgregarItemCar;
@@ -53,6 +60,8 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         toolbar = (Toolbar) findViewById(R.id.toolbar_producto_detalle);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
 
         sessionManager = SessionManager.getInstance(this);
         mViewPager = (ViewPagerNeubs)findViewById(R.id.viewPager_producto_detalle);
@@ -146,6 +155,20 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                 }
             });
         }
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (iconShopCart != null) {
+                    if (verticalOffset < -300) {
+                        iconShopCart.setColorIcon(android.R.color.white);
+                    } else {
+                        iconShopCart.setColorIcon(R.color.colorPrimaryLight);
+
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -173,6 +196,39 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
+
+        menu.findItem(R.id.action_filtro).setVisible(false);
+
+        menu.findItem(R.id.action_search).setVisible(false);
+
+        final MenuItem itemMenuCart = menu.findItem(R.id.action_cart);
+        iconShopCart = (IconNotificationBadge)itemMenuCart.getActionView();
+
+        if (iconShopCart != null) {
+            iconShopCart.setIcon(R.drawable.ic_menu_shop_cart);
+            iconShopCart.show(sessionManager.getCountItemsShopCar());
+            iconShopCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOptionsItemSelected(itemMenuCart);
+                }
+            });
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_cart){
+            Intent intent = new Intent(ProductoDetalleActivity.this,ShopCarActivity.class);
+            startActivity(intent);
+        }
+        return true;
+    }
+    @Override
     public void onClick(View v) {
 
         // Se agrega el item al carrito
@@ -189,6 +245,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                 itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
             if (sessionManager.addItemCar(itemCar)) {
                 Toast.makeText(this,getString(R.string.title_item_added),Toast.LENGTH_SHORT).show();
+                iconShopCart.show(sessionManager.getCountItemsShopCar());
             }
             else{
                 Toast.makeText(this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();
