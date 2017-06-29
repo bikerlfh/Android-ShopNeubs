@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs.controls;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -202,6 +203,10 @@ public class IconNotificationBadge extends RelativeLayout {
         mImage.setImageDrawable(getContext().getApplicationContext().getDrawable(idDrawable));
     }
 
+    public void setColorIcon(int color){
+        mImage.setColorFilter(getContext().getResources().getColor(color));
+    }
+
     public void setTextColor(int id){
         mTextBadge.setTextColor(id);
     }
@@ -213,7 +218,7 @@ public class IconNotificationBadge extends RelativeLayout {
         mTextBadge.setBackground(background);
     }
 
-    public void setBackgroundBadgeColor(@ColorInt int color){
+    public void setBackgroundBadgeColor(int color){
         shapeOval.setColorFilter(color, PorterDuff.Mode.SCREEN);
         setBackgroundBadge(shapeOval);
     }
