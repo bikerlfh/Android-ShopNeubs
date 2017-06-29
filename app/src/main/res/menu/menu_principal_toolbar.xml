@@ -7,12 +7,14 @@
         android:icon="@drawable/ic_menu_search"
         android:title="@string/search_title"
         app:showAsAction="always" />
+
     <item
         android:id="@+id/action_cart"
         android:title="@string/search_title"
-        android:icon="@drawable/ic_menu_shop_cart"
+        app:actionViewClass="co.com.neubs.shopneubs.controls.IconNotificationBadge"
         app:showAsAction="always"/>
 
+    <!--app:actionLayout="@layout/actionbar_icon_cart"-->
     <item
         android:id="@+id/action_filtro"
         android:icon="@drawable/ic_menu_filtro"

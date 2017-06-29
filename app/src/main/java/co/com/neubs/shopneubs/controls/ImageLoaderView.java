@@ -24,6 +24,8 @@ import co.com.neubs.shopneubs.R;
 
 /**
  * Created by bikerlfh on 6/9/17.
+ * Copyright 2017 Neubs SAS
+ *
  * Control personalizado, carga mediante Glide una imagen en un ImageView, visualizando un progressBar antes de finalizar la carga
  * El drawable (rotate) del progressBar personalizado se pasa por la propiedad indeterminateDrawable
  * Ejemplo

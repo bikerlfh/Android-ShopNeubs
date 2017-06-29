@@ -20,6 +20,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
+import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.fragments.IndexFragment;
 import co.com.neubs.shopneubs.fragments.OfertasFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
@@ -146,6 +147,7 @@ public class PrincipalActivity extends AppCompatActivity
             super.onBackPressed();
     }
 
+    int number = 0;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -155,8 +157,21 @@ public class PrincipalActivity extends AppCompatActivity
         itemMenuFiltro.setVisible(false);
 
         // Se asigna la accion search al searchView
-        MenuItem item = menu.findItem(R.id.action_search);
+        final MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
+
+        final IconNotificationBadge itemCart = (IconNotificationBadge)menu.findItem(R.id.action_cart).getActionView();
+
+        if (itemCart != null) {
+            itemCart.setIcon(R.drawable.ic_menu_shop_cart);
+            itemCart.setAnimationEnabled(true);
+            itemCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemCart.show(++number);
+                }
+            });
+        }
         return true;
     }
 

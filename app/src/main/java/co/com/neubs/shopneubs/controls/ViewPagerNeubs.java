@@ -28,6 +28,8 @@ import co.com.neubs.shopneubs.R;
 
 /**
  * Created by bikerlfh on 6/27/17.
+ * Copyright 2017 Neubs SAS
+ *
  * Alto del viewPager
  * <attr name="viewPagerHeight" format="dimension"/>
  * Radio de los indicadores
@@ -138,8 +140,8 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerNeubs, defStyleAttr, defStyleRes);
 
-        indicatorPadding = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_indicatorPadding, applyDimensionPixel(DEFAULT_INDICATOR_PADDING_DIP));
-        indicatorRadius = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_indicatorRadius,applyDimensionPixel(IndicatorView.DEFAULT_RADIUS_DIP));
+        indicatorPadding = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_indicatorPadding, convertDpToPixels(DEFAULT_INDICATOR_PADDING_DIP));
+        indicatorRadius = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_indicatorRadius,convertDpToPixels(IndicatorView.DEFAULT_RADIUS_DIP));
 
         unselectedIndicatorColor = attributes.getColor(R.styleable.ViewPagerNeubs_defaultIndicatorColor,IndicatorView.DEFAULT_COLOR);
         selectedIndicatorColor = attributes.getColor(R.styleable.ViewPagerNeubs_selectedIndicatorColor,IndicatorView.DEFAULT_SELECTED_COLOR);
@@ -150,7 +152,7 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
             FLIP_INTERVAL = attributes.getInt(R.styleable.ViewPagerNeubs_flipInterval,FLIP_INTERVAL);
         }
 
-        final int heightViewPager = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_viewPagerHeight, applyDimensionPixel(DEFAULT_VIEW_PAGER_HEIGHT_DPI));
+        final int heightViewPager = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_viewPagerHeight, convertDpToPixels(DEFAULT_VIEW_PAGER_HEIGHT_DPI));
 
         mViewPager = new ViewPager(context);
         mViewPager.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heightViewPager));
@@ -318,7 +320,7 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
      * @param dpi
      * @return
      */
-    private int applyDimensionPixel(int dpi){
+    private int convertDpToPixels(int dpi){
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpi,getResources().getDisplayMetrics());
     }
 
