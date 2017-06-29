@@ -8,12 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterViewFlipper;
-
 import java.util.ArrayList;
 
 import co.com.neubs.shopneubs.adapters.SectionAdapter;
-import co.com.neubs.shopneubs.adapters.BannerAdapter;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.Section;
 import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
@@ -66,8 +63,6 @@ public class IndexFragment extends Fragment {
         images.add("http://d37enp55yzymsd.cloudfront.net/images/Las-mejores-13-ofertas-en-cancun-para-nadar-con-delfines-554x247.jpg");
         mViewPagerBanner = (ViewPagerNeubs) view.findViewById(R.id.adpaterViewFlipper_banner);
         if (images.size() > 0) {
-            //BannerAdapter customAdapter = new BannerAdapter(getContext(), images);
-            //mAdapterViewFlipper.setAdapter(customAdapter);
             mViewPagerBanner.showGalleryImages(images);
             mViewPagerBanner.setVisibility(View.VISIBLE);
         }

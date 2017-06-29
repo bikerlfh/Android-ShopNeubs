@@ -3,20 +3,16 @@ package co.com.neubs.shopneubs;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.neubs.shopneubs.adapters.ViewPagerAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.Helper;
@@ -49,7 +45,6 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
     private CollapsingToolbarLayout mToolbarLayout;
     private ViewPagerNeubs mViewPager;
-    private ViewPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -137,8 +132,6 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                         for (Imagen img: producto.getImagenes()) {
                             images.add(img.getUrl());
                         }
-                        viewPagerAdapter = new ViewPagerAdapter(ProductoDetalleActivity.this,images);
-                        //mViewPager.setAdapter(viewPagerAdapter);
                         mViewPager.showGalleryImages(images);
                     }
                 }
@@ -195,20 +188,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             else
                 itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
             if (sessionManager.addItemCar(itemCar)) {
-                Toast toast = new Toast(this);
-                //usamos cualquier layout como Toast
-                View toast_layout = getLayoutInflater().inflate(R.layout.cutom_toast, (ViewGroup) findViewById(R.id.lytLayout));
-                toast.setView(toast_layout);
-
-                TextView textView = (TextView) toast_layout.findViewById(R.id.toastMessage);
-                textView.setText("Tu Producto ha sido agredado");
-                toast.setDuration(Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER|Gravity.CENTER_VERTICAL,0,0);
-                toast.setView(toast_layout);
-                toast.show();
-
-                //Intent intent = new Intent(ProductoDetalleActivity.this,PrincipalActivity.class);
-                //startActivity(intent);
+                Toast.makeText(this,getString(R.string.title_item_added),Toast.LENGTH_SHORT).show();
             }
             else{
                 Toast.makeText(this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();
