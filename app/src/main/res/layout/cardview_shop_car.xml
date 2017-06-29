@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/lbl_nombre_producto_card_shop_car"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="80dp"
                 android:layout_marginRight="8dp"
@@ -39,7 +39,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/lbl_marca_card_shop_car"
@@ -55,7 +56,6 @@
                 android:id="@+id/lbl_valor_total_item_card_shop_card"
                 android:layout_width="90dp"
                 android:layout_height="27dp"
-                android:layout_marginBottom="-9dp"
                 android:layout_marginRight="1dp"
                 android:gravity="right|center_vertical"
                 android:paddingBottom="8dp"
@@ -64,7 +64,8 @@
                 android:textColor="@color/textColorSecundary"
                 android:textSize="@dimen/valor_total_shop_cart"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginEnd="1dp" />
 
             <TextView
                 android:id="@+id/lbl_cantidad_card_shop_car"
@@ -81,7 +82,7 @@
                 android:textSize="@dimen/cantidad_shop_cart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/img_btn_menos_card_shop_car"
-                tools:layout_editor_absoluteY="66dp" />
+                android:layout_marginStart="6dp" />
 
             <ImageButton
                 android:id="@+id/img_btn_eliminar_item_car"
@@ -114,7 +115,8 @@
                 android:tint="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/lbl_cantidad_card_shop_car"
-                app:srcCompat="@drawable/ic_adds" />
+                app:srcCompat="@drawable/ic_adds"
+                android:layout_marginStart="4dp" />
 
             <ImageButton
                 android:id="@+id/img_btn_menos_card_shop_car"
