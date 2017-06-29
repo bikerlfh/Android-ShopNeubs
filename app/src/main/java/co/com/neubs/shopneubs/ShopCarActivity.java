@@ -10,6 +10,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -29,6 +31,7 @@ import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.PedidoVenta;
+import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class ShopCarActivity extends AppCompatActivity {
@@ -41,6 +44,8 @@ public class ShopCarActivity extends AppCompatActivity {
     private Button btnRealizarPedido;
     private  ProgressDialog progressDialog;
     private LinearLayout rootLayout;
+
+    private IconNotificationBadge iconShopCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +133,7 @@ public class ShopCarActivity extends AppCompatActivity {
     }
 
     /**
-     * Remueve todaslas vistas del rootLayout y visualiza la vista shop_cart_vacio
+     * Remueve todas las vistas del rootLayout y visualiza la vista shop_cart_vacio
      */
     public void visualizarCarroVacio()
     {
@@ -156,6 +161,28 @@ public class ShopCarActivity extends AppCompatActivity {
 
     public void calcularValorTotal(){
         lblValorTotal.setText(Helper.MoneyFormat(sessionManager.getValorTotalShopCar()));
+        // Se actualiza el icono ShopCart
+        if (iconShopCart != null) {
+            iconShopCart.show(sessionManager.getCountItemsShopCar());
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
+
+        menu.findItem(R.id.action_filtro).setVisible(false);
+        menu.findItem(R.id.action_search).setVisible(false);
+
+        final MenuItem itemMenuCart = menu.findItem(R.id.action_cart);
+        iconShopCart = (IconNotificationBadge)itemMenuCart.getActionView();
+
+        if (iconShopCart != null) {
+            iconShopCart.setIcon(R.drawable.ic_menu_shop_cart);
+            iconShopCart.show(sessionManager.getCountItemsShopCar());
+        }
+        return true;
     }
 
 }

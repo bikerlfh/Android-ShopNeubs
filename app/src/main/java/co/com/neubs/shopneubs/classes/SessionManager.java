@@ -79,8 +79,18 @@ public class SessionManager {
         return shopCar;
     }
 
-    public void setShopCar(ArrayList<ItemCar> shopCar) {
-        this.shopCar = shopCar;
+    /***
+     * obtiene la canitdad de items que hay en el carro
+     */
+    public int getCountItemsShopCar(){
+        int countItems = 0;
+        if (shopCar != null){
+            for (ItemCar item:shopCar) {
+                countItems += item.getCantidad();
+            }
+        }
+
+        return countItems;
     }
 
     /**

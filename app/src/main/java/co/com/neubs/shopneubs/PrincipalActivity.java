@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +39,8 @@ public class PrincipalActivity extends AppCompatActivity
     private MaterialSearchView searchView;
 
     private SugerenciaBusqueda sugerenciaBusqueda;
+
+    private IconNotificationBadge iconShopCart;
 
     /**
      * representa el icono del menu filtro
@@ -73,7 +76,7 @@ public class PrincipalActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // Se inicializa con el fragment Index
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(),TAG_FRAGMENT).commit();
 
         // Se consulta la vista del navigationView
         View header = navigationView.getHeaderView(0);
@@ -127,6 +130,9 @@ public class PrincipalActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         setTextoWelcome(sessionManager.isAuthenticated());
+        if (iconShopCart != null) {
+            iconShopCart.show(sessionManager.getCountItemsShopCar());
+        }
     }
 
     @Override
@@ -147,7 +153,6 @@ public class PrincipalActivity extends AppCompatActivity
             super.onBackPressed();
     }
 
-    int number = 0;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -160,15 +165,16 @@ public class PrincipalActivity extends AppCompatActivity
         final MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
 
-        final IconNotificationBadge itemCart = (IconNotificationBadge)menu.findItem(R.id.action_cart).getActionView();
+        final MenuItem itemMenuCart = menu.findItem(R.id.action_cart);
+        iconShopCart = (IconNotificationBadge)itemMenuCart.getActionView();
 
-        if (itemCart != null) {
-            itemCart.setIcon(R.drawable.ic_menu_shop_cart);
-            itemCart.setAnimationEnabled(true);
-            itemCart.setOnClickListener(new View.OnClickListener() {
+        if (iconShopCart != null) {
+            iconShopCart.setIcon(R.drawable.ic_menu_shop_cart);
+            iconShopCart.show(sessionManager.getCountItemsShopCar());
+            iconShopCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemCart.show(++number);
+                    onOptionsItemSelected(itemMenuCart);
                 }
             });
         }

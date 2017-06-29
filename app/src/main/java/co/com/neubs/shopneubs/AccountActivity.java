@@ -17,6 +17,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
+import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -27,6 +28,7 @@ public class AccountActivity extends AppCompatActivity {
     private MaterialSearchView searchView;
 
     private SessionManager sessionManager;
+    private IconNotificationBadge iconShopCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +181,9 @@ public class AccountActivity extends AppCompatActivity {
         super.onResume();
         // Se valida la sesión y se visualizan los controles segun su estado
         visualizarControlesSession(validarSession());
+        if (iconShopCart != null) {
+            iconShopCart.show(sessionManager.getCountItemsShopCar());
+        }
     }
 
     @Override
@@ -188,19 +193,36 @@ public class AccountActivity extends AppCompatActivity {
         // Se asigna la accion search al searchView
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
+
+        // Se esconde el itemMenu filtro, ya que no es necesario
+        menu.findItem(R.id.action_filtro).setVisible(false);
+
+        final MenuItem itemMenuCart = menu.findItem(R.id.action_cart);
+        iconShopCart = (IconNotificationBadge)itemMenuCart.getActionView();
+
+        if (iconShopCart != null) {
+            iconShopCart.setIcon(R.drawable.ic_menu_shop_cart);
+            iconShopCart.show(sessionManager.getCountItemsShopCar());
+            iconShopCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOptionsItemSelected(itemMenuCart);
+                }
+            });
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = null;
         switch (item.getItemId()) {
-            case R.id.home:
-                onBackPressed();
-                return true;
             case R.id.action_cart:
-                Intent intent = new Intent(AccountActivity.this,ShopCarActivity.class);
-                startActivity(intent);
+                intent = new Intent(AccountActivity.this,ShopCarActivity.class);
+                break;
         }
+        if (intent != null)
+            startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
     private void action(int resid) {

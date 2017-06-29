@@ -31,7 +31,8 @@ import android.widget.TextView;
  * * En el menu agregar al item (app:actionViewClass="co.com.neubs.shopneubs.controls.IconNotificationBadge")
  * * En el onCreateOptionsMenu de la actividad obtener el ActionView del item (R.id.action_cart = id del MenuItem)
 
-    final ActionBarIconNotificationBadge itemCart = (ActionBarIconNotificationBadge)menu.findItem(R.id.action_cart).getActionView();
+    final MenuItem itemMenuCart = menu.findItem(R.id.action_cart);
+    final ActionBarIconNotificationBadge itemCart = (ActionBarIconNotificationBadge)itemMenuCart.getActionView();
     if (itemCart != null) {
         // Se asigna el icono
         itemCart.setIcon(R.drawable.ic_menu_shop_cart);
@@ -41,7 +42,7 @@ import android.widget.TextView;
         itemCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemCart.show(++number);
+                onOptionsItemSelected(itemMenuCart);
             }
         });
     }
@@ -110,7 +111,7 @@ public class IconNotificationBadge extends RelativeLayout {
     /**
      * indica si las animaciones estan activas o no
      */
-    private boolean isAnimationEnabled = false;
+    private boolean isAnimationEnabled = true;
 
     /**
      * Animaciones
@@ -288,7 +289,7 @@ public class IconNotificationBadge extends RelativeLayout {
         if (textoBadge.length() > maxTextLength)
             textoBadge = DEFAULT_TEXT_MAX_LENGTH_REACHED;
 
-        if (isAnimationEnabled) {
+        if (isAnimationEnabled && number > 0) {
             Animation animation = animationShow;
             // si el badger ya se esta visualizado
             // se cambia la animación por la Update
@@ -297,9 +298,14 @@ public class IconNotificationBadge extends RelativeLayout {
             }
             mTextBadge.startAnimation(animation);
         }
-        else{
+        else if(number > 0){
             mTextBadge.setText(textoBadge);
             setVisibilityBadge(true);
+        }
+        else{
+            clear();
+            isBadgeShow = false;
+            return;
         }
         isBadgeShow = true;
     }
