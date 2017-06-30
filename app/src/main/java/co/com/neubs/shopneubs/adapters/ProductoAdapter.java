@@ -116,6 +116,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         private TextView nombre_producto;
         private TextView precio;
         private TextView oferta;
+        private TextView lblSinStok;
 
         private SaldoInventario saldoInventario;
 
@@ -125,6 +126,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
             precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_card);
             oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card);
+            lblSinStok = (TextView) itemView.findViewById(R.id.lbl_producto_sin_stock);
             //Estilo Texto strikethrough
             oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         }
@@ -143,6 +145,12 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
                 oferta.setVisibility(View.GONE);
             }
+
+            if (saldoInventario.getEstado())
+                lblSinStok.setVisibility(View.GONE);
+            else
+                lblSinStok.setVisibility(View.VISIBLE);
+
             // Se obtiene la imagen y se guarda en el cache
             imagen.setImageURL(producto.getImagen());
 

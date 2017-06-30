@@ -95,8 +95,12 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         final float precioVentaUnitario = intentExtra.getExtras().getFloat(PARAM_PRECIO_VENTA_UNITARIO,0);
         final boolean estado = intentExtra.getExtras().getBoolean(PARAM_ESTADO,false);
 
-        if (estado)
+        if (estado){
             mBtnAgregarItemCar.setEnabled(true);
+        }else{
+            mBtnAgregarItemCar.setText("SIN STOCK");
+        }
+
         mCollapsingToolbarLayout.setTitle(nomProducto);
         mNombreProducto.setText(nomProducto);
 
@@ -259,7 +263,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         }
         else {
             Toast.makeText(this, getString(R.string.error_item_in_car), Toast.LENGTH_SHORT).show();
-            mBtnAgregarItemCar.setEnabled(false);
+
         }
     }
 }

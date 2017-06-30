@@ -24,7 +24,7 @@
     <!-- Text Size cardView_shop_cart -->
     <dimen name="title_shop_cart">14sp</dimen>
     <dimen name="subtitle_shop_cart">12sp</dimen>
-    <dimen name="valor_total_shop_cart">14sp</dimen>
+    <dimen name="valor_total_shop_cart">16sp</dimen>
     <dimen name="cantidad_shop_cart">16sp</dimen>
 
     <!-- Text Size cardView_pedido_detalle -->

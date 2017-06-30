@@ -104,10 +104,12 @@
                 android:layout_width="134dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.60"
-                android:backgroundTint="@color/colorSecundary"
-                android:drawableStart="@drawable/ic_menu_shop_cart"
+                android:backgroundTint="@color/botton_disable_color"
+                android:drawableStart="@drawable/botton_disable_drawable"
                 android:elevation="9dp"
+                android:gravity="center_vertical"
                 android:text="@string/agregar_carrito"
+                android:textAlignment="center"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
