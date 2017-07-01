@@ -233,7 +233,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             Intent intent = new Intent(ProductoDetalleActivity.this,ShopCarActivity.class);
             startActivity(intent);
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
     @Override
     public void onClick(View v) {

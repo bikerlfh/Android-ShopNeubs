@@ -98,7 +98,7 @@ public class APIRest {
 
     /**
      * Convierte los parametros Map<String,String> a un String format: p1=value1&p2=value2
-     * @param param para pasarlos por GET
+     * @param param parametros Map para convertirlos parametros GET
      * @return String parametros formato param1=valor1&param2=valor2...
      */
     private static String makeParams(Map<String,String> param){

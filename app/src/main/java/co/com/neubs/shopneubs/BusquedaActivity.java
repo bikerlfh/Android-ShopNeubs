@@ -30,13 +30,17 @@ import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.OnVerticalScrollListener;
+import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
+import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class BusquedaActivity extends AppCompatActivity {
 
     public final static String PARAM_QUERY = "query";
     public final static String PARAM_SUGERENCIAS = "sugerencias";
+
+    private SessionManager sessionManager;
 
     private ProductoAdapter productoAdapter;
 
@@ -45,6 +49,7 @@ public class BusquedaActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
+    private IconNotificationBadge iconShopCart;
     private SugerenciaBusqueda sugerenciaBusqueda;
 
     String query;
@@ -58,6 +63,7 @@ public class BusquedaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda);
 
+        sessionManager = SessionManager.getInstance(this);
         rootViewResults = (FrameLayout)findViewById(R.id.root_layout_resultados_busqueda);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -191,6 +197,20 @@ public class BusquedaActivity extends AppCompatActivity {
 
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
+
+        final MenuItem itemMenuCart = menu.findItem(R.id.action_cart);
+        iconShopCart = (IconNotificationBadge)itemMenuCart.getActionView();
+
+        if (iconShopCart != null) {
+            iconShopCart.setIcon(R.drawable.ic_menu_shop_cart);
+            iconShopCart.show(sessionManager.getCountItemsShopCar());
+            iconShopCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOptionsItemSelected(itemMenuCart);
+                }
+            });
+        }
         return true;
     }
 
@@ -208,7 +228,7 @@ public class BusquedaActivity extends AppCompatActivity {
         if (intent != null){
             startActivity(intent);
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -21,6 +21,7 @@ import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.OnVerticalScrollListener;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -95,26 +96,25 @@ public class ProductosCategoriaFragment extends Fragment {
         // Inflate the layout for this fragment
 
         recyclerView = (RecyclerView)view.findViewById(R.id.myRecycleView);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(3), true));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
 
         recyclerView.setLayoutManager(mLayoutManager);
 
-        /*final Snackbar snackbar = Snackbar.make(view, R.string.text_loading, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Action", null);
-        snackbar.show();*/
-
-
         // se visualiza el spinner de loading
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.progress_bar);
         spinner.setVisibility(View.VISIBLE);
 
-        // Si la urlRequest es nula quiere decir que fue invocado el fragment desde una peticion de categoria
-        if (urlRequest == null){
-            urlRequest = "?categoria=" + codigoCategoria;
+        // Si la urlRequest es nula quiere decir que fue invocado el fragment desde una peticion filtro por categoria o marca
+        if (codigoCategoria != null) {
+            addParametroUrlRequest("categoria",codigoCategoria);
         }
+        if (codigoMarca != null){
+            addParametroUrlRequest("marca",codigoMarca);
+        }
+
         APIRest.Async.get(urlRequest, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
@@ -128,7 +128,6 @@ public class ProductosCategoriaFragment extends Fragment {
                         productoAdapter.getNextPage(view);
                     }
                 });
-                //snackbar.dismiss();
                 spinner.setVisibility(View.GONE);
             }
 
@@ -138,8 +137,22 @@ public class ProductosCategoriaFragment extends Fragment {
                 spinner.setVisibility(View.GONE);
             }
         });
-
         return view;
+    }
+
+    /**
+     * Agrega un parametro GET a la urlRequest
+     * @param key nombre del parametro
+     * @param value valor del parametro
+     */
+    private  void addParametroUrlRequest(String key,String value){
+        if (urlRequest == null)
+            urlRequest = "";
+        // Si la url ya contiene el signo ? se agrega la adición de un nuevo parametro (&)
+        // de lo contrario agrega el signo ?
+        urlRequest += (urlRequest.contains("?"))? "&" : "?";
+        // Se adiciona el parametro get
+        urlRequest += key + "=" + value;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -179,10 +192,5 @@ public class ProductosCategoriaFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 }
