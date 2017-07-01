@@ -3,6 +3,7 @@ package co.com.neubs.shopneubs.classes;
 import android.content.Context;
 
 import co.com.neubs.shopneubs.classes.models.APIBanner;
+import co.com.neubs.shopneubs.classes.models.APISection;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.APITabla;
 import co.com.neubs.shopneubs.classes.models.Categoria;
@@ -28,6 +29,7 @@ public class Synchronize {
     private final String URL_DEPARTAMENTO = "sync/departamento/";
     private final String URL_MUNICIPIO = "sync/municipio/";
     private final String URL_BANNER = "sync/banner/";
+    private final String URL_SECTION = "sync/section/";
 
 
     public String message_error;
@@ -58,6 +60,8 @@ public class Synchronize {
             totalRowSync += SynchronizePais();
             // Se sincroniza el ApiBanner
             totalRowSync += SynchronizeAPIBanner();
+            // Se sincroniza la ApiSection
+            totalRowSync += SynchronizeAPISection();
         }
         catch (Exception ex){
             message_error = ex.getMessage();
@@ -322,6 +326,38 @@ public class Synchronize {
     }
 
     /**
+     * Realiza la sincronización del ApiSection
+     * @return numero de sincronizaciones guardadas
+     */
+    private int SynchronizeAPISection(){
+        int numSincronizacion = 0;
+        final String response = APIRest.Sync.get(URL_SECTION);
+        if (response != null && APIRest.Sync.ok()) {
+            final APISection[] listApiSection = APIRest.serializeObjectFromJson(response, APISection[].class);
+            if (listApiSection != null && listApiSection.length > 0) {
+                for (APISection section : listApiSection) {
+                    // Si la section no existe y está activa
+                    if (!section.exists()) {
+                        if (section.getEstado()) {
+                            section.save();
+                            numSincronizacion++;
+                        }
+                    }
+                    // Si la section existe pero esta con estado false
+                    // se elimina de la base de datos
+                    else if(!section.getEstado()){
+                        section.delete();
+                        numSincronizacion++;
+                    }
+                }
+            }
+        }
+        else
+            numSincronizacion = -1;
+        return numSincronizacion;
+    }
+
+    /**
      * Sincroniza una tabla en especifico. Si la tabla es null, realiza una sincronización inicial
      * @param tabla APITabla a sincronizar
      * @return numero de sincronizaciones guardadas
@@ -346,6 +382,8 @@ public class Synchronize {
                 case "04":
                     numSincronizacion = SynchronizeAPIBanner();
                     break;
+                case "05":
+                    numSincronizacion = SynchronizeAPISection();
             }
         }
         else {

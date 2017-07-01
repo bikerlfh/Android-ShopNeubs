@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import co.com.neubs.shopneubs.models.APISectionModel;
 import co.com.neubs.shopneubs.models.APISincronizacionModel;
 import co.com.neubs.shopneubs.models.APITablaModel;
 import co.com.neubs.shopneubs.models.APIBannerModel;
@@ -167,6 +168,7 @@ public class DbManager
             db.execSQL(MunicipioModel.CREATE_TABLE);
             db.execSQL(SugerenciaBusquedaModel.CREATE_TABLE);
             db.execSQL(APIBannerModel.CREATE_TABLE);
+            db.execSQL(APISectionModel.CREATE_TABLE);
         }
 
         @Override

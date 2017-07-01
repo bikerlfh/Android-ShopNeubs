@@ -5,8 +5,6 @@ package co.com.neubs.shopneubs.models;
  */
 
 public class APIBannerModel {
-
-
     public static final String NAME_TABLE = "ApiBanner";
     public static final String PK = "idApiBanner";
     public static final String URL_IMAGEN = "urlImagen";

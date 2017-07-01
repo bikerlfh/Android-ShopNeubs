@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ import co.com.neubs.shopneubs.ProductoDetalleActivity;
 import co.com.neubs.shopneubs.adapters.SectionAdapter;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.APIBanner;
-import co.com.neubs.shopneubs.classes.models.Section;
+import co.com.neubs.shopneubs.classes.models.APISection;
 import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
 
 /**
@@ -32,7 +31,7 @@ public class IndexFragment extends Fragment {
     RecyclerView mRecyclerViewSection;
     ViewPagerNeubs mViewPagerBanner;
 
-    ArrayList<Section> sections;
+    List<APISection> listAPISections;
     SectionAdapter sectionAdapter;
 
     public IndexFragment() {
@@ -59,13 +58,48 @@ public class IndexFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_index, container, false);
 
-        /* region Funcionalidad del banner */
+        mViewPagerBanner = (ViewPagerNeubs) view.findViewById(R.id.viewpager_banner);
+        mRecyclerViewSection=(RecyclerView) view.findViewById(R.id.recycle_view_index);
 
+        // Se cargan los banner
+        cargarAPIBanner();
+
+
+        mRecyclerViewSection.setHasFixedSize(true);
+        // Se consultan las secciones activas
+        listAPISections =new APISection().getAll(true);
+
+        if(listAPISections !=null) {
+            sectionAdapter = new SectionAdapter(listAPISections);
+            mRecyclerViewSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mRecyclerViewSection.setAdapter(sectionAdapter);
+        }
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Se reinicializa el autoScroll
+        mViewPagerBanner.reinitializeAutoScroll();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Se reinicializa pausa
+        mViewPagerBanner.stopAutoScroll();
+    }
+
+
+    /**
+     * Carga los ApiBanner
+     */
+    private void cargarAPIBanner(){
         // Se consultan todos los banner activos
         final List<APIBanner> listadoApiBanner = new APIBanner().getAll(true);
-        if (listadoApiBanner.size() > 0) {
 
-            mViewPagerBanner = (ViewPagerNeubs) view.findViewById(R.id.viewpager_banner);
+        if (listadoApiBanner.size() > 0) {
             // Se sacan las imagenes de los banners
             final ArrayList<String> images = new ArrayList<>();
             for(APIBanner banner:listadoApiBanner){
@@ -100,31 +134,5 @@ public class IndexFragment extends Fragment {
             // Se visualiza el viewPagerBanner
             mViewPagerBanner.setVisibility(View.VISIBLE);
         }
-        /*  endregion */
-
-        mRecyclerViewSection=(RecyclerView) view.findViewById(R.id.recycle_view_index);
-        mRecyclerViewSection.setHasFixedSize(true);
-
-        sections = Section.getAllSections();
-
-        if(sections!=null) {
-            sectionAdapter =new SectionAdapter(sections);
-            mRecyclerViewSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-            mRecyclerViewSection.setAdapter(sectionAdapter);
-        }
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Se reinicializa el autoScroll
-        mViewPagerBanner.reinitializeAutoScroll();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mViewPagerBanner.stopAutoScroll();
     }
 }
