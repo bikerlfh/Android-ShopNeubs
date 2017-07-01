@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.com.neubs.shopneubs.PrincipalActivity;
 import co.com.neubs.shopneubs.ProductoDetalleActivity;
 import co.com.neubs.shopneubs.adapters.SectionAdapter;
 import co.com.neubs.shopneubs.R;
@@ -28,13 +29,11 @@ import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
  */
 public class IndexFragment extends Fragment {
 
-    ArrayList<Section> sections;
-    SectionAdapter sectionAdapter;
-    RecyclerView rvSection;
+    RecyclerView mRecyclerViewSection;
     ViewPagerNeubs mViewPagerBanner;
 
-    private APIBanner apiBanner;
-
+    ArrayList<Section> sections;
+    SectionAdapter sectionAdapter;
 
     public IndexFragment() {
         // Required empty public constructor
@@ -59,51 +58,73 @@ public class IndexFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view =  inflater.inflate(R.layout.fragment_index, container, false);
-        apiBanner = new APIBanner();
-        final List<APIBanner> listadoApiBanner = apiBanner.getAllApiBanner(true);
 
+        /* region Funcionalidad del banner */
+
+        // Se consultan todos los banner activos
+        final List<APIBanner> listadoApiBanner = new APIBanner().getAll(true);
         if (listadoApiBanner.size() > 0) {
+
+            mViewPagerBanner = (ViewPagerNeubs) view.findViewById(R.id.viewpager_banner);
+            // Se sacan las imagenes de los banners
             final ArrayList<String> images = new ArrayList<>();
             for(APIBanner banner:listadoApiBanner){
                 images.add(banner.getUrlImagen());
             }
-            mViewPagerBanner = (ViewPagerNeubs) view.findViewById(R.id.adpaterViewFlipper_banner);
-            if (images.size() > 0) {
-                mViewPagerBanner.showGalleryImages(images, new ViewPagerNeubs.OnClickListenerImage() {
-                    @Override
-                    public void onClick(View v, int position) {
-                        final APIBanner apiBanner = listadoApiBanner.get(position);
-                        if (apiBanner.isClickable()){
-                            // si viene el idSaldoInventario, se abre el ProductoDetalleActivity
-                            if (apiBanner.getIdSaldoInventario() > 0){
-                                Intent intent = new Intent(v.getContext(), ProductoDetalleActivity.class);
-                                intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,apiBanner.getIdSaldoInventario());
-                                v.getContext().startActivity(intent);
-                            }
-                            // Si viene el urlResultado, se envía al fragment ProductosCategoria
-                            else if(apiBanner.getUrlResultado() != null && apiBanner.getUrlResultado().length() > 0){
-
-                            }
+            // Se visualiza el viewPager como Galeria de imagenes y se
+            // asigna el evento del click por imagen, para abrir el producto(idSaldoInventario) o el fragment ProductoCategoria(urlRequest)
+            mViewPagerBanner.showGalleryImages(images, new ViewPagerNeubs.OnClickListenerImage() {
+                @Override
+                public void onClick(View v, int position) {
+                    final APIBanner apiBanner = listadoApiBanner.get(position);
+                    if (apiBanner.isClickable()){
+                        // si viene el idSaldoInventario, se abre el ProductoDetalleActivity
+                        if (apiBanner.getIdSaldoInventario() > 0){
+                            Intent intent = new Intent(v.getContext(), ProductoDetalleActivity.class);
+                            intent.putExtra(ProductoDetalleActivity.PARAM_ID_SALDO_INVENTARIO,apiBanner.getIdSaldoInventario());
+                            v.getContext().startActivity(intent);
+                        }
+                        // Si viene el urlRequest, se envía al fragment ProductosCategoria
+                        else if(apiBanner.getUrlRequest() != null && apiBanner.getUrlRequest().length() > 0){
+                            Bundle args = new Bundle();
+                            args.putString(ProductosCategoriaFragment.PARAM_URL_REQUEST, apiBanner.getUrlRequest());
+                            Fragment fragment = new ProductosCategoriaFragment();
+                            fragment.setArguments(args);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment, PrincipalActivity.TAG_FRAGMENT).commit();
+                            // Se detiene el autoScroll
+                            mViewPagerBanner.stopAutoScroll();
                         }
                     }
-                });
-                mViewPagerBanner.setVisibility(View.VISIBLE);
-            }
+                }
+            });
+            // Se visualiza el viewPagerBanner
+            mViewPagerBanner.setVisibility(View.VISIBLE);
         }
+        /*  endregion */
 
+        mRecyclerViewSection=(RecyclerView) view.findViewById(R.id.recycle_view_index);
+        mRecyclerViewSection.setHasFixedSize(true);
 
-        rvSection=(RecyclerView) view.findViewById(R.id.rvSection);
-        rvSection.setHasFixedSize(true);
-
-        sections=Section.getAllSections();
+        sections = Section.getAllSections();
 
         if(sections!=null) {
             sectionAdapter =new SectionAdapter(sections);
-            rvSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-            rvSection.setAdapter(sectionAdapter);
+            mRecyclerViewSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mRecyclerViewSection.setAdapter(sectionAdapter);
         }
         return view;
-
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Se reinicializa el autoScroll
+        mViewPagerBanner.reinitializeAutoScroll();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mViewPagerBanner.stopAutoScroll();
+    }
 }

@@ -32,7 +32,7 @@ public class APIBanner implements ICrud {
      * Url de los resultados que debe arrojar cuando se da click en el banner
      */
     @Nullable
-    private String urlResultado;
+    private String urlRequest;
     private String fecha;
     /**
      * Especifica si el banner está activo o no
@@ -75,13 +75,14 @@ public class APIBanner implements ICrud {
         this.idSaldoInventario = idSaldoInventario;
     }
 
+
     @Nullable
-    public String getUrlResultado() {
-        return urlResultado;
+    public String getUrlRequest() {
+        return urlRequest;
     }
 
-    public void setUrlResultado(@Nullable String urlResultado) {
-        this.urlResultado = urlResultado;
+    public void setUrlRequest(@Nullable String urlRequest) {
+        this.urlRequest = urlRequest;
     }
 
     public String getFecha() {
@@ -107,7 +108,7 @@ public class APIBanner implements ICrud {
         contentValues.put(APIBannerModel.URL_IMAGEN,urlImagen);
         contentValues.put(APIBannerModel.IS_CLICKABLE,isClickable);
         contentValues.put(APIBannerModel.ID_SALDO_INVENTARIO,idSaldoInventario);
-        contentValues.put(APIBannerModel.URL_RESULTADO,urlResultado);
+        contentValues.put(APIBannerModel.URL_REQUEST,urlRequest);
         contentValues.put(APIBannerModel.FERCHA,fecha);
         contentValues.put(APIBannerModel.ESTADO,estado);
         return (dbManager.Insert(APIBannerModel.NAME_TABLE,contentValues));
@@ -119,7 +120,7 @@ public class APIBanner implements ICrud {
         contentValues.put(APIBannerModel.URL_IMAGEN,urlImagen);
         contentValues.put(APIBannerModel.IS_CLICKABLE,isClickable);
         contentValues.put(APIBannerModel.ID_SALDO_INVENTARIO,idSaldoInventario);
-        contentValues.put(APIBannerModel.URL_RESULTADO,urlResultado);
+        contentValues.put(APIBannerModel.URL_REQUEST,urlRequest);
         contentValues.put(APIBannerModel.FERCHA,fecha);
         contentValues.put(APIBannerModel.ESTADO,estado);
         return (dbManager.Update(APIBannerModel.NAME_TABLE,contentValues, APIBannerModel.PK,idApiBanner));
@@ -146,13 +147,30 @@ public class APIBanner implements ICrud {
     }
 
     /**
-     * Obtiene todos los APIBanner
+     * Obtiene todos los APIBanner filtrado por estado
      * @param estado estado de los banner
      * @return listado de ApiBanner
      */
-    public List<APIBanner> getAllApiBanner(boolean estado){
+    public List<APIBanner> getAll(boolean estado){
         List<APIBanner> listadoApiBanner = new ArrayList<>();
         Cursor c = dbManager.Select(APIBannerModel.NAME_TABLE,new String[] {"*"},APIBannerModel.ESTADO + "=?",new String[] {String.valueOf(estado?1:0)});
+        if (c.moveToFirst()){
+            do{
+                APIBanner apiBanner = new APIBanner();
+                apiBanner.serialize(c);
+                listadoApiBanner.add(apiBanner);
+            }while (c.moveToNext());
+        }
+        return listadoApiBanner;
+    }
+
+    /**
+     * Obtiene todos los APIBanner
+     * @return listado de ApiBanner
+     */
+    public List<APIBanner> getAll(){
+        List<APIBanner> listadoApiBanner = new ArrayList<>();
+        Cursor c = dbManager.SelectAll(APIBannerModel.NAME_TABLE);
         if (c.moveToFirst()){
             do{
                 APIBanner apiBanner = new APIBanner();
@@ -168,7 +186,7 @@ public class APIBanner implements ICrud {
         this.urlImagen = cursor.getString(cursor.getColumnIndex(APIBannerModel.URL_IMAGEN));
         this.isClickable = cursor.getInt(cursor.getColumnIndex(APIBannerModel.IS_CLICKABLE))==1;
         this.idSaldoInventario = cursor.getInt(cursor.getColumnIndex(APIBannerModel.ID_SALDO_INVENTARIO));
-        this.urlResultado = cursor.getString(cursor.getColumnIndex(APIBannerModel.URL_RESULTADO));
+        this.urlRequest = cursor.getString(cursor.getColumnIndex(APIBannerModel.URL_REQUEST));
         this.fecha = cursor.getString(cursor.getColumnIndex(APIBannerModel.FERCHA));
         this.estado = cursor.getInt(cursor.getColumnIndex(APIBannerModel.ESTADO))==1;
     }

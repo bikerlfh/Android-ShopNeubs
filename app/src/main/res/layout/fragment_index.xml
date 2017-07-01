@@ -15,7 +15,7 @@
             android:orientation="vertical" >
 
             <co.com.neubs.shopneubs.controls.ViewPagerNeubs
-                android:id="@+id/adpaterViewFlipper_banner"
+                android:id="@+id/viewpager_banner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
@@ -29,7 +29,7 @@
                 android:visibility="gone"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvSection"
+                android:id="@+id/recycle_view_index"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/margin_boton">

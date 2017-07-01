@@ -300,15 +300,18 @@ public class Synchronize {
             final APIBanner[] listApiBanner = APIRest.serializeObjectFromJson(response, APIBanner[].class);
             if (listApiBanner != null && listApiBanner.length > 0) {
                 for (APIBanner banner : listApiBanner) {
-                    // Si el banner no existe y está activo (estado true)
+                    // Si el banner no existe y está activo
                     if (!banner.exists()) {
                         if (banner.getEstado()) {
                             banner.save();
                             numSincronizacion++;
                         }
                     }
+                    // Si el banner existe pero esta con estado false
+                    // se elimina de la base de datos
                     else if(!banner.getEstado()){
-                        banner.update();
+                        banner.delete();
+                        numSincronizacion++;
                     }
                 }
             }

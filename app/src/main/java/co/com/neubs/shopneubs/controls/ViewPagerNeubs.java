@@ -284,9 +284,16 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
 
     // region AUTOSCROLL
     /**
+     * Obtiene si el control esta con la funcionalidad de autoScroll
+     * @return true si tiene activado el autoScroll de lo contrario false
+     */
+    private boolean isAutoScroll(){
+        return autoScroll;
+    }
+    /**
      * Inicializa el autoScroll
      */
-    private void initAutoScroll(){
+    public void initAutoScroll(){
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTaskAutoScroll(),FLIP_INTERVAL,FLIP_INTERVAL);
     }
@@ -294,9 +301,19 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
     /**
      * cancela el timer y lo vuelve a iniciar
      */
-    private void reinitializeAutoScroll(){
-        timer.cancel();
-        initAutoScroll();
+    public void reinitializeAutoScroll(){
+        if (timer != null) {
+            timer.cancel();
+            initAutoScroll();
+        }
+    }
+
+    /**
+     * Detiene el AutoScroll
+     */
+    public void stopAutoScroll(){
+        if (timer != null)
+            timer.cancel();
     }
 
     /**

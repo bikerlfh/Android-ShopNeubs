@@ -35,12 +35,17 @@ import co.com.neubs.shopneubs.interfaces.IServerCallback;
 public class ProductosCategoriaFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String PARAM_CODIGO_CATEGORIA = "CODIGO_CATEGORIA";
-    private static final String PARAM_CODIGO_MARCA = "CODIGO_MARCA";
+    public static final String PARAM_CODIGO_CATEGORIA = "CODIGO_CATEGORIA";
+    public static final String PARAM_CODIGO_MARCA = "CODIGO_MARCA";
+    public static final String PARAM_URL_REQUEST = "URL_REQUEST";
 
     // TODO: Rename and change types of parameters
     private String codigoCategoria;
     private String codigoMarca;
+    /**
+     * Almacena la url al cual se desea se realize la petición a la API
+     */
+    private String urlRequest;
 
 
     private RecyclerView recyclerView;
@@ -74,10 +79,10 @@ public class ProductosCategoriaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            codigoCategoria = getArguments().getString(PARAM_CODIGO_CATEGORIA);
-            codigoMarca = getArguments().getString(PARAM_CODIGO_MARCA);
+            codigoCategoria = getArguments().getString(PARAM_CODIGO_CATEGORIA,null);
+            codigoMarca = getArguments().getString(PARAM_CODIGO_MARCA,null);
+            urlRequest = getArguments().getString(PARAM_URL_REQUEST,null);
         }
-
     }
 
 
@@ -106,8 +111,11 @@ public class ProductosCategoriaFragment extends Fragment {
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.progress_bar);
         spinner.setVisibility(View.VISIBLE);
 
-        String url = "?categoria=" + codigoCategoria;
-        APIRest.Async.get(url, new IServerCallback() {
+        // Si la urlRequest es nula quiere decir que fue invocado el fragment desde una peticion de categoria
+        if (urlRequest == null){
+            urlRequest = "?categoria=" + codigoCategoria;
+        }
+        APIRest.Async.get(urlRequest, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
                 final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
@@ -118,7 +126,6 @@ public class ProductosCategoriaFragment extends Fragment {
                     public void onScrolledToBottom() {
                         super.onScrolledToBottom();
                         productoAdapter.getNextPage(view);
-
                     }
                 });
                 //snackbar.dismiss();

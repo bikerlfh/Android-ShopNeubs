@@ -12,7 +12,7 @@ public class APIBannerModel {
     public static final String URL_IMAGEN = "urlImagen";
     public static final String IS_CLICKABLE = "isClickable";
     public static final String ID_SALDO_INVENTARIO = "idSaldoInventario";
-    public static final String URL_RESULTADO = "urlResultado";
+    public static final String URL_REQUEST = "urlRequest";
     public static final String FERCHA = "fecha";
     public static final String ESTADO = "estado";
 
@@ -22,7 +22,7 @@ public class APIBannerModel {
             URL_IMAGEN + " text not null,"+
             IS_CLICKABLE + " integer not null,"+
             ID_SALDO_INVENTARIO + " integer null," +
-            URL_RESULTADO + " text null,"+
+            URL_REQUEST + " text null,"+
             FERCHA + " text not null," +
             ESTADO + " integer not null)";
 }

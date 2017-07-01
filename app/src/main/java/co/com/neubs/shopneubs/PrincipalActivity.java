@@ -30,7 +30,7 @@ import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ProductosCategoriaFragment.OnFragmentInteractionListener,OfertasFragment.OnFragmentInteractionListener {
 
-    private final String TAG_FRAGMENT = "FRAGMENT";
+    public static final String TAG_FRAGMENT = "FRAGMENT";
 
     private String codigoCategoria = null;
     private TextView lblHeaderWelcome;
@@ -256,7 +256,7 @@ public class PrincipalActivity extends AppCompatActivity
         if (codigoCategoria != null && !codigoCategoria.equals(codigoCategoriaAnterior)) {
             // Se crea el argumento CODIGO_CATEGORIA para pasarle al fragment
             Bundle args = new Bundle();
-            args.putString("CODIGO_CATEGORIA", codigoCategoria);
+            args.putString(ProductosCategoriaFragment.PARAM_CODIGO_CATEGORIA, codigoCategoria);
 
             fragment = new ProductosCategoriaFragment();
             fragment.setArguments(args);
