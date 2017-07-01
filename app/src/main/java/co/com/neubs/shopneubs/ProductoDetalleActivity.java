@@ -95,90 +95,87 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         final float precioVentaUnitario = intentExtra.getExtras().getFloat(PARAM_PRECIO_VENTA_UNITARIO,0);
         final boolean estado = intentExtra.getExtras().getBoolean(PARAM_ESTADO,false);
 
-        if (estado){
-            mBtnAgregarItemCar.setEnabled(true);
-        }else{
-            mBtnAgregarItemCar.setText("SIN STOCK");
-        }
-
-        mCollapsingToolbarLayout.setTitle(nomProducto);
-        mNombreProducto.setText(nomProducto);
-
         // Se asignan los precios
         setPrecio(precioVentaUnitario,precioOferta);
 
         if (idSaldoInventario == 0){
-            finish();
+            finishAfterTransition();
         }
-        /**
-         * Se consulta el saldo inventario en la API
-         * y se llenan los campos
-         */
-        APIRest.Async.get(APIRest.URL_PRODUCTO_DETALLE + String.valueOf(idSaldoInventario), new IServerCallback() {
-            @Override
-            public void onSuccess(String json) {
-                saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
-                if (saldoInventario != null){
-                    final Producto producto = saldoInventario.getProducto();
+        else {
 
-                    mMarcaProducto.setText(producto.getMarca().getDescripcion());
+            mCollapsingToolbarLayout.setTitle(nomProducto);
+            mNombreProducto.setText(nomProducto);
+            /**
+             * Se consulta el saldo inventario en la API
+             * y se llenan los campos
+             */
+            APIRest.Async.get(APIRest.URL_PRODUCTO_DETALLE + String.valueOf(idSaldoInventario), new IServerCallback() {
+                @Override
+                public void onSuccess(String json) {
+                    saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
+                    if (saldoInventario != null) {
+                        final Producto producto = saldoInventario.getProducto();
 
-                    mDescripcionProducto.setText(producto.getDescripcion());
-                    mEspecificacionProducto.setText(producto.getEspecificacion());
-                    // Si no hay descripcion se visualiza esconden los campos
-                    if (producto.getDescripcion().isEmpty()) {
-                        mTitleDescripcion.setVisibility(View.GONE);
-                        mDescripcionProducto.setVisibility(View.GONE);
-                    }
+                        mMarcaProducto.setText(producto.getMarca().getDescripcion());
 
-                    // Si no hay especificación se visualiza esconden los campos
-                    if (producto.getEspecificacion().isEmpty()){
-                        mTitleEspecificacion.setVisibility(View.GONE);
-                        mEspecificacionProducto.setVisibility(View.GONE);
-                    }
+                        mDescripcionProducto.setText(producto.getDescripcion());
+                        mEspecificacionProducto.setText(producto.getEspecificacion());
+                        // Si no hay descripcion se visualiza esconden los campos
+                        if (producto.getDescripcion().isEmpty()) {
+                            mTitleDescripcion.setVisibility(View.GONE);
+                            mDescripcionProducto.setVisibility(View.GONE);
+                        }
 
-                    // Se validan los precios que se reciben del servidor con los que se pasaron a la actividad
-                    if (precioVentaUnitario != saldoInventario.getPrecioVentaUnitario() ||
-                        precioOferta != saldoInventario.getPrecioOferta()){
-                        setPrecio(saldoInventario.getPrecioVentaUnitario(),saldoInventario.getPrecioOferta());
-                    }
-                    // Se cambia el estado
-                    if (saldoInventario.getEstado())
-                        mBtnAgregarItemCar.setEnabled(true);
+                        // Si no hay especificación se visualiza esconden los campos
+                        if (producto.getEspecificacion().isEmpty()) {
+                            mTitleEspecificacion.setVisibility(View.GONE);
+                            mEspecificacionProducto.setVisibility(View.GONE);
+                        }
 
-                    List<String> images = new ArrayList<>();
-                    for (Imagen img: producto.getImagenes()) {
-                        images.add(img.getUrl());
-                    }
-                    mViewPager.showGalleryImages(images);
-                }
-            }
+                        // Se validan los precios que se reciben del servidor con los que se pasaron a la actividad
+                        if (precioVentaUnitario != saldoInventario.getPrecioVentaUnitario() ||
+                                precioOferta != saldoInventario.getPrecioOferta()) {
+                            setPrecio(saldoInventario.getPrecioVentaUnitario(), saldoInventario.getPrecioOferta());
+                        }
+                        // Se cambia el estado boton del carro
+                        if (saldoInventario.getEstado())
+                            mBtnAgregarItemCar.setEnabled(true);
+                        else
+                            mBtnAgregarItemCar.setText("SIN STOCK");
 
-            @Override
-            public void onError(String message_error, APIValidations apiValidations) {
-                if(apiValidations.notFound()){
-                    Toast.makeText(ProductoDetalleActivity.this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();
-                }
-                else
-                    Toast.makeText(ProductoDetalleActivity.this,message_error,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                int scrimVisible = mCollapsingToolbarLayout.getScrimVisibleHeightTrigger();
-                if (iconShopCart != null) {
-                    if ((verticalOffset*-1) > scrimVisible) {
-                        iconShopCart.setColorIcon(android.R.color.white);
-                    } else {
-                        iconShopCart.setColorIcon(R.color.colorPrimaryLight);
-
+                        List<String> images = new ArrayList<>();
+                        for (Imagen img : producto.getImagenes()) {
+                            images.add(img.getUrl());
+                        }
+                        mViewPager.showGalleryImages(images, null);
                     }
                 }
-            }
-        });
+
+                @Override
+                public void onError(String message_error, APIValidations apiValidations) {
+                    if (apiValidations.notFound()) {
+                        Toast.makeText(ProductoDetalleActivity.this, getString(R.string.error_default), Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(ProductoDetalleActivity.this, message_error, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // Cambia el color del icono del carro cuando se realiza el scroll
+            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    int scrimVisible = mCollapsingToolbarLayout.getScrimVisibleHeightTrigger();
+                    if (iconShopCart != null) {
+                        if ((verticalOffset * -1) > scrimVisible) {
+                            iconShopCart.setColorIcon(android.R.color.white);
+                        } else {
+                            iconShopCart.setColorIcon(R.color.colorPrimaryLight);
+
+                        }
+                    }
+                }
+            });
+        }
     }
 
     /**

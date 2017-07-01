@@ -1,6 +1,8 @@
 package co.com.neubs.shopneubs.classes;
 
 import android.content.Context;
+
+import co.com.neubs.shopneubs.classes.models.APIBanner;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.APITabla;
 import co.com.neubs.shopneubs.classes.models.Categoria;
@@ -25,6 +27,7 @@ public class Synchronize {
     private final String URL_PAIS = "sync/pais/";
     private final String URL_DEPARTAMENTO = "sync/departamento/";
     private final String URL_MUNICIPIO = "sync/municipio/";
+    private final String URL_BANNER = "sync/banner/";
 
 
     public String message_error;
@@ -53,6 +56,8 @@ public class Synchronize {
             totalRowSync += SynchronizeTipoDocumento();
             // Se sincroniza los paises
             totalRowSync += SynchronizePais();
+            // Se sincroniza el ApiBanner
+            totalRowSync += SynchronizeAPIBanner();
         }
         catch (Exception ex){
             message_error = ex.getMessage();
@@ -124,7 +129,7 @@ public class Synchronize {
                     if (!apiSincronizacion.exists()) {
                         apiSincronizacion.save();
                         numSincronizacion++;
-
+                        // Sincroniza la tabla que se guarda
                         if (withTablas) {
                             SynchronizeAPITabla(apiSincronizacion.getTabla());
                         }
@@ -285,6 +290,35 @@ public class Synchronize {
     }
 
     /**
+     * Realiza la sincronización del ApiBanner
+     * @return numero de sincronizaciones guardadas
+     */
+    private int SynchronizeAPIBanner(){
+        int numSincronizacion = 0;
+        final String response = APIRest.Sync.get(URL_BANNER);
+        if (response != null && APIRest.Sync.ok()) {
+            final APIBanner[] listApiBanner = APIRest.serializeObjectFromJson(response, APIBanner[].class);
+            if (listApiBanner != null && listApiBanner.length > 0) {
+                for (APIBanner banner : listApiBanner) {
+                    // Si el banner no existe y está activo (estado true)
+                    if (!banner.exists()) {
+                        if (banner.getEstado()) {
+                            banner.save();
+                            numSincronizacion++;
+                        }
+                    }
+                    else if(!banner.getEstado()){
+                        banner.update();
+                    }
+                }
+            }
+        }
+        else
+            numSincronizacion = -1;
+        return numSincronizacion;
+    }
+
+    /**
      * Sincroniza una tabla en especifico. Si la tabla es null, realiza una sincronización inicial
      * @param tabla APITabla a sincronizar
      * @return numero de sincronizaciones guardadas
@@ -305,16 +339,16 @@ public class Synchronize {
                 case "03":
                     numSincronizacion = SynchronizeMarcas();
                     break;
-                // Productos
+                // ApiBanner
                 case "04":
+                    numSincronizacion = SynchronizeAPIBanner();
                     break;
             }
         }
-        else{
+        else {
             // Se sincroniza todas las tablas
             numSincronizacion = InitialSynchronize();
         }
         return numSincronizacion;
     }
-
 }

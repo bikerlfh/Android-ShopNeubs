@@ -8,6 +8,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Dimension;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.Px;
@@ -18,8 +19,9 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -30,20 +32,36 @@ import co.com.neubs.shopneubs.R;
  * Created by bikerlfh on 6/27/17.
  * Copyright 2017 Neubs SAS
  *
- * Alto del viewPager
+ * <p>Control que contiene un ViewPager con indicadores de paginas.
+ * También contiene la funcionalidad de cargarlo con un listado de imagenes (URL o idResource) para hacer
+ * sin necesidad de que el usuario tenga que crear un PageAdapter.</p>
+ * <p>Tiene la funcionalidad de Scroll Automatico</p>
+ *
+ * <p> Atributtos
+ * <ul>
+ * <li>"viewPagerHeight" Alto del viewPager
  * <attr name="viewPagerHeight" format="dimension"/>
- * Radio de los indicadores
+ * </li>
+ * <li>"indicatorRadius" Radio de los indicadores
  * <attr name="indicatorRadius" format="dimension"/>
- * padding de los indicadores
+ * </li>
+ * <li>"indicatorPadding" padding de los indicadores
  * <attr name="indicatorPadding" format="dimension"/>
- * color del indicador seleccionado
+ * </li>
+ * <li>"selectedIndicatorColor" color del indicador seleccionado
  * <attr name="selectedIndicatorColor" format="color" />
- * color del indicador que no esta seleccionado
+ * </li>
+ * <li>"defaultIndicatorColor" color del indicador que no esta seleccionado
  * <attr name="defaultIndicatorColor" format="color" />
- * Indica si se desea que el viewPager haga scroll automatico simulando un AdapterViewFlipper
+ * </li>
+ * <li>"autoScroll" Indica si se desea que el viewPager haga scroll automatico simulando un AdapterViewFlipper
  * <attr name="autoScroll" format="boolean"/>
- * Intervalo en milisegundos para realizar el Scroll automatico
+ * </li>
+ * <li>"flipInterval"  Intervalo en milisegundos para realizar el Scroll automatico
  * <attr name="flipInterval" format="integer"/>
+ * </li>
+ *</ul>
+ * </p>
  */
 
 public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageChangeListener {
@@ -51,15 +69,12 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
     // region viewPager
     @Nullable
     private ViewPager mViewPager;
-
     @Dimension
     private int DEFAULT_VIEW_PAGER_HEIGHT_DPI = 200;
-
     /**
      * Ultima posición seleccionada
      */
     private int lastPositionSelected;
-
     // AutoScroll
     /**
      * indica si se realiza el auto scroll o no
@@ -73,17 +88,20 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
      * Intervalo para realizar el autoscroll
      */
     private int FLIP_INTERVAL = 2000;
-
-
     /**
      * representa la posicion seleccionada
      */
     //endregion
 
     // region LayoutDots
+    /**
+     *  LinearLayout que contiene los Indicadores
+     */
     private LinearLayout mLinealLayoutDots;
+    /**
+     * Listado de Indicadores
+     */
     private List<IndicatorView> listIndicatorView;
-
     /**
      * padding por defecto del indicador
      */
@@ -110,6 +128,11 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
     @ColorInt
     private int selectedIndicatorColor;
     //endregion
+
+    /**
+     * Adaptador para la funcionalidad de Gallery
+     */
+    private GalleryAdapter galleryAdapter;
 
     // region Constructor
     public ViewPagerNeubs(Context context) {
@@ -181,35 +204,36 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
         createDots();
     }
 
-
-    /**
-     * Carga en el ViewPager imagenes apartir de urls.
-     * Cuando se invoca este método, se crea el adaptador (ViewPagerAdapter) de forma autormatica
-     * no se debe llamar despues el setAdapter
-     * @param listUrlImages listado de urls de imagenes
-     */
-    public void showGalleryImages(List<String> listUrlImages){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getContext(),listUrlImages,null);
-        this.setAdapter(adapter);
-    }
-
-    /**
-     * Carga en el ViewPager imagenes apartir de los idResource
-     * Cuando se invoca este método, se crea el adaptador (ViewPagerAdapter) de forma autormatica
-     * no se debe llamar despues el setAdapter
-     * @param listResourceImages listado de idResources de las imagenes
-     */
-    public void showGalleryImagesResources(List<Integer> listResourceImages){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getContext(),null,listResourceImages);
-        this.setAdapter(adapter);
-    }
-
     /**
      * Return the number of views available.
      */
     public int getCount(){
         return mViewPager.getAdapter().getCount();
     }
+
+    //region Funcionalidad de Galeria
+    /**
+     * Carga en el ViewPager imagenes apartir de urls.
+     * Cuando se invoca este método, se crea el adaptador (GalleryAdapter) de forma autormatica
+     * @param listUrlImages listado de urls de imagenes
+     * @param onClickListenerImage evento cuando se le da click a la imagen
+     */
+    public void showGalleryImages(@NonNull List<String> listUrlImages,@Nullable OnClickListenerImage onClickListenerImage){
+        galleryAdapter = new GalleryAdapter(getContext(),listUrlImages,onClickListenerImage);
+        this.setAdapter(galleryAdapter);
+    }
+
+    /**
+     * Carga en el ViewPager imagenes apartir de los idResource
+     * Cuando se invoca este método, se crea el adaptador (ViewPagerAdapter) de forma autormatica
+     * @param listResourceImages listado de idResources de las imagenes
+     * @param onClickListenerImage evento cuando se le da click a la imagen
+     */
+    public void showGalleryImagesResources(@NonNull List<Integer> listResourceImages,@Nullable OnClickListenerImage onClickListenerImage){
+        galleryAdapter = new GalleryAdapter(getContext(),listResourceImages,onClickListenerImage);
+        this.setAdapter(galleryAdapter);
+    }
+    //endregion
 
     /**
      * Crea los indicadores segun la cantidad de paginas que tenga el adaptador
@@ -236,6 +260,11 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
             initAutoScroll();
     }
 
+    /**
+     * OnClickListener del indicador
+     * @param position
+     * @return
+     */
     private OnClickListener onClickListenerIndicator(final int position){
         return new OnClickListener(){
 
@@ -329,16 +358,14 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
      * IndicatorView extiende de un ImageView
      * representa el Indicador
      */
-    private class IndicatorView extends ImageView{
+    private class IndicatorView extends android.support.v7.widget.AppCompatImageView{
 
         @Dimension
-        static final int DEFAULT_RADIUS_DIP = 3;
-
+        private static final int DEFAULT_RADIUS_DIP = 3;
         @ColorInt
-        static final int DEFAULT_COLOR = Color.BLACK;
+        private static final int DEFAULT_COLOR = Color.BLACK;
         @ColorInt
-        static final int DEFAULT_SELECTED_COLOR = Color.RED;
-
+        private static final int DEFAULT_SELECTED_COLOR = Color.RED;
         @NonNull
         private final ShapeDrawable dot = new ShapeDrawable(new OvalShape());
 
@@ -358,11 +385,6 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
         public IndicatorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
             init(context,attrs,defStyleAttr,0);
-        }
-
-        public IndicatorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-            super(context, attrs, defStyleAttr, defStyleRes);
-            init(context,attrs,defStyleAttr,defStyleRes);
         }
 
         private void init(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -399,26 +421,22 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
     /**
      * Adaptador para visualizar imagenes ya sea por URL o Resource
      */
-    private class ViewPagerAdapter extends PagerAdapter {
+    private class GalleryAdapter <T> extends PagerAdapter {
 
         private Context context;
-        private List<String> urlImages;
-        private List<Integer> resourceImages;
+        private List<T> listImagenes;
+        private OnClickListenerImage onClickListenerImage;
 
 
-
-        public ViewPagerAdapter(Context context, List<String> urlImages, List<Integer> resourceImages) {
+        public  GalleryAdapter(Context context, List<T> imagenes,@Nullable OnClickListenerImage onClickListenerImage) {
             this.context = context;
-            this.urlImages = urlImages;
-            this.resourceImages = resourceImages;
+            this.listImagenes = imagenes;
+            this.onClickListenerImage = onClickListenerImage;
         }
 
         @Override
         public int getCount() {
-            if (urlImages != null)
-                return urlImages.size();
-            return resourceImages.size();
-            //return urlImages != null? urlImages.size() : resourceImages.size();
+            return listImagenes.size();
         }
 
         @Override
@@ -427,13 +445,22 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(final ViewGroup container, final int position) {
             ImageLoaderView image = new ImageLoaderView(context);
 
-            if (urlImages != null)
-                image.setImageURL(urlImages.get(position));
+            if (listImagenes.get(0).getClass() == String.class)
+                image.setImageURL(String.valueOf(listImagenes.get(position)));
             else
-                image.setImagenResource(resourceImages.get(position));
+                image.setImagenResource(Integer.valueOf(listImagenes.get(position).toString()));
+
+            if (onClickListenerImage!=null) {
+                image.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickListenerImage.onClick(v, position);
+                    }
+                });
+            }
             container.addView(image);
             return image;
         }
@@ -442,6 +469,14 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+    }
+
+    /**
+     * Interfaz el cual es invocado cuando una imagen es clickeada
+     * Solo se usa cuando la funcionalidad de Gallery esta activa
+     */
+    public interface OnClickListenerImage{
+        void onClick(View v,int position);
     }
 }
 

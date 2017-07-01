@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import co.com.neubs.shopneubs.models.APISincronizacionModel;
 import co.com.neubs.shopneubs.models.APITablaModel;
+import co.com.neubs.shopneubs.models.APIBannerModel;
 import co.com.neubs.shopneubs.models.CategoriaModel;
 import co.com.neubs.shopneubs.models.DepartamentoModel;
 import co.com.neubs.shopneubs.models.ItemCarModel;
@@ -86,8 +87,16 @@ public class DbManager
         return (db.update(table, values, whereClause, whereArgs)>0);
     }
 
+    public boolean Update(String table, ContentValues values, String columnPk, int pk){
+        return (db.update(table, values, columnPk + "=?", new String[] {String.valueOf(pk)})>0);
+    }
+
     public boolean Delete(String table, String whereClause, String[] whereArgs){
         return (db.delete(table, whereClause, whereArgs) > 0);
+    }
+
+    public boolean Delete(String table, String columnPk, int pk){
+        return (db.delete(table, columnPk + "=?", new String[] {String.valueOf(pk)}) > 0);
     }
 
     public Cursor Select(String table, String[] columns, String selection, String[] selectionArgs,
@@ -114,17 +123,17 @@ public class DbManager
 
     /**
      * Verifica si un registro existe en la base de datos
-     * @param NAME_TABLE Nombre de la tabla
-     * @param COLUMN_PK Nombre de la columna pk
-     * @param pk_value valor del PK
+     * @param nameTable Nombre de la tabla
+     * @param columnPk Nombre de la columna pk
+     * @param pk valor del PK
      * @return
      */
-    public boolean exists(String NAME_TABLE,String COLUMN_PK,int pk_value){
-        Cursor cursor = Select(NAME_TABLE, new String[] { "*" },COLUMN_PK + "=?",new String[] {String.valueOf(pk_value)});
+    public boolean exists(String nameTable,String columnPk,int pk){
+        Cursor cursor = Select(nameTable, new String[] { "*" },columnPk + "=?",new String[] {String.valueOf(pk)});
         return  (cursor.moveToFirst());
     }
-    public boolean exists(String NAME_TABLE,String COLUMN_PK,long pk_value){
-        Cursor cursor = Select(NAME_TABLE, new String[] { "*" },COLUMN_PK + "=?",new String[] {String.valueOf(pk_value)});
+    public boolean exists(String nameTable,String columnPk,long pk){
+        Cursor cursor = Select(nameTable, new String[] { "*" },columnPk + "=?",new String[] {String.valueOf(pk)});
         return  (cursor.moveToFirst());
     }
 
@@ -157,6 +166,7 @@ public class DbManager
             db.execSQL(DepartamentoModel.CREATE_TABLE);
             db.execSQL(MunicipioModel.CREATE_TABLE);
             db.execSQL(SugerenciaBusquedaModel.CREATE_TABLE);
+            db.execSQL(APIBannerModel.CREATE_TABLE);
         }
 
         @Override
