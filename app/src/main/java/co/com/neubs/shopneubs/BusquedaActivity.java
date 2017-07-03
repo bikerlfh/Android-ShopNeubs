@@ -39,6 +39,7 @@ import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.controls.NavigationViewFiltro;
+import co.com.neubs.shopneubs.controls.VistaFiltroPrincipal;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class BusquedaActivity extends AppCompatActivity {
@@ -48,30 +49,26 @@ public class BusquedaActivity extends AppCompatActivity {
 
     private SessionManager sessionManager;
 
-    private ProductoAdapter productoAdapter;
-
     private ProgressBar mProgressBar;
-    private RecyclerView recycleView;
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
     private IconNotificationBadge iconShopCart;
     private SugerenciaBusqueda sugerenciaBusqueda;
+
+    /**
+     * vistaFiltroPrincipal
+     */
+    private VistaFiltroPrincipal vistaFiltroPrincipal;
     private NavigationViewFiltro navigationViewFiltro;
 
     String query;
 
     private DrawerLayout dreawerLayout;
-    RelativeLayout rootViewResults;
     View viewProductoNoEncontrado;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
-
-    //region layout opciones
-    private TextView lblCantidadProductos;
-    private ImageButton btnCambiarVista;
-    private ImageButton btnFiltro;
     //endregion
 
     @Override
@@ -84,17 +81,13 @@ public class BusquedaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sessionManager = SessionManager.getInstance(this);
-        rootViewResults = (RelativeLayout)findViewById(R.id.root_layout_vista_saldo_inventario_filtro);
+
+        vistaFiltroPrincipal = (VistaFiltroPrincipal) findViewById(R.id.vista_filtro_principal);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        recycleView = (RecyclerView) findViewById(R.id.recycle_view_filtro);
         dreawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_busqueda);
         navigationViewFiltro = (NavigationViewFiltro) findViewById(R.id.drawer_filtro);
-
-        lblCantidadProductos = (TextView) findViewById(R.id.lbl_cantidad_productos);
-        btnCambiarVista = (ImageButton) findViewById(R.id.btn_cambiar_vista);
-        btnFiltro = (ImageButton) findViewById(R.id.btn_filtro);
 
         // Se obtienen los parametros y el query
         Intent intentExtra = getIntent();
@@ -105,12 +98,6 @@ public class BusquedaActivity extends AppCompatActivity {
         sugerenciaBusqueda = new SugerenciaBusqueda();
         searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
 
-        recycleView.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,this), true));
-        recycleView.setItemAnimator(new DefaultItemAnimator());
-        recycleView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-
-        recycleView.setLayoutManager(mLayoutManager);
 
         // Se asignan los listener del searchView
         setListenersSearchView();
@@ -118,48 +105,6 @@ public class BusquedaActivity extends AppCompatActivity {
         if (query.length() > 0) {
             searchView.setQuery(query, true);
         }
-
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, dreawerLayout,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-
-        // Set the drawer toggle as the DrawerListener
-        dreawerLayout.addDrawerListener(mDrawerToggle);
-        dreawerLayout.closeDrawer(GravityCompat.END);
-
-        // Se asigna el listenerClick del boton filtro
-        btnFiltro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dreawerLayout.openDrawer(GravityCompat.END);
-                
-            }
-        });
-
-        // Se asigna el listenerClick del boton cambiar vista
-        btnCambiarVista.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     /**
@@ -171,7 +116,7 @@ public class BusquedaActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(final String query) {
 
                 getSupportActionBar().setTitle(query);
-                recycleView.setAdapter(null);
+                vistaFiltroPrincipal.cleanProductos();
 
                 mProgressBar.setVisibility(View.VISIBLE);
                 Map<String, String> parametros = new HashMap<>();
@@ -182,18 +127,9 @@ public class BusquedaActivity extends AppCompatActivity {
                         mProgressBar.setVisibility(View.GONE);
                         final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
                         if (consultaPaginada.getResults().size() > 0) {
-                            lblCantidadProductos.setText(String.valueOf(consultaPaginada.getCount()) + " Resultados");
-                            navigationViewFiltro.setFilterMarca(consultaPaginada.getMarcas());
+                            vistaFiltroPrincipal.showProductos(consultaPaginada,dreawerLayout);
                             visualizarBusquedaSinResultados(false);
-                            productoAdapter = new ProductoAdapter(BusquedaActivity.this, consultaPaginada, R.layout.cardview_producto);
-                            recycleView.setAdapter(productoAdapter);
-                            recycleView.addOnScrollListener(new OnVerticalScrollListener() {
-                                @Override
-                                public void onScrolledToBottom() {
-                                    super.onScrolledToBottom();
-                                    productoAdapter.getNextPage(dreawerLayout);
-                                }
-                            });
+
                         }
                         else{
                             visualizarBusquedaSinResultados(true);
@@ -238,14 +174,14 @@ public class BusquedaActivity extends AppCompatActivity {
     private void visualizarBusquedaSinResultados(boolean visualizar)
     {
         if (visualizar) {
-            recycleView.setVisibility(View.GONE);
+            vistaFiltroPrincipal.setVisibility(View.GONE);
             // Se infla el layout (shop_cart_vacio)
             if (viewProductoNoEncontrado == null) {
                 viewProductoNoEncontrado = getLayoutInflater().inflate(R.layout.producto_no_encontrado, null, false);
                 viewProductoNoEncontrado.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT));
 
                 // Se agrega la vista al rootView
-                rootViewResults.addView(viewProductoNoEncontrado);
+                vistaFiltroPrincipal.addView(viewProductoNoEncontrado);
             }
             TextView lblFiltro = (TextView) viewProductoNoEncontrado.findViewById(R.id.lbl_filtro);
             lblFiltro.setText("\"" + getSupportActionBar().getTitle() + "\"");
@@ -253,7 +189,7 @@ public class BusquedaActivity extends AppCompatActivity {
             viewProductoNoEncontrado.setVisibility(View.VISIBLE);
         }
         else {
-            recycleView.setVisibility(View.VISIBLE);
+            vistaFiltroPrincipal.setVisibility(View.VISIBLE);
             if (viewProductoNoEncontrado != null)
                 viewProductoNoEncontrado.setVisibility(View.GONE);
         }

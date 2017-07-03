@@ -111,5 +111,6 @@
     <string name="title_use_general_terms">Use general terms.</string>
     <string name="title_check_spelling">Check spelling.</string>
     <string name="title_order_by">Order by</string>
+    <string name="msg_productos_encontrados">Productos encontrados</string>
 
 </resources>

@@ -24,6 +24,7 @@ import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.OnVerticalScrollListener;
+import co.com.neubs.shopneubs.controls.VistaFiltroPrincipal;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
@@ -49,9 +50,11 @@ public class ProductosCategoriaFragment extends Fragment {
      */
     private String urlRequest;
 
+    /**
+     * vistaFiltroPrincipal
+     */
+    private VistaFiltroPrincipal vistaFiltroPrincipal;
 
-    private RecyclerView recyclerView;
-    ProductoAdapter productoAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -96,14 +99,7 @@ public class ProductosCategoriaFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_productos_categoria, container, false);
         // Inflate the layout for this fragment
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycle_view_filtro);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
-
-
-        recyclerView.setLayoutManager(mLayoutManager);
+        vistaFiltroPrincipal = (VistaFiltroPrincipal) view.findViewById(R.id.vista_filtro_principal);
 
         // se visualiza el spinner de loading
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.progress_bar);
@@ -120,17 +116,11 @@ public class ProductosCategoriaFragment extends Fragment {
         APIRest.Async.get(urlRequest, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
-                final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
-                productoAdapter = new ProductoAdapter(getActivity(),consultaPaginada,R.layout.cardview_producto);
-                recyclerView.setAdapter(productoAdapter);
-                recyclerView.addOnScrollListener(new OnVerticalScrollListener(){
-                    @Override
-                    public void onScrolledToBottom() {
-                        super.onScrolledToBottom();
-                        productoAdapter.getNextPage(view);
-                    }
-                });
                 spinner.setVisibility(View.GONE);
+
+                final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
+                // Se visualizan los productos en el recycleView de la vistaFiltroPrincipal
+                vistaFiltroPrincipal.showProductos(consultaPaginada);
             }
 
             @Override

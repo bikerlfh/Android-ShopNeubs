@@ -4,5 +4,9 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProductosCategoriaFragment">
 
-    <include layout="@layout/vista_saldo_inventario_filtro"/>
+    <co.com.neubs.shopneubs.controls.VistaFiltroPrincipal
+        android:id="@+id/vista_filtro_principal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </FrameLayout>
