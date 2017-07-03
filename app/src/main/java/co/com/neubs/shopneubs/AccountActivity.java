@@ -194,9 +194,6 @@ public class AccountActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
 
-        // Se esconde el itemMenu filtro, ya que no es necesario
-        menu.findItem(R.id.action_filtro).setVisible(false);
-
         final MenuItem itemMenuCart = menu.findItem(R.id.action_cart);
         iconShopCart = (IconNotificationBadge)itemMenuCart.getActionView();
 

@@ -207,8 +207,6 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_principal_toolbar, menu);
 
-        menu.findItem(R.id.action_filtro).setVisible(false);
-
         menu.findItem(R.id.action_search).setVisible(false);
 
         final MenuItem itemMenuCart = menu.findItem(R.id.action_cart);

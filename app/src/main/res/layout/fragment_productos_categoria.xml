@@ -4,14 +4,5 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProductosCategoriaFragment">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/myRecycleView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:background="@color/colorBackground"/>
-
-    <include layout="@layout/progress_bar" />
+    <include layout="@layout/vista_saldo_inventario_filtro"/>
 </FrameLayout>

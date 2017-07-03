@@ -84,11 +84,11 @@ public class BusquedaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sessionManager = SessionManager.getInstance(this);
-        rootViewResults = (RelativeLayout)findViewById(R.id.root_layout_resultados_busqueda);
+        rootViewResults = (RelativeLayout)findViewById(R.id.root_layout_vista_saldo_inventario_filtro);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        recycleView = (RecyclerView) findViewById(R.id.recycle_view_busqueda);
+        recycleView = (RecyclerView) findViewById(R.id.recycle_view_filtro);
         dreawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_busqueda);
         navigationViewFiltro = (NavigationViewFiltro) findViewById(R.id.drawer_filtro);
 
@@ -287,9 +287,6 @@ public class BusquedaActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_cart:
                 intent = new Intent(BusquedaActivity.this,ShopCarActivity.class);
-                break;
-            case R.id.action_filtro:
-                intent = new Intent(BusquedaActivity.this,FiltroActivity.class);
                 break;
         }
         if (intent != null){

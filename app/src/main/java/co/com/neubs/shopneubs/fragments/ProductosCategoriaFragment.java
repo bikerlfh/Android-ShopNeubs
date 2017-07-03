@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.adapters.ProductoAdapter;
@@ -95,11 +96,12 @@ public class ProductosCategoriaFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_productos_categoria, container, false);
         // Inflate the layout for this fragment
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.myRecycleView);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recycle_view_filtro);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+
 
         recyclerView.setLayoutManager(mLayoutManager);
 
