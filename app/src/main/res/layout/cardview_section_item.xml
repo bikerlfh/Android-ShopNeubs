@@ -14,71 +14,71 @@
 
 
 
-    <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <co.com.neubs.shopneubs.controls.ImageLoaderView
-            android:id="@+id/img_producto"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_img_producto_cardview_section_item"
-            android:layout_weight="1"
-            android:scaleType="fitXY" />
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/lbl_nombre_producto_card"
+            <co.com.neubs.shopneubs.controls.ImageLoaderView
+                android:id="@+id/img_producto"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/margin_img_producto_cardview_section_item"
                 android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical|center_horizontal"
-                android:maxLines="2"
-                android:paddingEnd="@dimen/padding_start_end_lbl_nombre_producto_cardview_section_item"
-                android:paddingStart="@dimen/padding_start_end_lbl_nombre_producto_cardview_section_item"
-                android:text="TextView"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/title_producto_card" />
+                android:scaleType="fitXY" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/lbl_precio_producto_card"
+                    android:id="@+id/lbl_nombre_producto_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:maxLines="2"
+                    android:paddingEnd="@dimen/padding_start_end_lbl_nombre_producto_cardview_section_item"
+                    android:paddingStart="@dimen/padding_start_end_lbl_nombre_producto_cardview_section_item"
+                    android:text="TextView"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/title_producto_card" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_section_item"
-                    android:paddingEnd="@dimen/padding_end_lbl_precio_producto_card_cardview_section_item"
-                    android:text="TextView"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/colorPrecio"
-                    android:textSize="@dimen/precio_producto_card" />
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
-                <TextView
-                    android:id="@+id/lbl_precio_anterior_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_section_item"
-                    android:text="TextView"
-                    android:textSize="@dimen/precio_anterior_producto_card" />
+                    <TextView
+                        android:id="@+id/lbl_precio_producto_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_section_item"
+                        android:paddingEnd="@dimen/padding_end_lbl_precio_producto_card_cardview_section_item"
+                        android:text="TextView"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/colorPrecio"
+                        android:textSize="@dimen/precio_producto_card" />
+
+                    <TextView
+                        android:id="@+id/lbl_precio_anterior_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_section_item"
+                        android:text="TextView"
+                        android:textSize="@dimen/precio_anterior_producto_card" />
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
     </RelativeLayout>
 
     <TextView

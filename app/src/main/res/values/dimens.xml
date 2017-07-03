@@ -185,16 +185,16 @@
     <dimen name="margin_bottom_start_lbl_costo_total_cardview_pedido">8dp</dimen>
     <dimen name="margin_end_lbl_costo_total_cardview_pedido">16dp</dimen>
 
+    <!-- margin-padding activity_pedido_detalle   -->
+    <dimen name="padding_bottom_activity_pedido_detalle">6dp</dimen>
+    <dimen name="padding_bootom_lbl_pedido_detalle">6dp</dimen>
+    <dimen name="padding_end_start_lbl_pedido_detalle">7dp</dimen>
+    <dimen name="padding_top_lbl_pedido_detalle">10dp</dimen>
+    <dimen name="padding_top_lbl_numero_productos_pedido_detalle">6dp</dimen>
+    <dimen name="padding_bottom_lbl_costo_total_detalle_producto">10dp</dimen>
 
 
 
     <dimen name="margin_boton">10dp</dimen>
-    <dimen name="padding_Top">6dp</dimen>
-    <dimen name="padding_Boton">6dp</dimen>
-    <dimen name="padding_End">7dp</dimen>
-    <dimen name="padding_Start">7dp</dimen>
-
-    <dimen name="padding_title">7dp</dimen>
-    <dimen name="margin_top_title">5dp</dimen>
 
 </resources>
