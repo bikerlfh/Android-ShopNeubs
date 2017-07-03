@@ -193,7 +193,11 @@
     <dimen name="padding_top_lbl_numero_productos_pedido_detalle">6dp</dimen>
     <dimen name="padding_bottom_lbl_costo_total_detalle_producto">10dp</dimen>
 
-
+    <!-- margin-padding cardview_marca_filtro -->
+    <dimen name="margin_cardview_marca_filtro">5dp</dimen>
+    <dimen name="margin_top_img_marca_cardview_marca_filtro">9dp</dimen>
+    <dimen name="margin_top_lbl_marca_cardview_marca_filtro">16dp</dimen>
+    <dimen name="padding_realtiveLayout_cardview_marca_filtro">7dp</dimen>
 
     <dimen name="margin_boton">10dp</dimen>
 
