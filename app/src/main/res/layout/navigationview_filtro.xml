@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_filtro"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:fitsSystemWindows="true"
+    app:elevation="16dp"
+    app:itemTextColor="@color/menu_text_color"
+    app:itemIconTint="@color/menu_text_color">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
+
+        <TextView
+            android:id="@+id/lbl_title_filtro"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="@string/filtro_title" />
+
+        <TextView
+            android:id="@+id/lbl_titulo_ordenar_por"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/lbl_title_filtro"
+            android:layout_centerHorizontal="false"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="false"
+            android:background="@android:color/white"
+            android:text="@string/title_order_by" />
+
+        <LinearLayout
+            android:id="@+id/ordenar_por"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbl_titulo_ordenar_por"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_relevante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_titulo_ordenar_por"
+                android:layout_toStartOf="@+id/btn_menor_precio"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                app:srcCompat="@mipmap/ic_launcher_round" />
+
+            <ImageButton
+                android:id="@+id/btn_menor_precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_titulo_ordenar_por"
+                android:layout_toStartOf="@+id/btn_mayor_precio"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <ImageButton
+                android:id="@+id/btn_mayor_precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_titulo_ordenar_por"
+                android:layout_toStartOf="@+id/btn_oferta"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                app:srcCompat="@mipmap/ic_launcher_round" />
+
+            <ImageButton
+                android:id="@+id/btn_oferta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/btn_aplicar_filtro"
+                android:layout_below="@+id/lbl_titulo_ordenar_por"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                app:srcCompat="@mipmap/ic_launcher" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ordenar_por"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/btn_aplicar_filtro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="Button" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_marca_filtro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_aplicar_filtro"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView19"
+            android:layout_marginTop="17dp" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.NavigationView>

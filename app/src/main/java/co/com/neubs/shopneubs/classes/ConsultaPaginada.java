@@ -2,6 +2,7 @@ package co.com.neubs.shopneubs.classes;
 
 import java.util.ArrayList;
 
+import co.com.neubs.shopneubs.classes.models.Marca;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 
 /**
@@ -14,6 +15,8 @@ public class ConsultaPaginada {
     private String next;
     private String previous;
     private ArrayList<SaldoInventario> results;
+    // marcas de los productos que vienen en el results
+    private ArrayList<Marca> marcas;
 
     public int getCount() {
         return count;
@@ -54,4 +57,11 @@ public class ConsultaPaginada {
         this.results = results;
     }
 
+    public ArrayList<Marca> getMarcas() {
+        return marcas;
+    }
+
+    public void setMarcas(ArrayList<Marca> marcas) {
+        this.marcas = marcas;
+    }
 }

@@ -6,6 +6,9 @@ import android.database.Cursor;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import co.com.neubs.shopneubs.classes.DbManager;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.interfaces.ICrud;
@@ -97,6 +100,19 @@ public class Marca implements ICrud {
             return true;
         }
         return false;
+    }
+
+    public List<Marca> getAll(){
+        List<Marca> listMarca = new ArrayList<>();
+        Cursor c = dbManager.SelectAll(MarcaModel.NAME_TABLE);
+        if (c.moveToFirst()){
+            do {
+                Marca marca = new Marca();
+                marca.serialize(c);
+                listMarca.add(marca);
+            }while (c.moveToNext());
+        }
+        return listMarca;
     }
 
     private void serialize(Cursor c){
