@@ -106,5 +106,9 @@
     <string name="mensaje">mensaje</string>
     <string name="filtro_title">Filter</string>
     <string name="title_more">More</string>
+    <string name="sin_stock">Out of Stock</string>
+    <string name="title_improve_search">Improve your search. We advise you:</string>
+    <string name="title_use_general_terms">Use general terms.</string>
+    <string name="title_check_spelling">Check spelling.</string>
 
 </resources>

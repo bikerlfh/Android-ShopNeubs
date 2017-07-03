@@ -86,5 +86,9 @@
     <string name="title_start_buy">Comienza Ahora!</string>
     <string name="filtro_title">Filtro</string>
     <string name="title_more">Más/</string>
+    <string name="sin_stock">Agotado</string>
+    <string name="title_improve_search">Mejora tu búsqueda. Te aconsejamos:</string>
+    <string name="title_use_general_terms">Usa terminos generales.</string>
+    <string name="title_check_spelling">Revisa la ortografía.</string>
 
 </resources>

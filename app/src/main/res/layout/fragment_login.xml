@@ -33,12 +33,12 @@
 
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/img_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="50dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/margin_botton_img_logo"
+                android:layout_marginTop="@dimen/margin_top_img_logo"
                 android:layout_weight="0.15"
                 android:background="@drawable/logo_login_200x38" />
 
@@ -50,17 +50,9 @@
                     android:id="@+id/txt_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="9dp"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginTop="8dp"
                     android:elevation="4dp"
                     android:hint="@string/prompt_username"
                     android:inputType="none|textCapWords"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="9dp"
-                    android:paddingRight="9dp"
-                    android:paddingTop="8dp"
                     android:textColor="@color/colorPrimary"
                     android:textColorLink="@color/colorPrimary"
                     android:textSize="@dimen/text_size_imput" />
@@ -75,16 +67,9 @@
                     android:id="@+id/txt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="9dp"
-                    android:layout_marginStart="9dp"
                     android:elevation="3dp"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
-                    android:paddingBottom="8sp"
-                    android:paddingLeft="9dp"
-                    android:paddingRight="9dp"
-                    android:paddingTop="8sp"
                     android:textColorLink="@color/colorPrimary"
                     android:textSize="@dimen/text_size_imput" />
 
@@ -103,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="23sp"
+                android:layout_marginTop="@dimen/margin_top_btn"
                 android:backgroundTint="@color/colorSecundary"
                 android:elevation="8dp"
                 android:text="@string/title_login"

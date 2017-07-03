@@ -7,8 +7,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top_title"
-        android:padding="@dimen/padding_title">
+        android:layout_marginTop="@dimen/margin_top_relative_section_layout"
+        android:padding="@dimen/padding_relative_section_layout">
 
         <TextView
             android:id="@+id/txtTitle"
@@ -35,7 +35,7 @@
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_top_boton_more_section_layout"
             android:background="@android:color/transparent"
             android:text="@string/title_more"
             android:textColor="@color/colorAccent" />

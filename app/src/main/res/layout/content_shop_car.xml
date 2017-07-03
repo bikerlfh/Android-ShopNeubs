@@ -17,7 +17,7 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintBottom_toTopOf="@+id/layout_resumen"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -55,16 +55,14 @@
     </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/layout_resumen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:elevation="8dp"
             android:minHeight="25dp"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/padding_End"
-            android:paddingStart="@dimen/padding_Start"
-            android:paddingTop="@dimen/padding_Top"
+            android:padding="@dimen/padding_layout_resumen_content_shop_cart"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"

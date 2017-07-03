@@ -32,12 +32,12 @@
             android:weightSum="1">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/img_logo"
                 android:layout_width="184dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="43sp"
-                android:layout_marginTop="12sp"
+                android:layout_marginBottom="@dimen/margin_botton_img_logo"
+                android:layout_marginTop="@dimen/margin_top_img_logo"
                 android:background="@drawable/logo_login_200x38" />
 
             <android.support.design.widget.TextInputLayout
@@ -49,7 +49,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"
                     android:elevation="2dp"
                     android:hint="@string/prompt_username"
                     android:inputType="textCapWords"
@@ -68,7 +67,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="8dp"
                     android:elevation="2dp"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
@@ -84,7 +82,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="8dp"
                     android:elevation="2dp"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
@@ -100,7 +97,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="8dp"
                     android:elevation="2dp"
                     android:hint="@string/prompt_password_repeat"
                     android:inputType="textPassword"
@@ -112,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="23sp"
+                android:layout_marginTop="@dimen/margin_top_btn"
                 android:backgroundTint="@color/colorSecundary"
                 android:elevation="8dp"
                 android:text="@string/title_register"

@@ -8,28 +8,23 @@
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
     <LinearLayout
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/lbl_producto_sin_stock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrecio"
-            android:padding="3dp"
-            android:text="SIN STOCK"
-            android:textAlignment="center"
-            android:textColor="@android:color/white" />
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
             android:id="@+id/img_producto"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/margin_img_producto_cardview_section_item"
             android:layout_weight="1"
             android:scaleType="fitXY" />
 
@@ -46,8 +41,8 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical|center_horizontal"
                 android:maxLines="2"
-                android:paddingEnd="1dp"
-                android:paddingStart="1dp"
+                android:paddingEnd="@dimen/padding_start_end_lbl_nombre_producto_cardview_section_item"
+                android:paddingStart="@dimen/padding_start_end_lbl_nombre_producto_cardview_section_item"
                 android:text="TextView"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/title_producto_card" />
@@ -64,8 +59,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingBottom="@dimen/padding_Boton"
-                    android:paddingRight="2dp"
+                    android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_section_item"
+                    android:paddingEnd="@dimen/padding_end_lbl_precio_producto_card_cardview_section_item"
                     android:text="TextView"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorPrecio"
@@ -76,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
-                    android:paddingBottom="@dimen/padding_Boton"
+                    android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_section_item"
                     android:text="TextView"
                     android:textSize="@dimen/precio_anterior_producto_card" />
             </LinearLayout>
@@ -84,4 +79,17 @@
         </LinearLayout>
 
     </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lbl_producto_sin_stock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorPrecio"
+        android:elevation="4dp"
+        android:padding="3dp"
+        android:text="@string/sin_stock"
+        android:textAlignment="center"
+        android:textColor="@color/textColorPrimary" />
 </android.support.v7.widget.CardView>

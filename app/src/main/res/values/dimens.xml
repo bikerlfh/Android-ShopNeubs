@@ -87,9 +87,107 @@
     <dimen name="padding_boton_detalle_producto">12dp</dimen>
 
 
+    <!-- Margin -Padding section_layout-->
+    <dimen name="margin_top_relative_section_layout">5dp</dimen>
+    <dimen name="padding_relative_section_layout">7dp</dimen>
+    <dimen name="margin_top_boton_more_section_layout">5dp</dimen>
+
+    <!-- Margin-padding shop_cart_vacio-->
+    <dimen name="margin_top_imagen_shop_cart_vacio">80dp</dimen>
+    <dimen name="margin_star_end_element_shop_cart_vacio">8dp</dimen>
+    <dimen name="margin_top_lbl_your_cart_shop_cart_vacio">54dp</dimen>
+    <dimen name="margin_top_btn_comenzar_ahora_shop_cart_vacio">26dp</dimen>
+
+    <!--Margin-Padding cardview_producto -->
+    <dimen name="margin_cardview_producto">1dp</dimen>
+    <dimen name="padding_lbl_producto_sin_stock_cardview_producto">4dp</dimen>
+    <dimen name="margin_img_producto_cardview_producto">5dp</dimen>
+    <dimen name="padding_star_end_lbl_nombre_producto_card">2dp</dimen>
+    <dimen name="padding_bottom_lbl_precio_cardview_producto">6dp</dimen>
+    <dimen name="padding_star_lbl_precio_producto_card_cardview_producto">2dp</dimen>
+    <dimen name="padding_end_lbl_precio_producto_card_cardview_producto">4dp</dimen>
+    <dimen name="padding_star_lbl_precio_anterior_card_cardview_producto">4dp</dimen>
+    <dimen name="padding_end_lbl_precio_anterior_card_cardview_producto">2dp</dimen>
+
+
+    <!-- Margin-padding cardview_section_item -->
+    <dimen name="margin_img_producto_cardview_section_item">10dp</dimen>
+    <dimen name="padding_start_end_lbl_nombre_producto_cardview_section_item">1dp</dimen>
+    <dimen name="padding_bottom_lbl_precio_cardview_section_item">6dp</dimen>
+    <dimen name="padding_end_lbl_precio_producto_card_cardview_section_item">2dp</dimen>
+
+    <!-- Margin-padding fragment_register, fragment_login , content_perfil -->
+    <dimen name="padding_fragment">9dp</dimen>
+    <dimen name="margin_fragment">10dp</dimen>
     <dimen name="margin_End">10dp</dimen>
     <dimen name="margin_Start">10dp</dimen>
     <dimen name="margin_top">10dp</dimen>
+
+    <dimen name="margin_top_img_logo">12dp</dimen>
+    <dimen name="margin_botton_img_logo">43dp</dimen>
+    <dimen name="margin_top_btn">26dp</dimen>
+
+    <!--margin-padding content_shop_cart -->
+    <dimen name="padding_layout_resumen_content_shop_cart">6dp</dimen>
+
+    <!-- margin-padding content_account-->
+    <dimen name="margin_top_btn_logout_content_account">17dp</dimen>
+    <dimen name="margin_end_start_elemento_final_content_account">8dp</dimen>
+    <dimen name="margin_top_img_logo_content_account">18dp</dimen>
+    <dimen name="padding_start_end_lbl_action_content_account">5dp</dimen>
+    <dimen name="margin_top_lbl_action_content_account">1dp</dimen>
+    <dimen name="margin_top_lbl_action_terminos_content_account">10dp</dimen>
+    <dimen name="padding_top_img_account_content_account">6dp</dimen>
+    <dimen name="margin_bottom_lbl_welcome_content_account">10dp</dimen>
+
+    <!-- margin_padding cardview_shop_cart -->
+    <dimen name="margin_end_lbl_nombre_producto_car_cardview_shop_cart">8dp</dimen>
+    <dimen name="margin_start_lbl_nombre_producto_car_cardview_shop_cart">80dp</dimen>
+    <dimen name="margin_top_lbl_nombre_producto_car_cardview_shop_cart">16dp</dimen>
+    <dimen name="padding_end_lbl_nombre_producto_car_cardview_shop_cart">33dp</dimen>
+    <dimen name="padding_start_lbl_nombre_producto_car_cardview_shop_cart">8dp</dimen>
+    <dimen name="padding_start_lbl_marca_producto_car_cardview_shop_cart">8dp</dimen>
+    <dimen name="padding_bottom_valor_total_item_cardview_shop_cart">8dp</dimen>
+    <dimen name="padding_end_valor_total_item_cardview_shop_cart">16dp</dimen>
+    <dimen name="padding_bottom_lbl_cantidad_card_cardview_shop_cart">3dp</dimen>
+    <dimen name="padding_end_lbl_cantidad_card_cardview_shop_cart">2dp</dimen>
+    <dimen name="margin_top_end_img_btn_eliminar_item_cardview_shop_cart">16dp</dimen>
+    <dimen name="margin_start_img_btn_eliminar_item_cardview_shop_cart">8dp</dimen>
+    <dimen name="margin_start_img_btn_mas_cardview_shop_cart">4dp</dimen>
+    <dimen name="margin_bottom_img_btn_mas_cardview_shop_cart">8dp</dimen>
+    <dimen name="padding_bottom_top_img_btn_mas_menos_cardview_shop_cart">3dp</dimen>
+    <dimen name="padding_end_start_img_btn_mas_menos_cardview_shop_cart">5dp</dimen>
+    <dimen name="margin_bottom_img_btn_menos_cardview_shop_cart">8dp</dimen>
+    <dimen name="margin_start_img_btn_menos_cardview_shop_cart">88dp</dimen>
+    <dimen name="margin_bottom_top_img_producto_cardview_shop_cart">8dp</dimen>
+
+    <!-- margin-padding cardview_pedido_detalle -->
+    <dimen name="padding_botton_cardview_pedido_detalle">9dp</dimen>
+    <dimen name="margin_card_view">2dp</dimen>
+    <dimen name="padding_end_start_lbl_cardview_pedido_detalle">16dp</dimen>
+    <dimen name="padding_top_lbl_nombre_producto_cardview_pedido_detalle">24dp</dimen>
+    <dimen name="margin_bottom_lbl_costo_total_cardview_pedido_detalle">8dp</dimen>
+    <dimen name="margin_start_lbl_costo_total_cardview_pedido_detalle">96dp</dimen>
+    <dimen name="margin_top_img_producto_cardview_pedido_detalle">5dp</dimen>
+    <dimen name="padding_top_img_producto_cardview_pedido_detalle">6dp</dimen>
+
+    <!-- margin_padding cardview_pedido -->
+    <dimen name="padding_end_start_bottom_layout_cardview_pedido">5dp</dimen>
+    <dimen name="padding_top_layout_cardview_pedido">24dp</dimen>
+    <dimen name="padding_start_title_pedido_cardview_pedido">6dp</dimen>
+    <dimen name="margin_end_start_lbl_fecha_pedido_cardview_pedido">8dp</dimen>
+    <dimen name="margin_top_constraintLayout_cardview_pedido">50dp</dimen>
+    <dimen name="padding_end_start_cardview_pedido">5dp</dimen>
+    <dimen name="padding_bottom_cardview_pedido">16dp</dimen>
+    <dimen name="margin_end_start_top__title_estado_cardview_pedido">8dp</dimen>
+    <dimen name="margin_top_lbl_numeros_producto_cardview_pedido">3dp</dimen>
+    <dimen name="margin_top_lbl_costo_total_cardview_pedido">22dp</dimen>
+    <dimen name="margin_bottom_start_lbl_costo_total_cardview_pedido">8dp</dimen>
+    <dimen name="margin_end_lbl_costo_total_cardview_pedido">16dp</dimen>
+
+
+
+
     <dimen name="margin_boton">10dp</dimen>
     <dimen name="padding_Top">6dp</dimen>
     <dimen name="padding_Boton">6dp</dimen>
@@ -98,7 +196,5 @@
 
     <dimen name="padding_title">7dp</dimen>
     <dimen name="margin_top_title">5dp</dimen>
-    <dimen name="padding_fragment">7dp</dimen>
-    <dimen name="margin_fragment">10dp</dimen>
-    <dimen name="margin_card_view">2dp</dimen>
+
 </resources>
