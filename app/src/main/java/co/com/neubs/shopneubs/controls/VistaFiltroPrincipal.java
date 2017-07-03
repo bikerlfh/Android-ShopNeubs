@@ -43,7 +43,7 @@ public class VistaFiltroPrincipal extends RelativeLayout {
     /**
      * el layout para la vista de los productos en Grilla
      */
-    private final int DEFAULT_LAYOUT_CARD_VIEW_GRID = R.layout.cardview_producto;
+    private final int DEFAULT_LAYOUT_CARD_VIEW_GRID = R.layout.cardview_producto_grid;
     /**
      * el layout para la vista de los productos en listas
      */
