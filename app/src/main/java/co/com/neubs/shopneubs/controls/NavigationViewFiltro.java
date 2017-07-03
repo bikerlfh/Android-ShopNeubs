@@ -137,7 +137,7 @@ public class NavigationViewFiltro extends NavigationView {
 
         @Override
         public int getItemCount() {
-            return listMarca.size();
+            return listMarca != null? listMarca.size() : 0;
         }
 
         public Marca getMarcaSeleccionada(){
