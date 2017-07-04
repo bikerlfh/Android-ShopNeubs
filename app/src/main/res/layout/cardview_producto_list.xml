@@ -2,61 +2,91 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardElevation="0dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"
         android:paddingTop="16dp">
 
+
         <co.com.neubs.shopneubs.controls.ImageLoaderView
             android:id="@+id/img_producto"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignParentEnd="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            app:srcCompat="@drawable/circular_progress_bar" />
+            app:srcCompat="@drawable/circular_progress_bar"
+            />
 
-        <TextView
+        <com.uncopt.android.widget.text.justify.JustifiedTextView
             android:id="@+id/lbl_nombre_producto_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/img_producto"
-            android:paddingEnd="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_vertical|right"
+            android:layout_toEndOf="@+id/img_producto"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingStart="16dp"
             android:paddingTop="8dp"
             android:text="TextView"
             android:textColor="@color/textColorSecundary"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/lbl_marca_producto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbl_nombre_producto_card"
+            android:layout_toEndOf="@+id/img_producto"
+            android:maxLines="2"
+            android:paddingStart="16dp"
+            android:text="Lenovo"
+            android:textAlignment="viewStart" />
 
         <TextView
             android:id="@+id/lbl_precio_producto_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lbl_marca_producto"
+            android:layout_toEndOf="@+id/img_producto"
+            android:paddingStart="16dp"
+            android:paddingTop="3dp"
             android:text="TextView"
-            android:layout_below="@+id/lbl_nombre_producto_card" />
+            android:textColor="@color/colorPrecio" />
 
         <TextView
             android:id="@+id/lbl_precio_anterior_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lbl_nombre_producto_card"
-            android:layout_toStartOf="@+id/img_producto"
-            android:text="TextView" />
+            android:layout_below="@+id/lbl_marca_producto"
+            android:layout_toEndOf="@+id/lbl_precio_producto_card"
+            android:paddingStart="7dp"
+            android:paddingTop="3dp"
+            android:text="TextView"
+            android:textSize="@dimen/precio_producto_card" />
 
         <TextView
             android:id="@+id/lbl_producto_sin_stock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_precio_producto_card"
-            android:text="TextView"
-            android:layout_toStartOf="@+id/img_producto" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@+id/img_producto"
+            android:background="@android:color/holo_red_dark"
+            android:padding="4dp"
+            android:text="@string/sin_stock"
+            android:textColor="@color/textColorPrimary" />
 
     </RelativeLayout>
+
 </android.support.v7.widget.CardView>
