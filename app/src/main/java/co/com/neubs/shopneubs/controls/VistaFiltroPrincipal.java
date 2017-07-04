@@ -37,6 +37,16 @@ public class VistaFiltroPrincipal extends RelativeLayout {
     private ContentLoadingProgressBar mLoadingProgressBar;
 
     /**
+     * itemDecoration para el recycleView cuando se visualiza como grid
+     */
+    private RecyclerView.ItemDecoration itemDecorationGrid;
+
+    /**
+     * itemDecoration para el recycleView cuando se visualiza como List
+     */
+    private RecyclerView.ItemDecoration itemDecorationList;
+
+    /**
      * Es el layout que contiene el lblCantidadProducto y los botones btnFiltro y btnCambiarVista
      */
     private View mLayoutOptions;
@@ -119,6 +129,9 @@ public class VistaFiltroPrincipal extends RelativeLayout {
         mLoadingProgressBar = (ContentLoadingProgressBar) findViewById(R.id.loading_progress_bar);
 
         mLayoutOptions = findViewById(R.id.layout_options);
+
+        // se configura el recycleView
+        initRecycleViewGrid();
 
         // se optiene el drawerLayoutPadre
         drawerLayoutParent = (DrawerLayout)((Activity)context).findViewById(R.id.drawer_layout);
@@ -238,29 +251,53 @@ public class VistaFiltroPrincipal extends RelativeLayout {
             mRecycleViewProductos.setAdapter(null);
         }
     }
+
+    /**
+     * configura el recycleView para el tipo de vista GRID
+     */
+    private void initRecycleViewGrid(){
+        if (itemDecorationGrid == null)
+            itemDecorationGrid = new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true);
+
+        mRecycleViewProductos.addItemDecoration(itemDecorationGrid);
+        mRecycleViewProductos.setItemAnimator(new DefaultItemAnimator());
+        mRecycleViewProductos.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+        mRecycleViewProductos.setLayoutManager(mLayoutManager);
+
+    }
+    /**
+     * configura el recycleView para el tipo de vista LIST
+     */
+    private void initRecycleViewList(){
+        if (itemDecorationList == null)
+            itemDecorationList = new GridSpacingItemDecoration(1, Helper.dpToPx(3,getContext()), true);
+
+        mRecycleViewProductos.addItemDecoration(itemDecorationList);
+        mRecycleViewProductos.setItemAnimator(new DefaultItemAnimator());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        mRecycleViewProductos.setLayoutManager(mLayoutManager);
+    }
+
     /**
      * Cambia la vista del recycleView
      */
     public void cambiarVista(){
+        mRecycleViewProductos.setItemAnimator(null);
+        mRecycleViewProductos.removeItemDecoration(itemDecorationGrid);
+
         if (idLayoutSelected == DEFAULT_LAYOUT_GRID){
             // Se cambia la vista a LIST
             idLayoutSelected = DEFAULT_LAYOUT_LIST;
             mBtnCambiarVista.setImageDrawable(getContext().getApplicationContext().getResources().getDrawable(ICON_VIEW_LIST));
             // se configura el recycleView
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-            mRecycleViewProductos.setLayoutManager(mLayoutManager);
-
+            initRecycleViewList();
         }
         else{
             // Se cambia la vista a GRID
             idLayoutSelected = DEFAULT_LAYOUT_GRID;
             mBtnCambiarVista.setImageDrawable(getContext().getApplicationContext().getResources().getDrawable(ICON_VIEW_GRID));
-            // se configura el recycleView
-            mRecycleViewProductos.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true));
-            mRecycleViewProductos.setItemAnimator(new DefaultItemAnimator());
-            mRecycleViewProductos.setHasFixedSize(true);
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
-            mRecycleViewProductos.setLayoutManager(mLayoutManager);
+            initRecycleViewGrid();
         }
         showProductos(consultaPaginada);
     }
