@@ -2,7 +2,9 @@ package co.com.neubs.shopneubs.controls;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -30,29 +32,51 @@ public class VistaFiltroPrincipal extends RelativeLayout {
     private TextView mLblCantidadProducto;
     private ImageButton mBtnCambiarVista;
     private ImageButton mBtnFiltro;
-    private RecyclerView mRecycleViewSaldoInventario;
+    private RecyclerView mRecycleViewProductos;
+    private ContentLoadingProgressBar mLoadingProgressBar;
 
+    /**
+     * Es el layout que contiene el lblCantidadProducto y los botones btnFiltro y btnCambiarVista
+     */
+    private View mLayoutOptions;
+
+    /**
+     * Objeto que contiene el resultado de un request a la API
+     * en el se encuentran el listado de marcas y el listado de SaldoInventario (para llenar el  adapter del recycleViewProductos)
+     */
     private ConsultaPaginada consultaPaginada;
+    /**
+     * Adapter para el recycleViewProductos
+     */
     private ProductoAdapter adapter;
 
-
-    private View layoutOptions;
+    /**
+     * DrawerLayaut contenedor padre y contenedero del navigationViewFiltro
+     * Si este objeto es null, la funcionalidad el filtro no estará disponible
+     */
     private DrawerLayout drawerLayoutParent;
+    /**
+     * NavigationView del filtro.
+     */
     private NavigationViewFiltro navigationViewFiltro;
 
     /**
      * el layout para la vista de los productos en Grilla
      */
-    private final int DEFAULT_LAYOUT_CARD_VIEW_GRID = R.layout.cardview_producto_grid;
+    @LayoutRes
+    private final int DEFAULT_LAYOUT_GRID = R.layout.cardview_producto_grid;
     /**
      * el layout para la vista de los productos en listas
      */
-    private final int DEFAULT_LAYOUT_CARD_VIEW_LIST = R.layout.cardview_section_item;
+    @LayoutRes
+    private final int DEFAULT_LAYOUT_LIST = R.layout.cardview_section_item;
 
     /**+
-     * layout dinamico (DEFAULT_LAYOUT_CARD_VIEW_GRID o DEFAULT_LAYOUT_CARD_VIEW_LIST) con el que se visualiza los productos
+     * contiene el id del layout con el cual se inflará el ProductoAdapter
+     * se inicializa con el DEFAULT_LAYOUT_GRID
      */
-    private int layoutCardViewSelected = DEFAULT_LAYOUT_CARD_VIEW_GRID;
+    @LayoutRes
+    private int idLayoutSelected = DEFAULT_LAYOUT_GRID;
 
 
     public VistaFiltroPrincipal(Context context) {
@@ -82,28 +106,34 @@ public class VistaFiltroPrincipal extends RelativeLayout {
         mLblCantidadProducto = (TextView) findViewById(R.id.lbl_cantidad_productos);
         mBtnCambiarVista = (ImageButton) findViewById(R.id.btn_cambiar_vista);
         mBtnFiltro = (ImageButton) findViewById(R.id.btn_filtro);
-        mRecycleViewSaldoInventario = (RecyclerView) findViewById(R.id.recycle_view_filtro);
+        mRecycleViewProductos = (RecyclerView) findViewById(R.id.recycle_view_filtro);
+        mLoadingProgressBar = (ContentLoadingProgressBar) findViewById(R.id.loading_progress_bar);
 
-        layoutOptions = findViewById(R.id.layout_options);
+        mLayoutOptions = findViewById(R.id.layout_options);
 
         // se optiene el drawerLayoutPadre
         drawerLayoutParent = (DrawerLayout)((Activity)context).findViewById(R.id.drawer_layout);
-        // se obtiene el navigationViewFiltro que puede contener el padre
-        navigationViewFiltro = (NavigationViewFiltro) ((Activity)context).findViewById(R.id.drawer_filtro);
+        if (drawerLayoutParent != null) {
+            // se obtiene el navigationViewFiltro que puede contener el padre
+            navigationViewFiltro = (NavigationViewFiltro) ((Activity) context).findViewById(R.id.drawer_filtro);
+        }
 
+        showLoadingProgressBar(true);
         // se configura el recycleView
-        mRecycleViewSaldoInventario.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true));
-        mRecycleViewSaldoInventario.setItemAnimator(new DefaultItemAnimator());
-        mRecycleViewSaldoInventario.setHasFixedSize(true);
+        mRecycleViewProductos.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true));
+        mRecycleViewProductos.setItemAnimator(new DefaultItemAnimator());
+        mRecycleViewProductos.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
-        mRecycleViewSaldoInventario.setLayoutManager(mLayoutManager);
+        mRecycleViewProductos.setLayoutManager(mLayoutManager);
 
+        // Se asigna el evento click al boton del Cambiar Vista
         mBtnCambiarVista.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 cambiarVista();
             }
         });
+        // Se asigna el evento click al boton del Filtro
         mBtnFiltro.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,64 +161,109 @@ public class VistaFiltroPrincipal extends RelativeLayout {
     }
 
     private void initAdapter(int layoutCardViewSelected) {
-        this.layoutCardViewSelected = layoutCardViewSelected;
-        adapter = new ProductoAdapter(getContext(),consultaPaginada,layoutCardViewSelected);
+        idLayoutSelected = layoutCardViewSelected;
+        adapter = new ProductoAdapter(getContext(),consultaPaginada,idLayoutSelected);
     }
 
+    /**
+     * Visualiza los productos en el recycleview
+     * @param consultaPaginada ConsultaPaginada que retorna la API con los datos
+     * @param drawerLayoutParent drawerLayaout el que contiene el navigationViewFiltro
+     */
     public void showProductos(ConsultaPaginada consultaPaginada,DrawerLayout drawerLayoutParent){
         this.drawerLayoutParent = drawerLayoutParent;
         this.navigationViewFiltro = (NavigationViewFiltro) drawerLayoutParent.findViewById(R.id.drawer_filtro);
         showProductos(consultaPaginada);
     }
     /**
-     * Visualiza el los productos en el recycleview
+     * Visualiza los productos en el recycleview
      * @param consultaPaginada ConsultaPaginada que retorna la API con los datos
      */
     public void showProductos(ConsultaPaginada consultaPaginada){
+        // se escpmde el loadingProgressBar
+        showLoadingProgressBar(false);
         this.consultaPaginada = consultaPaginada;
+        // Se visualizan los productos encontrados en ConsultaPaginada
         setCantidadProductos(this.consultaPaginada.getCount());
-        initAdapter(layoutCardViewSelected);
+        // Se inicializa el adapter
+        initAdapter(idLayoutSelected);
+
+        // si existe el navigationViewFiltro, se le pasan las marcas
+        if (navigationViewFiltro != null){
+            navigationViewFiltro.setFilterMarca(consultaPaginada.getMarcas());
+        }
+        else{
+            // Se esconde el boton filtro.
+            mBtnFiltro.setVisibility(View.GONE);
+        }
+
         if (adapter != null) {
-            mRecycleViewSaldoInventario.setAdapter(adapter);
-            mRecycleViewSaldoInventario.addOnScrollListener(new OnVerticalScrollListener() {
+            mRecycleViewProductos.setAdapter(adapter);
+            mRecycleViewProductos.addOnScrollListener(new OnVerticalScrollListener() {
                 @Override
                 public void onScrolledToBottom() {
                     super.onScrolledToBottom();
                     adapter.getNextPage(drawerLayoutParent);
                 }
             });
-            if (navigationViewFiltro != null){
-                navigationViewFiltro.setFilterMarca(consultaPaginada.getMarcas());
-            }
         }
+    }
+
+    /**
+     * Asigna el evento click al boton btnApicarFiltro
+     * @param onClickListenerAplicarFiltro onClickListenerAplicarFiltro
+     */
+    public void setOnClickListenerAplicarFiltro(NavigationViewFiltro.OnClickListenerAplicarFiltro onClickListenerAplicarFiltro){
+        if (navigationViewFiltro != null) {
+            navigationViewFiltro.setOnClickListenerAplicarFiltro(onClickListenerAplicarFiltro);
+        }
+    }
+
+    /**
+     * Cierra el drawerFiltro
+     */
+    public void closeDrawer(){
+        if (drawerLayoutParent != null)
+            drawerLayoutParent.closeDrawers();
     }
 
     /**
      * limpia el recycleview
      */
     public void cleanProductos(){
-        if (mRecycleViewSaldoInventario != null){
-            mRecycleViewSaldoInventario.setAdapter(null);
+        if (mRecycleViewProductos != null){
+            mRecycleViewProductos.setAdapter(null);
         }
     }
     /**
      * Cambia la vista del recycleView
      */
     public void cambiarVista(){
-        layoutCardViewSelected = (layoutCardViewSelected == DEFAULT_LAYOUT_CARD_VIEW_GRID) ? DEFAULT_LAYOUT_CARD_VIEW_LIST : DEFAULT_LAYOUT_CARD_VIEW_GRID;
+        idLayoutSelected = (idLayoutSelected == DEFAULT_LAYOUT_GRID) ? DEFAULT_LAYOUT_LIST : DEFAULT_LAYOUT_GRID;
         showProductos(consultaPaginada);
     }
 
     /**
-     * asigna la visibilidad al recycleView y al layout de las opciones
+     * Asigna la visibilidad al recycleView y al layout de las opciones
      * @param visibility visibilidad
      */
     public void setVisibility(int visibility){
-        mRecycleViewSaldoInventario.setVisibility(visibility);
-        layoutOptions.setVisibility(visibility);
+        mRecycleViewProductos.setVisibility(visibility);
+        mLayoutOptions.setVisibility(visibility);
     }
 
+    /**
+     * Visualiza o esconde el loadingProgressBar
+     * @param show true para visualizar, false para esconderlo
+     */
+    public void showLoadingProgressBar(boolean show){
+        if (show){
+            mRecycleViewProductos.setVisibility(GONE);
+            mLoadingProgressBar.setVisibility(VISIBLE);
+        }else{
+            mRecycleViewProductos.setVisibility(VISIBLE);
+            mLoadingProgressBar.setVisibility(GONE);
+        }
 
-
-
+    }
 }

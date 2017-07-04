@@ -49,8 +49,6 @@ public class BusquedaActivity extends AppCompatActivity {
 
     private SessionManager sessionManager;
 
-    private ProgressBar mProgressBar;
-
     private Toolbar toolbar;
     private MaterialSearchView searchView;
     private IconNotificationBadge iconShopCart;
@@ -85,7 +83,6 @@ public class BusquedaActivity extends AppCompatActivity {
         vistaFiltroPrincipal = (VistaFiltroPrincipal) findViewById(R.id.vista_filtro_principal);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         dreawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_busqueda);
         navigationViewFiltro = (NavigationViewFiltro) findViewById(R.id.drawer_filtro);
 
@@ -118,18 +115,15 @@ public class BusquedaActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(query);
                 vistaFiltroPrincipal.cleanProductos();
 
-                mProgressBar.setVisibility(View.VISIBLE);
                 Map<String, String> parametros = new HashMap<>();
                 parametros.put("filtro",query);
                 APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,parametros, new IServerCallback() {
                     @Override
                     public void onSuccess(String json) {
-                        mProgressBar.setVisibility(View.GONE);
                         final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
                         if (consultaPaginada.getResults().size() > 0) {
                             vistaFiltroPrincipal.showProductos(consultaPaginada,dreawerLayout);
                             visualizarBusquedaSinResultados(false);
-
                         }
                         else{
                             visualizarBusquedaSinResultados(true);
@@ -138,7 +132,7 @@ public class BusquedaActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(String message_error, APIValidations apiValidations) {
-                        mProgressBar.setVisibility(View.GONE);
+                        vistaFiltroPrincipal.showLoadingProgressBar(false);
                         if (apiValidations!= null){
                             if (apiValidations.timeOut())
                                 Snackbar.make(dreawerLayout,getString(R.string.error_connection_server),Snackbar.LENGTH_INDEFINITE).show();

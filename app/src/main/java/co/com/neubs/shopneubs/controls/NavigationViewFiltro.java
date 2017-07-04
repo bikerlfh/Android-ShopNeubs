@@ -2,9 +2,6 @@ package co.com.neubs.shopneubs.controls;
 
 import android.content.Context;
 import android.support.design.widget.NavigationView;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -12,22 +9,17 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.ExpandableListView;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import co.com.neubs.shopneubs.R;
-import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
-import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.Marca;
 
 /**
@@ -75,7 +67,6 @@ public class NavigationViewFiltro extends NavigationView {
         mBtnOferta = (ImageButton) findViewById(R.id.btn_oferta);
         mRecycleViewMarca = (RecyclerView) findViewById(R.id.recycle_view_marca_filtro);
         mBtnAplicarFiltro = (Button) findViewById(R.id.btn_aplicar_filtro);
-
     }
 
     private OnClickListener onClickListenerImageOrenarPor = new OnClickListener() {
@@ -94,17 +85,26 @@ public class NavigationViewFiltro extends NavigationView {
         mRecycleViewMarca.setLayoutManager(mLayoutManager);
     }
 
-    public void setListMarca(List<Marca> listMarca){
-        this.listMarca = listMarca;
+    public Map<String,String> getFiltro(){
+        Map<String,String> params = new HashMap<>();
+        final Marca marcaSelected = marcaAdapter.getMarcaSelected();
+        if (marcaSelected != null){
+            params.put("marca",String.valueOf(marcaSelected.getCodigo()));
+        }
+        return params;
     }
 
-    public String getFiltro(){
-        String filtro  = "";
-        Marca marcaSeleccionada = marcaAdapter.getMarcaSeleccionada();
-        if (marcaSeleccionada != null){
-            filtro += "marca="+marcaSeleccionada.getIdMarca();
-        }
-        return filtro;
+    /***
+     * Asigna el onClickListenerAplicarFiltro
+     * @param onClickListenerAplicarFiltro OnClickListenerAplicarFiltro
+     */
+    public void setOnClickListenerAplicarFiltro(final OnClickListenerAplicarFiltro onClickListenerAplicarFiltro){
+        mBtnAplicarFiltro.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListenerAplicarFiltro.onClick(v,getFiltro());
+            }
+        });
     }
 
     private int convertDpToPixels(float dpi){
@@ -112,21 +112,40 @@ public class NavigationViewFiltro extends NavigationView {
     }
 
 
+    /**
+     * Adaptador para las marcas
+     */
     private class MarcaFiltroAdapter extends RecyclerView.Adapter<MarcaFiltroAdapter.MarcaViewHolder>{
 
         private Context context;
         private List<Marca> listMarca;
-        private Marca marcaSeleccionada;
+        private Marca marcaSelected;
+        private List<MarcaViewHolder> listMarcaViewHolder;
 
         public MarcaFiltroAdapter(Context context, List<Marca> listMarca) {
             this.context = context;
             this.listMarca = listMarca;
+            listMarcaViewHolder = new ArrayList<>();
         }
 
         @Override
         public MarcaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_marca_filtro ,null);
-            return new MarcaViewHolder(view);
+            MarcaViewHolder viewHolder = new MarcaViewHolder(view, new OnSelectedMarca() {
+                @Override
+                public void OnSelectedListenerMarca(Marca marca) {
+                    // cuando una marca es seleccionada
+                    // los demas radioButton son ser deseleccionados
+                    marcaSelected = marca;
+                    for (MarcaViewHolder view : listMarcaViewHolder){
+                        if (view.marca != marca){
+                            view.setChecked(false);
+                        }
+                    }
+                }
+            });
+            listMarcaViewHolder.add(viewHolder);
+            return viewHolder;
         }
 
         @Override
@@ -140,36 +159,51 @@ public class NavigationViewFiltro extends NavigationView {
             return listMarca != null? listMarca.size() : 0;
         }
 
-        public Marca getMarcaSeleccionada(){
-            return marcaSeleccionada;
+        public Marca getMarcaSelected(){
+            return marcaSelected;
         }
 
-        public class MarcaViewHolder extends RecyclerView.ViewHolder implements OnClickListener{
+        public class MarcaViewHolder extends RecyclerView.ViewHolder{
 
-            private CardView mCardView;
-            private RadioButton mNombreMarca;
-
+            private RadioButton mRbtnMarca;
             private Marca marca;
 
-            public MarcaViewHolder(View itemView) {
+            public MarcaViewHolder(View itemView,final OnSelectedMarca onSelectedMarca) {
                 super(itemView);
-                mNombreMarca = (RadioButton) itemView.findViewById(R.id.rbtn_marca);
+                mRbtnMarca = (RadioButton) itemView.findViewById(R.id.rbtn_marca);
+                // cuando se cambia el estado del check del radioButton, se invoca el metodo onSelectedListenerMarca
+                mRbtnMarca.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked)
+                            onSelectedMarca.OnSelectedListenerMarca(marca);
+                    }
+                });
 
             }
-            public void bindMarca(Marca marca){
+            public void bindMarca(final Marca marca){
                 this.marca = marca;
-                mNombreMarca.setText(marca.getDescripcion());
+                mRbtnMarca.setText(marca.getDescripcion());
+
             }
 
-            @Override
-            public void onClick(View v) {
-                mCardView.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+            public void setChecked(boolean checked){
+                mRbtnMarca.setChecked(checked);
             }
         }
-
-
     }
+
+    /**
+     * interfaz para controlar la marca seleccionada
+     */
     private interface OnSelectedMarca{
-        Marca onSelectedMarca();
+        void OnSelectedListenerMarca(Marca marca);
+    }
+
+    /**
+     * Interfaz para controlar el click del boton aplicar filtro
+     */
+    public interface OnClickListenerAplicarFiltro{
+        void onClick(View v,Map<String,String> filtro);
     }
 }

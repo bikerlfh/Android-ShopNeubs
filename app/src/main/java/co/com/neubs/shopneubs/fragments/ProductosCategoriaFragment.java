@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.adapters.ProductoAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
@@ -24,6 +27,7 @@ import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.OnVerticalScrollListener;
+import co.com.neubs.shopneubs.controls.NavigationViewFiltro;
 import co.com.neubs.shopneubs.controls.VistaFiltroPrincipal;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -86,7 +90,7 @@ public class ProductosCategoriaFragment extends Fragment {
         if (getArguments() != null) {
             codigoCategoria = getArguments().getString(PARAM_CODIGO_CATEGORIA,null);
             codigoMarca = getArguments().getString(PARAM_CODIGO_MARCA,null);
-            urlRequest = getArguments().getString(PARAM_URL_REQUEST,null);
+            urlRequest = getArguments().getString(PARAM_URL_REQUEST,"");
         }
     }
 
@@ -101,23 +105,37 @@ public class ProductosCategoriaFragment extends Fragment {
 
         vistaFiltroPrincipal = (VistaFiltroPrincipal) view.findViewById(R.id.vista_filtro_principal);
 
-        // se visualiza el spinner de loading
-        final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.progress_bar);
-        spinner.setVisibility(View.VISIBLE);
-
-        // Si la urlRequest es nula quiere decir que fue invocado el fragment desde una peticion filtro por categoria o marca
+        final Map<String,String> params = new HashMap<>();
         if (codigoCategoria != null) {
-            addParametroUrlRequest("categoria",codigoCategoria);
+            params.put("categoria",codigoCategoria);
         }
         if (codigoMarca != null){
-            addParametroUrlRequest("marca",codigoMarca);
+            params.put("marca",codigoMarca);
         }
 
-        APIRest.Async.get(urlRequest, new IServerCallback() {
+
+        // Se asigna el evento click del boton aplicarFiltro
+        vistaFiltroPrincipal.setOnClickListenerAplicarFiltro(new NavigationViewFiltro.OnClickListenerAplicarFiltro() {
+            @Override
+            public void onClick(View v, Map<String, String> filtro) {
+                // Se le agrega al filtro los parametros
+                if (filtro != null)
+                    params.putAll(filtro);
+                consultarPeticionAPI(urlRequest,params);
+                vistaFiltroPrincipal.closeDrawer();
+            }
+        });
+
+        consultarPeticionAPI(urlRequest,params);
+
+        return view;
+    }
+
+    private void consultarPeticionAPI(String url,Map<String,String> params){
+        vistaFiltroPrincipal.showLoadingProgressBar(true);
+        APIRest.Async.get(url,params, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
-                spinner.setVisibility(View.GONE);
-
                 final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
                 // Se visualizan los productos en el recycleView de la vistaFiltroPrincipal
                 vistaFiltroPrincipal.showProductos(consultaPaginada);
@@ -125,26 +143,10 @@ public class ProductosCategoriaFragment extends Fragment {
 
             @Override
             public void onError(String message_error, APIValidations apiValidations) {
-                Snackbar.make(view,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
-                spinner.setVisibility(View.GONE);
+                vistaFiltroPrincipal.showLoadingProgressBar(false);
+                //Snackbar.make(view,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
             }
         });
-        return view;
-    }
-
-    /**
-     * Agrega un parametro GET a la urlRequest
-     * @param key nombre del parametro
-     * @param value valor del parametro
-     */
-    private  void addParametroUrlRequest(String key,String value){
-        if (urlRequest == null)
-            urlRequest = "";
-        // Si la url ya contiene el signo ? se agrega la adición de un nuevo parametro (&)
-        // de lo contrario agrega el signo ?
-        urlRequest += (urlRequest.contains("?"))? "&" : "?";
-        // Se adiciona el parametro get
-        urlRequest += key + "=" + value;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

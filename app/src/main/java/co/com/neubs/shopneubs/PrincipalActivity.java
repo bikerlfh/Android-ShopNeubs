@@ -1,7 +1,5 @@
 package co.com.neubs.shopneubs;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,11 +22,10 @@ import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.fragments.IndexFragment;
-import co.com.neubs.shopneubs.fragments.OfertasFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
 
 public class PrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,ProductosCategoriaFragment.OnFragmentInteractionListener,OfertasFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,ProductosCategoriaFragment.OnFragmentInteractionListener {
 
     public static final String TAG_FRAGMENT = "FRAGMENT";
 
@@ -134,11 +131,11 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START) || searchView.isSearchOpen()) {
+        if (drawer.isDrawerOpen(GravityCompat.START) || drawer.isDrawerOpen(GravityCompat.END) || searchView.isSearchOpen()) {
             if (searchView.isSearchOpen())
                 searchView.closeSearch();
             else
-                drawer.closeDrawer(GravityCompat.START);
+                drawer.closeDrawers();
         }
         // Si no se está visualizando el IndexFragment, se carga
         else if (getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT).getClass() != IndexFragment.class){
