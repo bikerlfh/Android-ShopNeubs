@@ -8,6 +8,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -69,7 +70,7 @@ public class VistaFiltroPrincipal extends RelativeLayout {
      * el layout para la vista de los productos en listas
      */
     @LayoutRes
-    private final int DEFAULT_LAYOUT_LIST = R.layout.cardview_section_item;
+    private final int DEFAULT_LAYOUT_LIST = R.layout.cardview_producto_list;
 
     /**+
      * contiene el id del layout con el cual se inflará el ProductoAdapter
@@ -127,12 +128,6 @@ public class VistaFiltroPrincipal extends RelativeLayout {
         }
 
         showLoadingProgressBar(true);
-        // se configura el recycleView
-        mRecycleViewProductos.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true));
-        mRecycleViewProductos.setItemAnimator(new DefaultItemAnimator());
-        mRecycleViewProductos.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
-        mRecycleViewProductos.setLayoutManager(mLayoutManager);
 
         // Se asigna el evento click al boton del Cambiar Vista
         mBtnCambiarVista.setOnClickListener(new OnClickListener() {
@@ -248,16 +243,30 @@ public class VistaFiltroPrincipal extends RelativeLayout {
      */
     public void cambiarVista(){
         if (idLayoutSelected == DEFAULT_LAYOUT_GRID){
+            // Se cambia la vista a LIST
             idLayoutSelected = DEFAULT_LAYOUT_LIST;
             mBtnCambiarVista.setImageDrawable(getContext().getApplicationContext().getResources().getDrawable(ICON_VIEW_LIST));
+            // se configura el recycleView
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+            mRecycleViewProductos.setLayoutManager(mLayoutManager);
 
         }
         else{
+            // Se cambia la vista a GRID
             idLayoutSelected = DEFAULT_LAYOUT_GRID;
             mBtnCambiarVista.setImageDrawable(getContext().getApplicationContext().getResources().getDrawable(ICON_VIEW_GRID));
+            // se configura el recycleView
+            mRecycleViewProductos.addItemDecoration(new GridSpacingItemDecoration(2, Helper.dpToPx(3,getContext()), true));
+            mRecycleViewProductos.setItemAnimator(new DefaultItemAnimator());
+            mRecycleViewProductos.setHasFixedSize(true);
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+            mRecycleViewProductos.setLayoutManager(mLayoutManager);
         }
         showProductos(consultaPaginada);
     }
+
+
+
 
     /**
      * Asigna la visibilidad al recycleView y al layout de las opciones
