@@ -78,6 +78,9 @@ public class VistaFiltroPrincipal extends RelativeLayout {
     @LayoutRes
     private int idLayoutSelected = DEFAULT_LAYOUT_GRID;
 
+    private final int ICON_VIEW_GRID = R.drawable.ic_action_view_as_grid;
+    private final int ICON_VIEW_LIST = R.drawable.ic_action_view_as_list;
+
     /**
      * Especifica si hay un filtro aplicado
      */
@@ -244,7 +247,15 @@ public class VistaFiltroPrincipal extends RelativeLayout {
      * Cambia la vista del recycleView
      */
     public void cambiarVista(){
-        idLayoutSelected = (idLayoutSelected == DEFAULT_LAYOUT_GRID) ? DEFAULT_LAYOUT_LIST : DEFAULT_LAYOUT_GRID;
+        if (idLayoutSelected == DEFAULT_LAYOUT_GRID){
+            idLayoutSelected = DEFAULT_LAYOUT_LIST;
+            mBtnCambiarVista.setImageDrawable(getContext().getApplicationContext().getResources().getDrawable(ICON_VIEW_LIST));
+
+        }
+        else{
+            idLayoutSelected = DEFAULT_LAYOUT_GRID;
+            mBtnCambiarVista.setImageDrawable(getContext().getApplicationContext().getResources().getDrawable(ICON_VIEW_GRID));
+        }
         showProductos(consultaPaginada);
     }
 

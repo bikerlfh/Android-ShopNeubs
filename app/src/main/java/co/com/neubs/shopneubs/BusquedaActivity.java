@@ -2,39 +2,23 @@ package co.com.neubs.shopneubs;
 
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import co.com.neubs.shopneubs.adapters.ProductoAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
-import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
-import co.com.neubs.shopneubs.classes.Helper;
-import co.com.neubs.shopneubs.classes.OnVerticalScrollListener;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
@@ -253,16 +237,13 @@ public class BusquedaActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
-        }
-        else if(dreawerLayout.isDrawerOpen(GravityCompat.END)){
+        }else if(dreawerLayout.isDrawerOpen(GravityCompat.END)){
             dreawerLayout.closeDrawers();
-        }
-        else if(vistaFiltroPrincipal.isFiltroAplicado()){
+        }else if(vistaFiltroPrincipal.isFiltroAplicado()){
             // Se realiza la peticion con los parametros inciales
             consultarPeticionAPI(parametrosRequest);
             vistaFiltroPrincipal.setFiltroAplicado(false);
-        }
-        else {
+        }else {
             super.onBackPressed();
         }
     }
