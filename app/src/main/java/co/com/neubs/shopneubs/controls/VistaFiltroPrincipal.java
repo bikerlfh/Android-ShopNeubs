@@ -283,8 +283,11 @@ public class VistaFiltroPrincipal extends RelativeLayout {
      * Cambia la vista del recycleView
      */
     public void cambiarVista(){
+        // Se elimina el item animator
         mRecycleViewProductos.setItemAnimator(null);
+        // se remueven los item decoration Grid y List
         mRecycleViewProductos.removeItemDecoration(itemDecorationGrid);
+        mRecycleViewProductos.removeItemDecoration(itemDecorationList);
 
         if (idLayoutSelected == DEFAULT_LAYOUT_GRID){
             // Se cambia la vista a LIST
