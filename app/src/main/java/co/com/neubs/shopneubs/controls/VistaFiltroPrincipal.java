@@ -78,6 +78,11 @@ public class VistaFiltroPrincipal extends RelativeLayout {
     @LayoutRes
     private int idLayoutSelected = DEFAULT_LAYOUT_GRID;
 
+    /**
+     * Especifica si hay un filtro aplicado
+     */
+    private boolean filtroAplicado = false;
+
 
     public VistaFiltroPrincipal(Context context) {
         super(context);
@@ -145,6 +150,7 @@ public class VistaFiltroPrincipal extends RelativeLayout {
 
     public void setDrawerLayoutParent(DrawerLayout drawerLayoutParent) {
         this.drawerLayoutParent = drawerLayoutParent;
+        this.navigationViewFiltro = (NavigationViewFiltro) drawerLayoutParent.findViewById(R.id.drawer_filtro);
     }
 
     public void setNavigationViewFiltro(NavigationViewFiltro navigationViewFiltro) {
@@ -171,8 +177,7 @@ public class VistaFiltroPrincipal extends RelativeLayout {
      * @param drawerLayoutParent drawerLayaout el que contiene el navigationViewFiltro
      */
     public void showProductos(ConsultaPaginada consultaPaginada,DrawerLayout drawerLayoutParent){
-        this.drawerLayoutParent = drawerLayoutParent;
-        this.navigationViewFiltro = (NavigationViewFiltro) drawerLayoutParent.findViewById(R.id.drawer_filtro);
+        setDrawerLayoutParent(drawerLayoutParent);
         showProductos(consultaPaginada);
     }
     /**
@@ -266,4 +271,21 @@ public class VistaFiltroPrincipal extends RelativeLayout {
         }
 
     }
+
+    /**
+     *  Asigna si hay o no filtro aplicado
+     * @param filtroAplicado filtro aplicado
+     */
+    public void setFiltroAplicado(boolean filtroAplicado) {
+        this.filtroAplicado = filtroAplicado;
+    }
+
+    /**
+     * Verifica si un filtro esta aplicado o no
+     * @return true si hay un filtro aplicado, false si no lo hay
+     */
+    public boolean isFiltroAplicado(){
+        return filtroAplicado;
+    }
+
 }

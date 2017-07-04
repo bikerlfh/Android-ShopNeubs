@@ -60,12 +60,12 @@ public class BusquedaActivity extends AppCompatActivity {
     private VistaFiltroPrincipal vistaFiltroPrincipal;
     private NavigationViewFiltro navigationViewFiltro;
 
-    String query;
+    private String query;
+    private Map<String,String> parametrosRequest;
 
     private DrawerLayout dreawerLayout;
     View viewProductoNoEncontrado;
 
-    private ActionBarDrawerToggle mDrawerToggle;
 
     //endregion
 
@@ -96,6 +96,20 @@ public class BusquedaActivity extends AppCompatActivity {
         searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
 
 
+        vistaFiltroPrincipal.setDrawerLayoutParent(dreawerLayout);
+        vistaFiltroPrincipal.setOnClickListenerAplicarFiltro(new NavigationViewFiltro.OnClickListenerAplicarFiltro() {
+            @Override
+            public void onClick(View v, Map<String, String> filtro) {
+                if (filtro.size() > 0){
+                    // agregamos al filtro los parametros iniciales
+                    filtro.putAll(parametrosRequest);
+                    consultarPeticionAPI(filtro);
+                    vistaFiltroPrincipal.setFiltroAplicado(true);
+                }
+                vistaFiltroPrincipal.closeDrawer();
+            }
+        });
+
         // Se asignan los listener del searchView
         setListenersSearchView();
 
@@ -115,35 +129,9 @@ public class BusquedaActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(query);
                 vistaFiltroPrincipal.cleanProductos();
 
-                Map<String, String> parametros = new HashMap<>();
-                parametros.put("filtro",query);
-                APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,parametros, new IServerCallback() {
-                    @Override
-                    public void onSuccess(String json) {
-                        final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
-                        if (consultaPaginada.getResults().size() > 0) {
-                            vistaFiltroPrincipal.showProductos(consultaPaginada,dreawerLayout);
-                            visualizarBusquedaSinResultados(false);
-                        }
-                        else{
-                            visualizarBusquedaSinResultados(true);
-                        }
-                    }
-
-                    @Override
-                    public void onError(String message_error, APIValidations apiValidations) {
-                        vistaFiltroPrincipal.showLoadingProgressBar(false);
-                        if (apiValidations!= null){
-                            if (apiValidations.timeOut())
-                                Snackbar.make(dreawerLayout,getString(R.string.error_connection_server),Snackbar.LENGTH_INDEFINITE).show();
-                            else
-                                Snackbar.make(dreawerLayout,getString(R.string.error_default),Snackbar.LENGTH_INDEFINITE).show();
-                        }
-                        else
-                            Snackbar.make(dreawerLayout,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
-                    }
-
-                });
+                parametrosRequest = new HashMap<>();
+                parametrosRequest.put("filtro",query);
+                consultarPeticionAPI(parametrosRequest);
                 return false;
             }
 
@@ -159,6 +147,36 @@ public class BusquedaActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 searchView.setQuery(parent.getItemAtPosition(position).toString(),true);
             }
+        });
+    }
+
+    private void consultarPeticionAPI(Map<String,String> params){
+        APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,params, new IServerCallback() {
+            @Override
+            public void onSuccess(String json) {
+                final ConsultaPaginada consultaPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
+                if (consultaPaginada.getResults().size() > 0) {
+                    vistaFiltroPrincipal.showProductos(consultaPaginada);
+                    visualizarBusquedaSinResultados(false);
+                }
+                else{
+                    visualizarBusquedaSinResultados(true);
+                }
+            }
+
+            @Override
+            public void onError(String message_error, APIValidations apiValidations) {
+                vistaFiltroPrincipal.showLoadingProgressBar(false);
+                if (apiValidations!= null){
+                    if (apiValidations.timeOut())
+                        Snackbar.make(dreawerLayout,getString(R.string.error_connection_server),Snackbar.LENGTH_INDEFINITE).show();
+                    else
+                        Snackbar.make(dreawerLayout,getString(R.string.error_default),Snackbar.LENGTH_INDEFINITE).show();
+                }
+                else
+                    Snackbar.make(dreawerLayout,"Error:"+message_error,Snackbar.LENGTH_INDEFINITE).show();
+            }
+
         });
     }
 
@@ -235,7 +253,16 @@ public class BusquedaActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
-        } else {
+        }
+        else if(dreawerLayout.isDrawerOpen(GravityCompat.END)){
+            dreawerLayout.closeDrawers();
+        }
+        else if(vistaFiltroPrincipal.isFiltroAplicado()){
+            // Se realiza la peticion con los parametros inciales
+            consultarPeticionAPI(parametrosRequest);
+            vistaFiltroPrincipal.setFiltroAplicado(false);
+        }
+        else {
             super.onBackPressed();
         }
     }

@@ -25,7 +25,7 @@ import co.com.neubs.shopneubs.fragments.IndexFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
 
 public class PrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,ProductosCategoriaFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG_FRAGMENT = "FRAGMENT";
 
@@ -40,6 +40,11 @@ public class PrincipalActivity extends AppCompatActivity
 
     private IconNotificationBadge iconShopCart;
 
+    /**
+     * callback cuando se backPressed
+     * se usa para cuando se hace backPressed en un fragment
+     */
+    protected OnBackPressedListener onBackPressedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,18 +136,24 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START) || drawer.isDrawerOpen(GravityCompat.END) || searchView.isSearchOpen()) {
-            if (searchView.isSearchOpen())
-                searchView.closeSearch();
-            else
-                drawer.closeDrawers();
+        // si ningun fragment asignó un callback onBackPressed
+        if (onBackPressedListener == null) {
+            if (drawer.isDrawerOpen(GravityCompat.START) || drawer.isDrawerOpen(GravityCompat.END) || searchView.isSearchOpen()) {
+                if (searchView.isSearchOpen())
+                    searchView.closeSearch();
+                else
+                    drawer.closeDrawers();
+            }
+            // Si no se está visualizando el IndexFragment, se carga
+            else if (getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT).getClass() != IndexFragment.class) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(), TAG_FRAGMENT).commit();
+            } else
+                super.onBackPressed();
         }
-        // Si no se está visualizando el IndexFragment, se carga
-        else if (getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT).getClass() != IndexFragment.class){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(),TAG_FRAGMENT).commit();
+        else{
+            // se invoca el método doBack del fragment
+            onBackPressedListener.doBack();
         }
-        else
-            super.onBackPressed();
     }
 
     @Override
@@ -236,7 +247,7 @@ public class PrincipalActivity extends AppCompatActivity
                 break;
             case R.id.nav_my_account:
                 Intent intent = new Intent(this,AccountActivity.class);
-                this.startActivity(intent);
+                startActivity(intent);
                 break;
 
         }
@@ -255,8 +266,20 @@ public class PrincipalActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    /**
+     * Asigna el onBackPressedListener a la actividad
+     * @param onBackPressedListener evento
+     */
+    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
+        this.onBackPressedListener = onBackPressedListener;
     }
+
+    /**
+     * interfaz para realizar el callback en onBackPressed desde un fragment
+     */
+    public interface OnBackPressedListener {
+        void doBack();
+    }
+
+
 }

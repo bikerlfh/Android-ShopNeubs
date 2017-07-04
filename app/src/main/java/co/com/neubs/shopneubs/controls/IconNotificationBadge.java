@@ -288,31 +288,31 @@ public class IconNotificationBadge extends RelativeLayout {
     }
 
     public void show(int number){
-        textoBadge = String.valueOf(number);
-        // si el número tiene una longitud mayor a la proporcionada
-        // se visualiza el texto por default alcanzado
-        if (textoBadge.length() > maxTextLength)
-            textoBadge = DEFAULT_TEXT_MAX_LENGTH_REACHED;
+        if (!String.valueOf(number).equals(textoBadge)) {
+            textoBadge = String.valueOf(number);
+            // si el número tiene una longitud mayor a la proporcionada
+            // se visualiza el texto por default alcanzado
+            if (textoBadge.length() > maxTextLength)
+                textoBadge = DEFAULT_TEXT_MAX_LENGTH_REACHED;
 
-        if (isAnimationEnabled && number > 0) {
-            Animation animation = animationShow;
-            // si el badger ya se esta visualizado
-            // se cambia la animación por la Update
-            if (isBadgeShow) {
-                animation = animationUpdate;
+            if (isAnimationEnabled && number > 0) {
+                Animation animation = animationShow;
+                // si el badger ya se esta visualizado
+                // se cambia la animación por la Update
+                if (isBadgeShow) {
+                    animation = animationUpdate;
+                }
+                mTextBadge.startAnimation(animation);
+            } else if (number > 0) {
+                mTextBadge.setText(textoBadge);
+                setVisibilityBadge(true);
+            } else {
+                clear();
+                isBadgeShow = false;
+                return;
             }
-            mTextBadge.startAnimation(animation);
+            isBadgeShow = true;
         }
-        else if(number > 0){
-            mTextBadge.setText(textoBadge);
-            setVisibilityBadge(true);
-        }
-        else{
-            clear();
-            isBadgeShow = false;
-            return;
-        }
-        isBadgeShow = true;
     }
 
     /**
