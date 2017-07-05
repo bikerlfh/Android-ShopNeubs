@@ -160,6 +160,7 @@
     <dimen name="margin_bottom_img_btn_menos_cardview_shop_cart">8dp</dimen>
     <dimen name="margin_start_img_btn_menos_cardview_shop_cart">88dp</dimen>
     <dimen name="margin_bottom_top_img_producto_cardview_shop_cart">8dp</dimen>
+    <dimen name="padding_bottom_lbl_marca_producto_car_cardview_shop_cart">2dp</dimen>
 
     <!-- margin-padding cardview_pedido_detalle -->
     <dimen name="padding_botton_cardview_pedido_detalle">9dp</dimen>
