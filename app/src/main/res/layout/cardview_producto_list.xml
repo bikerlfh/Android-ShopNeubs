@@ -74,13 +74,12 @@
             android:id="@+id/lbl_producto_sin_stock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/lbl_precio_producto_card"
             android:background="@android:color/holo_red_dark"
             android:padding="4dp"
             android:text="@string/sin_stock"
-            android:textColor="@color/textColorPrimary"
-            android:layout_alignBaseline="@+id/lbl_precio_anterior_card"
-            android:layout_alignBottom="@+id/lbl_precio_anterior_card"
-            android:layout_alignParentEnd="true" />
+            android:textColor="@color/textColorPrimary" />
 
     </RelativeLayout>
 

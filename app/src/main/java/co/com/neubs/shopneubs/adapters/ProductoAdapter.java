@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import co.com.neubs.shopneubs.PrincipalActivity;
 import co.com.neubs.shopneubs.ProductoDetalleActivity;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
@@ -40,7 +41,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     /**
      * ID del recurso XML Layout a cargar desde LayoutInflater
      */
-    private int idResourceLayoutToInflate;
+    protected int idResourceLayoutToInflate;
 
     /**
      * Constructor
@@ -60,7 +61,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     public ProductoViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         // inflate layout
         View view = LayoutInflater.from(parent.getContext()).inflate(this.idResourceLayoutToInflate ,null);
-        return new ProductoViewHolder(view);
+        return new ProductoViewHolder(view,idResourceLayoutToInflate == R.layout.cardview_producto_list);
     }
 
     @Override
@@ -120,7 +121,9 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
 
         private SaldoInventario saldoInventario;
 
-        public ProductoViewHolder(View itemView) {
+        private boolean showAddCart;
+
+        public ProductoViewHolder(View itemView,boolean showAddCart) {
             super(itemView);
             imagen = (ImageLoaderView)itemView.findViewById(R.id.img_producto);
             nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
@@ -129,9 +132,10 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             lblSinStok = (TextView) itemView.findViewById(R.id.lbl_producto_sin_stock);
             //Estilo Texto strikethrough
             oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+            this.showAddCart = showAddCart;
         }
 
-        public void bindProducto(SaldoInventario saldoInventario) {
+        public void bindProducto(final SaldoInventario saldoInventario) {
             this.saldoInventario = saldoInventario;
             Producto producto = saldoInventario.getProducto();
             nombre_producto.setText(producto.getNombre());
@@ -145,11 +149,28 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 precio.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
                 oferta.setVisibility(View.GONE);
             }
-
-            if (saldoInventario.getEstado())
-                lblSinStok.setVisibility(View.GONE);
-            else
+            // si esta activo y es llamado desde el vista en lista
+            // se visualiza  para agregar al carro
+            if (saldoInventario.getEstado()) {
+                if (showAddCart) {
+                    lblSinStok.setVisibility(View.VISIBLE);
+                    lblSinStok.setBackgroundColor(itemView.getResources().getColor(R.color.colorAccent));
+                    lblSinStok.setText(itemView.getContext().getString(R.string.agregar_carrito));
+                    lblSinStok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((PrincipalActivity) v.getContext()).agregarItemCart(saldoInventario);
+                        }
+                    });
+                }
+                else
+                    lblSinStok.setVisibility(View.GONE);
+            }
+            else {
                 lblSinStok.setVisibility(View.VISIBLE);
+                lblSinStok.setBackgroundColor(itemView.getResources().getColor(android.R.color.holo_red_dark));
+                lblSinStok.setText(itemView.getContext().getString(R.string.sin_stock));
+            }
 
             // Se obtiene la imagen y se guarda en el cache
             imagen.setImageURL(producto.getImagen());
@@ -157,6 +178,8 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             imagen.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
+
+
 
         @Override
         public void onClick(View v) {

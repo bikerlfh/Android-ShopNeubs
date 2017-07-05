@@ -15,10 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import co.com.neubs.shopneubs.classes.SessionManager;
+import co.com.neubs.shopneubs.classes.models.ItemCar;
+import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.fragments.IndexFragment;
@@ -279,6 +282,33 @@ public class PrincipalActivity extends AppCompatActivity
      */
     public interface OnBackPressedListener {
         void doBack();
+    }
+
+    public void agregarItemCart(SaldoInventario saldoInventario){
+        // Se agrega el item al carrito
+        if (sessionManager.getItemCarByIdSaldoInventario(saldoInventario.getIdSaldoInventario()) == null) {
+            ItemCar itemCar = new ItemCar();
+            itemCar.setNombreProducto(saldoInventario.getProducto().getNombre());
+            itemCar.setIdSaldoInventario(saldoInventario.getIdSaldoInventario());
+            itemCar.setImage(saldoInventario.getProducto().getImagen());
+            itemCar.setIdMarca(saldoInventario.getProducto().getIdMarca());
+            itemCar.setCantidad(1);
+            if (saldoInventario.getPrecioOferta() > 0)
+                itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioOferta());
+            else
+                itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
+            if (sessionManager.addItemCar(itemCar)) {
+                Toast.makeText(this,getString(R.string.title_item_added),Toast.LENGTH_SHORT).show();
+                iconShopCart.show(sessionManager.getCountItemsShopCar());
+            }
+            else{
+                Toast.makeText(this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            Toast.makeText(this, getString(R.string.error_item_in_car), Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 
