@@ -216,7 +216,7 @@ public class NavigationViewFiltro extends NavigationView {
     }
 
     /**
-     * Adaptador para las marcas
+     * Adaptador para el filtro de marcas
      */
     private class MarcaFiltroAdapter extends RecyclerView.Adapter<MarcaFiltroAdapter.MarcaViewHolder>{
 

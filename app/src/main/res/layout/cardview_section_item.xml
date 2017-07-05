@@ -9,7 +9,7 @@
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="160dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -60,20 +60,22 @@
             <TextView
                 android:id="@+id/lbl_precio_producto_card"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:layout_weight="0.45"
+                android:gravity="center_vertical|end"
                 android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_section_item"
                 android:paddingEnd="@dimen/padding_end_lbl_precio_producto_card_cardview_section_item"
                 android:text="TextView"
-                android:textAlignment="textEnd"
                 android:textColor="@color/colorPrecio"
                 android:textSize="@dimen/precio_producto_card" />
 
             <TextView
                 android:id="@+id/lbl_precio_anterior_card"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="bottom|end"
+                android:gravity="center_vertical|end"
                 android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_section_item"
                 android:text="TextView"
                 android:textSize="@dimen/precio_anterior_producto_card" />
