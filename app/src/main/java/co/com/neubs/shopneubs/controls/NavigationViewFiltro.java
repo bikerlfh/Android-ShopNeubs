@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,16 +30,42 @@ import co.com.neubs.shopneubs.classes.models.Marca;
 
 public class NavigationViewFiltro extends NavigationView {
 
+    private LinearLayout mContainerRelevante;
     private ImageButton mBtnRelevante;
+    private TextView mLblRelevante;
+    private LinearLayout mContainerMenorPrecio;
     private ImageButton mBtnMenorPrecio;
+    private TextView mLblMenorPrecio;
+    private LinearLayout mContainerMayorPrecio;
     private ImageButton mBtnMayorPrecio;
+    private TextView mLblMayorPrecio;
+    private LinearLayout mContainerOferta;
     private ImageButton mBtnOferta;
+    private TextView mLblOferta;
+
     private RecyclerView mRecycleViewMarca;
     private Button mBtnAplicarFiltro;
 
     private MarcaFiltroAdapter marcaAdapter;
 
-    private List<Marca> listMarca;
+    /**
+     * Color por defecto del filtro (icono y texto)
+     */
+    private final int DEFAULT_COLOR_FILTRO = R.color.menuTextColorNonChecked;
+    /**
+     * Color del filtro seleccionado (icono y text)
+     */
+    private final int DEFAULT_COLOR_SELECTED_FILTRO = R.color.menuTextColorChecked;
+    /**
+     * Background color por defecto del filtro
+     */
+    private final int DEFAULT_BACKGROUND_COLOR_FILTRO = R.color.menuBackgroudColorNonChecked;
+    /**
+     * Background color del filtro cuando esta seleccionado
+     */
+    private final int DEFAULT_BACKGROUND_COLOR_SELECTED_FILTRO = R.color.menuBackgroudColorChecked;
+
+    private String filtroOrderBy;
 
 
     public NavigationViewFiltro(Context context) {
@@ -60,36 +88,94 @@ public class NavigationViewFiltro extends NavigationView {
 
         inflater.inflate(R.layout.navigationview_filtro, this);
 
+        mContainerRelevante = (LinearLayout) findViewById(R.id.container_filter_relevante);
+        mContainerMenorPrecio = (LinearLayout) findViewById(R.id.container_filter_menor_precio);
+        mContainerMayorPrecio = (LinearLayout) findViewById(R.id.container_filter_mayor_precio);
+        mContainerOferta = (LinearLayout) findViewById(R.id.container_filter_oferta);
+
         // Se incializan los controles
         mBtnRelevante = (ImageButton) findViewById(R.id.btn_relevante);
         mBtnMenorPrecio = (ImageButton) findViewById(R.id.btn_menor_precio);
         mBtnMayorPrecio = (ImageButton) findViewById(R.id.btn_mayor_precio);
         mBtnOferta = (ImageButton) findViewById(R.id.btn_oferta);
+
+        mLblRelevante = (TextView) findViewById(R.id.lbl_relevante);
+        mLblMenorPrecio = (TextView) findViewById(R.id.lbl_menor_precio);
+        mLblMayorPrecio = (TextView) findViewById(R.id.lbl_mayor_precio);
+        mLblOferta = (TextView) findViewById(R.id.lbl_oferta);
+
         mRecycleViewMarca = (RecyclerView) findViewById(R.id.recycle_view_marca_filtro);
         mBtnAplicarFiltro = (Button) findViewById(R.id.btn_aplicar_filtro);
+
+        mContainerRelevante.setOnClickListener(onClickListenerContainerFiltro);
+        mContainerMenorPrecio.setOnClickListener(onClickListenerContainerFiltro);
+        mContainerMayorPrecio.setOnClickListener(onClickListenerContainerFiltro);
+        mContainerOferta.setOnClickListener(onClickListenerContainerFiltro);
+
+        cleanFormatContainerFilter();
     }
 
-    private OnClickListener onClickListenerImageOrenarPor = new OnClickListener() {
+    /**
+     * Evento OnClickListener de los contenedores Filtro
+     * cambia de color al container seleccionado
+     */
+    private OnClickListener onClickListenerContainerFiltro = new OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            cleanFormatContainerFilter();
+            int color = getContext().getResources().getColor(DEFAULT_COLOR_SELECTED_FILTRO);
+            switch (v.getId()){
+                case R.id.container_filter_relevante:
+                    mContainerRelevante.setBackgroundColor(getResources().getColor(DEFAULT_BACKGROUND_COLOR_SELECTED_FILTRO));
+                    mBtnRelevante.setColorFilter(color);
+                    mLblRelevante.setTextColor(color);
+                    filtroOrderBy = "rel";
+                    break;
+                case R.id.container_filter_menor_precio:
+                    mContainerMenorPrecio.setBackgroundColor(getResources().getColor(DEFAULT_BACKGROUND_COLOR_SELECTED_FILTRO));
+                    mBtnMenorPrecio.setColorFilter(color);
+                    mLblMenorPrecio.setTextColor(color);
+                    filtroOrderBy = "asc";
+                    break;
+                case R.id.container_filter_mayor_precio:
+                    mContainerMayorPrecio.setBackgroundColor(getResources().getColor(DEFAULT_BACKGROUND_COLOR_SELECTED_FILTRO));
+                    mBtnMayorPrecio.setColorFilter(color);
+                    mLblMayorPrecio.setTextColor(color);
+                    filtroOrderBy = "desc";
+                    break;
+                case R.id.container_filter_oferta:
+                    mContainerOferta.setBackgroundColor(getResources().getColor(DEFAULT_BACKGROUND_COLOR_SELECTED_FILTRO));
+                    mBtnOferta.setColorFilter(color);
+                    mLblOferta.setTextColor(color);
+                    filtroOrderBy = "promo";
+                    break;
+            }
         }
     };
 
+    /**
+     * Asigna el filtro por marca
+     * @param listMarca listado de Marcas a visualizar
+     */
     public void setFilterMarca(List<Marca> listMarca){
         marcaAdapter = new MarcaFiltroAdapter(getContext(),listMarca);
         mRecycleViewMarca.setAdapter(marcaAdapter);
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-
         mRecycleViewMarca.setLayoutManager(mLayoutManager);
     }
 
+    /**
+     * Obtiene el filtro
+     * @return filtro
+     */
     public Map<String,String> getFiltro(){
         Map<String,String> params = new HashMap<>();
         final Marca marcaSelected = marcaAdapter.getMarcaSelected();
         if (marcaSelected != null){
             params.put("marca",String.valueOf(marcaSelected.getCodigo()));
+        }
+        if (filtroOrderBy != null){
+            params.put("order",filtroOrderBy);
         }
         return params;
     }
@@ -107,10 +193,27 @@ public class NavigationViewFiltro extends NavigationView {
         });
     }
 
-    private int convertDpToPixels(float dpi){
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpi,getResources().getDisplayMetrics());
-    }
+    /**
+     * Pone los colores por defecto de los countainerFilter (Ordenar por)
+     */
+    private void cleanFormatContainerFilter(){
+        int color = getContext().getResources().getColor(DEFAULT_COLOR_FILTRO);
+        int colorBackground = getContext().getResources().getColor(DEFAULT_BACKGROUND_COLOR_FILTRO);
+        mBtnRelevante.setColorFilter(color);
+        mBtnMenorPrecio.setColorFilter(color);
+        mBtnMayorPrecio.setColorFilter(color);
+        mBtnOferta.setColorFilter(color);
 
+        mLblRelevante.setTextColor(color);
+        mLblMenorPrecio.setTextColor(color);
+        mLblMayorPrecio.setTextColor(color);
+        mLblOferta.setTextColor(color);
+
+        mContainerRelevante.setBackgroundColor(colorBackground);
+        mContainerMenorPrecio.setBackgroundColor(colorBackground);
+        mContainerMayorPrecio.setBackgroundColor(colorBackground);
+        mContainerOferta.setBackgroundColor(colorBackground);
+    }
 
     /**
      * Adaptador para las marcas

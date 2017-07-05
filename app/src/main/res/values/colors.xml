@@ -17,4 +17,11 @@
     <color name="colorBackgroundCardView">#fafafa</color>
     <color name="colorPrecio">#e01414</color>
     <color name="colorControlActivated">#ffffff</color>
+
+    <!-- Colores para el menu drawer -->
+    <color name="menuTextColorChecked">#ffffff</color>
+    <color name="menuTextColorNonChecked">#5a626c</color>
+    <color name="menuBackgroudColorChecked">#ff5722</color>
+    <color name="menuBackgroudColorNonChecked">#00000000</color>
+
 </resources>
