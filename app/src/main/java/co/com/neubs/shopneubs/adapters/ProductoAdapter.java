@@ -3,7 +3,6 @@ package co.com.neubs.shopneubs.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -156,10 +155,12 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 if (showAddCart) {
                     lblSinStok.setVisibility(View.VISIBLE);
                     //lblSinStok.setBackgroundColor(itemView.getResources().getColor(R.color.colorAccent));
-                    lblSinStok.setBackground(itemView.getResources().getDrawable(R.drawable.boton_add_cart_view_list));
+                    lblSinStok.setBackground(itemView.getResources().getDrawable(R.drawable.shape_boton_add_cart_view_list));
+                    lblSinStok.setText(itemView.getContext().getString(R.string.agregar_carrito));
                     lblSinStok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_shopping_cart_list,0,0,0);
                     lblSinStok.setCompoundDrawablePadding(5);
                     lblSinStok.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    lblSinStok.setEnabled(true);
                     lblSinStok.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -172,8 +173,11 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             }
             else {
                 lblSinStok.setVisibility(View.VISIBLE);
-                lblSinStok.setBackground(itemView.getResources().getDrawable(R.drawable.boton_sin_stock_view_list));
+                lblSinStok.setBackground(itemView.getResources().getDrawable(R.drawable.shape_boton_sin_stock_view_list));
+                lblSinStok.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 lblSinStok.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                lblSinStok.setText(itemView.getContext().getString(R.string.sin_stock));
+                lblSinStok.setEnabled(false);
             }
 
             // Se obtiene la imagen y se guarda en el cache
