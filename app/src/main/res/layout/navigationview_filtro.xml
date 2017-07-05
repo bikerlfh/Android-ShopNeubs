@@ -1,118 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_filtro"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="end"
+    android:layout_marginTop="23dp"
     android:fitsSystemWindows="true"
     app:elevation="16dp"
-    app:itemTextColor="@color/menu_text_color"
-    app:itemIconTint="@color/menu_text_color">
+    app:itemIconTint="@color/menu_text_color"
+    app:itemTextColor="@color/menu_text_color">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground">
-
-        <TextView
-            android:id="@+id/lbl_title_filtro"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:text="@string/filtro_title" />
+        android:background="@color/colorBackground"
+        android:elevation="16dp">
 
         <TextView
             android:id="@+id/lbl_titulo_ordenar_por"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentStart="false"
+            android:layout_height="56dp"
             android:layout_below="@+id/lbl_title_filtro"
-            android:layout_centerHorizontal="false"
             android:layout_centerInParent="false"
-            android:layout_centerVertical="false"
             android:background="@android:color/white"
-            android:text="@string/title_order_by" />
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:text="@string/title_order_by"
+            android:textColor="@color/textColorSecundary"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/ordenar_por"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_titulo_ordenar_por"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="3dp"
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/btn_relevante"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lbl_titulo_ordenar_por"
-                android:layout_toStartOf="@+id/btn_menor_precio"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                android:orientation="horizontal"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
 
-            <ImageButton
-                android:id="@+id/btn_menor_precio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lbl_titulo_ordenar_por"
-                android:layout_toStartOf="@+id/btn_mayor_precio"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                app:srcCompat="@mipmap/ic_launcher" />
+                <ImageButton
+                    android:id="@+id/btn_relevante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lbl_titulo_ordenar_por"
+                    android:layout_toStartOf="@+id/btn_menor_precio"
+                    android:background="?android:attr/selectableItemBackground"
+                    app:srcCompat="@drawable/ic_important" />
 
-            <ImageButton
-                android:id="@+id/btn_mayor_precio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lbl_titulo_ordenar_por"
-                android:layout_toStartOf="@+id/btn_oferta"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/ordenar_por"
+                    android:layout_weight="1.21"
+                    android:alpha="0.8"
+                    android:paddingStart="50dp"
+                    android:text="Relevante"
+                    android:textAllCaps="false"
+                    android:textColor="@color/textColorSecundary"
+                    android:textIsSelectable="false" />
 
-            <ImageButton
-                android:id="@+id/btn_oferta"
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/btn_aplicar_filtro"
-                android:layout_below="@+id/lbl_titulo_ordenar_por"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:orientation="horizontal"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <ImageButton
+                    android:id="@+id/btn_menor_precio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/btn_mayor_precio"
+                    android:background="?android:attr/selectableItemBackground"
+                    app:srcCompat="@drawable/ic_price_tag" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/ordenar_por"
+                    android:layout_toEndOf="@+id/textView8"
+                    android:layout_weight="13778924"
+                    android:paddingStart="50dp"
+                    android:text="Menor Precio"
+                    android:textColor="@color/textColorSecundary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <ImageButton
+                    android:id="@+id/btn_mayor_precio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lbl_titulo_ordenar_por"
+                    android:layout_toStartOf="@+id/btn_oferta"
+                    android:background="?android:attr/selectableItemBackground"
+                    app:srcCompat="@drawable/ic_price_higher" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ordenar_por"
+                    android:layout_toEndOf="@+id/textView5"
+                    android:layout_weight="1"
+                    android:paddingStart="50dp"
+                    android:text="Precio mayor"
+                    android:textColor="@color/textColorSecundary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <ImageButton
+                    android:id="@+id/btn_oferta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/btn_aplicar_filtro"
+                    android:layout_below="@+id/lbl_titulo_ordenar_por"
+                    android:background="?android:attr/selectableItemBackground"
+                    app:srcCompat="@drawable/ic_offer" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="50dp"
+                    android:text="Ofertas"
+                    android:textColor="@color/textColorSecundary" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/lbl_title_filtre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/ordenar_por"
-            android:text="TextView" />
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@android:color/white"
+            android:paddingBottom="8dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:text="Marcas"
+            android:textColor="@color/textColorSecundary"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_aplicar_filtro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:text="Button" />
+            android:layout_alignParentStart="true"
+            android:backgroundTint="@color/colorSecundary"
+            android:text="HECHO"
+            android:textColor="@color/textColorPrimary" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_view_marca_filtro"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/btn_aplicar_filtro"
-            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView19"
-            android:layout_marginTop="17dp" />
+            android:layout_below="@+id/lbl_title_filtre"
+            android:background="@android:color/white"
+            android:paddingStart="16dp" />
 
     </RelativeLayout>
 
