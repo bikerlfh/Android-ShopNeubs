@@ -172,7 +172,7 @@ public class NavigationViewFiltro extends NavigationView {
         Map<String,String> params = new HashMap<>();
         final Marca marcaSelected = marcaAdapter.getMarcaSelected();
         if (marcaSelected != null){
-            params.put("marca",String.valueOf(marcaSelected.getCodigo()));
+            params.put("marca",marcaSelected.getCodigo());
         }
         if (filtroOrderBy != null){
             params.put("order",filtroOrderBy);

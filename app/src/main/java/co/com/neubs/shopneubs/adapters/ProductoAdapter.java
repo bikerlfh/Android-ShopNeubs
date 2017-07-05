@@ -39,6 +39,11 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     private Context context;
 
     /**
+     * indica si una peticion de siguiente pagina esta activa o no
+     */
+    private boolean onNextPageRequest = false;
+
+    /**
      * ID del recurso XML Layout a cargar desde LayoutInflater
      */
     protected int idResourceLayoutToInflate;
@@ -85,8 +90,9 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
      * Este metodo debe ser llamado desde el evento OnScrollListener (onScrolledToBottom)
      */
     public void getNextPage(View view){
-        if (this.nextPage!= null && this.nextPage.length() > 0){
-
+        // Si existe siguiente pagina y no se esta haciendo una petición de siguiente pagina en curso
+        if (this.nextPage!= null && this.nextPage.length() > 0 && !onNextPageRequest){
+            onNextPageRequest = true;
             final Snackbar snackbar = Snackbar.make(view, R.string.text_loading, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null);
             snackbar.show();
@@ -94,6 +100,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             APIRest.Async.get(this.nextPage, new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
+                    onNextPageRequest = false;
                     ConsultaPaginada cPaginada = APIRest.serializeObjectFromJson(json,ConsultaPaginada.class);
                     addItems(getItemCount(),cPaginada.getResults());
                     // Se modifica nextPage asignandole la nueva (pagina siguiente)
@@ -103,6 +110,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
 
                 @Override
                 public void onError(String message_error, APIValidations apiValidations) {
+                    onNextPageRequest = false;
                     Log.d(TAG,"ERROR: " + message_error);
                     snackbar.dismiss();
                 }
