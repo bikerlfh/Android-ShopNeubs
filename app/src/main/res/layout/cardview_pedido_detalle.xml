@@ -49,6 +49,7 @@
         <TextView
             android:id="@+id/lbl_costo_total_pedido_detalle"
             android:layout_width="209dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_bottom_lbl_costo_total_cardview_pedido_detalle"
             android:layout_marginStart="@dimen/margin_start_lbl_costo_total_cardview_pedido_detalle"
             android:paddingStart="@dimen/padding_end_start_lbl_cardview_pedido_detalle"

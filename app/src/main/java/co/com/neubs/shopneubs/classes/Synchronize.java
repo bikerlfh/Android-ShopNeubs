@@ -2,6 +2,9 @@ package co.com.neubs.shopneubs.classes;
 
 import android.content.Context;
 
+import com.android.volley.Cache;
+
+import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.classes.models.APIBanner;
 import co.com.neubs.shopneubs.classes.models.APISection;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
@@ -131,6 +134,13 @@ public class Synchronize {
             if (listApiSincronizacion != null && listApiSincronizacion.length > 0) {
                 for (APISincronizacion apiSincronizacion : listApiSincronizacion) {
                     if (!apiSincronizacion.exists()) {
+
+                        /* Se limpia el cache de Volley si existe alguna sincronización pendiente.
+                        * solo se ejecuta la primera vez que se guarda la sincronización
+                        */
+                        if (numSincronizacion == 0)
+                            Helper.clearCacheVolley();
+
                         apiSincronizacion.save();
                         numSincronizacion++;
                         // Sincroniza la tabla que se guarda

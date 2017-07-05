@@ -10,6 +10,8 @@ import android.util.TypedValue;
 import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 
 /**
@@ -66,5 +68,13 @@ public class Helper {
      */
     public static int dpToPx(int dp, Context context) {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics()));
+    }
+
+    /**
+     * Limpia el cache de las peticiones Volley
+     */
+    public static void clearCacheVolley(){
+        // Se borra el cache de Volley
+        AppController.getInstance().getRequestQueue().getCache().clear();
     }
 }
