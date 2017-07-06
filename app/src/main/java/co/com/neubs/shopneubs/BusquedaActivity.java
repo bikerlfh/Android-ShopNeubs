@@ -81,6 +81,7 @@ public class BusquedaActivity extends AppCompatActivity {
 
 
         vistaFiltroPrincipal.setDrawerLayoutParent(dreawerLayout);
+
         vistaFiltroPrincipal.setOnClickListenerAplicarFiltro(new NavigationViewFiltro.OnClickListenerAplicarFiltro() {
             @Override
             public void onClick(View v, Map<String, String> filtro) {
@@ -91,6 +92,14 @@ public class BusquedaActivity extends AppCompatActivity {
                     vistaFiltroPrincipal.setFiltroAplicado(true);
                 }
                 vistaFiltroPrincipal.closeDrawer();
+            }
+        });
+
+        // Se asigna el evento click del boton limpiarFiltro
+        vistaFiltroPrincipal.setOnClickListenerLimpiarFiltro(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                consultarPeticionAPI(parametrosRequest);
             }
         });
 

@@ -45,6 +45,7 @@ public class NavigationViewFiltro extends NavigationView {
 
     private RecyclerView mRecycleViewMarca;
     private Button mBtnAplicarFiltro;
+    private Button mBtnLimpiarFiltro;
 
     private MarcaFiltroAdapter marcaAdapter;
 
@@ -105,6 +106,7 @@ public class NavigationViewFiltro extends NavigationView {
         mLblOferta = (TextView) findViewById(R.id.lbl_oferta);
 
         mRecycleViewMarca = (RecyclerView) findViewById(R.id.recycle_view_marca_filtro);
+        mBtnLimpiarFiltro = (Button) findViewById(R.id.btn_limpiar_filtro);
         mBtnAplicarFiltro = (Button) findViewById(R.id.btn_aplicar_filtro);
 
         mContainerRelevante.setOnClickListener(onClickListenerContainerFiltro);
@@ -194,9 +196,19 @@ public class NavigationViewFiltro extends NavigationView {
     }
 
     /**
+     * Asigna el evento click al boton limpiar filtro
+     * también limpia el formato de container y el filtroOrderBy
+     * @param listener
+     */
+    public void setOnClickListenerLimpiarFiltro(final OnClickListener listener){
+        mBtnLimpiarFiltro.setOnClickListener(listener);
+    }
+
+    /**
      * Pone los colores por defecto de los countainerFilter (Ordenar por)
      */
-    private void cleanFormatContainerFilter(){
+    public void cleanFormatContainerFilter(){
+        filtroOrderBy = null;
         int color = getContext().getResources().getColor(DEFAULT_COLOR_FILTRO);
         int colorBackground = getContext().getResources().getColor(DEFAULT_BACKGROUND_COLOR_FILTRO);
         mBtnRelevante.setColorFilter(color);

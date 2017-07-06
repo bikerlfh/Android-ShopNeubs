@@ -236,6 +236,23 @@ public class VistaFiltroPrincipal extends RelativeLayout {
     }
 
     /**
+     * Asigna el evento click al boton btnApicarFiltro
+     * @param listener OnClickListener Event
+     */
+    public void setOnClickListenerLimpiarFiltro(final OnClickListener listener){
+        if (navigationViewFiltro != null){
+            navigationViewFiltro.setOnClickListenerLimpiarFiltro(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navigationViewFiltro.cleanFormatContainerFilter();
+                    listener.onClick(v);
+                    closeDrawer();
+                }
+            });
+        }
+    }
+
+    /**
      * Cierra el drawerFiltro
      */
     public void closeDrawer(){

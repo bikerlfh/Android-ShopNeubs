@@ -103,6 +103,13 @@ public class ProductosCategoriaFragment extends Fragment implements PrincipalAct
                 vistaFiltroPrincipal.closeDrawer();
             }
         });
+        // Se asigna el evento click del boton limpiarFiltro
+        vistaFiltroPrincipal.setOnClickListenerLimpiarFiltro(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                consultarPeticionAPI(urlRequest,parametrosRequest);
+            }
+        });
 
         consultarPeticionAPI(urlRequest,parametrosRequest);
 
