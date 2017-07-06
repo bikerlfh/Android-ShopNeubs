@@ -35,17 +35,18 @@
             android:id="@+id/lbl_titulo_ordenar_por"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
             android:layout_centerInParent="false"
+            android:layout_marginTop="3dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:paddingBottom="8dp"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
             android:text="@string/title_order_by"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textSize="15sp"
-            android:layout_below="@+id/textView"
-            android:layout_alignParentStart="true" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorSecundaryLight" />
 
         <LinearLayout
             android:id="@+id/ordenar_por"
@@ -53,7 +54,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_titulo_ordenar_por"
-            android:layout_marginTop="3dp"
             android:background="@android:color/white"
             android:orientation="vertical">
 
@@ -85,7 +85,7 @@
                     android:layout_below="@+id/ordenar_por"
                     android:layout_weight="1.21"
                     android:gravity="center_vertical"
-                    android:paddingStart="38dp"
+                    android:paddingStart="32dp"
                     android:text="Relevante"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textIsSelectable="false" />
@@ -118,7 +118,7 @@
                     android:layout_toEndOf="@+id/lbl_relevante"
                     android:layout_weight="13778924"
                     android:gravity="center_vertical"
-                    android:paddingStart="38dp"
+                    android:paddingStart="32dp"
                     android:text="Menor Precio"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
@@ -150,7 +150,7 @@
                     android:layout_toEndOf="@+id/lbl_menor_precio"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:paddingStart="38dp"
+                    android:paddingStart="32dp"
                     android:text="Mayor Precio"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -181,7 +181,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:paddingStart="38dp"
+                    android:paddingStart="32dp"
                     android:text="Ofertas"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
@@ -194,14 +194,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/ordenar_por"
-            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
             android:background="@android:color/white"
             android:paddingBottom="8dp"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
             android:text="Marcas"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textSize="15sp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorSecundaryLight" />
 
         <Button
             android:id="@+id/btn_aplicar_filtro"
@@ -228,7 +228,7 @@
             android:textAlignment="center" />
 
         <Button
-            android:id="@+id/btn_limpiar"
+            android:id="@+id/btn_limpiar_filtro"
             style="@style/Widget.AppCompat.ButtonBar.AlertDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
