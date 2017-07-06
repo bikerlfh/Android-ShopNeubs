@@ -163,21 +163,47 @@ public class VistaFiltroPrincipal extends RelativeLayout {
 
     /**
      * Asigna el drawerLayout
-     * @param drawerLayoutParent drawerLayout
+     * @param drawerLayout drawerLayout
      */
-    public void setDrawerLayoutParent(DrawerLayout drawerLayoutParent) {
-        this.drawerLayoutParent = drawerLayoutParent;
+    public void setDrawerLayoutParent(DrawerLayout drawerLayout) {
+        this.drawerLayoutParent = drawerLayout;
         if (this.drawerLayoutParent != null) {
             navigationViewFiltro = (NavigationViewFiltro) drawerLayoutParent.findViewById(R.id.drawer_filtro);
+
+            // Si existe el navigationViewFiltro se bloquea para que se abra deslizando
+            // cuando se abre se quita el bloqueo para que se pueda cerrar deslizando, y cuando se cierra,
+            // se bloquea para que no se logre abrir deslizando
             if (navigationViewFiltro != null){
-                // Se bloquea el navigationViewFiltro, siempre cerrado
-                this.drawerLayoutParent.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,navigationViewFiltro);
+                drawerLayoutParent.addDrawerListener(new DrawerLayout.DrawerListener() {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                    }
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        // Caundo el navigationViewFiltro se abre, se desbloquea para que se pueda cerrar deslizando
+                        if (drawerView == navigationViewFiltro){
+                            drawerLayoutParent.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED,navigationViewFiltro);
+                        }
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        // Caundo el navigationViewFiltro se cierra, se bloquea para que no se pueda abrir deslizando
+                        if (drawerView == navigationViewFiltro){
+                            drawerLayoutParent.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,navigationViewFiltro);
+                        }
+
+                    }
+
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+
+                    }
+                });
             }
         }
-    }
-
-    public void setNavigationViewFiltro(NavigationViewFiltro navigationViewFiltro) {
-        this.navigationViewFiltro = navigationViewFiltro;
     }
 
     /**

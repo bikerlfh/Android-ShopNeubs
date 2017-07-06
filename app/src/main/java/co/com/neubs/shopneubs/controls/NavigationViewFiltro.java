@@ -225,6 +225,8 @@ public class NavigationViewFiltro extends NavigationView {
         mContainerMenorPrecio.setBackgroundColor(colorBackground);
         mContainerMayorPrecio.setBackgroundColor(colorBackground);
         mContainerOferta.setBackgroundColor(colorBackground);
+
+        mBtnRelevante.performClick();
     }
 
     /**
