@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import co.com.neubs.shopneubs.PrincipalActivity;
@@ -126,6 +128,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         private TextView precio;
         private TextView oferta;
         private TextView lblSinStok;
+        private TextView lblMarca;
 
         private SaldoInventario saldoInventario;
 
@@ -137,6 +140,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             nombre_producto = (TextView)itemView.findViewById(R.id.lbl_nombre_producto_card);
             precio = (TextView)itemView.findViewById(R.id.lbl_precio_producto_card);
             oferta = (TextView)itemView.findViewById(R.id.lbl_precio_anterior_card);
+            lblMarca =(TextView)itemView.findViewById(R.id.lbl_marca_producto);
             lblSinStok = (TextView) itemView.findViewById(R.id.lbl_producto_sin_stock);
             //Estilo Texto strikethrough
             oferta.setPaintFlags(precio.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
@@ -145,8 +149,12 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
 
         public void bindProducto(final SaldoInventario saldoInventario) {
             this.saldoInventario = saldoInventario;
-            Producto producto = saldoInventario.getProducto();
+            final Producto producto = saldoInventario.getProducto();
             nombre_producto.setText(producto.getNombre());
+            // Se visualiza la marca
+            if (producto.getMarca() != null && lblMarca != null){
+                lblMarca.setText(producto.getMarca().getDescripcion());
+            }
 
             if (saldoInventario.getPrecioOferta() > 0){
                 oferta.setText(Helper.MoneyFormat(saldoInventario.getPrecioVentaUnitario()));
