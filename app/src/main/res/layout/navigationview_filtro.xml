@@ -20,16 +20,32 @@
         android:elevation="16dp">
 
         <TextView
-            android:id="@+id/lbl_titulo_ordenar_por"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:background="@color/colorPrimary"
+            android:gravity="fill_vertical"
+            android:paddingStart="16dp"
+            android:text="Filtro"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lbl_titulo_ordenar_por"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="false"
             android:background="@android:color/white"
             android:gravity="center_vertical"
+            android:paddingBottom="8dp"
             android:paddingStart="16dp"
+            android:paddingTop="8dp"
             android:text="@string/title_order_by"
-            android:textColor="@color/textColorSecundary"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="15sp"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentStart="true" />
 
         <LinearLayout
             android:id="@+id/ordenar_por"
@@ -45,10 +61,10 @@
                 android:id="@+id/container_filter_relevante"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
+                android:paddingStart="16dp"
                 android:paddingTop="8dp">
 
                 <ImageButton
@@ -68,12 +84,10 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/ordenar_por"
                     android:layout_weight="1.21"
-                    android:alpha="0.8"
                     android:gravity="center_vertical"
-                    android:paddingStart="50dp"
+                    android:paddingStart="38dp"
                     android:text="Relevante"
-                    android:textAllCaps="false"
-                    android:textColor="@color/textColorSecundary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textIsSelectable="false" />
 
             </LinearLayout>
@@ -82,10 +96,10 @@
                 android:id="@+id/container_filter_menor_precio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
+                android:paddingStart="16dp"
                 android:paddingTop="8dp">
 
                 <ImageButton
@@ -104,20 +118,19 @@
                     android:layout_toEndOf="@+id/lbl_relevante"
                     android:layout_weight="13778924"
                     android:gravity="center_vertical"
-                    android:paddingStart="50dp"
+                    android:paddingStart="38dp"
                     android:text="Menor Precio"
-                    android:textColor="@color/textColorSecundary"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/container_filter_mayor_precio"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
+                android:paddingStart="16dp"
                 android:paddingTop="8dp">
 
                 <ImageButton
@@ -137,9 +150,9 @@
                     android:layout_toEndOf="@+id/lbl_menor_precio"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:paddingStart="50dp"
-                    android:text="Precio mayor"
-                    android:textColor="@color/textColorSecundary" />
+                    android:paddingStart="38dp"
+                    android:text="Mayor Precio"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             </LinearLayout>
 
@@ -147,10 +160,10 @@
                 android:id="@+id/container_filter_oferta"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingBottom="8dp"
+                android:paddingStart="16dp"
                 android:paddingTop="8dp">
 
                 <ImageButton
@@ -168,9 +181,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:paddingStart="50dp"
+                    android:paddingStart="38dp"
                     android:text="Ofertas"
-                    android:textColor="@color/textColorSecundary" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
 
         </LinearLayout>
@@ -182,34 +195,49 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/ordenar_por"
             android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
             android:background="@android:color/white"
             android:paddingBottom="8dp"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
             android:text="Marcas"
-            android:textColor="@color/textColorSecundary"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btn_aplicar_filtro"
-            android:layout_width="match_parent"
+            style="@style/Widget.AppCompat.ButtonBar.AlertDialog"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:backgroundTint="@color/colorSecundary"
-            android:text="HECHO"
-            android:textColor="@color/textColorPrimary" />
+            android:backgroundTint="@android:color/transparent"
+            android:drawableTint="@android:color/transparent"
+            android:text="APLICAR"
+            android:textColor="@color/textColorPrimary"
+            android:layout_alignBaseline="@+id/textView"
+            android:layout_alignBottom="@+id/textView"
+            android:layout_alignParentEnd="true" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_view_marca_filtro"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_aplicar_filtro"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_title_filtre"
             android:background="@android:color/white"
-            android:paddingStart="16dp" />
+            android:paddingStart="16dp"
+            android:paddingTop="2dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btn_limpiar"
+            style="@style/Widget.AppCompat.ButtonBar.AlertDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btn_aplicar_filtro"
+            android:layout_alignBottom="@+id/btn_aplicar_filtro"
+            android:layout_toStartOf="@+id/btn_aplicar_filtro"
+            android:backgroundTint="@android:color/transparent"
+            android:text="LIMPIAR"
+            android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
 

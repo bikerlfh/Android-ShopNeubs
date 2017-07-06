@@ -10,12 +10,11 @@
         android:id="@+id/rbtn_marca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:alpha="0.8"
+        android:capitalize="words"
         android:duplicateParentState="false"
-        android:paddingStart="50dp"
+        android:paddingStart="35dp"
         android:textAllCaps="false"
-        android:buttonTint="@color/colorAccent"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        />
+        android:textColor="@color/colorSecundaryLight"
+        android:textStyle="bold" />
 
 </LinearLayout>
