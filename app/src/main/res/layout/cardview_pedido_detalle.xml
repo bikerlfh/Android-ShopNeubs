@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardElevation="2dp">
+    android:foreground="?android:attr/selectableItemBackground">
 
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/padding_botton_cardview_pedido_detalle">
+        android:paddingEnd="8dp">
 
-        <TextView
+        <com.uncopt.android.widget.text.justify.JustifiedTextView
             android:id="@+id/lbl_nombre_producto_pedido_detalle"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_width="221dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingEnd="@dimen/padding_end_start_lbl_cardview_pedido_detalle"
-            android:paddingStart="@dimen/padding_end_start_lbl_cardview_pedido_detalle"
-            android:paddingTop="@dimen/padding_top_lbl_nombre_producto_cardview_pedido_detalle"
+            android:maxLines="2"
+            android:paddingEnd="10dp"
+            android:paddingStart="13dp"
+            android:paddingTop="13dp"
             android:text="TextView"
             android:textColor="@color/textColorSecundary"
             android:textSize="@dimen/title_producto_pedido_detalle"
@@ -33,11 +33,11 @@
 
         <TextView
             android:id="@+id/lbl_cantidad_pedido_detalle"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:paddingEnd="@dimen/padding_end_start_lbl_cardview_pedido_detalle"
-            android:paddingStart="@dimen/padding_end_start_lbl_cardview_pedido_detalle"
+            android:paddingEnd="13dp"
+            android:paddingStart="13dp"
             android:text="TextView"
             android:textSize="@dimen/cantidad_pedido_detalle"
             app:layout_constraintHorizontal_bias="0.0"
@@ -47,23 +47,29 @@
 
         <TextView
             android:id="@+id/lbl_costo_total_pedido_detalle"
-            android:layout_width="209dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_bottom_lbl_costo_total_cardview_pedido_detalle"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="96dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="@dimen/margin_start_lbl_costo_total_cardview_pedido_detalle"
-            android:paddingStart="@dimen/padding_end_start_lbl_cardview_pedido_detalle"
+            android:layout_marginTop="5dp"
+            android:paddingStart="8dp"
             android:text="Total:"
             android:textColor="@color/colorPrecio"
             android:textSize="@dimen/costo_total_pedido_detalle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_cantidad_pedido_detalle"
+            app:layout_constraintVertical_bias="0.0" />
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
             android:id="@+id/img_pedido_detalle"
-            android:layout_width="95dp"
-            android:layout_height="99dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginTop="@dimen/margin_top_img_producto_cardview_pedido_detalle"
             android:paddingTop="@dimen/padding_top_img_producto_cardview_pedido_detalle"
             android:scaleType="centerCrop"
