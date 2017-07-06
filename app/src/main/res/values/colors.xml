@@ -9,7 +9,7 @@
 
     <color name="textColorPrimary">#ffffff</color>
     <color name="textColorSecundary">#000000</color>
-    <color name="textHint">#5a626c</color>
+    <color name="textHint">#4f555e</color>
 
     <color name="colorBackground">#f7f6f6</color>
     <color name="colorAccent">#ff5722</color>
