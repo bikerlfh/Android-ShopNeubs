@@ -182,7 +182,7 @@ public class BusquedaActivity extends AppCompatActivity {
             vistaFiltroPrincipal.setVisibility(View.GONE);
             // Se infla el layout (shop_cart_vacio)
             if (viewProductoNoEncontrado == null) {
-                viewProductoNoEncontrado = getLayoutInflater().inflate(R.layout.producto_no_encontrado, null, false);
+                viewProductoNoEncontrado = getLayoutInflater().inflate(R.layout.layout_producto_no_encontrado, null, false);
                 viewProductoNoEncontrado.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT));
 
                 // Se agrega la vista al rootView

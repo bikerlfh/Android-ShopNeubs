@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -140,7 +139,7 @@ public class ShopCarActivity extends AppCompatActivity {
         // Ser remueven todas las vistas del rootLayout
         rootLayout.removeAllViews();
         // Se infla el layout (shop_cart_vacio)
-        View view = getLayoutInflater().inflate(R.layout.shop_cart_vacio, null, false);
+        View view = getLayoutInflater().inflate(R.layout.layout_shop_cart_vacio, null, false);
         view.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.MATCH_PARENT));
 
         Button btnComenzarAhora = (Button)view.findViewById(R.id.btn_comenzar_ahora);
