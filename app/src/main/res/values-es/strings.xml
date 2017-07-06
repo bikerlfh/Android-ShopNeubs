@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ShopNeubs</string>
-    <string name="search_title">Buscar</string>
+    <string name="search_title">Buscar en ShopNeubs</string>
     <string name="settings_title">Configuración</string>
     <string name="welcome_title">Bienvenido a ShopNeubs</string>
     <string name="text_loading">Cargando&#8230;</string>

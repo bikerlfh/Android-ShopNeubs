@@ -239,24 +239,6 @@ public class APIRest {
         public static boolean ok() {
             return request.ok();
         }
-
-        /*
-        public static boolean badRequest() {
-            return request.badRequest();
-        }
-
-        public static boolean unAuthorized() { return request.code() == HTTP_UNAUTHORIZED; }
-
-        public boolean timeOut() { return request.code() == HTTP_CLIENT_TIMEOUT || request.code() == HTTP_UNAVAILABLE; }
-
-        public static boolean serverError() {
-            return request.serverError();
-        }
-
-        public static boolean notFound() {
-            return request.notFound();
-        }
-        */
     }
 
     /**
@@ -382,27 +364,5 @@ public class APIRest {
             }.setRetryPolicy(policy);
             AppController.getInstance().addToRequestQueue(postRequest);
         }
-        /*
-        public static boolean ok() {
-            return RESPONSE_CODE == HTTP_OK;
-        }
-
-        public static boolean created() { return  RESPONSE_CODE == HTTP_CREATED; }
-
-        public static boolean badRequest() {
-            return RESPONSE_CODE == HTTP_BAD_REQUEST;
-        }
-
-        public static boolean unAuthorized() { return RESPONSE_CODE == HTTP_UNAUTHORIZED; }
-
-        public boolean timeOut() { return responseCode == HTTP_CLIENT_TIMEOUT || responseCode == HTTP_UNAVAILABLE; }
-
-        public static boolean serverError() {
-            return RESPONSE_CODE == HTTP_INTERNAL_ERROR;
-        }
-
-        public static boolean notFound() {
-            return RESPONSE_CODE == HTTP_NOT_FOUND;
-        }*/
     }
 }

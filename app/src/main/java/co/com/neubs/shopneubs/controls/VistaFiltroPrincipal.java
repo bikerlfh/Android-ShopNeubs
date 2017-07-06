@@ -134,11 +134,13 @@ public class VistaFiltroPrincipal extends RelativeLayout {
         initRecycleViewGrid();
 
         // se optiene el drawerLayoutPadre
+        setDrawerLayoutParent((DrawerLayout)((Activity)context).findViewById(R.id.drawer_layout));
+        /*
         drawerLayoutParent = (DrawerLayout)((Activity)context).findViewById(R.id.drawer_layout);
         if (drawerLayoutParent != null) {
             // se obtiene el navigationViewFiltro que puede contener el padre
             navigationViewFiltro = (NavigationViewFiltro) ((Activity) context).findViewById(R.id.drawer_filtro);
-        }
+        }*/
 
         showLoadingProgressBar(true);
 
@@ -159,9 +161,19 @@ public class VistaFiltroPrincipal extends RelativeLayout {
         });
     }
 
+    /**
+     * Asigna el drawerLayout
+     * @param drawerLayoutParent drawerLayout
+     */
     public void setDrawerLayoutParent(DrawerLayout drawerLayoutParent) {
         this.drawerLayoutParent = drawerLayoutParent;
-        this.navigationViewFiltro = (NavigationViewFiltro) drawerLayoutParent.findViewById(R.id.drawer_filtro);
+        if (this.drawerLayoutParent != null) {
+            navigationViewFiltro = (NavigationViewFiltro) drawerLayoutParent.findViewById(R.id.drawer_filtro);
+            if (navigationViewFiltro != null){
+                // Se bloquea el navigationViewFiltro, siempre cerrado
+                this.drawerLayoutParent.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,navigationViewFiltro);
+            }
+        }
     }
 
     public void setNavigationViewFiltro(NavigationViewFiltro navigationViewFiltro) {
