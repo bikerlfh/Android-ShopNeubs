@@ -163,7 +163,6 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     private void guardar(){
-        boolean cancel = false;
 
         spnTipoDocumento.setError(null);
         txtNit.setError(null);

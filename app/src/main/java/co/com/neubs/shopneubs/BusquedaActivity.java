@@ -28,7 +28,6 @@ import co.com.neubs.shopneubs.interfaces.IServerCallback;
 public class BusquedaActivity extends AppCompatActivity {
 
     public final static String PARAM_QUERY = "query";
-    public final static String PARAM_SUGERENCIAS = "sugerencias";
 
     private SessionManager sessionManager;
 

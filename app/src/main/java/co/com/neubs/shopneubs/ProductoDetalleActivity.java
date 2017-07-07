@@ -46,7 +46,14 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
     private AppBarLayout appBarLayout;
     private IconNotificationBadge iconShopCart;
 
-    private TextView mTitleDescripcion,mTitleEspecificacion, mNombreProducto, mDescripcionProducto, mMarcaProducto, mEspecificacionProducto, mPrecioProducto, mPrecioAnterior;
+    private TextView mTitleDescripcion;
+    private TextView mTitleEspecificacion;
+    private TextView mNombreProducto;
+    private TextView mDescripcionProducto;
+    private TextView mMarcaProducto;
+    private TextView mEspecificacionProducto;
+    private TextView mPrecioProducto;
+    private TextView mPrecioAnterior;
     private Button mBtnAgregarItemCar;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -141,7 +148,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                         if (saldoInventario.getEstado())
                             mBtnAgregarItemCar.setEnabled(true);
                         else
-                            mBtnAgregarItemCar.setText("SIN STOCK");
+                            mBtnAgregarItemCar.setText(getString(R.string.sin_stock));
 
                         List<String> images = new ArrayList<>();
                         for (Imagen img : producto.getImagenes()) {

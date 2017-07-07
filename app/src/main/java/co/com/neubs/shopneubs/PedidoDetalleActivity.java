@@ -3,22 +3,15 @@ package co.com.neubs.shopneubs;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import co.com.neubs.shopneubs.adapters.PedidoDetalleAdapter;
 import co.com.neubs.shopneubs.classes.APIRest;
@@ -26,7 +19,6 @@ import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.PedidoVenta;
-import co.com.neubs.shopneubs.classes.models.PedidoVentaPosicion;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class PedidoDetalleActivity extends AppCompatActivity {
