@@ -67,12 +67,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.48"
-                android:gravity="center"
+                android:gravity="center_vertical|end"
                 android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_producto_grid"
                 android:paddingEnd="@dimen/padding_end_lbl_precio_producto_card_cardview_producto_grid"
                 android:paddingStart="@dimen/padding_star_lbl_precio_producto_card_cardview_producto_grid"
                 android:text="TextView"
-                android:textAlignment="textEnd"
                 android:textColor="@color/colorPrecio"
                 android:textSize="@dimen/precio_producto_card" />
 
@@ -80,7 +79,7 @@
                 android:id="@+id/lbl_precio_anterior_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_vertical|start"
                 android:paddingBottom="@dimen/padding_bottom_lbl_precio_cardview_producto_grid"
                 android:paddingEnd="@dimen/padding_end_lbl_precio_anterior_card_cardview_producto_grid"
                 android:paddingStart="@dimen/padding_star_lbl_precio_anterior_card_cardview_producto_grid"

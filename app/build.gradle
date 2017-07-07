@@ -42,8 +42,6 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.github.ganfra:material-spinner:1.1.1'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
-    testCompile 'junit:junit:4.12'
     compile 'com.uncopt:android.justified:1.0'
-
-
+    testCompile 'junit:junit:4.12'
 }

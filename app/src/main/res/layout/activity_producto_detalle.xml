@@ -40,12 +40,6 @@
                 neubs:indicatorRadius="5dp"
                 neubs:viewPagerHeight="300dp"/>
 
-            <!--android.support.v4.view.ViewPager
-                android:id="@+id/viewPager_producto_detalle"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:background="@color/colorWhite" /-->
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_producto_detalle"
                 android:layout_width="match_parent"
