@@ -155,7 +155,7 @@ public class RegisterFragment extends Fragment {
                 @Override
                 public void onSuccess(String json) {
                     showProgress(false);
-                    Toast.makeText(getActivity(),getString(R.string.created_register),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),getString(R.string.msg_created_register),Toast.LENGTH_LONG).show();
                     getActivity().finish();
                 }
 

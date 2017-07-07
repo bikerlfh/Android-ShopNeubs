@@ -149,7 +149,7 @@ public class AccountActivity extends AppCompatActivity {
         }
         else{
             btnLogout.setVisibility(View.GONE);
-            lblWelcome.setText(getString(R.string.welcome_title));
+            lblWelcome.setText(getString(R.string.title_welcome));
         }
     }
 

@@ -14,7 +14,7 @@
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ofertas_title"
+            android:text="@string/title_ofertas"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/title_section_layout" />
 

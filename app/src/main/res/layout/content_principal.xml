@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="5dp"
-                android:hint="@string/search_title"
+                android:hint="@string/title_search"
                 android:textColorHint="@color/textHint"
                 android:visibility="visible" />
 

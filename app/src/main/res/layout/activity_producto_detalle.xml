@@ -102,7 +102,7 @@
                 android:drawableStart="@drawable/botton_disable_drawable"
                 android:elevation="9dp"
                 android:gravity="center_vertical"
-                android:text="@string/agregar_carrito"
+                android:text="@string/title_agregar_carrito"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite" />
 

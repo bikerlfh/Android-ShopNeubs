@@ -122,7 +122,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         if (isActiva)
             lblHeaderWelcome.setText(sessionManager.getEmail());
         else
-            lblHeaderWelcome.setText(getString(R.string.welcome_title));
+            lblHeaderWelcome.setText(getString(R.string.title_welcome));
     }
 
     @Override

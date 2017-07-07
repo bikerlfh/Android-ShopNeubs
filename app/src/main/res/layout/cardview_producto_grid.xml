@@ -26,7 +26,7 @@
             android:background="@android:color/holo_red_dark"
             android:elevation="4dp"
             android:padding="@dimen/padding_lbl_producto_sin_stock_cardview_producto_grid"
-            android:text="@string/sin_stock"
+            android:text="@string/title_sin_stock"
             android:textAlignment="center"
             android:textColor="@color/textColorPrimary"
             android:visibility="visible" />

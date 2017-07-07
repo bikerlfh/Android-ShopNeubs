@@ -28,8 +28,8 @@
             app:ms_arrowColor="@color/colorPrimary"
             app:ms_arrowSize="15dp"
             app:ms_floatingLabelColor="#A9A9A9"
-            app:ms_floatingLabelText="@string/promp_type_document"
-            app:ms_hint="@string/promp_type_document"
+            app:ms_floatingLabelText="@string/prompt_type_document"
+            app:ms_hint="@string/prompt_type_document"
             app:ms_multiline="true" />
 
         <android.support.design.widget.TextInputLayout
@@ -45,7 +45,7 @@
                 android:id="@+id/txt_nit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/promp_nit"
+                android:hint="@string/prompt_nit"
                 android:inputType="number"
                 android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
@@ -63,7 +63,7 @@
                 android:id="@+id/txt_primer_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/promp_first_name"
+                android:hint="@string/prompt_first_name"
                 android:inputType="textCapWords"
                 android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
@@ -81,7 +81,7 @@
                 android:id="@+id/txt_segundo_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/promp_secund_name"
+                android:hint="@string/prompt_secund_name"
                 android:inputType="textCapWords"
                 android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
@@ -99,7 +99,7 @@
                 android:id="@+id/txt_primer_apellido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/promp_first_last_name"
+                android:hint="@string/prompt_first_last_name"
                 android:inputType="textCapWords"
                 android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
@@ -118,7 +118,7 @@
                 android:id="@+id/txt_segundo_apellido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/promp_secund_last_name"
+                android:hint="@string/prompt_secund_last_name"
                 android:inputType="textCapWords"
                 android:textSize="@dimen/text_size_imput" />
 
@@ -137,7 +137,7 @@
                 android:id="@+id/txt_direccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/promp_address"
+                android:hint="@string/prompt_address"
                 android:inputType="textCapWords"
                 android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
@@ -155,7 +155,7 @@
                 android:id="@+id/txt_telefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/promp_telephone"
+                android:hint="@string/prompt_telephone"
                 android:inputType="phone"
                 android:textSize="@dimen/text_size_imput" />
         </android.support.design.widget.TextInputLayout>
@@ -189,8 +189,8 @@
             app:ms_arrowColor="@color/colorPrimary"
             app:ms_arrowSize="15dp"
             app:ms_floatingLabelColor="#A9A9A9"
-            app:ms_floatingLabelText="@string/promp_department"
-            app:ms_hint="@string/promp_department"
+            app:ms_floatingLabelText="@string/prompt_department"
+            app:ms_hint="@string/prompt_department"
             app:ms_multiline="true" />
 
         <fr.ganfra.materialspinner.MaterialSpinner
@@ -204,8 +204,8 @@
             app:ms_arrowColor="@color/colorPrimary"
             app:ms_arrowSize="15dp"
             app:ms_floatingLabelColor="#A9A9A9"
-            app:ms_floatingLabelText="@string/promp_municipio"
-            app:ms_hint="@string/promp_municipio"
+            app:ms_floatingLabelText="@string/prompt_municipio"
+            app:ms_hint="@string/prompt_municipio"
             app:ms_multiline="true" />
 
         <Button

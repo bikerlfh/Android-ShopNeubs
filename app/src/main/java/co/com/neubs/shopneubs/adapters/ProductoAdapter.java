@@ -95,7 +95,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         // Si existe siguiente pagina y no se esta haciendo una petición de siguiente pagina en curso
         if (this.nextPage!= null && this.nextPage.length() > 0 && !onNextPageRequest){
             onNextPageRequest = true;
-            final Snackbar snackbar = Snackbar.make(view, R.string.text_loading, Snackbar.LENGTH_INDEFINITE)
+            final Snackbar snackbar = Snackbar.make(view, R.string.msg_loading, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null);
             snackbar.show();
             // Se consulta a la api la proxima pagina
@@ -172,7 +172,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                     lblSinStok.setVisibility(View.VISIBLE);
                     //lblSinStok.setBackgroundColor(itemView.getResources().getColor(R.color.colorAccent));
                     lblSinStok.setBackground(itemView.getResources().getDrawable(R.drawable.shape_boton_add_cart_view_list));
-                    lblSinStok.setText(itemView.getContext().getString(R.string.agregar_carrito));
+                    lblSinStok.setText(itemView.getContext().getString(R.string.title_agregar_carrito));
                     lblSinStok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_shopping_cart_list,0,0,0);
                     lblSinStok.setCompoundDrawablePadding(5);
                     lblSinStok.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -192,7 +192,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                 lblSinStok.setBackground(itemView.getResources().getDrawable(R.drawable.shape_boton_sin_stock_view_list));
                 lblSinStok.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 lblSinStok.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                lblSinStok.setText(itemView.getContext().getString(R.string.sin_stock));
+                lblSinStok.setText(itemView.getContext().getString(R.string.title_sin_stock));
                 lblSinStok.setEnabled(false);
             }
 

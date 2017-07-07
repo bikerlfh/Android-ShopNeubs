@@ -1,125 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ShopNeubs</string>
-    <string name="search_title">Search in ShopNeubs</string>
-    <string name="settings_title">Settings</string>
+
     <string name="title_activity_principal"></string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="url_site" translatable="false">https://www.shopneubs.com</string>
-    <string name="welcome_title">Welcome to ShopNeubs</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="ofertas_title">Offer</string>
-    <string name="text_loading">Loading&#8230;</string>
-    <string name="categoria_01">Motherboards</string>
-    <string name="categoria_02">Cases</string>
-    <string name="categoria_03">PCs</string>
-    <string name="categoria_04">Hard Drives</string>
-    <string name="categoria_05">Power Supplies</string>
-    <string name="categoria_06">Printers</string>
-    <string name="categoria_08">Memory Flash</string>
-    <string name="categoria_09">Memory RAM</string>
-    <string name="categoria_10">Monitors</string>
-    <string name="categoria_11">Laptop</string>
-    <string name="categoria_12">CPUs</string>
-    <string name="categoria_13">Cooling</string>
-    <string name="categoria_14">Video Cards</string>
-    <string name="categoria_15">Computer Peripherals</string>
-    <string name="categoria_16">Video Games</string>
-    <string name="categoria_17">Electronic</string>
-    <string name="categoria_18">Pen Tablets</string>
-    <string name="msg_no_internet">No Internet connection available. Press ok to reload</string>
-    <string name="title_no_internet">No Internet Connection</string>
-    <string name="msg_sincronizando_datos">Synchronizing</string>
-    <string name="title_description">Description</string>
-    <string name="title_specification">Specification</string>
-    <string name="agregar_carrito">Add Cart</string>
-
-    <string name="title_activity_login">Sign in</string>
-
-    <!-- Strings related to login -->
-    <string name="prompt_username">Username</string>
-    <string name="prompt_password">Password</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is invalid</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="title_activity_login_register">Login | Register</string>
-
-    <string name="title_login">login</string>
-    <string name="title_register">Register</string>
-
-    <string name="error_timeout_api">Timeout for this request. Please try again later.</string>
-    <string name="prompt_password_repeat">Password repeat</string>
-    <string name="prompt_email">Email</string>
-    <string name="error_invalid_password1">The passwords do not match</string>
-    <string name="title_logout">Logout</string>
-    <string name="title_derechos_reservados">© 2017 - Neubs S.A.S All right reserverd.</string>
-    <string name="title_activity_account">My Account</string>
-    <string name="title_activity_orders">My Orders</string>
-    <string name="title_activity_edit_profile">Profile</string>
-    <string name="title_terminos_condiciones">Terms and conditions</string>
-    <string name="title_informacion_envio">Shipment information</string>
-    <string name="title_garantia">Warranty</string>
-    <string name="error_connection_server">Server connection failed</string>
-    <string name="created_register">Registration completed. We\'ve sent you an email to activate your account.</string>
-    <string name="error_default">Request not completed. Please try again later.</string>
-    <string name="title_order">Order</string>
-    <string name="title_estado">State</string>
-    <string name="title_num_products">Counts</string>
-    <string name="promp_nit" translatable="false">Nit</string>
-    <string name="promp_first_name">First Name</string>
-    <string name="promp_secund_name">Secund Name</string>
-    <string name="promp_first_last_name">First last</string>
-    <string name="promp_secund_last_name">Secund Last</string>
-    <string name="promp_address">Address</string>
-    <string name="promp_telephone">Telephone</string>
-    <string name="promp_type_document">Type Document</string>
-    <string name="msg_session_expired">Your session are expired</string>
-    <string name="prompt_contry">Contry</string>
-    <string name="promp_contry">Contry</string>
-    <string name="promp_department">Department</string>
-    <string name="promp_municipio" translatable="false">Municipio</string>
-    <string name="title_save">Save</string>
-    <string name="msg_save_success">Save success</string>
-    <string name="msg_save_error">Save Error</string>
+    <string name="title_activity_account">Mi cuenta</string>
+    <string name="title_activity_login_register">Iniciar sesión | Crear cuenta</string>
+    <string name="title_activity_edit_profile">Perfil</string>
+    <string name="title_activity_login">Iniciar Sesión</string>
+    <string name="title_activity_orders">Mis Pedidos</string>
+    <string name="title_activity_shop_car">Mi carrito</string>
     <string name="title_activity_pedido_detalle">PedidoDetalleActivity</string>
-    <string name="title_pedido">Order N°</string>
-    <string name="text_view_empy" translatable="false">----</string>
-    <string name="title_activity_shop_car">My car</string>
-    <string name="title_resumen">Summary</string>
-    <string name="title_item_deleted">Item deleted</string>
-    <string name="error_item_in_car">The product is already in the cart</string>
-    <string name="title_item_added">Item added</string>
-    <string name="textView">TextView</string>
-    <string name="comprar">Buy</string>
-    <string name="msg_pedido_generado" translatable="false">Se ha generado el pedido número</string>
-    <string name="msg_generando_pedido" translatable="false">Generando pedido...</string>
-    <string name="title_result_search">Search result</string>
-    <string name="msg_result_search">No results found for your search.</string>
-    <string name="msg_try_again">Try again</string>
-    <string name="title_your_cart_empty">Your cart shop is empty!</string>
-    <string name="msg_cart_empty">In our store you will find the best technological products at the best price, you can add different items at the same time.</string>
-    <string name="title_start_buy">Comienza Ahora !</string>
-    <string name="mensaje">mensaje</string>
-    <string name="filtro_title">Filter</string>
-    <string name="title_more">More</string>
-    <string name="sin_stock">Out of Stock</string>
-    <string name="title_improve_search">Improve your search. We advise you:</string>
-    <string name="title_use_general_terms">Use general terms.</string>
-    <string name="title_check_spelling">Check spelling.</string>
-    <string name="title_order_by">Ordenar por:</string>
-    <string name="msg_productos_encontrados">Productos encontrados</string>
-    <string name="title_filtro">Filtro</string>
-    <string name="title_relevante">Relevante</string>
-    <string name="title_menor_precio">Menor precio</string>
-    <string name="title_mayor_precio">Mayor precio</string>
-    <string name="title_oferta">Oferta</string>
+
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+
+    <string name="categoria_01">Motherboards</string>
+    <string name="categoria_02">Cajas</string>
+    <string name="categoria_03">PCs</string>
+    <string name="categoria_04">Discos Duros</string>
+    <string name="categoria_05">Fuentes de Poder</string>
+    <string name="categoria_06">Impresoras</string>
+    <string name="categoria_08">Memoria Flash</string>
+    <string name="categoria_09">Memoria RAM</string>
+    <string name="categoria_10">Monitores</string>
+    <string name="categoria_11">Portatiles</string>
+    <string name="categoria_12">Procesadores</string>
+    <string name="categoria_13">Refrigeración</string>
+    <string name="categoria_14">Tarjetas de video</string>
+    <string name="categoria_15">Perifericos</string>
+    <string name="categoria_16">Video Juegos</string>
+    <string name="categoria_17">Electrónica</string>
+    <string name="categoria_18">Tarjetas Digitalizadoras</string>
+
+    <string name="prompt_password">Contraseña</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_email">Correo Electrónico</string>
+    <string name="prompt_password_repeat">Contraseña (confirmación)</string>
+    <string name="prompt_secund_name">Segundo Nombre</string>
+    <string name="prompt_first_name">Primer Nombre</string>
+    <string name="prompt_first_last_name">Primer Apellido</string>
+    <string name="prompt_secund_last_name">Segundo Apellido</string>
+    <string name="prompt_address">Dirección</string>
+    <string name="prompt_telephone">Teléfono</string>
+    <string name="prompt_type_document">Tipo Documento</string>
+    <string name="prompt_department">Departamento</string>
+    <string name="prompt_contry">Pais</string>
+    <string name="prompt_municipio" >Municipio</string>
+    <string name="prompt_nit">Nit</string>
+
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_field_required">Esta fila es requerida</string>
+    <string name="error_invalid_email">La dirección de email no es valida</string>
+    <string name="error_invalid_password">La contraseña invalida</string>
+    <string name="error_timeout_api">Tiempo de espera agotado. Favor intentar de nuevo mas tarde</string>
+    <string name="error_invalid_password1">Las constraseñas no coinciden</string>
+    <string name="error_connection_server">No se ha logrado comunicarse con el servidor</string>
+    <string name="error_default">Solicitud no completada. Vuelve a intentarlo más tarde.</string>
+    <string name="error_item_in_car">El producto ya está en el carrito</string>
+
+    <string name="title_ofertas">Ofertas</string>
+    <string name="title_no_internet">No hay conexión a Internet</string>
+    <string name="title_description">Descripción</string>
+    <string name="title_specification">Especificación</string>
+    <string name="title_register">Crear cuenta</string>
+    <string name="title_logout">Salir</string>
+    <string name="title_derechos_reservados">© 2017 - Neubs S.A.S Todos los Derechos Reservados</string>
+    <string name="title_terminos_condiciones">Terminos y condiciones</string>
+    <string name="title_garantia">Garantia</string>
+    <string name="title_informacion_envio">Información de Envío</string>
+    <string name="title_order">Pedido</string>
+    <string name="title_estado">Estado</string>
+    <string name="title_save">Guardar</string>
+    <string name="title_pedido">Pedido N°</string>
+    <string name="title_login">Iniciar sesión</string>
+    <string name="title_num_products">Cantidades</string>
+    <string name="title_item_deleted">Producto eliminado</string>
+    <string name="title_item_added">Producto agregado</string>
+    <string name="title_resumen">Resumen</string>
+    <string name="title_result_search">Resultado de Búsqueda</string>
+    <string name="title_your_cart_empty">Tu carrito de compras está vacío!</string>
+    <string name="title_start_buy">Comienza Ahora!</string>
+    <string name="title_more">Más...</string>
+    <string name="title_improve_search">Mejora tu búsqueda. Te aconsejamos:</string>
+    <string name="title_use_general_terms">Usa terminos generales.</string>
+    <string name="title_check_spelling">Revisa la ortografía.</string>
     <string name="title_marca">Marca</string>
-    <string name="limpiar">Limpiar</string>
-    <string name="aplicar">Aplicar</string>
-    <string name="msg_no_hay_pedidos">No hay pedidos registrados.</string>
-    <string name="msg_primer_pedido"> Te invitamos a agregar productos a tu carrito de compra y realizar tu primer pedido.</string>
+    <string name="title_mayor_precio">Mayor precio</string>
+    <string name="title_menor_precio">Menor precio</string>
+    <string name="title_oferta">Oferta</string>
+    <string name="title_order_by">Ordenar por:</string>
+    <string name="title_relevante">Relevante</string>
+    <string name="title_filtro">Filtro</string>
+    <string name="title_comprar">Comprar</string>
+    <string name="title_limpiar">Limpiar</string>
+    <string name="title_mensaje">mensaje</string>
+    <string name="title_aplicar">Aplicar</string>
+    <string name="title_sin_stock">Sin Stock</string>
+    <string name="title_agregar_carrito">Agregar</string>
+    <string name="title_search">Buscar en ShopNeubs</string>
+    <string name="title_settings">Configuración</string>
+    <string name="title_welcome">Bienvenido a ShopNeubs</string>
+
+    <string name="msg_loading">Cargando&#8230;</string>
+    <string name="msg_no_internet">No hay conexión a Internet disponible. Presiona ok para recargar</string>
+    <string name="msg_sincronizando_datos">Sincronizando</string>
+    <string name="msg_created_register">Registro completado. Te hemos enviado un email para que actives tu cuenta.</string>
+    <string name="msg_session_expired">Su sesión ha expirado</string>
+    <string name="msg_save_success">Se guardó corrrectamente</string>
+    <string name="msg_save_error">No se ha podido guardar</string>
+    <string name="msg_result_search">No se han encontrado resultados para su busqueda. Intentalo de nuevo</string>
+    <string name="msg_try_again">Intentalo de nuevo</string>
+    <string name="msg_cart_empty">En nuestra tienda encontrarás los mejores productos tecnológicos al mejor precio, puedes agregar diversos artículos al mismo tiempo.</string>
+    <string name="msg_primer_pedido">" Te invitamos a agregar productos a tu carrito de compra y realizar tu primer pedido."</string>
+    <string name="msg_generando_pedido" >Generando pedido...</string>
+    <string name="msg_pedido_generado">Se ha generado el pedido número</string>
+    <string name="msg_no_hay_pedidos">No hay pedidos registrados</string>
+    <string name="msg_productos_encontrados">Productos encontrados</string>
+
+    <string name="text_view_empy">----</string>
+    <string name="url_site" >https://www.shopneubs.com</string>
+
 </resources>

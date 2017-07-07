@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_min_vertical_spacing"
-        android:text="@string/welcome_title"
+        android:text="@string/title_welcome"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="@dimen/text_size_button" />
 </LinearLayout>

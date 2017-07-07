@@ -148,7 +148,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                         if (saldoInventario.getEstado())
                             mBtnAgregarItemCar.setEnabled(true);
                         else
-                            mBtnAgregarItemCar.setText(getString(R.string.sin_stock));
+                            mBtnAgregarItemCar.setText(getString(R.string.title_sin_stock));
 
                         List<String> images = new ArrayList<>();
                         for (Imagen img : producto.getImagenes()) {

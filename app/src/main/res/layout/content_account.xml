@@ -175,7 +175,7 @@
             android:background="@android:color/white"
             android:clickable="true"
             android:gravity="center"
-            android:text="@string/welcome_title"
+            android:text="@string/title_welcome"
             android:textSize="@dimen/title_welcome_account"
             android:textStyle="bold" />
 

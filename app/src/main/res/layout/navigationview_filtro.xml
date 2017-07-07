@@ -211,7 +211,7 @@
             android:layout_alignParentEnd="true"
             android:backgroundTint="@android:color/transparent"
             android:drawableTint="@android:color/transparent"
-            android:text="@string/aplicar"
+            android:text="@string/title_aplicar"
             android:textColor="@color/textColorPrimary" />
 
         <android.support.v7.widget.RecyclerView
@@ -234,7 +234,7 @@
             android:layout_alignBottom="@+id/btn_aplicar_filtro"
             android:layout_toStartOf="@+id/btn_aplicar_filtro"
             android:backgroundTint="@android:color/transparent"
-            android:text="@string/limpiar"
+            android:text="@string/title_limpiar"
             android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
