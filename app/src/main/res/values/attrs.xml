@@ -4,12 +4,11 @@
         <attr name="indeterminateDrawable" format="integer"/>
     </declare-styleable>
     <declare-styleable name="ViewPagerNeubs">
-        <attr name="viewPagerHeight" format="dimension"/>
+        <attr name="marginButtonIndicatorContainer" format="dimension"/>
         <attr name="indicatorRadius" format="dimension"/>
         <attr name="indicatorPadding" format="dimension"/>
         <attr name="selectedIndicatorColor" format="color" />
         <attr name="defaultIndicatorColor" format="color" />
-
         <attr name="autoScroll" format="boolean"/>
         <attr name="flipInterval" format="integer"/>
     </declare-styleable>

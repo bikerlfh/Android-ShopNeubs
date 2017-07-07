@@ -3,24 +3,32 @@ package co.com.neubs.shopneubs.controls;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RectShape;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Dimension;
-import android.support.annotation.IntegerRes;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.Px;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +47,8 @@ import co.com.neubs.shopneubs.R;
  *
  * <p> Atributtos
  * <ul>
- * <li>"viewPagerHeight" Alto del viewPager
- * <attr name="viewPagerHeight" format="dimension"/>
+ * <li>"marginButtonIndicatorContainer" Margin bottom del contenedero de los indicadores
+ * <attr name="marginButtonIndicatorContainer" format="dimension"/>
  * </li>
  * <li>"indicatorRadius" Radio de los indicadores
  * <attr name="indicatorRadius" format="dimension"/>
@@ -64,7 +72,7 @@ import co.com.neubs.shopneubs.R;
  * </p>
  */
 
-public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageChangeListener {
+public class ViewPagerNeubs extends RelativeLayout implements  ViewPager.OnPageChangeListener {
 
     // region viewPager
     @Nullable
@@ -117,6 +125,16 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
      */
     @Px
     private int indicatorRadius;
+
+    /**
+     * margin bottom por defecto del container de los indicadores
+     */
+    private final int DEFAULT_MARGIN_BOTTOM_INDICATOR_CONTAINER_DP = 16;
+    /**
+     * margin bottom del container de los indicadores
+     */
+    @Px
+    private int marginBottomIndicatorContainerDp;
     /**
      * Color del indicador no seleccionado
      */
@@ -161,38 +179,44 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
      */
     private void init(@NonNull Context context,@Nullable AttributeSet attrs,int defStyleAttr,int defStyleRes){
 
-        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerNeubs, defStyleAttr, defStyleRes);
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.view_pager_neubs, this);
 
-        indicatorPadding = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_indicatorPadding, convertDpToPixels(DEFAULT_INDICATOR_PADDING_DIP));
-        indicatorRadius = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_indicatorRadius,convertDpToPixels(IndicatorView.DEFAULT_RADIUS_DIP));
+        // se inicializan los estilos
+        initStyles(attrs,defStyleAttr,defStyleRes);
 
-        unselectedIndicatorColor = attributes.getColor(R.styleable.ViewPagerNeubs_defaultIndicatorColor,IndicatorView.DEFAULT_COLOR);
-        selectedIndicatorColor = attributes.getColor(R.styleable.ViewPagerNeubs_selectedIndicatorColor,IndicatorView.DEFAULT_SELECTED_COLOR);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mLinealLayoutDots = (LinearLayout) findViewById(R.id.layout_container_dots);
 
 
-        autoScroll = attributes.getBoolean(R.styleable.ViewPagerNeubs_autoScroll,false);
-        if (autoScroll){
-            FLIP_INTERVAL = attributes.getInt(R.styleable.ViewPagerNeubs_flipInterval,FLIP_INTERVAL);
-        }
-
-        final int heightViewPager = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_viewPagerHeight, convertDpToPixels(DEFAULT_VIEW_PAGER_HEIGHT_DPI));
-
-        mViewPager = new ViewPager(context);
-        mViewPager.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heightViewPager));
-
-        attributes.recycle();
-
-        setOrientation(VERTICAL);
-
-        mLinealLayoutDots = new LinearLayout(context);
-        LinearLayout.LayoutParams paramsLayoutDots = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsLayoutDots.setMargins(0,10,0,20);
-        mLinealLayoutDots.setLayoutParams(paramsLayoutDots);
-        mLinealLayoutDots.setOrientation(HORIZONTAL);
-        mLinealLayoutDots.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
+        RelativeLayout.LayoutParams params = (LayoutParams) mLinealLayoutDots.getLayoutParams();
+        params.setMargins(0,0,0,marginBottomIndicatorContainerDp);
+        mLinealLayoutDots.setLayoutParams(params);
         mViewPager.addOnPageChangeListener(this);
+    }
 
-        addView(mViewPager);
+    /**
+     * Inicializa los estilos
+     */
+    private void initStyles(@Nullable AttributeSet attrs,int defStyleAttr,int defStyleRes){
+        TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.ViewPagerNeubs, defStyleAttr, defStyleRes);
+        try {
+            indicatorPadding = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_indicatorPadding, convertDpToPixels(DEFAULT_INDICATOR_PADDING_DIP));
+            indicatorRadius = attributes.getDimensionPixelSize(R.styleable.ViewPagerNeubs_indicatorRadius, convertDpToPixels(IndicatorView.DEFAULT_RADIUS_DIP));
+
+            marginBottomIndicatorContainerDp = attributes.getDimensionPixelOffset(R.styleable.ViewPagerNeubs_marginButtonIndicatorContainer,convertDpToPixels(DEFAULT_MARGIN_BOTTOM_INDICATOR_CONTAINER_DP));
+
+            unselectedIndicatorColor = attributes.getColor(R.styleable.ViewPagerNeubs_defaultIndicatorColor, IndicatorView.DEFAULT_COLOR);
+            selectedIndicatorColor = attributes.getColor(R.styleable.ViewPagerNeubs_selectedIndicatorColor, IndicatorView.DEFAULT_SELECTED_COLOR);
+
+            autoScroll = attributes.getBoolean(R.styleable.ViewPagerNeubs_autoScroll, false);
+            if (autoScroll) {
+                FLIP_INTERVAL = attributes.getInt(R.styleable.ViewPagerNeubs_flipInterval, FLIP_INTERVAL);
+            }
+        }
+        finally {
+            attributes.recycle();
+        }
     }
 
     public PagerAdapter getAdapter() {
@@ -239,7 +263,7 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
      * Crea los indicadores segun la cantidad de paginas que tenga el adaptador
      */
     private void createDots() {
-        LinearLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //params.setMargins(8,0,8,0);
         int countDots = getCount();
         listIndicatorView = new ArrayList<>();
@@ -249,12 +273,13 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
             indicatorView.setPadding(indicatorPadding, 0, indicatorPadding, 0);
             indicatorView.setColor((i == 0) ? selectedIndicatorColor : unselectedIndicatorColor);
             indicatorView.invalidate();
+            //indicatorView.setAlpha(1f);
             indicatorView.setOnClickListener(onClickListenerIndicator(i));
             listIndicatorView.add(i, indicatorView);
             mLinealLayoutDots.addView(indicatorView, params);
         }
         lastPositionSelected = 0;
-        addView(mLinealLayoutDots);
+        //addView(mLinealLayoutDots);
 
         if (autoScroll)
             initAutoScroll();
@@ -367,7 +392,7 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
      * @return
      */
     private int convertDpToPixels(int dpi){
-        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpi,getResources().getDisplayMetrics());
+        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpi, getContext().getApplicationContext().getResources().getDisplayMetrics());
     }
 
 
@@ -385,6 +410,7 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
         private static final int DEFAULT_SELECTED_COLOR = Color.RED;
         @NonNull
         private final ShapeDrawable dot = new ShapeDrawable(new OvalShape());
+        //private ShapeDrawable dot;
 
         @Px
         private int dotRadius;
@@ -405,6 +431,17 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
         }
 
         private void init(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+
+            /*Paint paint = new Paint();
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(convertDpToPixels(5));
+            paint.setColor(getResources().getColor(android.R.color.white));
+
+            Canvas canvas = new Canvas();
+            OvalShape ovalShape =new OvalShape();
+            ovalShape.draw(canvas,paint);
+            dot = new ShapeDrawable(ovalShape);*/
+
             setImageDrawable(dot);
         }
 
@@ -419,7 +456,6 @@ public class ViewPagerNeubs extends LinearLayout implements  ViewPager.OnPageCha
             final int diameter = newRadius * 2;
             dot.setIntrinsicWidth(diameter);
             dot.setIntrinsicHeight(diameter);
-
             invalidate();
         }
 
