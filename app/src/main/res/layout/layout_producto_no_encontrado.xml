@@ -8,59 +8,76 @@
     android:orientation="vertical"
     app:cardElevation="4dp">
 
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="121dp"
-            android:layout_height="88dp"
-            android:layout_marginEnd="@dimen/margin_start_end_imagen_layout"
-            android:layout_marginStart="@dimen/margin_start_end_imagen_layout"
-            android:layout_marginTop="@dimen/margin_top_imagen_layout"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_search" />
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="121dp"
+        android:layout_height="88dp"
+        android:layout_marginEnd="@dimen/margin_start_end_imagen_layout"
+        android:layout_marginStart="@dimen/margin_start_end_imagen_layout"
+        android:layout_marginTop="120dp"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_search" />
 
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="0dp"
-            android:layout_height="21dp"
-            android:layout_marginEnd="@dimen/margin_start_end_msg_layout"
-            android:layout_marginStart="@dimen/margin_start_end_msg_layout"
-            android:layout_marginTop="@dimen/margin_top_msg_layout"
-            android:text="@string/msg_result_search"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_start_end_msg_layout"
+        android:layout_marginStart="@dimen/margin_start_end_msg_layout"
+        android:layout_marginTop="@dimen/margin_top_msg_layout"
+        android:padding="6dp"
+        android:text="No se han encontrado resultado por tu busqueda"
+        android:textAlignment="center"
+        android:textColor="@color/textColorSecundary"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-        <TextView
-            android:id="@+id/lbl_filtro"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_start_end_msg_layout"
-            android:layout_marginStart="@dimen/margin_start_end_msg_layout"
-            android:text='"   "'
-            android:textAlignment="center"
-            android:textColor="@color/textColorSecundary"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+    <TextView
+        android:id="@+id/lbl_filtro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_start_end_msg_layout"
+        android:layout_marginStart="@dimen/margin_start_end_msg_layout"
+        android:text='"     "'
+        android:textAlignment="center"
+        android:textColor="@color/textColorSecundary"
+        android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_top_bottom_msg_layout"
         android:layout_marginEnd="@dimen/margin_start_end_msg_layout"
         android:layout_marginStart="@dimen/margin_start_end_msg_layout"
         android:layout_marginTop="@dimen/margin_top_bottom_msg_layout"
-        android:text="TextView"
+        android:text="Te sugerimos:"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_filtro" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="-8dp"
+        android:gravity="center_horizontal"
+        android:paddingEnd="6dp"
+        android:paddingStart="6dp"
+        android:text="Revisa tu busqueda e intenta de nuevo."
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 </android.support.constraint.ConstraintLayout>
