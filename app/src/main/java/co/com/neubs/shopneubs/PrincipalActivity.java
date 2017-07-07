@@ -143,8 +143,9 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
             // Si no se está visualizando el IndexFragment, se carga
             else if (getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT).getClass() != IndexFragment.class) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(), TAG_FRAGMENT).commit();
-                // Se descheckean todos los items del menu ya que se va a visualizar el IndexFragmentt
+                // Se descheckean todos los items del menu ya que se va a visualizar el IndexFragment
                 unCheckMenuItems();
+                codigoCategoria = null;
             } else
                 super.onBackPressed();
         }
@@ -259,8 +260,8 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
             fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment,TAG_FRAGMENT).commit();
         }
-
-        drawer.closeDrawer(GravityCompat.START);
+        item.setChecked(true);
+        drawer.closeDrawers();
         return true;
     }
 
