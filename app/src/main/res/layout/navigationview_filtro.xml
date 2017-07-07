@@ -25,7 +25,7 @@
             android:background="@color/colorPrimary"
             android:gravity="fill_vertical"
             android:paddingStart="16dp"
-            android:text="Filtro"
+            android:text="@string/title_filtro"
             android:textColor="@color/textColorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -85,7 +85,7 @@
                     android:layout_weight="1.21"
                     android:gravity="center_vertical"
                     android:paddingStart="32dp"
-                    android:text="Relevante"
+                    android:text="@string/title_relevante"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textIsSelectable="false" />
 
@@ -118,7 +118,7 @@
                     android:layout_weight="13778924"
                     android:gravity="center_vertical"
                     android:paddingStart="32dp"
-                    android:text="Menor Precio"
+                    android:text="@string/title_menor_precio"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
 
@@ -150,7 +150,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingStart="32dp"
-                    android:text="Mayor Precio"
+                    android:text="@string/title_mayor_precio"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             </LinearLayout>
@@ -181,7 +181,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingStart="32dp"
-                    android:text="Ofertas"
+                    android:text="@string/title_oferta"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
 
@@ -198,7 +198,7 @@
             android:paddingBottom="8dp"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
-            android:text="Marcas"
+            android:text="@string/title_marca"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorSecundaryLight" />
 
@@ -212,7 +212,7 @@
             android:layout_alignParentEnd="true"
             android:backgroundTint="@android:color/transparent"
             android:drawableTint="@android:color/transparent"
-            android:text="APLICAR"
+            android:text="@string/aplicar"
             android:textColor="@color/textColorPrimary" />
 
         <android.support.v7.widget.RecyclerView
@@ -235,7 +235,7 @@
             android:layout_alignBottom="@+id/btn_aplicar_filtro"
             android:layout_toStartOf="@+id/btn_aplicar_filtro"
             android:backgroundTint="@android:color/transparent"
-            android:text="LIMPIAR"
+            android:text="@string/limpiar"
             android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
