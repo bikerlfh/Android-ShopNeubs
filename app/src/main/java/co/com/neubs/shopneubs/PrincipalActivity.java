@@ -1,7 +1,6 @@
 package co.com.neubs.shopneubs;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -23,7 +22,6 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
-import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.fragments.IndexFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
@@ -61,8 +59,6 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         sessionManager = SessionManager.getInstance(this);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
-        // Se pasan las sugerencias al searchView
-        searchView.setSuggestions(sessionManager.getSugerencias());
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -83,19 +79,23 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         setTextoWelcome(sessionManager.isAuthenticated());
 
         // se inicializa la funcionalidad del SearchView
-        setListenersSearchView();
+        initSearchView();
+        searchView.setQuery("", true);
     }
 
     /**
      * Crea los listeners del SearchView
      */
-    private void setListenersSearchView(){
+    private void initSearchView(){
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(PrincipalActivity.this,BusquedaActivity.class);
-                intent.putExtra(BusquedaActivity.PARAM_QUERY,query);
-                startActivity(intent);
+                if (query != null && query.length() > 0) {
+                    Intent intent = new Intent(PrincipalActivity.this, BusquedaActivity.class);
+                    intent.putExtra(BusquedaActivity.PARAM_QUERY, query);
+                    startActivity(intent);
+                }
                 return false;
             }
 
@@ -105,12 +105,8 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
                 return false;
             }
         });
-        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                searchView.setQuery(parent.getItemAtPosition(position).toString(),true);
-            }
-        });
+
+        initSugerencia();
     }
 
     /**
@@ -131,8 +127,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         if (iconShopCart != null) {
             iconShopCart.show(sessionManager.getCountItemsShopCar());
         }
-        // Se vuelven a asignar las sugerencias por si se ha agregado nuevas
-        searchView.setSuggestions(sessionManager.getSugerencias());
+        initSugerencia();
     }
 
     @Override
@@ -267,6 +262,20 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * inicializa las sugerencias del SearchView
+     */
+    private void initSugerencia(){
+        searchView.setSuggestions(sessionManager.getSugerencias());
+        // cuando se selecciona una sugerencia se envía el query
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchView.setQuery(parent.getItemAtPosition(position).toString(),true);
+            }
+        });
     }
 
     /**

@@ -20,7 +20,6 @@ import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
 import co.com.neubs.shopneubs.classes.SessionManager;
-import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.controls.NavigationViewFiltro;
 import co.com.neubs.shopneubs.controls.VistaFiltroPrincipal;
@@ -41,16 +40,12 @@ public class BusquedaActivity extends AppCompatActivity {
      * vistaFiltroPrincipal
      */
     private VistaFiltroPrincipal vistaFiltroPrincipal;
-    private NavigationViewFiltro navigationViewFiltro;
 
     private String query;
     private Map<String,String> parametrosRequest;
 
     private DrawerLayout dreawerLayout;
     View viewProductoNoEncontrado;
-
-
-    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +62,6 @@ public class BusquedaActivity extends AppCompatActivity {
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         dreawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_busqueda);
-        navigationViewFiltro = (NavigationViewFiltro) findViewById(R.id.drawer_filtro);
 
         // Se obtienen los parametros y el query
         Intent intentExtra = getIntent();
@@ -77,6 +71,7 @@ public class BusquedaActivity extends AppCompatActivity {
         searchView.setSuggestions(sessionManager.getSugerencias());
 
         vistaFiltroPrincipal.setDrawerLayoutParent(dreawerLayout);
+
         vistaFiltroPrincipal.setOnClickListenerAplicarFiltro(new NavigationViewFiltro.OnClickListenerAplicarFiltro() {
             @Override
             public void onClick(View v, Map<String, String> filtro) {
@@ -99,7 +94,7 @@ public class BusquedaActivity extends AppCompatActivity {
         });
 
         // Se asignan los listener del searchView
-        setListenersSearchView();
+        initSearchView();
 
         if (query.length() > 0) {
             searchView.setQuery(query, true);
@@ -109,7 +104,8 @@ public class BusquedaActivity extends AppCompatActivity {
     /**
      * Crea los listeners del SearchView
      */
-    private void setListenersSearchView(){
+    private void initSearchView(){
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {

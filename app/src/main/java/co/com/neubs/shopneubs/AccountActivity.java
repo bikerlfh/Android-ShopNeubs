@@ -43,9 +43,6 @@ public class AccountActivity extends AppCompatActivity {
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
 
-        // Se pasan las sugerencias al searchView
-        searchView.setSuggestions(sessionManager.getSugerencias());
-
         lblWelcome = (TextView) findViewById(R.id.lbl_welcome_account);
         lblPedidos = (TextView) findViewById(R.id.lbl_action_pedidos);
         lblPerfil = (TextView) findViewById(R.id.lbl_action_perfil);
@@ -117,12 +114,7 @@ public class AccountActivity extends AppCompatActivity {
                 return false;
             }
         });
-        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                searchView.setQuery(parent.getItemAtPosition(position).toString(),true);
-            }
-        });
+        initSugerencia();
     }
 
     private View.OnClickListener clickListenerLinks = new View.OnClickListener() {
@@ -185,8 +177,7 @@ public class AccountActivity extends AppCompatActivity {
             iconShopCart.show(sessionManager.getCountItemsShopCar());
         }
 
-        // Se vuelven a asignar las sugerencias por si se ha agregado nuevas
-        searchView.setSuggestions(sessionManager.getSugerencias());
+        initSugerencia();
     }
 
     @Override
@@ -233,6 +224,20 @@ public class AccountActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finishAfterTransition();
         return super.onSupportNavigateUp();
+    }
+
+    /**
+     * inicializa las sugerencias del SearchView
+     */
+    private void initSugerencia(){
+        searchView.setSuggestions(sessionManager.getSugerencias());
+        // cuando se selecciona una sugerencia se envía el query
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchView.setQuery(parent.getItemAtPosition(position).toString(),true);
+            }
+        });
     }
 
 }
