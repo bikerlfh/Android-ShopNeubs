@@ -42,9 +42,9 @@ public class AccountActivity extends AppCompatActivity {
         sessionManager = SessionManager.getInstance(this);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
-        // Se consultan las sugerencias
-        SugerenciaBusqueda sugerenciaBusqueda = new SugerenciaBusqueda();
-        searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
+
+        // Se pasan las sugerencias al searchView
+        searchView.setSuggestions(sessionManager.getSugerencias());
 
         lblWelcome = (TextView) findViewById(R.id.lbl_welcome_account);
         lblPedidos = (TextView) findViewById(R.id.lbl_action_pedidos);
@@ -184,6 +184,9 @@ public class AccountActivity extends AppCompatActivity {
         if (iconShopCart != null) {
             iconShopCart.show(sessionManager.getCountItemsShopCar());
         }
+
+        // Se vuelven a asignar las sugerencias por si se ha agregado nuevas
+        searchView.setSuggestions(sessionManager.getSugerencias());
     }
 
     @Override

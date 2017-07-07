@@ -27,6 +27,10 @@ public class SugerenciaBusqueda implements ICrud {
     public SugerenciaBusqueda() {
     }
 
+    public SugerenciaBusqueda(String sugerencia) {
+        this.sugerencia = sugerencia;
+    }
+
     public int getIdSugerenciaBusqueda() {
         return idSugerenciaBusqueda;
     }
@@ -51,7 +55,6 @@ public class SugerenciaBusqueda implements ICrud {
     @Override
     public boolean save() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(SugerenciaBusquedaModel.PK,idSugerenciaBusqueda);
         contentValues.put(SugerenciaBusquedaModel.SUGERENCIA,sugerencia);
         return dbManager.Insert(SugerenciaBusquedaModel.NAME_TABLE,contentValues);
     }
@@ -85,7 +88,7 @@ public class SugerenciaBusqueda implements ICrud {
      * consulta todas las sugerencias (incluidas las categorias y marcas)
      * @return arreglo de String con las sugerencias
      */
-    public String[] getAllSugerencias(){
+    public List<String> getAllSugerencias(){
         List<String> listSugerencias = new ArrayList<>();
         Cursor c = dbManager.Select(SugerenciaBusquedaModel.NAME_TABLE, new String[] { "*" });
         if (c.moveToFirst()){
@@ -108,7 +111,8 @@ public class SugerenciaBusqueda implements ICrud {
                 listSugerencias.add(c.getString(c.getColumnIndex(MarcaModel.DESCRIPCION)));
             }while (c.moveToNext());
         }
-        return listSugerencias.toArray(new String[listSugerencias.size()]);
+        //return listSugerencias.toArray(new String[listSugerencias.size()]);
+        return listSugerencias;
     }
 
     private void serialize(Cursor cursor) {

@@ -36,7 +36,6 @@ public class BusquedaActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private MaterialSearchView searchView;
     private IconNotificationBadge iconShopCart;
-    private SugerenciaBusqueda sugerenciaBusqueda;
 
     /**
      * vistaFiltroPrincipal
@@ -74,14 +73,10 @@ public class BusquedaActivity extends AppCompatActivity {
         Intent intentExtra = getIntent();
         query = intentExtra.getExtras().getString(PARAM_QUERY,"");
 
-
-        // Se consultan las sugerencias y se pasan al search
-        sugerenciaBusqueda = new SugerenciaBusqueda();
-        searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
-
+        // Se pasan las sugerencias al searchView
+        searchView.setSuggestions(sessionManager.getSugerencias());
 
         vistaFiltroPrincipal.setDrawerLayoutParent(dreawerLayout);
-
         vistaFiltroPrincipal.setOnClickListenerAplicarFiltro(new NavigationViewFiltro.OnClickListenerAplicarFiltro() {
             @Override
             public void onClick(View v, Map<String, String> filtro) {
@@ -143,7 +138,7 @@ public class BusquedaActivity extends AppCompatActivity {
         });
     }
 
-    private void consultarPeticionAPI(Map<String,String> params){
+    private void consultarPeticionAPI(final Map<String,String> params){
         APIRest.Async.get(APIRest.URL_FILTRO_PRODUCTO,params, new IServerCallback() {
             @Override
             public void onSuccess(String json) {
@@ -151,8 +146,16 @@ public class BusquedaActivity extends AppCompatActivity {
                 if (consultaPaginada.getResults().size() > 0) {
                     vistaFiltroPrincipal.showProductos(consultaPaginada);
                     visualizarBusquedaSinResultados(false);
+
+                    // Si se encontraron resultados y el filtro no esta como sugerencia, se guarda
+                    if (!sessionManager.existSugerencia(params.get("filtro"))){
+                        sessionManager.addSugerencia(params.get("filtro"));
+                        // Se vuelven a asignar las sugerencias
+                        searchView.setSuggestions(sessionManager.getSugerencias());
+                    }
                 }
                 else{
+                    vistaFiltroPrincipal.showLoadingProgressBar(false);
                     visualizarBusquedaSinResultados(true);
                 }
             }

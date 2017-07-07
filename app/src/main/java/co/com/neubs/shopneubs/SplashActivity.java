@@ -18,6 +18,7 @@ import co.com.neubs.shopneubs.classes.DbManager;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.Synchronize;
+import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 
 public class SplashActivity extends Activity {
     private final int TIME_SPLASH = 2000;
@@ -147,6 +148,10 @@ public class SplashActivity extends Activity {
             if (!result){
                 apiValidations = APIRest.Sync.apiValidations;
             }
+            // Se agregan las sugerencias a la session
+            SugerenciaBusqueda sugerencia = new SugerenciaBusqueda();
+            sessionManager.setSugerencias(sugerencia.getAllSugerencias());
+
             return result;
         }
 

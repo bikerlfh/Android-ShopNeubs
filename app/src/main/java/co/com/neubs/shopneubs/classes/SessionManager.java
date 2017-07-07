@@ -10,12 +10,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
+import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 import co.com.neubs.shopneubs.classes.models.Usuario;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
@@ -30,6 +32,10 @@ public class SessionManager {
     private String username;
     private String email;
     private String token;
+    /**
+     * Listado de sugerencias para la busqueda
+     */
+    private List<String> listSugerencias;
 
     // Guarda el carrito
     private ArrayList<ItemCar> shopCar;
@@ -71,6 +77,39 @@ public class SessionManager {
 
     public String getToken() {
         return token;
+    }
+
+    public String[] getSugerencias() {
+        return listSugerencias.toArray(new String[listSugerencias.size()]);
+    }
+
+    public void setSugerencias(List<String> listSugerencias) {
+        this.listSugerencias = listSugerencias;
+    }
+
+    /**
+     * Verifica si una sugerencia ya existe
+     * @param sugerencia sugerencia a verificar
+     * @return true si existe, de lo contrario false
+     */
+    public boolean existSugerencia(String sugerencia){
+        if (listSugerencias != null && listSugerencias.size() > 0) {
+            for (String item : listSugerencias) {
+                if (item.equals(sugerencia))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Agrega una nueva sugerencia a la tabla y a la lista
+     * @param sugerencia sugerencia a agregar
+     */
+    public void addSugerencia(String sugerencia){
+        SugerenciaBusqueda sugerenciaBusqueda = new SugerenciaBusqueda(sugerencia);
+        sugerenciaBusqueda.save();
+        this.listSugerencias.add(sugerencia);
     }
 
     public ArrayList<ItemCar> getShopCar() {

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -27,19 +28,17 @@ import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.fragments.IndexFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
 
-public class PrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG_FRAGMENT = "FRAGMENT";
 
     private String codigoCategoria = null;
     private TextView lblHeaderWelcome;
     private DrawerLayout drawer;
+    private NavigationView navigationViewPrincipal;
 
     private SessionManager sessionManager;
     private MaterialSearchView searchView;
-
-    private SugerenciaBusqueda sugerenciaBusqueda;
 
     private IconNotificationBadge iconShopCart;
 
@@ -62,9 +61,8 @@ public class PrincipalActivity extends AppCompatActivity
         sessionManager = SessionManager.getInstance(this);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
-        // Se consultan las sugerencias
-        sugerenciaBusqueda = new SugerenciaBusqueda();
-        searchView.setSuggestions(sugerenciaBusqueda.getAllSugerencias());
+        // Se pasan las sugerencias al searchView
+        searchView.setSuggestions(sessionManager.getSugerencias());
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,14 +70,14 @@ public class PrincipalActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationViewPrincipal = (NavigationView) findViewById(R.id.nav_view);
+        navigationViewPrincipal.setNavigationItemSelectedListener(this);
 
         // Se inicializa con el fragment Index
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(),TAG_FRAGMENT).commit();
 
         // Se consulta la vista del navigationView
-        View header = navigationView.getHeaderView(0);
+        View header = navigationViewPrincipal.getHeaderView(0);
         // Se asigna el lbl header welcome
         lblHeaderWelcome = (TextView) header.findViewById(R.id.lbl_header_welcome);
         setTextoWelcome(sessionManager.isAuthenticated());
@@ -133,6 +131,8 @@ public class PrincipalActivity extends AppCompatActivity
         if (iconShopCart != null) {
             iconShopCart.show(sessionManager.getCountItemsShopCar());
         }
+        // Se vuelven a asignar las sugerencias por si se ha agregado nuevas
+        searchView.setSuggestions(sessionManager.getSugerencias());
     }
 
     @Override
@@ -148,6 +148,8 @@ public class PrincipalActivity extends AppCompatActivity
             // Si no se está visualizando el IndexFragment, se carga
             else if (getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT).getClass() != IndexFragment.class) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(), TAG_FRAGMENT).commit();
+                // Se descheckean todos los items del menu ya que se va a visualizar el IndexFragmentt
+                unCheckMenuItems();
             } else
                 super.onBackPressed();
         }
@@ -276,12 +278,27 @@ public class PrincipalActivity extends AppCompatActivity
     }
 
     /**
-     * interfaz para realizar el callback en onBackPressed desde un fragment
+     * deschekea todos los items del menú Principal y los submenus
      */
-    public interface OnBackPressedListener {
-        void doBack();
+    private void unCheckMenuItems(){
+        Menu menuPrincipal = navigationViewPrincipal.getMenu();
+        for(int i=0;i < menuPrincipal.size();i++){
+            MenuItem item = menuPrincipal.getItem(i);
+            item.setChecked(false);
+            // Si el item tiene un submenu
+            // como es el caso del menu CATEGORIAS
+            if (item.getSubMenu() != null){
+                SubMenu subMenu = item.getSubMenu();
+                for (int j = 0;j<subMenu.size();j++)
+                    subMenu.getItem(j).setChecked(false);
+            }
+        }
     }
 
+    /**
+     * Agrega un itemCart
+     * @param saldoInventario saldo inventario que se va a agregar al carro
+     */
     public void agregarItemCart(SaldoInventario saldoInventario){
         // Se agrega el item al carrito
         if (sessionManager.getItemCarByIdSaldoInventario(saldoInventario.getIdSaldoInventario()) == null) {
@@ -309,5 +326,10 @@ public class PrincipalActivity extends AppCompatActivity
         }
     }
 
-
+    /**
+     * interfaz para realizar el callback en onBackPressed desde un fragment
+     */
+    public interface OnBackPressedListener {
+        void doBack();
+    }
 }
