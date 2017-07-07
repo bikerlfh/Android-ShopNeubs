@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:minWidth="100dp"
             android:paddingBottom="4dp"
-            android:text="TextView"
+            android:text="@string/text_view_empy"
             android:textColor="@color/textColorSecundary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.137"

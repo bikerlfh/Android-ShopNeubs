@@ -12,13 +12,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <co.com.neubs.shopneubs.controls.ViewPagerNeubs
                 android:id="@+id/viewpager_banner"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:visibility="gone"
                 neubs:autoScroll="true"
@@ -33,7 +33,7 @@
                 android:id="@+id/recycle_view_index"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/margin_boton">
+                android:paddingBottom="3dp">
 
             </android.support.v7.widget.RecyclerView>
 
