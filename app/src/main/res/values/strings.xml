@@ -108,8 +108,9 @@
     <string name="msg_session_expired">Su sesión ha expirado</string>
     <string name="msg_save_success">Se guardó corrrectamente</string>
     <string name="msg_save_error">No se ha podido guardar</string>
-    <string name="msg_result_search">No se han encontrado resultados para su busqueda. Intentalo de nuevo</string>
-    <string name="msg_try_again">Intentalo de nuevo</string>
+    <string name="msg_result_search">No se han encontrado resultado para tu búsqueda</string>
+    <string name="msg_sugerencia">Te sugerimos:</string>
+    <string name="msg_try_again">Revisa tu búsqueda e intenta de nuevo.</string>
     <string name="msg_cart_empty">En nuestra tienda encontrarás los mejores productos tecnológicos al mejor precio, puedes agregar diversos artículos al mismo tiempo.</string>
     <string name="msg_primer_pedido">" Te invitamos a agregar productos a tu carrito de compra y realizar tu primer pedido."</string>
     <string name="msg_generando_pedido" >Generando pedido...</string>

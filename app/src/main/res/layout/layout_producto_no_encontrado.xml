@@ -14,7 +14,8 @@
         android:layout_height="88dp"
         android:layout_marginEnd="@dimen/margin_start_end_imagen_layout"
         android:layout_marginStart="@dimen/margin_start_end_imagen_layout"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="135dp"
+        android:alpha="0.8"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,13 +24,13 @@
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_start_end_msg_layout"
         android:layout_marginStart="@dimen/margin_start_end_msg_layout"
         android:layout_marginTop="@dimen/margin_top_msg_layout"
         android:padding="6dp"
-        android:text="No se han encontrado resultado por tu busqueda"
+        android:text="@string/msg_result_search"
         android:textAlignment="center"
         android:textColor="@color/textColorSecundary"
         android:textSize="14sp"
@@ -40,7 +41,7 @@
 
     <TextView
         android:id="@+id/lbl_filtro"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_start_end_msg_layout"
         android:layout_marginStart="@dimen/margin_start_end_msg_layout"
@@ -59,23 +60,25 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_start_end_msg_layout"
         android:layout_marginStart="@dimen/margin_start_end_msg_layout"
-        android:layout_marginTop="@dimen/margin_top_bottom_msg_layout"
-        android:text="Te sugerimos:"
+        android:layout_marginTop="9dp"
+        android:text="@string/msg_sugerencia"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_filtro" />
+        app:layout_constraintTop_toBottomOf="@+id/lbl_filtro"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="-8dp"
+        android:layout_marginStart="8dp"
         android:gravity="center_horizontal"
         android:paddingEnd="6dp"
         android:paddingStart="6dp"
-        android:text="Revisa tu busqueda e intenta de nuevo."
+        android:text="@string/msg_try_again"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
