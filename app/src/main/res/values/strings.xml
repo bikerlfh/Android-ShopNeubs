@@ -45,7 +45,7 @@
     <string name="prompt_type_document">Tipo Documento</string>
     <string name="prompt_department">Departamento</string>
     <string name="prompt_contry">Pais</string>
-    <string name="prompt_municipio" >Municipio</string>
+    <string name="prompt_municipio">Municipio</string>
     <string name="prompt_nit">Nit</string>
 
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
@@ -113,12 +113,12 @@
     <string name="msg_try_again">Revisa tu búsqueda e intenta de nuevo.</string>
     <string name="msg_cart_empty">En nuestra tienda encontrarás los mejores productos tecnológicos al mejor precio, puedes agregar diversos artículos al mismo tiempo.</string>
     <string name="msg_primer_pedido">" Te invitamos a agregar productos a tu carrito de compra y realizar tu primer pedido."</string>
-    <string name="msg_generando_pedido" >Generando pedido...</string>
+    <string name="msg_generando_pedido">Generando pedido...</string>
     <string name="msg_pedido_generado">Se ha generado el pedido número</string>
     <string name="msg_no_hay_pedidos">No hay pedidos registrados</string>
     <string name="msg_productos_encontrados">Productos encontrados</string>
 
     <string name="text_view_empy">----</string>
-    <string name="url_site" >https://www.shopneubs.com</string>
+    <string name="url_site">https://www.shopneubs.com</string>
 
 </resources>

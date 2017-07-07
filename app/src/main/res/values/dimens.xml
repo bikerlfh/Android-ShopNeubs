@@ -186,13 +186,14 @@
     <dimen name="padding_boton_detalle_producto">12dp</dimen>
 
 
-    <!-- Margin-padding shop_cart_vacio-->
+    <!-- Margin-padding shop_cart_vacio producto_no_encontrado sin_pedido-->
     <dimen name="margin_top_imagen_layout">80dp</dimen>
     <dimen name="margin_start_end_imagen_layout">8dp</dimen>
     <dimen name="margin_top_msg_layout">54dp</dimen>
     <dimen name="margin_start_end_msg_layout">8dp</dimen>
     <dimen name="margin_top_bottom_msg_layout">8dp</dimen>
-    
+    <dimen name="padding_end_start_msg_layout">6dp</dimen>
+    <dimen name="margin_top_img_layout_producto_no_encontrado">135dp</dimen>
     
    <!-- Margin - padding navigationview_filtro -->
     <dimen name="padding_start_title_filtro_navigationview_filtro">16dp</dimen>
