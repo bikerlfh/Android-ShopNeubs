@@ -69,8 +69,11 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         navigationViewPrincipal = (NavigationView) findViewById(R.id.nav_view);
         navigationViewPrincipal.setNavigationItemSelectedListener(this);
 
-        // Se inicializa con el fragment Index
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(),TAG_FRAGMENT).commit();
+        // Se bloquea el navigationViewFiltro si existe.
+        NavigationView navigationViewFiltro = (NavigationView) findViewById(R.id.drawer_filtro);
+        if (navigationViewFiltro != null){
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,navigationViewFiltro);
+        }
 
         // Se consulta la vista del navigationView
         View header = navigationViewPrincipal.getHeaderView(0);
@@ -80,7 +83,9 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
         // se inicializa la funcionalidad del SearchView
         initSearchView();
-        searchView.setQuery("", true);
+
+        // Se inicializa con el fragment Index
+        openFragment(new IndexFragment());
     }
 
     /**
@@ -142,7 +147,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
             }
             // Si no se está visualizando el IndexFragment, se carga
             else if (getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT).getClass() != IndexFragment.class) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, new IndexFragment(), TAG_FRAGMENT).commit();
+                openFragment(new IndexFragment());
                 // Se descheckean todos los items del menu ya que se va a visualizar el IndexFragment
                 unCheckMenuItems();
                 codigoCategoria = null;
@@ -258,11 +263,20 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
             fragment = new ProductosCategoriaFragment();
             fragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment,TAG_FRAGMENT).commit();
+            openFragment(fragment);
+            item.setChecked(true);
         }
-        item.setChecked(true);
+        // se cierran los drawers
         drawer.closeDrawers();
         return true;
+    }
+
+    /**
+     * Reemplaza un fragment en el contenedor
+     * @param fragment fragment a cargar
+     */
+    private void openFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment,TAG_FRAGMENT).commit();
     }
 
     /**
