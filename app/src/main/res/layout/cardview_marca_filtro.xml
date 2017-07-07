@@ -14,7 +14,6 @@
         android:paddingStart="24dp"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/colorSecundaryLight"
-        />
+        android:textColor="@color/colorSecundaryLight" />
 
 </LinearLayout>

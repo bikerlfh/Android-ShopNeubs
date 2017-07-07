@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_margin="@dimen/margin_cardview_producto_list"
     app:cardElevation="0dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:padding="@dimen/padding_relativeLayout_cardview_producto_list">
 
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
@@ -31,8 +31,8 @@
             android:layout_toEndOf="@+id/img_producto"
             android:ellipsize="end"
             android:maxLines="2"
-            android:paddingStart="5dp"
-            android:paddingTop="9dp"
+            android:paddingStart="@dimen/padding_start_lbl_nombre_cardview_producto_list"
+            android:paddingTop="@dimen/padding_top_lbl_nombre_cardview_producto_list"
             android:text="TextView"
             android:textColor="@color/textColorSecundary"
             android:textSize="14sp" />
@@ -43,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lbl_nombre_producto_card"
             android:layout_toEndOf="@+id/img_producto"
-            android:paddingStart="6dp"
-            android:text="Lenovo"
+            android:paddingStart="@dimen/padding_start_lbl_marca_cardview_producto_list"
+            android:text="@string/text_view_empy"
             android:textAlignment="viewStart" />
 
         <TextView
@@ -54,8 +54,8 @@
             android:layout_alignBottom="@+id/lbl_precio_anterior_card"
             android:layout_below="@+id/lbl_marca_producto"
             android:layout_toEndOf="@+id/img_producto"
-            android:paddingStart="5dp"
-            android:text="TextView"
+            android:paddingStart="@dimen/padding_start_lbl_precio_cardview_producto_list"
+            android:text="@string/text_view_empy"
             android:textColor="@color/colorPrecio" />
 
         <TextView
@@ -64,8 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lbl_marca_producto"
             android:layout_toEndOf="@+id/lbl_precio_producto_card"
-            android:paddingTop="3dp"
-            android:text="TextView"
+            android:paddingTop="@dimen/padding_top_lbl_precio_anterior_cardview_producto_list"
+            android:text="@string/text_view_empy"
             android:textSize="@dimen/precio_anterior_producto_card" />
 
         <TextView

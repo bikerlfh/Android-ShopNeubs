@@ -24,7 +24,7 @@
             android:layout_height="56dp"
             android:background="@color/colorPrimary"
             android:gravity="fill_vertical"
-            android:paddingStart="16dp"
+            android:paddingStart="@dimen/padding_start_title_filtro_navigationview_filtro"
             android:text="@string/title_filtro"
             android:textColor="@color/textColorPrimary"
             android:textSize="16sp"
@@ -37,12 +37,11 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView"
             android:layout_centerInParent="false"
-            android:layout_marginTop="3dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
-            android:paddingBottom="8dp"
-            android:paddingStart="16dp"
-            android:paddingTop="8dp"
+            android:paddingBottom="@dimen/padding_top_bottom_title_navigationview_filtro"
+            android:paddingStart="@dimen/padding_start_title_navigationview_filtro"
+            android:paddingTop="@dimen/padding_top_bottom_title_navigationview_filtro"
             android:text="@string/title_order_by"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorSecundaryLight" />
@@ -62,9 +61,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp">
+                android:paddingBottom="@dimen/padding_top_bottom_container_layout_navigationview_filtro"
+                android:paddingStart="@dimen/padding_start_container_layout_navigationview_filtro"
+                android:paddingTop="@dimen/padding_top_bottom_container_layout_navigationview_filtro">
 
                 <ImageButton
                     android:id="@+id/btn_relevante"
@@ -84,7 +83,7 @@
                     android:layout_below="@+id/ordenar_por"
                     android:layout_weight="1.21"
                     android:gravity="center_vertical"
-                    android:paddingStart="32dp"
+                    android:paddingStart="@dimen/padding_start_lbl_container_layout_navigationview_filtro"
                     android:text="@string/title_relevante"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textIsSelectable="false" />
@@ -97,9 +96,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp">
+                android:paddingBottom="@dimen/padding_top_bottom_container_layout_navigationview_filtro"
+                android:paddingStart="@dimen/padding_start_container_layout_navigationview_filtro"
+                android:paddingTop="@dimen/padding_top_bottom_container_layout_navigationview_filtro">
 
                 <ImageButton
                     android:id="@+id/btn_menor_precio"
@@ -117,7 +116,7 @@
                     android:layout_toEndOf="@+id/lbl_relevante"
                     android:layout_weight="13778924"
                     android:gravity="center_vertical"
-                    android:paddingStart="32dp"
+                    android:paddingStart="@dimen/padding_start_lbl_container_layout_navigationview_filtro"
                     android:text="@string/title_menor_precio"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
@@ -128,9 +127,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp">
+                android:paddingBottom="@dimen/padding_top_bottom_container_layout_navigationview_filtro"
+                android:paddingStart="@dimen/padding_start_container_layout_navigationview_filtro"
+                android:paddingTop="@dimen/padding_top_bottom_container_layout_navigationview_filtro">
 
                 <ImageButton
                     android:id="@+id/btn_mayor_precio"
@@ -149,7 +148,7 @@
                     android:layout_toEndOf="@+id/lbl_menor_precio"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:paddingStart="32dp"
+                    android:paddingStart="@dimen/padding_start_lbl_container_layout_navigationview_filtro"
                     android:text="@string/title_mayor_precio"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -161,9 +160,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp">
+                android:paddingBottom="@dimen/padding_top_bottom_container_layout_navigationview_filtro"
+                android:paddingStart="@dimen/padding_start_container_layout_navigationview_filtro"
+                android:paddingTop="@dimen/padding_top_bottom_container_layout_navigationview_filtro">
 
                 <ImageButton
                     android:id="@+id/btn_oferta"
@@ -180,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:paddingStart="32dp"
+                    android:paddingStart="@dimen/padding_start_lbl_container_layout_navigationview_filtro"
                     android:text="@string/title_oferta"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
@@ -195,9 +194,9 @@
             android:layout_below="@+id/ordenar_por"
             android:layout_marginTop="2dp"
             android:background="@android:color/white"
-            android:paddingBottom="8dp"
-            android:paddingStart="16dp"
-            android:paddingTop="8dp"
+            android:paddingBottom="@dimen/padding_top_bottom_title_navigationview_filtro"
+            android:paddingStart="@dimen/padding_start_title_navigationview_filtro"
+            android:paddingTop="@dimen/padding_top_bottom_title_navigationview_filtro"
             android:text="@string/title_marca"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorSecundaryLight" />
@@ -222,8 +221,8 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_title_filtre"
             android:background="@android:color/white"
-            android:paddingStart="16dp"
-            android:paddingTop="2dp"
+            android:paddingStart="@dimen/padding_start_recycle_view_navegationview_filtro"
+            android:paddingTop="@dimen/padding_top_recycle_view_navegationview_filtro"
             android:textAlignment="center" />
 
         <Button
