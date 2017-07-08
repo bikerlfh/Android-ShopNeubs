@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -20,13 +21,13 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
 import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
-import static java.net.HttpURLConnection.HTTP_SERVER_ERROR;
 import static java.net.HttpURLConnection.HTTP_UNAVAILABLE;
 
 /**
@@ -35,11 +36,14 @@ import static java.net.HttpURLConnection.HTTP_UNAVAILABLE;
 
 public class APIRest {
 
-    //public final static String PROTOCOL_URL_API = "https";
-    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    public final static String PROTOCOL_URL_API = "https";
+    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
-    public final static String PROTOCOL_URL_API = "http";
-    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
+    /**
+     * URL desarrollo
+     */
+    //public final static String PROTOCOL_URL_API = "http";
+    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
     // URLs de funcionalidad de la API
     public final static String URL_LOGIN = "rest-auth/login/";

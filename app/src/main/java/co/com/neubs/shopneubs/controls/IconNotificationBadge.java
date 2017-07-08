@@ -1,7 +1,6 @@
 package co.com.neubs.shopneubs.controls;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;

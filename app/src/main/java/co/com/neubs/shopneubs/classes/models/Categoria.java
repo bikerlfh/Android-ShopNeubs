@@ -1,9 +1,10 @@
 package co.com.neubs.shopneubs.classes.models;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
+
 import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 

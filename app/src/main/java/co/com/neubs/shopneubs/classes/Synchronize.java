@@ -1,10 +1,5 @@
 package co.com.neubs.shopneubs.classes;
 
-import android.content.Context;
-
-import com.android.volley.Cache;
-
-import co.com.neubs.shopneubs.AppController;
 import co.com.neubs.shopneubs.classes.models.APIBanner;
 import co.com.neubs.shopneubs.classes.models.APISection;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;

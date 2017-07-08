@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import co.com.neubs.shopneubs.models.APIBannerModel;
 import co.com.neubs.shopneubs.models.APISectionModel;
 import co.com.neubs.shopneubs.models.APISincronizacionModel;
 import co.com.neubs.shopneubs.models.APITablaModel;
-import co.com.neubs.shopneubs.models.APIBannerModel;
 import co.com.neubs.shopneubs.models.CategoriaModel;
 import co.com.neubs.shopneubs.models.DepartamentoModel;
 import co.com.neubs.shopneubs.models.ItemCarModel;

@@ -4,7 +4,6 @@ package co.com.neubs.shopneubs.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +21,6 @@ import java.util.Map;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
-import co.com.neubs.shopneubs.classes.models.APISincronizacion;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**

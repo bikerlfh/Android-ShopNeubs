@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;

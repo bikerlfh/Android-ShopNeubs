@@ -20,8 +20,8 @@ import java.util.List;
 
 import co.com.neubs.shopneubs.PrincipalActivity;
 import co.com.neubs.shopneubs.ProductoDetalleActivity;
-import co.com.neubs.shopneubs.adapters.SectionAdapter;
 import co.com.neubs.shopneubs.R;
+import co.com.neubs.shopneubs.adapters.SectionAdapter;
 import co.com.neubs.shopneubs.classes.models.APIBanner;
 import co.com.neubs.shopneubs.classes.models.APISection;
 import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
@@ -176,7 +176,7 @@ public class IndexFragment extends Fragment {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2 && getActivity() != null) {
             int shortAnimTime = getActivity().getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
