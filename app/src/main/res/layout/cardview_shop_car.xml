@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:background="@color/colorWhite">
 
-            <com.uncopt.android.widget.text.justify.JustifiedTextView
+            <TextView
                 android:id="@+id/lbl_nombre_producto_card_shop_car"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

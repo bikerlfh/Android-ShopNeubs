@@ -140,7 +140,7 @@ public class ShopCarActivity extends AppCompatActivity {
         rootLayout.removeAllViews();
         // Se infla el layout (shop_cart_vacio)
         View view = getLayoutInflater().inflate(R.layout.layout_shop_cart_vacio, null, false);
-        view.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.MATCH_PARENT));
+        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
 
         Button btnComenzarAhora = (Button)view.findViewById(R.id.btn_comenzar_ahora);
         btnComenzarAhora.setOnClickListener(new View.OnClickListener() {

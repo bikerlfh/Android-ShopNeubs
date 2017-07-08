@@ -75,18 +75,13 @@ public class IndexFragment extends Fragment {
         mViewPagerBanner = (ViewPagerNeubs) view.findViewById(R.id.viewpager_banner);
         mRecyclerViewSection=(RecyclerView) view.findViewById(R.id.recycle_view_index);
 
-
+        showLoadingView(true);
         AsyncInitial  asyncInitial = new AsyncInitial();
         asyncInitial.execute();
         return view;
     }
 
     class AsyncInitial extends AsyncTask<Void,Void,Void>{
-
-        @Override
-        protected void onPreExecute() {
-            showLoadingView(true);
-        }
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -97,7 +92,6 @@ public class IndexFragment extends Fragment {
 
             if(listAPISections !=null)
                 sectionAdapter = new SectionAdapter(listAPISections);
-            showLoadingView(false);
             return null;
         }
 
@@ -183,7 +177,7 @@ public class IndexFragment extends Fragment {
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = this.getResources().getInteger(android.R.integer.config_shortAnimTime);
+            int shortAnimTime = getActivity().getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
             mMainView.animate().setDuration(shortAnimTime).alpha(
@@ -208,5 +202,6 @@ public class IndexFragment extends Fragment {
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+
     }
 }
