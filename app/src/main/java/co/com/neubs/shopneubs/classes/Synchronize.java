@@ -354,6 +354,10 @@ public class Synchronize {
                         section.delete();
                         numSincronizacion++;
                     }
+                    else{
+                        // se modifica por si el orden ah cambiado
+                        section.update();
+                    }
                 }
             }
         }

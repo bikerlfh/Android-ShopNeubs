@@ -12,6 +12,7 @@ public class APISectionModel {
     public static final String SUBTITLE= "subTitle";
     public static final String URL_REQUEST_PRODUCTOS= "urlRequestProductos";
     public static final String URL_REQUEST_MAS = "urlRequestMas";
+    public static final String ORDEN = "orden";
     public static final String ESTADO = "estado";
 
 
@@ -21,5 +22,6 @@ public class APISectionModel {
             SUBTITLE + " text null,"+
             URL_REQUEST_PRODUCTOS + " text not null," +
             URL_REQUEST_MAS + " text null,"+
+            ORDEN + " integer not null,"+
             ESTADO + " text not null)";
 }

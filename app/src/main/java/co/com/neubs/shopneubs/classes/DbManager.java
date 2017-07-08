@@ -105,6 +105,10 @@ public class DbManager
         return db.query(table, columns, selection, selectionArgs, groupBy,having, orderBy,null);
     }
 
+    public Cursor Select(String table, String[] columns, String selection, String[] selectionArgs, String orderBy){
+        return db.query(table, columns, selection, selectionArgs,null,null, orderBy,null);
+    }
+
     public Cursor Select(String table, String[] columns, String selection, String[] selectionArgs){
         return db.query(table, columns, selection, selectionArgs, null,null, null,null);
     }

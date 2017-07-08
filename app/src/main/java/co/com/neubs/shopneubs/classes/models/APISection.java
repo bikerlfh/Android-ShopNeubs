@@ -27,6 +27,7 @@ public class APISection implements ICrud {
      */
     private String urlRequestMas;
 
+    private int orden;
     private boolean estado;
 
     private transient DbManager dbManager = DbManager.getInstance();
@@ -81,6 +82,14 @@ public class APISection implements ICrud {
         this.urlRequestMas = urlRequestMas;
     }
 
+    public int getOrden() {
+        return orden;
+    }
+
+    public void setOrden(int orden) {
+        this.orden = orden;
+    }
+
     public boolean getEstado() {
         return estado;
     }
@@ -97,6 +106,7 @@ public class APISection implements ICrud {
         contentValues.put(APISectionModel.SUBTITLE,subTitle);
         contentValues.put(APISectionModel.URL_REQUEST_PRODUCTOS,urlRequestProductos);
         contentValues.put(APISectionModel.URL_REQUEST_MAS,urlRequestMas);
+        contentValues.put(APISectionModel.ORDEN,orden);
         contentValues.put(APISectionModel.ESTADO,estado);
         return (dbManager.Insert(APISectionModel.NAME_TABLE,contentValues));
     }
@@ -108,6 +118,7 @@ public class APISection implements ICrud {
         contentValues.put(APISectionModel.SUBTITLE,subTitle);
         contentValues.put(APISectionModel.URL_REQUEST_PRODUCTOS,urlRequestProductos);
         contentValues.put(APISectionModel.URL_REQUEST_MAS,urlRequestMas);
+        contentValues.put(APISectionModel.ORDEN,orden);
         contentValues.put(APISectionModel.ESTADO,estado);
         return (dbManager.Update(APISectionModel.NAME_TABLE,contentValues,APISectionModel.PK,idApiSection));
     }
@@ -139,8 +150,8 @@ public class APISection implements ICrud {
      */
     public List<APISection> getAll(boolean estado){
         List<APISection> listadoApiSection = new ArrayList<>();
-        Cursor c = dbManager.Select(APISectionModel.NAME_TABLE,new String[] {"*"},APISectionModel.ESTADO + "=?",new String[] {String.valueOf(estado?1:0)},null,null,
-                APISectionModel.PK + " DESC",null);
+        // Se consultan las secciones ordenando por el campo ORDER
+        Cursor c = dbManager.Select(APISectionModel.NAME_TABLE,new String[] {"*"},APISectionModel.ESTADO + "=?",new String[] {String.valueOf(estado?1:0)},APISectionModel.ORDEN + " ASC");
         if (c.moveToFirst()){
             do{
                 APISection apiSection = new APISection();
@@ -157,6 +168,7 @@ public class APISection implements ICrud {
         this.subTitle = cursor.getString(cursor.getColumnIndex(APISectionModel.SUBTITLE));
         this.urlRequestProductos = cursor.getString(cursor.getColumnIndex(APISectionModel.URL_REQUEST_PRODUCTOS));
         this.urlRequestMas = cursor.getString(cursor.getColumnIndex(APISectionModel.URL_REQUEST_MAS));
+        this.orden = cursor.getInt(cursor.getColumnIndex(APISectionModel.ORDEN));
         this.estado = cursor.getInt(cursor.getColumnIndex(APISectionModel.ESTADO))==1;
     }
 }
