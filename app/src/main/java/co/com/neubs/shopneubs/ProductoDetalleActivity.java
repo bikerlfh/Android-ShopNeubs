@@ -86,7 +86,8 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
         mBtnAgregarItemCar = (Button) findViewById(R.id.btn_agregar_item_car);
 
-        mBtnAgregarItemCar.setEnabled(false);
+        mBtnAgregarItemCar.setEnabled(true);
+        mBtnAgregarItemCar.setText(R.string.title_agregar_carrito);
         mBtnAgregarItemCar.setOnClickListener(this);
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -145,10 +146,12 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                             setPrecio(saldoInventario.getPrecioVentaUnitario(), saldoInventario.getPrecioOferta());
                         }
                         // Se cambia el estado boton del carro
-                        if (saldoInventario.getEstado())
-                            mBtnAgregarItemCar.setEnabled(true);
+                        if (!saldoInventario.getEstado()){
+                            mBtnAgregarItemCar.setEnabled(false);
+                            mBtnAgregarItemCar.setText(R.string.title_sin_stock);}
                         else
-                            mBtnAgregarItemCar.setText(getString(R.string.title_sin_stock));
+                            mBtnAgregarItemCar.setText(R.string.title_agregar_carrito);
+
 
                         List<String> images = new ArrayList<>();
                         for (Imagen img : producto.getImagenes()) {
