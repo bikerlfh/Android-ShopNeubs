@@ -139,7 +139,8 @@ public class APISection implements ICrud {
      */
     public List<APISection> getAll(boolean estado){
         List<APISection> listadoApiSection = new ArrayList<>();
-        Cursor c = dbManager.Select(APISectionModel.NAME_TABLE,new String[] {"*"},APISectionModel.ESTADO + "=?",new String[] {String.valueOf(estado?1:0)});
+        Cursor c = dbManager.Select(APISectionModel.NAME_TABLE,new String[] {"*"},APISectionModel.ESTADO + "=?",new String[] {String.valueOf(estado?1:0)},null,null,
+                APISectionModel.PK + " DESC",null);
         if (c.moveToFirst()){
             do{
                 APISection apiSection = new APISection();

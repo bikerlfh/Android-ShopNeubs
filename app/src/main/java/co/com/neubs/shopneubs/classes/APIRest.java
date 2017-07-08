@@ -105,7 +105,7 @@ public class APIRest {
      * @param param parametros Map para convertirlos parametros GET
      * @return String parametros formato param1=valor1&param2=valor2...
      */
-    private static String makeParams(Map<String,String> param){
+    private static String makeParamsGET(Map<String,String> param){
         try {
             String parms = null;
             Set<String> keys = param.keySet();
@@ -117,6 +117,25 @@ public class APIRest {
         catch (Exception ex){
             return null;
         }
+    }
+
+    /**
+     * Agrega los parametros a una url GET
+     * @param url url
+     * @param params parámetros GET Map
+     * @return url con parámetros
+     */
+    private static String addParamsToURL(String url,Map<String,String> params){
+        // Se agrega la url completa si es necesario
+        url = constructURL(url);
+        if (params != null && params.size() > 0){
+            // se obtienen los parámetros en formato GET
+            String paramsGET = makeParamsGET(params);
+            // Si la url no contiene otros parametros se agrega el signo ? y los paramsGET
+            // de lo contrario se agrega & y los paramsGET
+            url = url.concat((url.contains("?")? "&" + paramsGET: "?" + paramsGET));
+        }
+        return url;
     }
 
     /**
@@ -193,7 +212,7 @@ public class APIRest {
                 //headers = headers !=  null? headers:new HashMap<String, String>();
                 request = HttpRequest.post(constructURL(url)).accept("application/json").connectTimeout(TIME_OUT);
                 // Se envian los parametros si existen
-                request = (params != null) ? request.send(makeParams(params)) : request;
+                request = (params != null) ? request.send(makeParamsGET(params)) : request;
 
                 headers = addTokenHeader(headers);
                 if (headers != null)
@@ -268,7 +287,7 @@ public class APIRest {
          */
         public static void get(String url,final Map<String,String> params,final IServerCallback callback){
             // Se formatean los parametros si es necesario
-            url = constructURL(url).concat((params != null)? ("?" + makeParams(params)) : "");
+            url = addParamsToURL(url,params);
             StringRequest(Request.Method.GET,url,null,null,callback);
         }
         /**
@@ -280,7 +299,7 @@ public class APIRest {
          */
         public static void get(String url,final Map<String,String> params,final Map<String,String> headers,final IServerCallback callback){
             // Se formatean los parametros si es necesario
-            url = constructURL(url).concat((params != null)? ("?" + makeParams(params)) : "");
+            url = addParamsToURL(url,params);
             StringRequest(Request.Method.GET,url,null,headers,callback);
         }
 
