@@ -1,7 +1,12 @@
 package co.com.neubs.shopneubs;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +47,16 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
     private SessionManager sessionManager;
     private SaldoInventario saldoInventario;
 
+    /**
+     * Vista principal donde se carga la información del producto
+     * es usuada para ser escondida y visualizar el LoadingProgress
+     */
+    private View mMainView;
+    /**
+     * LoadingProgress
+     */
+    private View mProgressView;
+
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
     private IconNotificationBadge iconShopCart;
@@ -66,6 +81,9 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         toolbar = (Toolbar) findViewById(R.id.toolbar_producto_detalle);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mMainView = findViewById(R.id.main_view_producto_detalle);
+        mProgressView = findViewById(R.id.loading_progress_bar);
 
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
 
@@ -93,6 +111,22 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
 
+        // Cambia el color del icono del carro cuando se realiza el scroll
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                int scrimVisible = mCollapsingToolbarLayout.getScrimVisibleHeightTrigger();
+                if (iconShopCart != null) {
+                    if ((verticalOffset * -1) > scrimVisible) {
+                        iconShopCart.setColorIcon(android.R.color.white);
+                    } else {
+                        iconShopCart.setColorIcon(R.color.colorPrimaryLight);
+
+                    }
+                }
+            }
+        });
+
         Intent intentExtra = getIntent();
         if (intentExtra.getExtras().isEmpty())
             finish();
@@ -101,10 +135,13 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         final String nomProducto = intentExtra.getExtras().getString(PARAM_NOMBRE_PRODUCTO,"");
         final float precioOferta = intentExtra.getExtras().getFloat(PARAM_PRECIO_OFERTA,0);
         final float precioVentaUnitario = intentExtra.getExtras().getFloat(PARAM_PRECIO_VENTA_UNITARIO,0);
-        final boolean estado = intentExtra.getExtras().getBoolean(PARAM_ESTADO,false);
+        final boolean estado = intentExtra.getExtras().getBoolean(PARAM_ESTADO,true);
 
         // Se asignan los precios
         setPrecio(precioVentaUnitario,precioOferta);
+
+        // Se cambia el estado boton del carro
+        setEstadoBoton(estado);
 
         if (idSaldoInventario == 0){
             finishAfterTransition();
@@ -113,6 +150,10 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
             mCollapsingToolbarLayout.setTitle(nomProducto);
             mNombreProducto.setText(nomProducto);
+
+            // Se visualiza la vista del loading
+            showLoadingView(true);
+
             /**
              * Se consulta el saldo inventario en la API
              * y se llenan los campos
@@ -120,6 +161,9 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             APIRest.Async.get(APIRest.URL_PRODUCTO_DETALLE + String.valueOf(idSaldoInventario), new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
+                    // Se esconde la vista del loading
+                    showLoadingView(false);
+
                     saldoInventario = APIRest.serializeObjectFromJson(json, SaldoInventario.class);
                     if (saldoInventario != null) {
                         final Producto producto = saldoInventario.getProducto();
@@ -146,12 +190,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                             setPrecio(saldoInventario.getPrecioVentaUnitario(), saldoInventario.getPrecioOferta());
                         }
                         // Se cambia el estado boton del carro
-                        if (!saldoInventario.getEstado()){
-                            mBtnAgregarItemCar.setEnabled(false);
-                            mBtnAgregarItemCar.setText(R.string.title_sin_stock);}
-                        else
-                            mBtnAgregarItemCar.setText(R.string.title_agregar_carrito);
-
+                        setEstadoBoton(saldoInventario.getEstado());
 
                         List<String> images = new ArrayList<>();
                         for (Imagen img : producto.getImagenes()) {
@@ -163,29 +202,27 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
                 @Override
                 public void onError(String message_error, APIValidations apiValidations) {
+                    // Se esconde la vista del loading
+                    showLoadingView(false);
                     if (apiValidations.notFound()) {
                         Toast.makeText(ProductoDetalleActivity.this, getString(R.string.error_default), Toast.LENGTH_SHORT).show();
                     } else
                         Toast.makeText(ProductoDetalleActivity.this, message_error, Toast.LENGTH_SHORT).show();
                 }
             });
-
-            // Cambia el color del icono del carro cuando se realiza el scroll
-            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                @Override
-                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    int scrimVisible = mCollapsingToolbarLayout.getScrimVisibleHeightTrigger();
-                    if (iconShopCart != null) {
-                        if ((verticalOffset * -1) > scrimVisible) {
-                            iconShopCart.setColorIcon(android.R.color.white);
-                        } else {
-                            iconShopCart.setColorIcon(R.color.colorPrimaryLight);
-
-                        }
-                    }
-                }
-            });
         }
+    }
+
+    /**
+     * Cambia el estado del boton
+     * @param estado true para visualizar el boton de agregar a carrito, false para visualizar el boton sin stok
+     */
+    private void setEstadoBoton(boolean estado){
+        if (!estado){
+            mBtnAgregarItemCar.setEnabled(false);
+            mBtnAgregarItemCar.setText(R.string.title_sin_stock);}
+        else
+            mBtnAgregarItemCar.setText(R.string.title_agregar_carrito);
     }
 
     /**
@@ -269,6 +306,42 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         else {
             Toast.makeText(this, getString(R.string.error_item_in_car), Toast.LENGTH_SHORT).show();
 
+        }
+    }
+
+    /**
+     * Shows the progress UI and hides the main view
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    public void showLoadingView(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = this.getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mMainView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 }
