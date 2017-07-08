@@ -1,7 +1,12 @@
 package co.com.neubs.shopneubs.fragments;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,11 +33,16 @@ import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
  */
 public class IndexFragment extends Fragment {
 
+    private View mMainView;
+    private View mProgressView;
+
     RecyclerView mRecyclerViewSection;
     ViewPagerNeubs mViewPagerBanner;
 
     List<APISection> listAPISections;
     SectionAdapter sectionAdapter;
+
+    private boolean showBanner = false;
 
     public IndexFragment() {
         // Required empty public constructor
@@ -58,24 +68,53 @@ public class IndexFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_index, container, false);
 
+        mMainView = view.findViewById(R.id.main_view_index);
+        mProgressView = view.findViewById(R.id.loading_progress_bar);
+
+
         mViewPagerBanner = (ViewPagerNeubs) view.findViewById(R.id.viewpager_banner);
         mRecyclerViewSection=(RecyclerView) view.findViewById(R.id.recycle_view_index);
 
-        // Se cargan los banner
-        cargarAPIBanner();
 
-
-        mRecyclerViewSection.setHasFixedSize(true);
-        // Se consultan las secciones activas
-        listAPISections =new APISection().getAll(true);
-
-        if(listAPISections !=null) {
-            sectionAdapter = new SectionAdapter(listAPISections);
-            mRecyclerViewSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-            mRecyclerViewSection.setAdapter(sectionAdapter);
-        }
+        AsyncInitial  asyncInitial = new AsyncInitial();
+        asyncInitial.execute();
         return view;
     }
+
+    class AsyncInitial extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected void onPreExecute() {
+            showLoadingView(true);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // Se cargan los banner
+            cargarAPIBanner();
+            // Se consultan las secciones activas
+            listAPISections =new APISection().getAll(true);
+
+            if(listAPISections !=null)
+                sectionAdapter = new SectionAdapter(listAPISections);
+            showLoadingView(false);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            showLoadingView(false);
+            mRecyclerViewSection.setHasFixedSize(true);
+            if (listAPISections != null){
+                mRecyclerViewSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                mRecyclerViewSection.setAdapter(sectionAdapter);
+            }
+            if (showBanner)
+                // Se visualiza el viewPagerBanner
+                mViewPagerBanner.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     @Override
     public void onResume() {
@@ -131,8 +170,43 @@ public class IndexFragment extends Fragment {
                     }
                 }
             });
-            // Se visualiza el viewPagerBanner
-            mViewPagerBanner.setVisibility(View.VISIBLE);
+            showBanner = true;
+        }
+    }
+
+    /**
+     * Shows the progress UI and hides the main view
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    public void showLoadingView(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = this.getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mMainView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 }

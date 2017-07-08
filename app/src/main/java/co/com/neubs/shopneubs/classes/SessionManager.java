@@ -80,7 +80,7 @@ public class SessionManager {
     }
 
     public String[] getSugerencias() {
-        return listSugerencias.toArray(new String[listSugerencias.size()]);
+        return listSugerencias != null ? listSugerencias.toArray(new String[listSugerencias.size()]) : null;
     }
 
     public void setSugerencias(List<String> listSugerencias) {

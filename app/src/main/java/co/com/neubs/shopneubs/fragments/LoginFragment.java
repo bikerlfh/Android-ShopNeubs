@@ -4,6 +4,8 @@ package co.com.neubs.shopneubs.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +37,7 @@ public class LoginFragment extends Fragment {
 
 
     private EditText txtUsername,txtPassword;
+    private TextView lblForgorPassword;
     private Button btnLogin;
 
     private View mProgressView;
@@ -78,7 +82,17 @@ public class LoginFragment extends Fragment {
 
         txtUsername = (EditText) view.findViewById(R.id.txt_username);
         txtPassword = (EditText) view.findViewById(R.id.txt_password);
+        lblForgorPassword = (TextView) view.findViewById(R.id.lbl_forgot_password);
         btnLogin = (Button) view.findViewById(R.id.btn_login);
+
+        lblForgorPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://www.shopneubs.com/accounts/password/reset/"));
+                startActivity(intent);
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

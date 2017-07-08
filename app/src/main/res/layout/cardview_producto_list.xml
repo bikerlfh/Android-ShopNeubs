@@ -22,7 +22,7 @@
             android:layout_alignParentTop="true"
             app:srcCompat="@drawable/circular_progress_bar" />
 
-        <com.uncopt.android.widget.text.justify.JustifiedTextView
+        <TextView
             android:id="@+id/lbl_nombre_producto_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

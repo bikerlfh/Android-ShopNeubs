@@ -53,7 +53,7 @@ public class AccountActivity extends AppCompatActivity {
         lblPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validarSession()){
+                if (sessionManager.isAuthenticated()){
                     // Abrir actividad mis pedidos
                     Intent intent   = new Intent(AccountActivity.this,PedidosActivity.class);
                     startActivity(intent);
@@ -66,7 +66,7 @@ public class AccountActivity extends AppCompatActivity {
        lblPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validarSession()){
+                if (sessionManager.isAuthenticated()){
                     // Abrir actividad mis datos
                     Intent intent   = new Intent(AccountActivity.this,PerfilActivity.class);
                     startActivity(intent);
@@ -88,7 +88,7 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        visualizarControlesSession(validarSession());
+        visualizarControlesSession(sessionManager.isAuthenticated());
 
         setListenersSearchView();
     }
@@ -158,19 +158,11 @@ public class AccountActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * Valida que el usuario tenga la sesión iniciada
-     * @return
-     */
-    private boolean validarSession(){
-        return sessionManager.isAuthenticated();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         // Se valida la sesión y se visualizan los controles segun su estado
-        visualizarControlesSession(validarSession());
+        visualizarControlesSession(sessionManager.isAuthenticated());
         if (iconShopCart != null) {
             iconShopCart.show(sessionManager.getCountItemsShopCar());
         }
