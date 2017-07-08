@@ -3,7 +3,6 @@ package co.com.neubs.shopneubs;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;

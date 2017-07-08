@@ -21,10 +21,7 @@ import co.com.neubs.shopneubs.classes.Synchronize;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
 
 public class SplashActivity extends Activity {
-    private final int TIME_SPLASH = 2000;
-
     private AsyncSyncronize asyncSyncronizeData;
-    private ImageView imgSplash;
     private boolean isRunning=false;
     boolean isFirstRun;
     private SessionManager sessionManager;
@@ -34,7 +31,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        imgSplash = (ImageView) findViewById(R.id.img_splash);
+        ImageView imgSplash = (ImageView) findViewById(R.id.img_splash);
         isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isfirstrun", true);
 
@@ -55,16 +52,6 @@ public class SplashActivity extends Activity {
         // para que consulte el usuario y el carro
         sessionManager = SessionManager.getInstance(this);
         initApp(isFirstRun);
-
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                Intent intent = new Intent(SplashActivity.this,PrincipalActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        },TIME_SPLASH);*/
 
         imgSplash.setOnClickListener(new View.OnClickListener() {
             @Override
