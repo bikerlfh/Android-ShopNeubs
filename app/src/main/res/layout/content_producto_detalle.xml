@@ -62,7 +62,7 @@
             android:textColor="@color/textColorSecundary"
             android:textSize="@dimen/subtitle_detalle_producto" />
 
-        <com.uncopt.android.widget.text.justify.JustifiedTextView
+        <TextView
             android:id="@+id/lbl_descripcion_producto_detalle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

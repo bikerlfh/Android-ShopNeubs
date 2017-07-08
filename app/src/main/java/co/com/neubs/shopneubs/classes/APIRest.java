@@ -59,7 +59,7 @@ public class APIRest {
     /**
      * tiempo de espera maximo por petición
      */
-    private final static int TIME_OUT = 30000;
+    private final static int TIME_OUT = 10000;
 
     /**
      * Serialize a object from String(json format)
