@@ -18,12 +18,13 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@android:color/white"
         android:fitsSystemWindows="true"
         app:elevation="16dp"
         app:headerLayout="@layout/nav_header_principal"
         app:itemBackground="@drawable/item_menu_selector"
+        app:itemIconTint="@color/menu_icon_color"
         app:itemTextColor="@color/menu_text_color"
-        app:itemIconTint="@color/menu_text_color"
         app:menu="@menu/activity_principal_drawer" />
 
     <co.com.neubs.shopneubs.controls.NavigationViewFiltro

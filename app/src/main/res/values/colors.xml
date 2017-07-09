@@ -21,8 +21,12 @@
 
     <!-- Colores para el menu drawer -->
     <color name="menuTextColorChecked">#ffffff</color>
-    <color name="menuTextColorNonChecked">#5a626c</color>
+    <color name="menuTextColorNonChecked">#000000</color>
+
+    <color name="menuIconColorChecked">#ffffff</color>
+    <color name="menuIconColorNonChecked">#b3b3b3</color>
+
     <color name="menuBackgroudColorChecked">#ff5722</color>
-    <color name="menuBackgroudColorNonChecked">#00000000</color>
+    <color name="menuBackgroudColorNonChecked">#ffffff</color>
 
 </resources>

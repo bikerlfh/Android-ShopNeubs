@@ -56,6 +56,10 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
      * LoadingProgress
      */
     private View mProgressView;
+    /**
+     * Contiene el boton de comprar y los precios
+     */
+    private View mFooterView;
 
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
@@ -84,6 +88,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
         mMainView = findViewById(R.id.main_view_producto_detalle);
         mProgressView = findViewById(R.id.loading_progress_bar);
+        mFooterView = findViewById(R.id.footer);
 
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
 
@@ -321,17 +326,23 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             int shortAnimTime = this.getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mMainView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            mMainView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
+            mFooterView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mFooterView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mFooterView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            mProgressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
@@ -342,6 +353,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mFooterView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 }
