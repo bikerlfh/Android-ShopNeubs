@@ -23,24 +23,11 @@ public class Categoria implements ICrud{
     private String descripcion;
     @SerializedName("categoriaPadre")
     private int idCategoriaPadre;
+    private boolean estado;
 
     public transient Categoria categoriaPadre;
 
     private transient DbManager dbManager = DbManager.getInstance();
-
-    public Categoria(int idCategoria,String codigo, String descripcion,int idCategoriaPadre){
-        this.idCategoria = idCategoria;
-        this.codigo = codigo;
-        this.descripcion = descripcion;
-        this.idCategoriaPadre = idCategoriaPadre;
-        if (idCategoriaPadre > 0){
-            this.categoriaPadre = new Categoria();
-            this.categoriaPadre.getById(idCategoriaPadre);
-        }
-    }
-
-    public Categoria(){
-    }
 
     public int getIdCategoria() {
         return idCategoria;
@@ -74,6 +61,14 @@ public class Categoria implements ICrud{
         this.idCategoriaPadre = idCategoriaPadre;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public boolean getById(int id) {
         Cursor c = dbManager.Select(CategoriaModel.NAME_TABLE, new String[] { "*" },CategoriaModel.PK + "=?",new String[] {String.valueOf(idCategoria)});
@@ -91,6 +86,7 @@ public class Categoria implements ICrud{
         contentValues.put(CategoriaModel.CODIGO,codigo);
         contentValues.put(CategoriaModel.DESCRIPCION,descripcion);
         contentValues.put(CategoriaModel.CATEGORIA_PADRE,idCategoriaPadre);
+        contentValues.put(CategoriaModel.ESTADO,estado);
         return (dbManager.Insert(CategoriaModel.NAME_TABLE,contentValues));
     }
 
@@ -136,6 +132,7 @@ public class Categoria implements ICrud{
         this.idCategoria = cursor.getInt(cursor.getColumnIndex(CategoriaModel.PK));
         this.codigo = cursor.getString(cursor.getColumnIndex(CategoriaModel.CODIGO));
         this.descripcion = cursor.getString(cursor.getColumnIndex(CategoriaModel.DESCRIPCION));
+        this.estado = cursor.getInt(cursor.getColumnIndex(CategoriaModel.ESTADO))==1;
         int idCategoriaPadre = cursor.getInt(cursor.getColumnIndex(CategoriaModel.CATEGORIA_PADRE));
         if (idCategoriaPadre > 0){
             this.categoriaPadre = new Categoria();
