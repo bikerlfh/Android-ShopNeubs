@@ -290,6 +290,10 @@ public class Synchronize {
                         cat.save();
                         numSincronizacion++;
                     }
+                    else{
+                        cat.update();
+                        numSincronizacion++;
+                    }
                 }
             }
         }

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_view"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@color/colorBackground"
+    android:fitsSystemWindows="true"
+    app:elevation="16dp"
+    app:itemBackground="@drawable/item_menu_selector"
+    app:itemIconTint="@color/menu_icon_color"
+    app:itemTextColor="@color/menu_text_color">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutHeader"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/nav_header_height"
+                android:background="@color/colorPrimary"
+
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/nav_header_vertical_spacing"
+                    app:srcCompat="@drawable/logo"
+                    />
+
+                <TextView
+                    android:id="@+id/lbl_header_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/nav_header_min_vertical_spacing"
+                    android:text="@string/title_welcome"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="@dimen/text_size_button" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_item_menu_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayoutHeader"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="5dp"
+                    android:alpha="0.54"
+                    android:background="@android:color/white"
+                    android:scaleType="center"
+                    android:tint="@color/menuIconColorNonChecked"
+                    app:srcCompat="@drawable/ic_user" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:alpha="0.87"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/padding_start_title_item_menu"
+                    android:text="@string/title_activity_account"
+                    android:textColor="@color/menuTextColorNonChecked"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container_item_menu_account"
+                android:layout_marginTop="1dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:alpha="0.54"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="@string/title_categorias"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@android:color/black" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_view_categoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</android.support.design.widget.NavigationView>

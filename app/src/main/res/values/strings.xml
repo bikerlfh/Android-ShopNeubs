@@ -58,6 +58,7 @@
     <string name="error_default">Solicitud no completada. Vuelve a intentarlo más tarde.</string>
     <string name="error_item_in_car">El producto ya está en el carrito</string>
 
+    <string name="title_categorias">Categorias</string>
     <string name="title_ofertas">Ofertas</string>
     <string name="title_no_internet">No hay conexión a Internet</string>
     <string name="title_description">Descripción</string>

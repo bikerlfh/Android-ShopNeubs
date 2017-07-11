@@ -8,6 +8,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,21 +21,26 @@ import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import co.com.neubs.shopneubs.adapters.MenuCategoriaAdapter;
+import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
+import co.com.neubs.shopneubs.classes.models.Categoria;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.fragments.IndexFragment;
 import co.com.neubs.shopneubs.fragments.ProductosCategoriaFragment;
 
-public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PrincipalActivity extends AppCompatActivity {
 
     public static final String TAG_FRAGMENT = "FRAGMENT";
 
     private String codigoCategoria = null;
-    private TextView lblHeaderWelcome;
+    private TextView lblHeaderUsuario;
     private DrawerLayout drawer;
     private NavigationView navigationViewPrincipal;
+    private RecyclerView recyclerViewCategoria;
 
     private SessionManager sessionManager;
     private MaterialSearchView searchView;
@@ -66,26 +73,71 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationViewPrincipal = (NavigationView) findViewById(R.id.nav_view);
-        navigationViewPrincipal.setNavigationItemSelectedListener(this);
-
         // Se bloquea el navigationViewFiltro si existe.
         NavigationView navigationViewFiltro = (NavigationView) findViewById(R.id.drawer_filtro);
         if (navigationViewFiltro != null){
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,navigationViewFiltro);
         }
-
-        // Se consulta la vista del navigationView
-        View header = navigationViewPrincipal.getHeaderView(0);
-        // Se asigna el lbl header welcome
-        lblHeaderWelcome = (TextView) header.findViewById(R.id.lbl_header_welcome);
-        setTextoWelcome(sessionManager.isAuthenticated());
+        // se inicializa la funcionalidad del NavigationViewPrincipal
+        initNavigationViewPrincipal();
 
         // se inicializa la funcionalidad del SearchView
         initSearchView();
 
         // Se inicializa con el fragment Index
         openFragment(new IndexFragment());
+    }
+
+    /**
+     * inicializa la funcionalidad del NavigationViewPrincipal
+     * Menu Categorias y
+     */
+    private void initNavigationViewPrincipal(){
+        navigationViewPrincipal = (NavigationView) findViewById(R.id.nav_view);
+        // Se consulta el contenedor del item Account y se asigna el onclick listener para que abra
+        // la actividad AccountActivity
+        View containerItemMenuAccount = findViewById(R.id.container_item_menu_account);
+        containerItemMenuAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PrincipalActivity.this,AccountActivity.class);
+                startActivity(intent);
+                drawer.closeDrawers();
+            }
+        });
+
+        //navigationViewPrincipal.setNavigationItemSelectedListener(this);
+        recyclerViewCategoria = (RecyclerView) findViewById(R.id.recycle_view_categoria);
+
+        recyclerViewCategoria.addItemDecoration(new GridSpacingItemDecoration(1, Helper.dpToPx(1,this),true));
+        recyclerViewCategoria.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        MenuCategoriaAdapter menuCategoriaAdapter = new MenuCategoriaAdapter(this);
+        menuCategoriaAdapter.setOnCategoriaClickListener(new MenuCategoriaAdapter.OnCategoriaClickListener() {
+            @Override
+            public void onClick(View v, Categoria categoria) {
+                // Se valida que la categoria seleccionada no sea la que se esta visualizando
+                if (categoria != null && !categoria.getCodigo().equals(codigoCategoria)) {
+                    codigoCategoria = categoria.getCodigo();
+                    // Se crea el argumento CODIGO_CATEGORIA para pasarle al fragment
+                    Bundle args = new Bundle();
+                    args.putString(ProductosCategoriaFragment.PARAM_CODIGO_CATEGORIA, codigoCategoria);
+
+                    Fragment fragment = new ProductosCategoriaFragment();
+                    fragment.setArguments(args);
+                    openFragment(fragment);
+                    // se cierran todos los drawers
+                    drawer.closeDrawers();
+                }
+            }
+        });
+        recyclerViewCategoria.setAdapter(menuCategoriaAdapter);
+
+        // Se consulta la vista del navigationView
+        //View header = navigationViewPrincipal.getHeaderView(0);
+        // Se asigna el lbl header welcome
+        lblHeaderUsuario = (TextView)findViewById(R.id.lbl_header_usuario);
+        setTextHeaderNavigationView(sessionManager.isAuthenticated());
     }
 
     /**
@@ -115,20 +167,17 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
     }
 
     /**
-     * Cambia el texto del lblHeaderWelcome que esta en el navigationView
+     * Cambia los textos del header que esta en el navigationView
      * @param isActiva
      */
-    private void setTextoWelcome(boolean isActiva) {
-        if (isActiva)
-            lblHeaderWelcome.setText(sessionManager.getEmail());
-        else
-            lblHeaderWelcome.setText(getString(R.string.title_welcome));
+    private void setTextHeaderNavigationView(boolean isActiva) {
+        lblHeaderUsuario.setText(isActiva? sessionManager.getEmail() : getString(R.string.title_welcome));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setTextoWelcome(sessionManager.isAuthenticated());
+        setTextHeaderNavigationView(sessionManager.isAuthenticated());
         if (iconShopCart != null) {
             iconShopCart.show(sessionManager.getCountItemsShopCar());
         }
@@ -194,6 +243,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         return true;
     }
 
+    /*
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -269,7 +319,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         // se cierran los drawers
         drawer.closeDrawers();
         return true;
-    }
+    }*/
 
     /**
      * Reemplaza un fragment en el contenedor

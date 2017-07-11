@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <android.support.design.widget.NavigationView
+    <!--android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -25,7 +25,8 @@
         app:itemBackground="@drawable/item_menu_selector"
         app:itemIconTint="@color/menu_icon_color"
         app:itemTextColor="@color/menu_text_color"
-        app:menu="@menu/activity_principal_drawer" />
+        app:menu="@menu/activity_principal_drawer" /-->
+    <include layout="@layout/navigationview_principal"/>
 
     <co.com.neubs.shopneubs.controls.NavigationViewFiltro
         android:id="@+id/drawer_filtro"

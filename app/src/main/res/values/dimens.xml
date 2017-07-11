@@ -73,6 +73,9 @@
     <dimen name="title_shop_cart_vacio">16sp</dimen>
     <dimen name="body_shop_cart_vacio">14sp</dimen>
 
+    <!-- Item menu NavigationView -->
+    <dimen name="padding_start_title_item_menu">16dp</dimen>
+
 
     <!-- margin_padding cardview_pedido -->
     <dimen name="margin_botton_linear_layout_cardview_pedido">2dp</dimen>

@@ -46,7 +46,7 @@ public class Categoria implements ICrud{
     }
 
     public String getDescripcion() {
-        return Helper.EncodingUTF8(descripcion);
+        return (descripcion);
     }
 
     public void setDescripcion(String descripcion) {
@@ -92,7 +92,12 @@ public class Categoria implements ICrud{
 
     @Override
     public boolean update() {
-        return false;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CategoriaModel.CODIGO,codigo);
+        contentValues.put(CategoriaModel.DESCRIPCION,descripcion);
+        contentValues.put(CategoriaModel.CATEGORIA_PADRE,idCategoriaPadre);
+        contentValues.put(CategoriaModel.ESTADO,estado);
+        return (dbManager.Update(CategoriaModel.NAME_TABLE,contentValues,CategoriaModel.PK,idCategoria));
     }
 
     @Override
@@ -114,16 +119,36 @@ public class Categoria implements ICrud{
         return false;
     }
 
-    public List<Categoria> getListCategoriaByCategoriaPadre(int idCategoriaPadre){
+    /**
+     * Obtiene las categorias hijas
+     * @return
+     */
+    public List<Categoria> getListCategoriaHijo(){
         List<Categoria> ListadoCategoria= new ArrayList<Categoria>();
-        Cursor c = dbManager.Select(CategoriaModel.NAME_TABLE, new String[] { "*" },CategoriaModel.CATEGORIA_PADRE + "=?",new String[] {String.valueOf(idCategoriaPadre)});
+        Cursor c = dbManager.Select(CategoriaModel.NAME_TABLE, new String[] { "*" },CategoriaModel.CATEGORIA_PADRE + "=? AND " + CategoriaModel.ESTADO + " =?",new String[] {String.valueOf(idCategoria),"1"});
         if (c.moveToFirst()){
             do {
                 Categoria categoria = new Categoria();
                 categoria.serialize(c);
                 ListadoCategoria.add(categoria);
-            }
-            while (c.moveToNext());
+            }while (c.moveToNext());
+        }
+        return ListadoCategoria;
+    }
+
+    /**
+     * Obtiene todas las categorias padre
+     * @return
+     */
+    public List<Categoria> getCategoriasPadre(){
+        List<Categoria> ListadoCategoria= new ArrayList<Categoria>();
+        Cursor c = dbManager.Select(CategoriaModel.NAME_TABLE, new String[] { "*" },CategoriaModel.CATEGORIA_PADRE + "=? AND " + CategoriaModel.ESTADO + " =?",new String[] { "0","1"},CategoriaModel.DESCRIPCION + " ASC");
+        if (c.moveToFirst()){
+            do {
+                Categoria categoria = new Categoria();
+                categoria.serialize(c);
+                ListadoCategoria.add(categoria);
+            }while (c.moveToNext());
         }
         return ListadoCategoria;
     }
