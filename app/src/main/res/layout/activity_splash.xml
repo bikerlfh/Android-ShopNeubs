@@ -14,8 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/logo_nuevo"
-            app:srcCompat="@drawable/logo_nuevo" />
+            android:scaleType="centerInside"
+            android:src="@drawable/logo_splash"
+            app:srcCompat="@drawable/logo_splash" />
 
 </RelativeLayout>
