@@ -76,7 +76,7 @@
     <string name="title_login">Iniciar sesión</string>
     <string name="title_num_products">Cantidades</string>
     <string name="title_item_deleted">Producto eliminado</string>
-    <string name="title_item_added">Producto agregado</string>
+    <string name="title_item_added">Tu producto ha sido agregado</string>
     <string name="title_resumen">Resumen</string>
     <string name="title_result_search">Resultado de Búsqueda</string>
     <string name="title_your_cart_empty">Tu carrito de compras está vacío!</string>
@@ -96,7 +96,7 @@
     <string name="title_limpiar">Limpiar</string>
     <string name="title_mensaje">mensaje</string>
     <string name="title_aplicar">Aplicar</string>
-    <string name="title_sin_stock">Sin Stock</string>
+    <string name="title_sin_stock">Agotado</string>
     <string name="title_agregar_carrito">Agregar</string>
     <string name="title_search">Buscar en ShopNeubs</string>
     <string name="title_settings">Configuración</string>

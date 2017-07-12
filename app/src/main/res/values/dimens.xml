@@ -208,6 +208,8 @@
     <dimen name="padding_start_lbl_container_layout_navigationview_filtro">32dp</dimen>
     <dimen name="padding_start_recycle_view_navegationview_filtro">16dp</dimen>
     <dimen name="padding_top_recycle_view_navegationview_filtro">2dp</dimen>
+    <dimen name="margin_bottom_recycle_view_navegationview_filtro">2dp</dimen>
+    <dimen name="margin_button_layout_opciones_navegationview_filtro">1dp</dimen>
 
     <!-- Margin -Padding section_layout-->
     <dimen name="margin_top_relative_section_layout">5dp</dimen>

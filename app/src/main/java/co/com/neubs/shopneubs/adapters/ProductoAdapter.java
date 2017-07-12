@@ -171,7 +171,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                     //lblSinStok.setBackgroundColor(itemView.getResources().getColor(R.color.colorAccent));
                     lblSinStok.setBackground(itemView.getResources().getDrawable(R.drawable.shape_boton_add_cart_view_list));
                     lblSinStok.setText(itemView.getContext().getString(R.string.title_agregar_carrito));
-                    lblSinStok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_shopping_cart_list,0,0,0);
+                    lblSinStok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_shopping_cart_list,0,0,0);
                     lblSinStok.setCompoundDrawablePadding(5);
                     lblSinStok.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     lblSinStok.setEnabled(true);

@@ -81,8 +81,8 @@
 
             <ImageButton
                 android:id="@+id/img_btn_eliminar_item_car"
-                android:layout_width="15dp"
-                android:layout_height="16dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="@dimen/margin_top_end_img_btn_eliminar_item_cardview_shop_cart"
                 android:layout_marginStart="@dimen/margin_start_img_btn_eliminar_item_cardview_shop_cart"
                 android:layout_marginTop="@dimen/margin_top_end_img_btn_eliminar_item_cardview_shop_cart"
@@ -107,7 +107,7 @@
                 android:tint="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/lbl_cantidad_card_shop_car"
-                app:srcCompat="@drawable/ic_adds" />
+                app:srcCompat="@drawable/ic_action_adds" />
 
             <ImageButton
                 android:id="@+id/img_btn_menos_card_shop_car"
@@ -123,7 +123,7 @@
                 android:tint="@color/colorPrimaryDark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:srcCompat="@drawable/ic_substract" />
+                app:srcCompat="@drawable/ic_action_substract" />
 
             <co.com.neubs.shopneubs.controls.ImageLoaderView
                 android:id="@+id/img_producto_card_shop_card"

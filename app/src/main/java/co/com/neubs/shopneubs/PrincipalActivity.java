@@ -11,10 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private NavigationView navigationViewPrincipal;
     private RecyclerView recyclerViewCategoria;
+    private TextView txtmessage;
 
     private SessionManager sessionManager;
     private MaterialSearchView searchView;
@@ -222,7 +225,7 @@ public class PrincipalActivity extends AppCompatActivity {
         iconShopCart = (IconNotificationBadge)itemMenuCart.getActionView();
 
         if (iconShopCart != null) {
-            iconShopCart.setIcon(R.drawable.ic_menu_shop_cart);
+            iconShopCart.setIcon(R.drawable.ic_action_menu_shop_cart);
             iconShopCart.show(sessionManager.getCountItemsShopCar());
             iconShopCart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -374,7 +377,11 @@ public class PrincipalActivity extends AppCompatActivity {
      * @param saldoInventario saldo inventario que se va a agregar al carro
      */
     public void agregarItemCart(SaldoInventario saldoInventario){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast,(ViewGroup) findViewById(R.id.lytLayout));
+        txtmessage = (TextView)layout.findViewById(R.id.toastMessage);
         // Se agrega el item al carrito
+        Toast toast = new Toast(getApplicationContext());
         if (sessionManager.getItemCarByIdSaldoInventario(saldoInventario.getIdSaldoInventario()) == null) {
             ItemCar itemCar = new ItemCar();
             itemCar.setNombreProducto(saldoInventario.getProducto().getNombre());
@@ -387,17 +394,20 @@ public class PrincipalActivity extends AppCompatActivity {
             else
                 itemCar.setPrecioVentaUnitario(saldoInventario.getPrecioVentaUnitario());
             if (sessionManager.addItemCar(itemCar)) {
-                Toast.makeText(this,getString(R.string.title_item_added),Toast.LENGTH_SHORT).show();
+                txtmessage.setText(R.string.title_item_added);
                 iconShopCart.show(sessionManager.getCountItemsShopCar());
             }
             else{
-                Toast.makeText(this,getString(R.string.error_default),Toast.LENGTH_SHORT).show();
+                txtmessage.setText(R.string.error_default);
             }
         }
         else {
-            Toast.makeText(this, getString(R.string.error_item_in_car), Toast.LENGTH_SHORT).show();
+            txtmessage.setText(R.string.error_item_in_car);
 
         }
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
     /**

@@ -176,7 +176,7 @@ public class ShopCarActivity extends AppCompatActivity {
         iconShopCart = (IconNotificationBadge)itemMenuCart.getActionView();
 
         if (iconShopCart != null) {
-            iconShopCart.setIcon(R.drawable.ic_menu_shop_cart);
+            iconShopCart.setIcon(R.drawable.ic_action_menu_shop_cart);
             iconShopCart.show(sessionManager.getCountItemsShopCar());
         }
         return true;

@@ -72,7 +72,7 @@
                     android:layout_toStartOf="@+id/btn_menor_precio"
                     android:background="?android:attr/selectableItemBackground"
                     android:foregroundTint="@color/colorAccent"
-                    app:srcCompat="@drawable/ic_important" />
+                    app:srcCompat="@drawable/ic_navegation_filter_important" />
 
                 <TextView
                     android:id="@+id/lbl_relevante"
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/btn_mayor_precio"
                     android:background="?android:attr/selectableItemBackground"
-                    app:srcCompat="@drawable/ic_price_tag" />
+                    app:srcCompat="@drawable/ic_navegation_filter_price_tag" />
 
                 <TextView
                     android:id="@+id/lbl_menor_precio"
@@ -137,7 +137,7 @@
                     android:layout_below="@+id/lbl_titulo_ordenar_por"
                     android:layout_toStartOf="@+id/btn_oferta"
                     android:background="?android:attr/selectableItemBackground"
-                    app:srcCompat="@drawable/ic_price_higher" />
+                    app:srcCompat="@drawable/ic_navegation_filter_price_higher" />
 
                 <TextView
                     android:id="@+id/lbl_mayor_precio"
@@ -170,7 +170,7 @@
                     android:layout_alignStart="@+id/btn_aplicar_filtro"
                     android:layout_below="@+id/lbl_titulo_ordenar_por"
                     android:background="?android:attr/selectableItemBackground"
-                    app:srcCompat="@drawable/ic_offer" />
+                    app:srcCompat="@drawable/ic_navegation_filter_offer" />
 
                 <TextView
                     android:id="@+id/lbl_oferta"
@@ -200,41 +200,53 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorSecundaryLight" />
 
-        <Button
-            android:id="@+id/btn_aplicar_filtro"
-            style="@style/Widget.AppCompat.ButtonBar.AlertDialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView"
-            android:layout_alignBottom="@+id/textView"
-            android:layout_alignParentEnd="true"
-            android:backgroundTint="@android:color/transparent"
-            android:drawableTint="@android:color/transparent"
-            android:text="@string/title_aplicar"
-            android:textColor="@color/textColorPrimary" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_view_marca_filtro"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/layout_opciones"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/lbl_title_filtre"
+            android:layout_marginBottom="@dimen/padding_start_recycle_view_navegationview_filtro"
             android:background="@android:color/white"
             android:paddingStart="@dimen/padding_start_recycle_view_navegationview_filtro"
             android:paddingTop="@dimen/padding_top_recycle_view_navegationview_filtro"
-            android:textAlignment="center" />
+            android:textAlignment="center">
 
-        <Button
-            android:id="@+id/btn_limpiar_filtro"
-            style="@style/Widget.AppCompat.ButtonBar.AlertDialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/btn_aplicar_filtro"
-            android:layout_alignBottom="@+id/btn_aplicar_filtro"
-            android:layout_toStartOf="@+id/btn_aplicar_filtro"
-            android:backgroundTint="@android:color/transparent"
-            android:text="@string/title_limpiar"
-            android:textColor="@color/colorWhite" />
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/layout_opciones"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_limpiar_filtro"
+                style="@style/Widget.Design.BottomSheet.Modal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_button_layout_opciones_navegationview_filtro"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorSecundaryLight"
+                android:elevation="2dp"
+                android:text="@string/title_limpiar"
+                android:textColor="@color/textColorPrimary" />
+
+            <Button
+                android:id="@+id/btn_aplicar_filtro"
+                style="@style/Widget.Design.BottomSheet.Modal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_button_layout_opciones_navegationview_filtro"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorSecundary"
+                android:elevation="2dp"
+                android:text="Aplicar"
+                android:textColor="@color/textColorPrimary" />
+        </LinearLayout>
 
     </RelativeLayout>
 
