@@ -105,6 +105,10 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
                     addItems(getItemCount(),cPaginada.getResults());
                     // Se modifica nextPage asignandole la nueva (pagina siguiente)
                     nextPage = cPaginada.getNext();
+                    /* se actualiza nextPage en el objeto consultaPaginada
+                    // ya que el listado_saldo_inventario es una referencia de results de este objeto
+                    // por consiguiente, al agregar nuevos objetos al listado_saldo_inventario, se agregan al results */
+                    consultaPaginada.setNext(nextPage);
                     snackbar.dismiss();
                 }
 
