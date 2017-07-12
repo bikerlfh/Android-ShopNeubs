@@ -12,7 +12,10 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="2dp">
+        android:elevation="2dp"
+        android:paddingEnd="@dimen/padding_end_start_linear_layout_inf"
+        android:paddingStart="@dimen/padding_end_start_linear_layout_inf"
+        android:paddingTop="@dimen/padding_top_constraint_layout">
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_tipo_documento"

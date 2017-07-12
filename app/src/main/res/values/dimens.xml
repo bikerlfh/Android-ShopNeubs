@@ -172,6 +172,7 @@
     <dimen name="padding_botton_top_linear_layout_img_logo">26dp</dimen>
     <dimen name="margin_top_linear_layout_inf">1dp</dimen>
     <dimen name="padding_top_linear_layout_inf">18dp</dimen>
+    <dimen name="padding_top_constraint_layout">15dp</dimen>
     
 
     <!-- Margin -Padding content_producto_detalle-->
