@@ -24,7 +24,10 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        //addShortcut();
+
+        final boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isfirstrun", true);
+        if (isFirstRun)
+            addShortcut();
     }
 
     public static synchronized AppController getInstance() {
