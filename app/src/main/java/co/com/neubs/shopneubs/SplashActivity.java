@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.DbManager;
@@ -28,6 +30,8 @@ public class SplashActivity extends Activity {
     boolean isFirstRun;
     private SessionManager sessionManager;
 
+    private AVLoadingIndicatorView loadingSplash;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         ImageView imgSplash = (ImageView) findViewById(R.id.img_splash);
+        loadingSplash = (AVLoadingIndicatorView) findViewById(R.id.loading_splash);
         isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isfirstrun", true);
 
@@ -74,7 +79,9 @@ public class SplashActivity extends Activity {
      * Inicializa la APP
      */
     public void initApp(final boolean isFirstRun) {
+        loadingSplash.smoothToShow();
         if (!Helper.isConnected(this)){
+            loadingSplash.smoothToHide();
             dialogNoInternetConnection(isFirstRun).show();
         }
         else {
@@ -171,12 +178,15 @@ public class SplashActivity extends Activity {
                         asyncSyncronizeData.execute();
                     }
                     else {
+                        loadingSplash.smoothToHide();
                         Toast.makeText(SplashActivity.this, getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
                         Log.d("AsyncSyncronize",apiValidations.getDetail());
                     }
                 }
-                else
+                else {
+                    loadingSplash.smoothToHide();
                     Toast.makeText(SplashActivity.this, getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
+                }
 
                 if (isFirstRun) {
                     // Se elimina la base de datos

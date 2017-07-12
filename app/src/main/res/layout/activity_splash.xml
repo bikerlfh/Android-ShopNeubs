@@ -10,12 +10,27 @@
 
         <ImageView
             android:id="@+id/img_splash"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:scaleType="centerInside"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="false"
+            android:scaleType="fitCenter"
             android:src="@drawable/logo_splash"
             app:srcCompat="@drawable/logo_splash" />
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/loading_splash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/img_splash"
+            android:layout_centerHorizontal="true"
+            android:elevation="17dp"
+            app:indicatorColor="@android:color/white"
+            app:indicatorName="BallGridPulseIndicator" />
+
 
 </RelativeLayout>
