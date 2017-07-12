@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,6 +31,10 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_splash);
 
         ImageView imgSplash = (ImageView) findViewById(R.id.img_splash);
@@ -69,7 +75,7 @@ public class SplashActivity extends Activity {
      */
     public void initApp(final boolean isFirstRun) {
         if (!Helper.isConnected(this)){
-            dialogNoInternetConnection(this,isFirstRun).show();
+            dialogNoInternetConnection(isFirstRun).show();
         }
         else {
             isRunning = true;
@@ -80,12 +86,10 @@ public class SplashActivity extends Activity {
 
     /**
      * AlertDialog de no internet connection
-     * @param c contexto
      * @return AlertDialog.Builder
      */
-    public AlertDialog.Builder dialogNoInternetConnection(Context c, final boolean isFirstRun) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+    public AlertDialog dialogNoInternetConnection(final boolean isFirstRun) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
         builder.setCancelable(false);
         builder.setTitle(R.string.title_no_internet);
         builder.setMessage(R.string.msg_no_internet);
@@ -97,7 +101,7 @@ public class SplashActivity extends Activity {
                 initApp(isFirstRun);
             }
         });
-        return builder;
+        return builder.create();
     }
 
 

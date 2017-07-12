@@ -60,7 +60,7 @@
 
     <string name="title_categorias">Categorias</string>
     <string name="title_ofertas">Ofertas</string>
-    <string name="title_no_internet">No hay conexión a Internet</string>
+    <string name="title_no_internet">Sin conexión a Internet</string>
     <string name="title_description">Descripción</string>
     <string name="title_specification">Especificación</string>
     <string name="title_register">Crear cuenta</string>
@@ -103,7 +103,7 @@
     <string name="title_welcome">Bienvenido a ShopNeubs</string>
 
     <string name="msg_loading">Cargando&#8230;</string>
-    <string name="msg_no_internet">No hay conexión a Internet disponible. Presiona ok para recargar</string>
+    <string name="msg_no_internet">Verifica tu conexión a internet y presiona OK para iniciar.</string>
     <string name="msg_sincronizando_datos">Sincronizando</string>
     <string name="msg_created_register">Registro completado. Te hemos enviado un email para que actives tu cuenta.</string>
     <string name="msg_session_expired">Su sesión ha expirado</string>
