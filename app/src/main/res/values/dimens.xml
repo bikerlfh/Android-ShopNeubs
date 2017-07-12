@@ -167,14 +167,11 @@
     <dimen name="margin_bottom_lbl_welcome_content_account">10dp</dimen>
 
     <!-- Margin-padding fragment_register, fragment_login , content_perfil -->
-    <dimen name="padding_fragment">13dp</dimen>
-    <dimen name="margin_fragment">10dp</dimen>
-    <dimen name="margin_End">10dp</dimen>
-    <dimen name="margin_Start">10dp</dimen>
-    <dimen name="margin_top">10dp</dimen>
-    <dimen name="margin_top_img_logo">12dp</dimen>
-    <dimen name="margin_botton_img_logo">43dp</dimen>
-    <dimen name="margin_top_btn">26dp</dimen>
+    <dimen name="padding_end_start_linear_layout_inf">10dp</dimen>
+    <dimen name="margin_top_boton">14dp</dimen>
+    <dimen name="padding_botton_top_linear_layout_img_logo">26dp</dimen>
+    <dimen name="margin_top_linear_layout_inf">1dp</dimen>
+    <dimen name="padding_top_linear_layout_inf">18dp</dimen>
     
 
     <!-- Margin -Padding content_producto_detalle-->

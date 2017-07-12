@@ -9,35 +9,46 @@
         android:id="@+id/register_fragment_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/register_fragment_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_fragment"
-            android:background="@drawable/border"
-            android:elevation="3dp"
+            android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="@dimen/padding_fragment"
-            android:weightSum="1">
+            android:paddingBottom="@dimen/padding_botton_top_linear_layout_img_logo"
+            android:paddingTop="@dimen/padding_botton_top_linear_layout_img_logo">
 
             <ImageView
                 android:id="@+id/img_logo"
-                android:layout_width="184dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/margin_botton_img_logo"
-                android:layout_marginTop="@dimen/margin_top_img_logo"
+                android:layout_weight="1"
                 android:background="@drawable/logo_login_200x38" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_top_linear_layout_inf"
+            android:background="@android:color/white"
+            android:elevation="3dp"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/padding_end_start_linear_layout_inf"
+            android:paddingStart="@dimen/padding_end_start_linear_layout_inf"
+            android:paddingTop="@dimen/padding_top_linear_layout_inf">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -107,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_top_btn"
+                android:layout_marginTop="@dimen/margin_top_boton"
                 android:backgroundTint="@color/colorSecundary"
                 android:elevation="8dp"
                 android:text="@string/title_register"
@@ -115,6 +126,6 @@
                 android:textSize="@dimen/text_size_button" />
 
         </LinearLayout>
-    </ScrollView>
 
+    </LinearLayout>
 </FrameLayout>
