@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -29,17 +30,17 @@ import co.com.neubs.shopneubs.classes.models.Marca;
 
 public class NavigationViewFiltro extends NavigationView {
 
-    private LinearLayout mContainerRelevante;
-    private ImageButton mBtnRelevante;
+    private View mContainerRelevante;
+    private ImageView mBtnRelevante;
     private TextView mLblRelevante;
-    private LinearLayout mContainerMenorPrecio;
-    private ImageButton mBtnMenorPrecio;
+    private View mContainerMenorPrecio;
+    private ImageView mBtnMenorPrecio;
     private TextView mLblMenorPrecio;
-    private LinearLayout mContainerMayorPrecio;
-    private ImageButton mBtnMayorPrecio;
+    private View mContainerMayorPrecio;
+    private ImageView mBtnMayorPrecio;
     private TextView mLblMayorPrecio;
-    private LinearLayout mContainerOferta;
-    private ImageButton mBtnOferta;
+    private View mContainerOferta;
+    private ImageView mBtnOferta;
     private TextView mLblOferta;
 
     private RecyclerView mRecycleViewMarca;
@@ -88,16 +89,16 @@ public class NavigationViewFiltro extends NavigationView {
 
         inflater.inflate(R.layout.navigationview_filtro, this);
 
-        mContainerRelevante = (LinearLayout) findViewById(R.id.container_filter_relevante);
-        mContainerMenorPrecio = (LinearLayout) findViewById(R.id.container_filter_menor_precio);
-        mContainerMayorPrecio = (LinearLayout) findViewById(R.id.container_filter_mayor_precio);
-        mContainerOferta = (LinearLayout) findViewById(R.id.container_filter_oferta);
+        mContainerRelevante = findViewById(R.id.container_filter_relevante);
+        mContainerMenorPrecio = findViewById(R.id.container_filter_menor_precio);
+        mContainerMayorPrecio = findViewById(R.id.container_filter_mayor_precio);
+        mContainerOferta = findViewById(R.id.container_filter_oferta);
 
         // Se incializan los controles
-        mBtnRelevante = (ImageButton) findViewById(R.id.btn_relevante);
-        mBtnMenorPrecio = (ImageButton) findViewById(R.id.btn_menor_precio);
-        mBtnMayorPrecio = (ImageButton) findViewById(R.id.btn_mayor_precio);
-        mBtnOferta = (ImageButton) findViewById(R.id.btn_oferta);
+        mBtnRelevante = (ImageView) findViewById(R.id.btn_relevante);
+        mBtnMenorPrecio = (ImageView) findViewById(R.id.btn_menor_precio);
+        mBtnMayorPrecio = (ImageView) findViewById(R.id.btn_mayor_precio);
+        mBtnOferta = (ImageView) findViewById(R.id.btn_oferta);
 
         mLblRelevante = (TextView) findViewById(R.id.lbl_relevante);
         mLblMenorPrecio = (TextView) findViewById(R.id.lbl_menor_precio);

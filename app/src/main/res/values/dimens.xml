@@ -75,6 +75,7 @@
 
     <!-- Item menu NavigationView -->
     <dimen name="padding_start_title_item_menu">16dp</dimen>
+    <dimen name="margin_start_end_icon_menu">16dp</dimen>
 
 
     <!-- margin_padding cardview_pedido -->
@@ -197,15 +198,13 @@
     <dimen name="margin_top_bottom_msg_layout">8dp</dimen>
     <dimen name="padding_end_start_msg_layout">6dp</dimen>
     <dimen name="margin_top_img_layout_producto_no_encontrado">135dp</dimen>
-    
-   <!-- Margin - padding navigationview_filtro -->
+
+
+    <!-- Margin - padding navigationview_filtro -->
     <dimen name="padding_start_title_filtro_navigationview_filtro">16dp</dimen>
     <dimen name="margin_top_title_ordenar_por_navigationview_filtro">3dp</dimen>
     <dimen name="padding_top_bottom_title_navigationview_filtro">8dp</dimen>
     <dimen name="padding_start_title_navigationview_filtro">16dp</dimen>
-    <dimen name="padding_start_container_layout_navigationview_filtro">16dp</dimen>
-    <dimen name="padding_top_bottom_container_layout_navigationview_filtro">8dp</dimen>
-    <dimen name="padding_start_lbl_container_layout_navigationview_filtro">32dp</dimen>
     <dimen name="padding_start_recycle_view_navegationview_filtro">16dp</dimen>
     <dimen name="padding_top_recycle_view_navegationview_filtro">2dp</dimen>
     <dimen name="margin_bottom_recycle_view_navegationview_filtro">2dp</dimen>
