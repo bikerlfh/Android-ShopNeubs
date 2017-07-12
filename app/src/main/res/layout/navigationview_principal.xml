@@ -81,8 +81,8 @@
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/padding_start_title_item_menu"
                     android:text="@string/title_activity_account"
-                    android:textColor="@color/menuTextColorNonChecked"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/menuTextColorNonChecked" />
 
             </LinearLayout>
 
@@ -90,7 +90,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/container_item_menu_account"
-                android:layout_marginTop="1dp"
                 android:orientation="vertical">
 
                 <TextView
