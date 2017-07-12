@@ -16,19 +16,19 @@
             android:id="@+id/lbl_producto_sin_stock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="false"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="false"
             android:layout_centerVertical="false"
-            android:layout_weight="0.11"
+            android:layout_marginTop="5dp"
             android:background="@android:color/holo_red_dark"
             android:elevation="4dp"
             android:padding="@dimen/padding_lbl_producto_sin_stock_cardview_producto_grid"
             android:text="@string/title_sin_stock"
             android:textAlignment="center"
             android:textColor="@color/textColorPrimary"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"/>
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
             android:id="@+id/img_producto"
