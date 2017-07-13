@@ -207,7 +207,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                         for (Imagen img : producto.getImagenes()) {
                             images.add(img.getUrl());
                         }
-                        mViewPager.showGalleryImages(images, null);
+                        mViewPager.showGalleryImages(images);
                     }
                 }
 

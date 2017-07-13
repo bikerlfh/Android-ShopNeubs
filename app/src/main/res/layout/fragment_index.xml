@@ -22,9 +22,9 @@
             <co.com.neubs.shopneubs.controls.ViewPagerNeubs
                 android:id="@+id/viewpager_banner"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:autoScroll="true"
                 app:defaultIndicatorColor="@color/colorPrimary"
                 app:flipInterval="5000"

@@ -77,7 +77,7 @@ public class ImageLoaderView extends LinearLayout
         imageView = new ImageView(context);
         LinearLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         imageView.setLayoutParams(params);
-        //imageView.setBackgroundColor(getColor(R.color.colorBackgroundCardView));
+        //imageView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
         // Se crea el progressBar con stylo progressBarStyleLarge
         progressBar = new ProgressBar(context,null,android.R.attr.progressBarStyleLarge);
@@ -105,6 +105,9 @@ public class ImageLoaderView extends LinearLayout
         return imageView;
     }
 
+    public void setScaleType(ImageView.ScaleType scaleType){
+        imageView.setScaleType(scaleType);
+    }
     /**
      * Visualiza o esconde el ProgressBar y el ImageView
      * @param loading
@@ -183,6 +186,37 @@ public class ImageLoaderView extends LinearLayout
     }
 
     /**
+     * Carga la imagen de la url en el ImageView
+     * @param url de la imagen
+     * @param onImageUrlChargedListener evento que se desencadena cuando la imagen es cargada
+     */
+    public void setImageURL(String url, final OnImageUrlChargedListener onImageUrlChargedListener){
+        // Se visualiza el progressBar
+        loadingImage(true);
+        // Se carga la imagen mediante Glide
+        // Se convierte en un bitMap.
+        /* el into es un SimpleTarget, esto con el fin de evitar errores de carga
+         * debido a la visibilidad del imageView (si se hace con el .listen no funciona)
+         */
+        Glide.with(getContext())
+                .load(url)
+                .asBitmap()
+                //.placeholder(R.drawable.circular_progress_bar)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .error(R.mipmap.ic_launcher)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                        // do something with the bitmap
+                        // for demonstration purposes, let's just set it to an ImageView
+                        imageView.setImageBitmap( bitmap );
+                        onImageUrlChargedListener.onImageUrlCharged(bitmap);
+                        loadingImage(false);
+                    }
+                });
+    }
+
+    /**
      * Carga la imagens desde un Resourse
      * @param resourceId id del Drawable
      */
@@ -217,4 +251,12 @@ public class ImageLoaderView extends LinearLayout
     public int getAdapter() {
         return adapter;
     }
+
+    /**
+     * Callback cuando la imageUrl es cargada
+     */
+    public interface OnImageUrlChargedListener{
+        void onImageUrlCharged(Bitmap image);
+    }
+
 }

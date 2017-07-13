@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,7 +141,7 @@ public class IndexFragment extends Fragment {
             }
             // Se visualiza el viewPager como Galeria de imagenes y se
             // asigna el evento del click por imagen, para abrir el producto(idSaldoInventario) o el fragment ProductoCategoria(urlRequest)
-            mViewPagerBanner.showGalleryImages(images, new ViewPagerNeubs.OnClickListenerImage() {
+            mViewPagerBanner.showGalleryImages(images, ImageView.ScaleType.FIT_XY,true, new ViewPagerNeubs.OnImageClickListener() {
                 @Override
                 public void onClick(View v, int position) {
                     final APIBanner apiBanner = listadoApiBanner.get(position);

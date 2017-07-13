@@ -3,6 +3,7 @@ package co.com.neubs.shopneubs.controls;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -18,6 +19,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.Timer;
 
 import co.com.neubs.shopneubs.R;
+import co.com.neubs.shopneubs.fragments.IndexFragment;
 
 /**
  * Created by bikerlfh on 6/27/17.
@@ -227,14 +230,26 @@ public class ViewPagerNeubs extends RelativeLayout implements  ViewPager.OnPageC
     }
 
     //region Funcionalidad de Galeria
+
+    /**
+     * Carga en el ViewPager imagenes apartir de urls.
+     * @param listUrlImages listado de urls de imagenes
+     */
+    public void showGalleryImages(@NonNull List<String> listUrlImages){
+        galleryAdapter = new GalleryAdapter(getContext(),listUrlImages,null,null,false);
+        this.setAdapter(galleryAdapter);
+    }
+
     /**
      * Carga en el ViewPager imagenes apartir de urls.
      * Cuando se invoca este método, se crea el adaptador (GalleryAdapter) de forma autormatica
      * @param listUrlImages listado de urls de imagenes
-     * @param onClickListenerImage evento cuando se le da click a la imagen
+     * @param scaleType ScaleType del imageView
+     * @param autoHeight indica si se desea que el viewPager se adapte al tamaño de las imagenes
+     * @param onImageClickListener evento cuando se le da click a la imagen
      */
-    public void showGalleryImages(@NonNull List<String> listUrlImages,@Nullable OnClickListenerImage onClickListenerImage){
-        galleryAdapter = new GalleryAdapter(getContext(),listUrlImages,onClickListenerImage);
+    public void showGalleryImages(@NonNull List<String> listUrlImages,@Nullable ImageView.ScaleType scaleType,boolean autoHeight,@Nullable OnImageClickListener onImageClickListener){
+        galleryAdapter = new GalleryAdapter(getContext(),listUrlImages,onImageClickListener,scaleType,autoHeight);
         this.setAdapter(galleryAdapter);
     }
 
@@ -242,10 +257,10 @@ public class ViewPagerNeubs extends RelativeLayout implements  ViewPager.OnPageC
      * Carga en el ViewPager imagenes apartir de los idResource
      * Cuando se invoca este método, se crea el adaptador (ViewPagerAdapter) de forma autormatica
      * @param listResourceImages listado de idResources de las imagenes
-     * @param onClickListenerImage evento cuando se le da click a la imagen
+     * @param onImageClickListener evento cuando se le da click a la imagen
      */
-    public void showGalleryImagesResources(@NonNull List<Integer> listResourceImages,@Nullable OnClickListenerImage onClickListenerImage){
-        galleryAdapter = new GalleryAdapter(getContext(),listResourceImages,onClickListenerImage);
+    public void showGalleryImagesResources(@NonNull List<Integer> listResourceImages,@Nullable ImageView.ScaleType scaleType,boolean autoHeight,@Nullable OnImageClickListener onImageClickListener){
+        galleryAdapter = new GalleryAdapter(getContext(),listResourceImages,onImageClickListener,scaleType,autoHeight);
         this.setAdapter(galleryAdapter);
     }
     //endregion
@@ -469,13 +484,19 @@ public class ViewPagerNeubs extends RelativeLayout implements  ViewPager.OnPageC
 
         private Context context;
         private List<T> listImagenes;
-        private OnClickListenerImage onClickListenerImage;
+        private OnImageClickListener onImageClickListener;
+        private int minHeight = 0;
+        private ImageView.ScaleType scaleType;
+        private boolean autoHeight;
 
 
-        public  GalleryAdapter(Context context, List<T> imagenes,@Nullable OnClickListenerImage onClickListenerImage) {
+        public  GalleryAdapter(Context context, List<T> imagenes,@Nullable OnImageClickListener onImageClickListener,
+                               @Nullable ImageView.ScaleType scaleType,@Nullable boolean autoHeight) {
             this.context = context;
             this.listImagenes = imagenes;
-            this.onClickListenerImage = onClickListenerImage;
+            this.onImageClickListener = onImageClickListener;
+            this.scaleType = scaleType;
+            this.autoHeight = autoHeight;
         }
 
         @Override
@@ -491,17 +512,40 @@ public class ViewPagerNeubs extends RelativeLayout implements  ViewPager.OnPageC
         @Override
         public Object instantiateItem(final ViewGroup container, final int position) {
             ImageLoaderView image = new ImageLoaderView(context);
+            // Se aplica la scala
+            if (scaleType != null)
+                image.setScaleType(scaleType);
 
-            if (listImagenes.get(0).getClass() == String.class)
-                image.setImageURL(String.valueOf(listImagenes.get(position)));
+            if (listImagenes.get(0).getClass() == String.class) {
+                // Si se requere que el container se adapte a la altura de la imagen
+                // se carga la imagen y se ajusta la altura del container del container
+                if (autoHeight) {
+                    image.setImageURL(String.valueOf(listImagenes.get(position)), new ImageLoaderView.OnImageUrlChargedListener() {
+                        @Override
+                        public void onImageUrlCharged(Bitmap image) {
+                            // si el alto de la imagen es diferente al minHeight se debe ajustar alto del container (ViewPager)
+                            if (minHeight < image.getHeight()) {
+                                minHeight = image.getHeight();
+                                RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, convertDpToPixels(minHeight));
+                                container.setLayoutParams(params);
+                            }
+                        }
+                    });
+                }
+                else {
+                    // se carga la imagen
+                    image.setImageURL(String.valueOf(listImagenes.get(position)));
+                }
+            }
             else
                 image.setImagenResource(Integer.valueOf(listImagenes.get(position).toString()));
 
-            if (onClickListenerImage!=null) {
+            // Se asigna el evento onImageClickListener
+            if (onImageClickListener!=null) {
                 image.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onClickListenerImage.onClick(v, position);
+                        onImageClickListener.onClick(v, position);
                     }
                 });
             }
@@ -519,7 +563,7 @@ public class ViewPagerNeubs extends RelativeLayout implements  ViewPager.OnPageC
      * Interfaz el cual es invocado cuando una imagen es clickeada
      * Solo se usa cuando la funcionalidad de Gallery esta activa
      */
-    public interface OnClickListenerImage{
+    public interface OnImageClickListener{
         void onClick(View v,int position);
     }
 }
