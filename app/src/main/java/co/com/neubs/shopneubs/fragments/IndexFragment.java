@@ -104,9 +104,12 @@ public class IndexFragment extends Fragment {
                 mRecyclerViewSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 mRecyclerViewSection.setAdapter(sectionAdapter);
             }
-            if (showBanner)
+            if (showBanner) {
                 // Se visualiza el viewPagerBanner
                 mViewPagerBanner.setVisibility(View.VISIBLE);
+            }
+            else
+                mViewPagerBanner.setVisibility(View.GONE);
         }
     }
 
