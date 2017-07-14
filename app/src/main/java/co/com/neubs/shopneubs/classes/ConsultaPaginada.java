@@ -27,12 +27,8 @@ public class ConsultaPaginada {
     }
 
     public String getNext() {
-        // Ajuste temporal mientras se arregla el api
         if (next != null) {
-            if (next.contains("http") && !next.contains(APIRest.PROTOCOL_URL_API))
-                next = next.replace("http",APIRest.PROTOCOL_URL_API);
-            else if (next.contains("https") && !next.contains(APIRest.PROTOCOL_URL_API))
-                next = next.replace("https",APIRest.PROTOCOL_URL_API);
+            next = APIRest.constructURL(next);
         }
         return next;
     }

@@ -82,6 +82,13 @@ public class APIRest {
      * @return url valida
      */
     protected static String constructURL(String url){
+        // Ajuste temporal mientras se arregla el api
+        // para que traiga las urls con el protocolo https
+        if (url.contains("http") && !url.contains(APIRest.PROTOCOL_URL_API))
+            url = url.replace("http",APIRest.PROTOCOL_URL_API);
+        else if (url.contains("https") && !url.contains(APIRest.PROTOCOL_URL_API))
+            url = url.replace("https",APIRest.PROTOCOL_URL_API);
+
         return (!url.contains(URL_API))? URL_API + url : url;
     }
 
@@ -353,11 +360,12 @@ public class APIRest {
                                 // se serializan los datos
                                 if (RESPONSE_CODE != HTTP_NOT_FOUND  && RESPONSE_CODE != HTTP_INTERNAL_ERROR) {
                                     apiValidations = serializeObjectFromJson(new String(error.networkResponse.data), APIValidations.class);
-                                    apiValidations.setResponse(new String(error.networkResponse.data));
                                 }
                                 else
                                     apiValidations = new APIValidations();
+
                                 apiValidations.setResponseCode(error.networkResponse.statusCode);
+                                apiValidations.setResponse(new String(error.networkResponse.data));
                             }
                             else{
                                 apiValidations = new APIValidations();
