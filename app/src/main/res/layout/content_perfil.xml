@@ -19,7 +19,7 @@
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_tipo_documento"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintHorizontal_bias="0.857"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -163,7 +163,7 @@
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_pais"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:layout_constraintHorizontal_bias="0.859"
@@ -179,7 +179,7 @@
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_departamento"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintHorizontal_bias="0.903"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -194,7 +194,7 @@
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spn_municipio"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -209,6 +209,7 @@
 
         <Button
             android:id="@+id/btn_guardar_perfil"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="55dp"
             android:layout_marginTop="@dimen/margin_top_boton"
