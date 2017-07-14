@@ -2,6 +2,7 @@ package co.com.neubs.shopneubs;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -78,8 +79,14 @@ public class AppController extends Application {
         //Añadimos los Extras necesarios como nombre del icono y icono
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, contentTitle.toString());
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                Intent.ShortcutIconResource.fromContext(getApplicationContext(),R.mipmap.ic_launcher));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                    Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher_round));
+        }
+        else{
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                    Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher));
+        }
         //IMPORTATE: si el icono ya esta creado que no cree otro
         addIntent.putExtra("duplicate", false);
         //Llamamos a la acción

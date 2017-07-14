@@ -36,7 +36,8 @@
                 android:id="@+id/recycle_view_index"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="3dp">
+                android:paddingBottom="3dp"
+                android:nestedScrollingEnabled="false">
 
             </android.support.v7.widget.RecyclerView>
 
