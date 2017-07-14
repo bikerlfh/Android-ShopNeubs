@@ -2,6 +2,7 @@ package co.com.neubs.shopneubs;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -91,13 +92,31 @@ public class AccountActivity extends AppCompatActivity {
 
         visualizarControlesSession(sessionManager.isAuthenticated());
 
-        setListenersSearchView();
+        initSearchView();
     }
 
     /**
      * Crea los listeners del SearchView
      */
-    private void setListenersSearchView(){
+    private void initSearchView(){
+
+        // Si la versión es menor a 21 se debe esconder la rootLayoutContent cuando se abre el searchView
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+                View rootLayoutContent = findViewById(R.id.root_layout_content_account);
+                @Override
+                public void onSearchViewShown() {
+                    // se esconde la rootLayoutContent
+                    rootLayoutContent.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onSearchViewClosed() {
+                    // se visualiza la rootLayoutContent
+                    rootLayoutContent.setVisibility(View.VISIBLE);
+                }
+            });
+        }
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -213,8 +232,11 @@ public class AccountActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finishAfterTransition();
-        return super.onSupportNavigateUp();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else
+            finish();
+        return true;
     }
 
     /**
