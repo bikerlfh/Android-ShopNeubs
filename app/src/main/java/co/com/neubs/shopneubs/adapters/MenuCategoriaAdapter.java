@@ -245,7 +245,7 @@ public class MenuCategoriaAdapter extends RecyclerView.Adapter<MenuCategoriaAdap
                     break;
             }
             if (idIcon > 0){
-                imgIcon.setImageDrawable(context.getDrawable(idIcon));
+                imgIcon.setImageDrawable(context.getResources().getDrawable(idIcon));
                 imgIcon.setVisibility(View.VISIBLE);
             }
             else
@@ -257,7 +257,7 @@ public class MenuCategoriaAdapter extends RecyclerView.Adapter<MenuCategoriaAdap
          * @param show
          */
         private void showSubCategoria(boolean show){
-            imgBtnExpandable.setImageDrawable(context.getDrawable(show? R.drawable.ic_action_expand_less_black : R.drawable.ic_action_expand_more_black));
+            imgBtnExpandable.setImageDrawable(context.getResources().getDrawable(show? R.drawable.ic_action_expand_less_black : R.drawable.ic_action_expand_more_black));
             recyclerViewSubCategorias.setVisibility(show? View.VISIBLE:View.GONE);
             inShowSubCategoria = show;
         }

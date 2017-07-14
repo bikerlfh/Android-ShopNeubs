@@ -178,7 +178,7 @@
     <!-- Margin -Padding content_producto_detalle-->
     <dimen name="padding_top_lbl_nombre_producto_detalle">12dp</dimen>
     <dimen name="padding_top_lbl_marca_producto_detalle">12dp</dimen>
-    <dimen name="margin_top_title_descripcion_producto_detalle">8dp</dimen>
+    <dimen name="margin_top_secciones_producto_detalle">2dp</dimen>
     <dimen name="margin_botton_title_descripcion_producto_detalle">1dp</dimen>
     <dimen name="padding_end_title_descripcion_producto">13dp</dimen>
     <dimen name="padding_start_title_descripcion_producto">13dp</dimen>

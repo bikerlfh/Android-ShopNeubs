@@ -347,14 +347,14 @@ public class VistaFiltroPrincipal extends RelativeLayout {
         if (idLayoutSelected == DEFAULT_LAYOUT_GRID){
             // Se cambia la vista a LIST
             idLayoutSelected = DEFAULT_LAYOUT_LIST;
-            mBtnCambiarVista.setImageDrawable(getContext().getApplicationContext().getResources().getDrawable(ICON_VIEW_LIST));
+            mBtnCambiarVista.setImageDrawable(getContext().getResources().getDrawable(ICON_VIEW_LIST));
             // se configura el recycleView
             initRecycleViewList();
         }
         else{
             // Se cambia la vista a GRID
             idLayoutSelected = DEFAULT_LAYOUT_GRID;
-            mBtnCambiarVista.setImageDrawable(getContext().getApplicationContext().getResources().getDrawable(ICON_VIEW_GRID));
+            mBtnCambiarVista.setImageDrawable(getContext().getResources().getDrawable(ICON_VIEW_GRID));
             initRecycleViewGrid();
         }
         showProductos(consultaPaginada);

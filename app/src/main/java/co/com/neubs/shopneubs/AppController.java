@@ -3,6 +3,7 @@ package co.com.neubs.shopneubs;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -25,6 +26,7 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         final boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isfirstrun", true);
         if (isFirstRun)

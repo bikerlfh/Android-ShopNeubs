@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -147,6 +149,25 @@ public class PrincipalActivity extends AppCompatActivity {
      * Crea los listeners del SearchView
      */
     private void initSearchView(){
+
+        // Si la versión es menor a 21 se debe esconder el frameContent cuando se abre el searchView
+        if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)) {
+            searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+                FrameLayout frameContent = (FrameLayout) findViewById(R.id.fragment_content);
+
+                @Override
+                public void onSearchViewShown() {
+                    // se esconde el frameContent
+                    frameContent.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onSearchViewClosed() {
+                    // se visualiza el frameContent
+                    frameContent.setVisibility(View.VISIBLE);
+                }
+            });
+        }
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override

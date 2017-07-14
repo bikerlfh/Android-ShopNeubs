@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_bottom_img_btn_menos_cardview_shop_cart"
                 android:layout_marginStart="@dimen/margin_start_img_btn_menos_cardview_shop_cart"
-                android:background="?android:attr/colorControlHighlight"
+                android:background="?attr/colorButtonNormal"
                 android:paddingBottom="@dimen/padding_bottom_top_img_btn_mas_menos_cardview_shop_cart"
                 android:paddingEnd="@dimen/padding_end_start_img_btn_mas_menos_cardview_shop_cart"
                 android:paddingStart="@dimen/padding_end_start_img_btn_mas_menos_cardview_shop_cart"

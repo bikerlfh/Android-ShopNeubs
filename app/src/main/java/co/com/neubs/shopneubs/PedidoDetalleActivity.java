@@ -2,6 +2,7 @@ package co.com.neubs.shopneubs;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -35,7 +36,7 @@ public class PedidoDetalleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido_detalle);
@@ -120,7 +121,10 @@ public class PedidoDetalleActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finishAfterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else
+            finish();
         return true;
     }
 

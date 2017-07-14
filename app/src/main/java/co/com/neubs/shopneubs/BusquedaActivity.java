@@ -1,6 +1,7 @@
 package co.com.neubs.shopneubs;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -22,6 +24,7 @@ import java.util.Map;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.ConsultaPaginada;
+import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.controls.NavigationViewFiltro;
@@ -108,6 +111,23 @@ public class BusquedaActivity extends AppCompatActivity {
      */
     private void initSearchView(){
 
+        // Si la versión es menor a 21 se debe esconder la vistaFiltroPrincipal cuando se abre el searchView
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+
+                @Override
+                public void onSearchViewShown() {
+                    // se esconde la vistaFiltroPrincipal
+                    vistaFiltroPrincipal.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onSearchViewClosed() {
+                    // se visualiza la vistaFiltroPrincipal
+                    vistaFiltroPrincipal.setVisibility(View.VISIBLE);
+                }
+            });
+        }
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
@@ -239,8 +259,11 @@ public class BusquedaActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finishAfterTransition();
-        return super.onSupportNavigateUp();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else
+            finish();
+        return true;
     }
 
     @Override

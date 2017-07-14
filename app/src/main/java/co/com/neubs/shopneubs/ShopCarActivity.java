@@ -2,6 +2,7 @@ package co.com.neubs.shopneubs;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -145,7 +146,7 @@ public class ShopCarActivity extends AppCompatActivity {
         btnComenzarAhora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishAfterTransition();
+                onSupportNavigateUp();
             }
         });
         //Se agrega la vista al rootLayout
@@ -153,8 +154,11 @@ public class ShopCarActivity extends AppCompatActivity {
     }
     @Override
     public boolean onSupportNavigateUp() {
-        finishAfterTransition();
-        return super.onSupportNavigateUp();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else
+            finish();
+        return true;
     }
 
     public void calcularValorTotal(){

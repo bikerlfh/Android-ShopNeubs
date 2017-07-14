@@ -3,21 +3,24 @@ package co.com.neubs.shopneubs;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +39,7 @@ import co.com.neubs.shopneubs.controls.IconNotificationBadge;
 import co.com.neubs.shopneubs.controls.ViewPagerNeubs;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
-import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.CENTER;
-import static android.view.Gravity.END;
-import static android.view.Gravity.START;
 
 public class ProductoDetalleActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -79,10 +79,11 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
     private TextView mEspecificacionProducto;
     private TextView mPrecioProducto;
     private TextView mPrecioAnterior;
-    private Button mBtnAgregarItemCar;
+    private AppCompatButton mBtnAgregarItemCar;
     private TextView txtmessage;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private ViewPagerNeubs mViewPager;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         mDescripcionProducto = (TextView) findViewById(R.id.lbl_descripcion_producto_detalle);
         mEspecificacionProducto = (TextView) findViewById(R.id.lbl_especificacion_producto_detalle);
 
-        mBtnAgregarItemCar = (Button) findViewById(R.id.btn_agregar_item_car);
+        mBtnAgregarItemCar = (AppCompatButton) findViewById(R.id.btn_agregar_item_car);
 
         mBtnAgregarItemCar.setEnabled(true);
         mBtnAgregarItemCar.setText(R.string.title_agregar_carrito);
@@ -155,7 +156,7 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         setEstadoBoton(estado);
 
         if (idSaldoInventario == 0){
-            finishAfterTransition();
+            onSupportNavigateUp();
         }
         else {
 
@@ -234,6 +235,12 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
             mBtnAgregarItemCar.setText(R.string.title_sin_stock);}
         else
             mBtnAgregarItemCar.setText(R.string.title_agregar_carrito);
+
+        // Si se esta en una versión menor a la 21
+        // Se agrega el soporte BackgroundTintList
+        if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)){
+            mBtnAgregarItemCar.setSupportBackgroundTintList(getResources().getColorStateList(R.color.botton_disable_color));
+        }
     }
 
     /**
@@ -256,7 +263,10 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onSupportNavigateUp() {
-        finishAfterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else
+            finish();
         return true;
     }
 
@@ -332,41 +342,30 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showLoadingView(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = this.getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = this.getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mMainView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mMainView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
 
-            mFooterView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mFooterView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mFooterView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        mFooterView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mFooterView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mFooterView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mFooterView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 }

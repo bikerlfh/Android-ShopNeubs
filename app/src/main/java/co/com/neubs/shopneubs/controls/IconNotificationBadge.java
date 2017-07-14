@@ -138,7 +138,8 @@ public class IconNotificationBadge extends RelativeLayout {
 
 
     public IconNotificationBadge(Context context) {
-        super(context,null,android.R.attr.actionButtonStyle,android.R.attr.actionBarItemBackground);
+        super(context,null);
+        //super(context,null,android.R.attr.actionButtonStyle,android.R.attr.actionBarItemBackground);
         init(context,null);
     }
 
@@ -158,7 +159,7 @@ public class IconNotificationBadge extends RelativeLayout {
     }
 
     private void init(Context context, AttributeSet attrs){
-        setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+        setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         setClickable(true);
 
         // Se crea la imagen
@@ -199,7 +200,7 @@ public class IconNotificationBadge extends RelativeLayout {
     }
 
     public void setIcon(int idDrawable){
-        mImage.setImageDrawable(getContext().getApplicationContext().getDrawable(idDrawable));
+        mImage.setImageDrawable(getContext().getResources().getDrawable(idDrawable));
     }
 
     public void setColorIcon(int color){

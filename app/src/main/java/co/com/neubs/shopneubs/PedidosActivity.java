@@ -89,7 +89,10 @@ public class PedidosActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finishAfterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else
+            finish();
         return true;
     }
 

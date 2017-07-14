@@ -236,7 +236,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_button_layout_opciones_navegationview_filtro"
                 android:layout_weight="1"
-                android:background="@color/colorSecundaryLight"
+                android:backgroundTint="@color/colorSecundaryLight"
                 android:elevation="2dp"
                 android:text="@string/title_limpiar"
                 android:textColor="@color/textColorPrimary" />
@@ -248,7 +248,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_button_layout_opciones_navegationview_filtro"
                 android:layout_weight="1"
-                android:background="@color/colorSecundary"
+                android:backgroundTint="@color/colorSecundary"
                 android:elevation="2dp"
                 android:text="@string/title_aplicar"
                 android:textColor="@color/textColorPrimary" />
