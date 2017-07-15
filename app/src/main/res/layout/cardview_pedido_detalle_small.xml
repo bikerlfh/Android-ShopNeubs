@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp">
+
+        <co.com.neubs.shopneubs.controls.ImageLoaderView
+            android:id="@+id/img_pedido_detalle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/lbl_nombre_producto_pedido_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="7dp"
+            android:layout_toEndOf="@+id/img_pedido_detalle"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingEnd="@dimen/padding_end_lbl_nombre_producto_cardview_producto_detalle"
+            android:paddingStart="@dimen/padding_start_lbl_nombre_producto_cardview_producto_detalle"
+            android:paddingTop="@dimen/padding_top_lbl_nombre_producto_cardview_producto_detalle"
+            android:text="TextView"
+            android:textColor="@color/textColorSecundary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/lbl_costo_total_pedido_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/lbl_cantidad_pedido_detalle"
+            android:layout_below="@+id/lbl_cantidad_pedido_detalle"
+            android:layout_marginTop="3dp"
+            android:paddingStart="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
+            android:text="Total:"
+            android:textColor="@color/colorPrecio"
+            android:textSize="@dimen/costo_total_pedido_detalle" />
+
+        <TextView
+            android:id="@+id/lbl_cantidad_pedido_detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/lbl_nombre_producto_pedido_detalle"
+            android:layout_below="@+id/lbl_nombre_producto_pedido_detalle"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
+            android:paddingStart="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
+            android:text="TextView"
+            android:textSize="@dimen/cantidad_pedido_detalle" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
