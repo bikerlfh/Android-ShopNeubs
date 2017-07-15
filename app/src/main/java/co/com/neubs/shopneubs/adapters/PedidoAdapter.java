@@ -2,16 +2,21 @@ package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import co.com.neubs.shopneubs.PedidoDetalleActivity;
 import co.com.neubs.shopneubs.R;
+import co.com.neubs.shopneubs.classes.APIRest;
+import co.com.neubs.shopneubs.classes.APIValidations;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.PedidoVenta;
+import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 /**
  * Created by bikerlfh on 6/12/17.
@@ -43,12 +48,13 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         return listadoPedidoVenta.length;
     }
 
-    public static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    protected static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView lblNumeroPedido;
         private TextView lblFecha;
         private TextView lblEstado;
         private TextView lblCostoTotal;
         private TextView lblNumeroProductos;
+        private RecyclerView recyclerViewDetalle;
 
         private PedidoVenta pedidoVenta;
 
@@ -61,6 +67,11 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             lblFecha = (TextView)itemView.findViewById(R.id.lbl_fecha_pedido_detalle);
             lblCostoTotal = (TextView)itemView.findViewById(R.id.lbl_costo_total);
             lblNumeroProductos = (TextView)itemView.findViewById(R.id.lbl_numero_productos_pedido_detalle);
+            recyclerViewDetalle = (RecyclerView) itemView.findViewById(R.id.recycle_view_detalle_producto);
+
+            recyclerViewDetalle.setHasFixedSize(true);
+            recyclerViewDetalle.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.VERTICAL,false));
+
             context = itemView.getContext();
         }
 
@@ -73,6 +84,25 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             lblCostoTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
 
             itemView.setOnClickListener(this);
+
+            // Se consula el detalle del pedido
+            APIRest.Async.get(pedidoVenta.getUrlDetalle(), new IServerCallback() {
+                @Override
+                public void onSuccess(String json) {
+                    PedidoVenta pedidoVenta = APIRest.serializeObjectFromJson(json, PedidoVenta.class);
+                    final PedidoDetalleAdapter pedidoDetalleAdapter = new PedidoDetalleAdapter(context, pedidoVenta.getPedidoVentaPosicion());
+                    recyclerViewDetalle.setAdapter(pedidoDetalleAdapter);
+                }
+
+                @Override
+                public void onError(String message_error, APIValidations apiValidations) {
+                    if (apiValidations != null) {
+                        Toast.makeText(context, apiValidations.getDetail(), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, context.getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }
 
         @Override

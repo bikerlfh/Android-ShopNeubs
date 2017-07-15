@@ -46,13 +46,13 @@ public class PedidoDetalleActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //lblEstado= (TextView) findViewById(R.id.lbl_estado_pedido_detalle);
+        lblEstado= (TextView) findViewById(R.id.lbl_estado_pedido_detalle);
         lblFecha = (TextView) findViewById(R.id.lbl_fecha_pedido_detalle);
         lblCostoTotal= (TextView) findViewById(R.id.lbl_costo_total_pedido_detalle);
         lblNumeroProductos = (TextView) findViewById(R.id.lbl_numero_productos_pedido_detalle);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_pedido_detalle);
         // ajustes en el recycleview
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(3), true));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, Helper.dpToPx(3,this), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
@@ -126,10 +126,5 @@ public class PedidoDetalleActivity extends AppCompatActivity {
         else
             finish();
         return true;
-    }
-
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 }
