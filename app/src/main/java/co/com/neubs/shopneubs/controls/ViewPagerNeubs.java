@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -15,6 +16,7 @@ import android.support.annotation.Px;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -485,7 +487,6 @@ public class ViewPagerNeubs extends RelativeLayout implements  ViewPager.OnPageC
         private Context context;
         private List<T> listImagenes;
         private OnImageClickListener onImageClickListener;
-        private int minHeight = 0;
         private ImageView.ScaleType scaleType;
         private boolean autoHeight;
 
@@ -518,17 +519,42 @@ public class ViewPagerNeubs extends RelativeLayout implements  ViewPager.OnPageC
 
             if (listImagenes.get(0).getClass() == String.class) {
                 // Si se requere que el container se adapte a la altura de la imagen
-                // se carga la imagen y se ajusta la altura del container del container
+                // se carga la imagen y se ajusta la altura del container
                 if (autoHeight) {
                     image.setImageURL(String.valueOf(listImagenes.get(position)), new ImageLoaderView.OnImageUrlChargedListener() {
                         @Override
                         public void onImageUrlCharged(Bitmap image) {
-                            // si el alto de la imagen es diferente al minHeight se debe ajustar alto del container (ViewPager)
-                            if (minHeight < image.getHeight()) {
-                                minHeight = image.getHeight();
-                                RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, convertDpToPixels(minHeight));
-                                container.setLayoutParams(params);
+                            // algoritmo que reconoce la proporcion de ajuste en las imagenes
+                            // Se obtienen las metricas de la pantalla
+                            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+                            // se obtienen las dimensiones de la imagen
+                            int imageWidth = image.getWidth();
+                            int imageHeight = image.getHeight();
+                            int withAumento = 0;
+                            float porcentajeAumento = 0;
+                            int height = 0;
+                            // si el with de la pantalla es mayor al de la imagen
+                            // se debe calcular el aumento
+                            if (metrics.widthPixels > imageWidth) {
+                                // se calcula el aumento width en pixeles para que la imagen se adapte al tamaño de pantalla
+                                withAumento = metrics.widthPixels - imageWidth;
+                                // se obtiene el porcentaje de aumento
+                                porcentajeAumento = withAumento * 100 / imageWidth;
+                                // Se calcula el tamaño height de la imagen con el aumento incluido
+                                height = (int) (imageHeight + (imageHeight*porcentajeAumento)/100);
                             }
+                            // si el width de la pantalla es menor al de la imagen
+                            // se debe calcular la disminución
+                            else{
+                                // se calcula el aumento width en pixeles para que la imagen se adapte al tamaño de pantalla
+                                withAumento = imageWidth - metrics.widthPixels;
+                                // se obtiene el porcentaje de aumento
+                                porcentajeAumento = withAumento * 100 / imageWidth;
+                                // Se calcula el tamaño height de la imagen con el aumento incluido
+                                height = (int) (imageHeight - (imageHeight*porcentajeAumento)/100);
+                            }
+                            RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+                            container.setLayoutParams(params);
                         }
                     });
                 }

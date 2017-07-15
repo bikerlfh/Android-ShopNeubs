@@ -144,7 +144,7 @@ public class IndexFragment extends Fragment {
             }
             // Se visualiza el viewPager como Galeria de imagenes y se
             // asigna el evento del click por imagen, para abrir el producto(idSaldoInventario) o el fragment ProductoCategoria(urlRequest)
-            mViewPagerBanner.showGalleryImages(images, ImageView.ScaleType.FIT_XY,true, new ViewPagerNeubs.OnImageClickListener() {
+            mViewPagerBanner.showGalleryImages(images, ImageView.ScaleType.FIT_START,true, new ViewPagerNeubs.OnImageClickListener() {
                 @Override
                 public void onClick(View v, int position) {
                     final APIBanner apiBanner = listadoApiBanner.get(position);
