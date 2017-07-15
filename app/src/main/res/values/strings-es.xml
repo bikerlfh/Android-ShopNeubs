@@ -65,7 +65,8 @@
     <string name="title_specification">Especificación</string>
     <string name="title_register">Crear cuenta</string>
     <string name="title_logout">Salir</string>
-    <string name="title_derechos_reservados">© 2017 - Neubs S.A.S Todos los Derechos Reservados</string>
+    <string name="title_derechos_reservados">© 2017 - Neubs S.A.S</string>
+    <string name="title_derechos_reservados1">Todos los Derechos Reservados</string>
     <string name="title_terminos_condiciones">Términos y condiciones</string>
     <string name="title_garantia">Garantia</string>
     <string name="title_informacion_envio">Información de Envío</string>
