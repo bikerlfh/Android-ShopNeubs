@@ -73,10 +73,10 @@
             android:layout_centerInParent="false"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:weightSum="2">
 
             <LinearLayout
-                android:layout_width="164dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -102,9 +102,9 @@
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_agregar_item_car"
-                android:layout_width="134dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.60"
+                android:layout_weight="1"
                 android:backgroundTint="@color/botton_disable_color"
                 android:drawableStart="@drawable/botton_disable_drawable"
                 android:elevation="9dp"
