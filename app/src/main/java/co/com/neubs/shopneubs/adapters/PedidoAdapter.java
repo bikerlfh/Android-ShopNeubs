@@ -48,7 +48,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         return listadoPedidoVenta.length;
     }
 
-    protected static class PedidoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    protected static class PedidoViewHolder extends RecyclerView.ViewHolder {// implements View.OnClickListener {
         private TextView lblNumeroPedido;
         private TextView lblFecha;
         private TextView lblEstado;
@@ -83,7 +83,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             lblNumeroProductos.setText(String.valueOf(pedidoVenta.getNumeroProductos()));
             lblCostoTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
 
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
 
             // Se consula el detalle del pedido
             APIRest.Async.get(pedidoVenta.getUrlDetalle(), new IServerCallback() {
@@ -105,7 +105,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             });
         }
 
-        @Override
+        /*@Override
         public void onClick(View v) {
             //Pair[] pairs = new Pair[1];
             //pairs[0]=Pair.create(lblEstado,"estado_pedido_detalle_shared");
@@ -118,6 +118,6 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             intent.putExtra(PedidoDetalleActivity.PARAM_PEDIDO_VENTA,pedidoVenta);
             //v.getContext().startActivity(intent,options.toBundle())
             v.getContext().startActivity(intent);
-        }
+        }*/
     }
 }
