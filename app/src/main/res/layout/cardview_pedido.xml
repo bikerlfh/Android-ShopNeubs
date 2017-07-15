@@ -6,12 +6,11 @@
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
     android:paddingBottom="10dp"
-    app:cardBackgroundColor="@color/colorBackground">
+    app:cardElevation="1dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
@@ -22,7 +21,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Pedido"
             android:textColor="@color/textColorSecundary"
@@ -37,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/text_view_empy"
             app:layout_constraintRight_toRightOf="parent"
@@ -54,24 +53,37 @@
             app:layout_constraintLeft_toRightOf="@+id/textView22"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_detalle_producto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorBackground"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_numero_pedido">
+
+        </android.support.v7.widget.RecyclerView>
+
         <RelativeLayout
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
+            android:layout_marginTop="0dp"
             android:background="@color/colorBackgroundCardView"
-            android:paddingBottom="10dp"
+            android:padding="8dp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/recycle_view_detalle_producto">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="8dp"
+                android:layout_alignParentTop="true"
                 android:text="Total Items" />
 
             <TextView
@@ -98,27 +110,14 @@
                 android:id="@+id/textView55"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/lbl_costo_total"
+                android:layout_alignParentTop="true"
                 android:layout_centerInParent="false"
-                android:layout_centerVertical="false"
+                android:layout_marginEnd="9dp"
                 android:layout_toStartOf="@+id/lbl_costo_total"
                 android:paddingEnd="6dp"
                 android:text="Total" />
 
         </RelativeLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_view_detalle_producto"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
-            app:layout_constraintVertical_bias="0.0">
-
-        </android.support.v7.widget.RecyclerView>
 
     </android.support.constraint.ConstraintLayout>
 

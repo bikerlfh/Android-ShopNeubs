@@ -91,7 +91,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
                 @Override
                 public void onSuccess(String json) {
                     PedidoVenta pedidoVenta = APIRest.serializeObjectFromJson(json, PedidoVenta.class);
-                    final PedidoDetalleAdapter pedidoDetalleAdapter = new PedidoDetalleAdapter(context, pedidoVenta.getPedidoVentaPosicion());
+                    final PedidoDetalleAdapter pedidoDetalleAdapter = new PedidoDetalleAdapter(context, pedidoVenta.getPedidoVentaPosicion(),R.layout.cardview_pedido_detalle_small);
                     recyclerViewDetalle.setAdapter(pedidoDetalleAdapter);
                     //itemView.setClickable(false);
                 }
