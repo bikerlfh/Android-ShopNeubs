@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="7dp"
-            android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/img_pedido_detalle"
             android:ellipsize="end"
             android:maxLines="2"
@@ -40,7 +39,8 @@
             android:paddingTop="@dimen/padding_top_lbl_nombre_producto_cardview_producto_detalle"
             android:text="TextView"
             android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/title_producto_card"
+            android:textSize="@dimen/title_producto_pedido_detalle"
+            android:textStyle="bold"
             tools:layout_editor_absoluteX="106dp"
             tools:layout_editor_absoluteY="13dp" />
 

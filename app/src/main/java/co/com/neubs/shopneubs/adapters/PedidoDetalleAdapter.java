@@ -79,7 +79,13 @@ public class PedidoDetalleAdapter extends RecyclerView.Adapter<PedidoDetalleAdap
             this.pedidoVentaPosicion = pedidoVentaPosicion;
             Producto producto = pedidoVentaPosicion.getProducto();
             txtNombreProducto.setText(producto.getNombre());
-            txtCantidad.setText(context.getString(R.string.title_num_products) + " ("+ String.valueOf(pedidoVentaPosicion.getCantidad())+")");
+            String cantidad = "";
+            if (pedidoVentaPosicion.getCantidad() > 1)
+                cantidad = String.valueOf(pedidoVentaPosicion.getCantidad()) + " " + context.getString(R.string.title_items_comprados);
+            else
+                cantidad = String.valueOf(pedidoVentaPosicion.getCantidad()) + " " + context.getString(R.string.title_item_comprado);
+
+            txtCantidad.setText(cantidad);
             txtCostoTotal.setText(Helper.MoneyFormat(pedidoVentaPosicion.getCostoTotal()));
             imagenView.setImageURL(producto.getImagen());
 

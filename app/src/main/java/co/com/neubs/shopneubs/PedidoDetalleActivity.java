@@ -69,7 +69,7 @@ public class PedidoDetalleActivity extends AppCompatActivity {
             lblEstado.setText(pedidoVenta.getEstado());
             lblFecha.setText(pedidoVenta.getFecha());
             lblCostoTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
-            lblNumeroProductos.setText(getString(R.string.title_num_products) + " (" + (String.valueOf(pedidoVenta.getNumeroProductos())) + ")");
+            lblNumeroProductos.setText(getString(R.string.title_total_items) + " " + (String.valueOf(pedidoVenta.getNumeroProductos())));
 
             APIRest.Async.get(pedidoVenta.getUrlDetalle(), new IServerCallback() {
                 @Override
@@ -100,7 +100,7 @@ public class PedidoDetalleActivity extends AppCompatActivity {
                     lblEstado.setText(pedidoVenta.getEstado());
                     lblFecha.setText(pedidoVenta.getFecha());
                     lblCostoTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
-                    lblNumeroProductos.setText(getString(R.string.title_num_products) + " (" + (String.valueOf(pedidoVenta.getNumeroProductos())) + ")");
+                    lblNumeroProductos.setText(getString(R.string.title_total_items) + " " + (String.valueOf(pedidoVenta.getNumeroProductos())));
 
                     final PedidoDetalleAdapter pedidoDetalleAdapter = new PedidoDetalleAdapter(PedidoDetalleActivity.this, pedidoVenta.getPedidoVentaPosicion());
                     recyclerView.setAdapter(pedidoDetalleAdapter);

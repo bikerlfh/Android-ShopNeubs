@@ -29,23 +29,8 @@
         android:paddingBottom="3dp">
 
         <TextView
-            android:id="@+id/lbl_fecha_pedido_detalle"
-            android:layout_width="109dp"
-            android:layout_height="35dp"
-            android:background="@color/colorWhite"
-            android:paddingBottom="@dimen/padding_bootom_lbl_pedido_detalle"
-            android:paddingEnd="@dimen/padding_end_start_lbl_pedido_detalle"
-            android:paddingTop="@dimen/padding_top_lbl_pedido_detalle"
-            android:text="@string/text_view_empy"
-            android:textAlignment="textEnd"
-            android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/fecha_pedido_detalle"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:id="@+id/textView4"
-            android:layout_width="65dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:background="@color/colorWhite"
             android:paddingBottom="@dimen/padding_bootom_lbl_pedido_detalle"
@@ -59,10 +44,11 @@
 
         <TextView
             android:id="@+id/lbl_estado_pedido_detalle"
-            android:layout_width="146dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:background="@color/colorWhite"
             android:paddingBottom="@dimen/padding_bootom_lbl_pedido_detalle"
+            android:paddingStart="2dp"
             android:paddingTop="@dimen/padding_top_lbl_pedido_detalle"
             android:text="@string/text_view_empy"
             android:textSize="@dimen/estado_pedido_detalle"
@@ -70,8 +56,37 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/lbl_fecha_pedido_detalle"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:background="@color/colorWhite"
+            android:paddingBottom="@dimen/padding_bootom_lbl_pedido_detalle"
+            android:paddingEnd="@dimen/padding_end_start_lbl_pedido_detalle"
+            android:paddingTop="@dimen/padding_top_lbl_pedido_detalle"
+            android:text="@string/text_view_empy"
+            android:textAlignment="textEnd"
+            android:textColor="@color/textColorSecundary"
+            android:textSize="@dimen/fecha_pedido_detalle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lbl_numero_productos_pedido_detalle"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:background="@color/colorWhite"
+            android:paddingBottom="@dimen/padding_bottom_lbl_costo_total_detalle_producto"
+            android:paddingStart="@dimen/padding_end_start_lbl_pedido_detalle"
+            android:paddingTop="@dimen/padding_top_lbl_numero_productos_pedido_detalle"
+            android:text="@string/title_total_items"
+            android:textColor="@color/textColorSecundary"
+            android:textSize="@dimen/numeros_producto_detalle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
             android:id="@+id/lbl_costo_total_pedido_detalle"
-            android:layout_width="132dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:background="@color/colorWhite"
             android:paddingBottom="@dimen/padding_bootom_lbl_pedido_detalle"
@@ -81,22 +96,9 @@
             android:textAlignment="textEnd"
             android:textColor="@color/colorPrecio"
             android:textSize="@dimen/costo_total_pedido_detalle"
+            android:textStyle="bold"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lbl_fecha_pedido_detalle" />
-
-        <TextView
-            android:id="@+id/lbl_numero_productos_pedido_detalle"
-            android:layout_width="188dp"
-            android:layout_height="35dp"
-            android:background="@color/colorWhite"
-            android:paddingBottom="@dimen/padding_bottom_lbl_costo_total_detalle_producto"
-            android:paddingStart="@dimen/padding_end_start_lbl_pedido_detalle"
-            android:paddingTop="@dimen/padding_top_lbl_numero_productos_pedido_detalle"
-            android:text="@string/title_num_products"
-            android:textColor="@color/textColorSecundary"
-            android:textSize="@dimen/numeros_producto_detalle"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     </android.support.constraint.ConstraintLayout>
 

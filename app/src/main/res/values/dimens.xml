@@ -28,12 +28,12 @@
     <dimen name="cantidad_shop_cart">16sp</dimen>
 
     <!-- Text Size cardView_pedido_detalle -->
-    <dimen name="title_producto_pedido_detalle">16sp</dimen>
-    <dimen name="cantidad_pedido_detalle">14sp</dimen>
+    <dimen name="title_producto_pedido_detalle">14sp</dimen>
+    <dimen name="cantidad_pedido_detalle">12sp</dimen>
     <dimen name="costo_total_pedido_detalle">14sp</dimen>
 
     <!-- TextSize cardView_pedido_detalle_small -->
-    <dimen name="title_producto_pedido_detalle_small">12sp</dimen>
+    <dimen name="title_producto_pedido_detalle_small">13sp</dimen>
     <dimen name="cantidad_pedido_detalle_small">12sp</dimen>
     <dimen name="costo_total_pedido_detalle_small">12sp</dimen>
 
@@ -57,11 +57,11 @@
     <dimen name="text_size_forgot_passwrod">14sp</dimen>
 
     <!-- Text Size activity_pedido_detalle-->
-    <dimen name="title_estado_pedido_detalle">16sp</dimen>
-    <dimen name="estado_pedido_detalle">16sp</dimen>
+    <dimen name="title_estado_pedido_detalle">14sp</dimen>
+    <dimen name="estado_pedido_detalle">14sp</dimen>
     <dimen name="numeros_producto_detalle">14sp</dimen>
     <dimen name="total_pedido_detalle">14sp</dimen>
-    <dimen name="fecha_pedido_detalle">16sp</dimen>
+    <dimen name="fecha_pedido_detalle">14sp</dimen>
 
     <!--Text Size Botones-->
     <dimen name="text_size_button">14sp</dimen>
