@@ -55,6 +55,7 @@
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
             android:paddingStart="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
+            android:paddingTop="2dp"
             android:text="TextView"
             android:textSize="@dimen/cantidad_pedido_detalle" />
 
