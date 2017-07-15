@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="7dp">
+        android:padding="5dp">
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
             android:id="@+id/img_pedido_detalle"
@@ -31,10 +31,10 @@
             android:maxLines="2"
             android:paddingEnd="@dimen/padding_end_lbl_nombre_producto_cardview_producto_detalle"
             android:paddingStart="@dimen/padding_start_lbl_nombre_producto_cardview_producto_detalle"
-            android:paddingTop="@dimen/padding_top_lbl_nombre_producto_cardview_producto_detalle"
+            android:paddingTop="8dp"
             android:text="TextView"
             android:textColor="@color/textColorSecundary"
-            android:textSize="14sp" />
+            android:textSize="@dimen/title_producto_pedido_detalle_small" />
 
         <TextView
             android:id="@+id/lbl_costo_total_pedido_detalle"
@@ -46,7 +46,7 @@
             android:paddingStart="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
             android:text="Total:"
             android:textColor="@color/colorPrecio"
-            android:textSize="@dimen/costo_total_pedido_detalle" />
+            android:textSize="@dimen/costo_total_pedido_detalle_small" />
 
         <TextView
             android:id="@+id/lbl_cantidad_pedido_detalle"
@@ -54,13 +54,12 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/lbl_nombre_producto_pedido_detalle"
             android:layout_below="@+id/lbl_nombre_producto_pedido_detalle"
-            android:layout_marginTop="5dp"
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
             android:paddingStart="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
-            android:paddingTop="2dp"
+            android:paddingTop="3dp"
             android:text="TextView"
-            android:textSize="@dimen/cantidad_pedido_detalle" />
+            android:textSize="@dimen/cantidad_pedido_detalle_small" />
 
     </RelativeLayout>
 

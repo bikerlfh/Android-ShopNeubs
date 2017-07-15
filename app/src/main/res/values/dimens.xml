@@ -32,6 +32,11 @@
     <dimen name="cantidad_pedido_detalle">14sp</dimen>
     <dimen name="costo_total_pedido_detalle">14sp</dimen>
 
+    <!-- TextSize cardView_pedido_detalle_small -->
+    <dimen name="title_producto_pedido_detalle_small">12sp</dimen>
+    <dimen name="cantidad_pedido_detalle_small">12sp</dimen>
+    <dimen name="costo_total_pedido_detalle_small">13sp</dimen>
+
     <!-- Text Size cardView pedido-->
     <dimen name="title_order_pedido">16sp</dimen>
     <dimen name="numero_pedido">16sp</dimen>
