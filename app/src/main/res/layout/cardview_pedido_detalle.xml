@@ -30,20 +30,6 @@
             android:layout_marginRight="167dp" />
 
         <TextView
-            android:id="@+id/lbl_cantidad_pedido_detalle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingEnd="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
-            android:paddingStart="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
-            android:text="TextView"
-            android:textSize="@dimen/cantidad_pedido_detalle"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toRightOf="@+id/img_pedido_detalle"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_nombre_producto_pedido_detalle" />
-
-        <TextView
             android:id="@+id/lbl_costo_total_pedido_detalle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,6 +47,20 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lbl_cantidad_pedido_detalle"
             app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/lbl_cantidad_pedido_detalle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
+            android:paddingStart="@dimen/padding_end_start_lbl_cantidad_cardview_producto_detalle"
+            android:text="TextView"
+            android:textSize="@dimen/cantidad_pedido_detalle"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/img_pedido_detalle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_nombre_producto_pedido_detalle" />
 
         <co.com.neubs.shopneubs.controls.ImageLoaderView
             android:id="@+id/img_pedido_detalle"
