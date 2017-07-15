@@ -25,15 +25,22 @@ public class PedidoDetalleAdapter extends RecyclerView.Adapter<PedidoDetalleAdap
 
     private ArrayList<PedidoVentaPosicion> listadoPedidoVentaPosicion;
     private Context context;
+    private int idResourceLayoutToInflate;
 
     public PedidoDetalleAdapter(Context context,ArrayList<PedidoVentaPosicion> listadoPedidoVentaPosicion) {
         this.listadoPedidoVentaPosicion = listadoPedidoVentaPosicion;
+        this.idResourceLayoutToInflate = R.layout.cardview_pedido_detalle;
+    }
+
+    public PedidoDetalleAdapter(Context context,ArrayList<PedidoVentaPosicion> listadoPedidoVentaPosicion,int idResourceLayoutToInflate) {
+        this.listadoPedidoVentaPosicion = listadoPedidoVentaPosicion;
+        this.idResourceLayoutToInflate = idResourceLayoutToInflate;
     }
 
     @Override
     public PedidoDetalleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // inflate layout CartView
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_pedido_detalle,null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(this.idResourceLayoutToInflate,null);
         return new PedidoDetalleViewHolder(view);
     }
 
