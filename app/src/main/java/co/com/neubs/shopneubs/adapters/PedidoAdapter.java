@@ -2,6 +2,7 @@ package co.com.neubs.shopneubs.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import co.com.neubs.shopneubs.PedidoDetalleActivity;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.APIRest;
 import co.com.neubs.shopneubs.classes.APIValidations;
+import co.com.neubs.shopneubs.classes.GridSpacingItemDecoration;
 import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.models.PedidoVenta;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
@@ -67,8 +69,11 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             lblNumeroProductos = (TextView)itemView.findViewById(R.id.lbl_numero_productos_pedido_detalle);
             recyclerViewDetalle = (RecyclerView) itemView.findViewById(R.id.recycle_view_detalle_producto);
 
-            recyclerViewDetalle.setHasFixedSize(true);
-            recyclerViewDetalle.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.VERTICAL,false));
+            recyclerViewDetalle.addItemDecoration(new GridSpacingItemDecoration(1, Helper.dpToPx(1,itemView.getContext()), true));
+            recyclerViewDetalle.setItemAnimator(new DefaultItemAnimator());
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.VERTICAL,false);
+            //recyclerViewDetalle.setHasFixedSize(true);
+            recyclerViewDetalle.setLayoutManager(mLayoutManager);
 
             context = itemView.getContext();
         }
@@ -88,7 +93,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
                     PedidoVenta pedidoVenta = APIRest.serializeObjectFromJson(json, PedidoVenta.class);
                     final PedidoDetalleAdapter pedidoDetalleAdapter = new PedidoDetalleAdapter(context, pedidoVenta.getPedidoVentaPosicion());
                     recyclerViewDetalle.setAdapter(pedidoDetalleAdapter);
-                    itemView.setClickable(false);
+                    //itemView.setClickable(false);
                 }
 
                 @Override
@@ -104,6 +109,15 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
                             v.getContext().startActivity(intent);
                         }
                     });
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(),PedidoDetalleActivity.class);
+                    intent.putExtra(PedidoDetalleActivity.PARAM_PEDIDO_VENTA,pedidoVenta);
+                    v.getContext().startActivity(intent);
                 }
             });
         }

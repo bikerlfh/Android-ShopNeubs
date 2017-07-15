@@ -77,10 +77,22 @@ public class ImageLoaderView extends LinearLayout
         imageView = new ImageView(context);
         LinearLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         imageView.setLayoutParams(params);
-        //imageView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
         // Se crea el progressBar con stylo progressBarStyleLarge
         progressBar = new ProgressBar(context,null,android.R.attr.progressBarStyleLarge);
+
+        initStyles(attrs);
+
+        progressBar.setVisibility(VISIBLE);
+        addView(imageView);
+        addView(progressBar);
+    }
+
+    /**
+     * Inicializa los stylos
+     * @param attrs attributeSet
+     */
+    private void initStyles(AttributeSet attrs){
         //Se obtienen los atributos del control
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageLoaderView);
 
@@ -94,10 +106,6 @@ public class ImageLoaderView extends LinearLayout
         finally {
             a.recycle();
         }
-        progressBar.setVisibility(VISIBLE);
-
-        addView(imageView);
-        addView(progressBar);
     }
 
     public ImageView getImageView()
