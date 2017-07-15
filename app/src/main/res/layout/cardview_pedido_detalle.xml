@@ -8,11 +8,12 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/lbl_nombre_producto_pedido_detalle"
-            android:layout_width="221dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -23,10 +24,10 @@
             android:text="TextView"
             android:textColor="@color/textColorSecundary"
             android:textSize="@dimen/title_producto_pedido_detalle"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toRightOf="@+id/img_pedido_detalle"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="167dp" />
 
         <TextView
             android:id="@+id/lbl_cantidad_pedido_detalle"
@@ -65,10 +66,17 @@
             android:id="@+id/img_pedido_detalle"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:layout_marginTop="@dimen/margin_top_img_producto_cardview_pedido_detalle"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="2dp"
             android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintRight_toLeftOf="@+id/lbl_nombre_producto_pedido_detalle"
+            android:layout_marginRight="8dp"
+            app:layout_constraintHorizontal_bias="0.0" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

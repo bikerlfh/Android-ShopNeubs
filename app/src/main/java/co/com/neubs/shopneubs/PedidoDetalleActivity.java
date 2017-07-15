@@ -46,7 +46,7 @@ public class PedidoDetalleActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        lblEstado= (TextView) findViewById(R.id.lbl_estado_pedido_detalle);
+        //lblEstado= (TextView) findViewById(R.id.lbl_estado_pedido_detalle);
         lblFecha = (TextView) findViewById(R.id.lbl_fecha_pedido_detalle);
         lblCostoTotal= (TextView) findViewById(R.id.lbl_costo_total_pedido_detalle);
         lblNumeroProductos = (TextView) findViewById(R.id.lbl_numero_productos_pedido_detalle);

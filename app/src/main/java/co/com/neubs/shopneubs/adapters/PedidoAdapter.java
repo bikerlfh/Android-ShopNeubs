@@ -57,7 +57,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             super(itemView);
 
             lblNumeroPedido = (TextView)itemView.findViewById(R.id.lbl_numero_pedido);
-            lblEstado = (TextView) itemView.findViewById(R.id.lbl_estado_pedido_detalle);
+            //lblEstado = (TextView) itemView.findViewById(R.id.lbl_estado_pedido_detalle);
             lblFecha = (TextView)itemView.findViewById(R.id.lbl_fecha_pedido_detalle);
             lblCostoTotal = (TextView)itemView.findViewById(R.id.lbl_costo_total);
             lblNumeroProductos = (TextView)itemView.findViewById(R.id.lbl_numero_productos_pedido_detalle);
@@ -67,7 +67,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         public void bindPedido(PedidoVenta pedidoVenta) {
             this.pedidoVenta = pedidoVenta;
             lblNumeroPedido.setText(String.valueOf(pedidoVenta.getNumeroPedido()));
-            lblEstado.setText(pedidoVenta.getEstado());
+            //lblEstado.setText(pedidoVenta.getEstado());
             lblFecha.setText(pedidoVenta.getFecha());
             lblNumeroProductos.setText(String.valueOf(pedidoVenta.getNumeroProductos()));
             lblCostoTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));

@@ -70,11 +70,11 @@
     <string name="title_garantia">Garantia</string>
     <string name="title_informacion_envio">Información de Envío</string>
     <string name="title_order">Pedido</string>
-    <string name="title_estado">Estado</string>
+    <string name="title_estado">Estado: </string>
     <string name="title_save">Guardar</string>
     <string name="title_pedido">Pedido N°</string>
     <string name="title_login">Iniciar sesión</string>
-    <string name="title_num_products">Cantidades</string>
+    <string name="title_num_products">Cantidades: </string>
     <string name="title_item_deleted">Producto eliminado</string>
     <string name="title_item_added">Tu producto ha sido agregado</string>
     <string name="title_resumen">Resumen</string>
