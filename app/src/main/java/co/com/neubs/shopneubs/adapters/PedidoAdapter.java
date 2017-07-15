@@ -48,15 +48,13 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         return listadoPedidoVenta.length;
     }
 
-    protected static class PedidoViewHolder extends RecyclerView.ViewHolder {// implements View.OnClickListener {
+    protected static class PedidoViewHolder extends RecyclerView.ViewHolder {//implements View.OnClickListener {
         private TextView lblNumeroPedido;
         private TextView lblFecha;
-        private TextView lblEstado;
+        //private TextView lblEstado;
         private TextView lblCostoTotal;
         private TextView lblNumeroProductos;
         private RecyclerView recyclerViewDetalle;
-
-        private PedidoVenta pedidoVenta;
 
         private Context context;
         public PedidoViewHolder(View itemView) {
@@ -75,15 +73,13 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             context = itemView.getContext();
         }
 
-        public void bindPedido(PedidoVenta pedidoVenta) {
-            this.pedidoVenta = pedidoVenta;
+        public void bindPedido(final PedidoVenta pedidoVenta) {
             lblNumeroPedido.setText(String.valueOf(pedidoVenta.getNumeroPedido()));
             //lblEstado.setText(pedidoVenta.getEstado());
             lblFecha.setText(pedidoVenta.getFecha());
             lblNumeroProductos.setText(String.valueOf(pedidoVenta.getNumeroProductos()));
             lblCostoTotal.setText(Helper.MoneyFormat(pedidoVenta.getValorTotal()));
 
-            //itemView.setOnClickListener(this);
 
             // Se consula el detalle del pedido
             APIRest.Async.get(pedidoVenta.getUrlDetalle(), new IServerCallback() {
@@ -92,15 +88,22 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
                     PedidoVenta pedidoVenta = APIRest.serializeObjectFromJson(json, PedidoVenta.class);
                     final PedidoDetalleAdapter pedidoDetalleAdapter = new PedidoDetalleAdapter(context, pedidoVenta.getPedidoVentaPosicion());
                     recyclerViewDetalle.setAdapter(pedidoDetalleAdapter);
+                    itemView.setClickable(false);
                 }
 
                 @Override
                 public void onError(String message_error, APIValidations apiValidations) {
-                    if (apiValidations != null) {
-                        Toast.makeText(context, apiValidations.getDetail(), Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(context, context.getString(R.string.error_connection_server), Toast.LENGTH_LONG).show();
-                    }
+                    itemView.setClickable(true);
+                    // Si ocurre algun error se habilita el evento click del pedido
+                    // para que abra el detalle del pedido
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(v.getContext(),PedidoDetalleActivity.class);
+                            intent.putExtra(PedidoDetalleActivity.PARAM_PEDIDO_VENTA,pedidoVenta);
+                            v.getContext().startActivity(intent);
+                        }
+                    });
                 }
             });
         }
