@@ -43,6 +43,8 @@ public class IndexFragment extends Fragment {
     List<APISection> listAPISections;
     SectionAdapter sectionAdapter;
 
+    List<APIBanner> listadoApiBanner;
+
     private boolean showBanner = false;
 
     public IndexFragment() {
@@ -86,8 +88,8 @@ public class IndexFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            // Se cargan los banner
-            cargarAPIBanner();
+            // Se consultan todos los banner activos
+            listadoApiBanner = new APIBanner().getAll(true);
             // Se consultan las secciones activas
             listAPISections =new APISection().getAll(true);
 
@@ -104,38 +106,16 @@ public class IndexFragment extends Fragment {
                 mRecyclerViewSection.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 mRecyclerViewSection.setAdapter(sectionAdapter);
             }
-            if (showBanner) {
-                // Se visualiza el viewPagerBanner
-                mViewPagerBanner.setVisibility(View.VISIBLE);
+            // si hay banners
+            if (listadoApiBanner != null  && listadoApiBanner.size() > 0) {
+                showBanner();
             }
             else
                 mViewPagerBanner.setVisibility(View.GONE);
         }
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Se reinicializa el autoScroll
-        mViewPagerBanner.reinitializeAutoScroll();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        // Se reinicializa pausa
-        mViewPagerBanner.stopAutoScroll();
-    }
-
-
-    /**
-     * Carga los ApiBanner
-     */
-    private void cargarAPIBanner(){
-        // Se consultan todos los banner activos
-        final List<APIBanner> listadoApiBanner = new APIBanner().getAll(true);
-
+    private void showBanner(){
         if (listadoApiBanner.size() > 0) {
             // Se sacan las imagenes de los banners
             final ArrayList<String> images = new ArrayList<>();
@@ -168,9 +148,26 @@ public class IndexFragment extends Fragment {
                     }
                 }
             });
-            showBanner = true;
         }
+        // Se visualiza el viewPagerBanner
+        mViewPagerBanner.setVisibility(View.VISIBLE);
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Se reinicializa el autoScroll
+        mViewPagerBanner.reinitializeAutoScroll();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Se reinicializa pausa
+        mViewPagerBanner.stopAutoScroll();
+    }
+
 
     /**
      * Shows the progress UI and hides the main view
@@ -180,7 +177,7 @@ public class IndexFragment extends Fragment {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2 && getActivity() != null) {
+        if (getActivity() != null) {
             int shortAnimTime = getActivity().getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
@@ -206,6 +203,5 @@ public class IndexFragment extends Fragment {
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mMainView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
-
     }
 }
