@@ -393,6 +393,10 @@ public class VistaFiltroPrincipal extends RelativeLayout {
      */
     public void setFiltroAplicado(boolean filtroAplicado) {
         this.filtroAplicado = filtroAplicado;
+        // Si no hay filtro aplicado,
+        // se deseleccionan los filtros aplicados
+        if (!filtroAplicado)
+            navigationViewFiltro.cleanFormatContainerFilter();
     }
 
     /**
