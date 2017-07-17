@@ -29,6 +29,7 @@ import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.classes.SessionManager;
 import co.com.neubs.shopneubs.classes.models.Imagen;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
+import co.com.neubs.shopneubs.classes.models.Marca;
 import co.com.neubs.shopneubs.classes.models.Producto;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 import co.com.neubs.shopneubs.controls.IconNotificationBadge;
@@ -176,7 +177,10 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                     if (saldoInventario != null) {
                         final Producto producto = saldoInventario.getProducto();
 
-                        mMarcaProducto.setText(producto.getMarca().getDescripcion());
+                        final Marca marca = producto.getMarca();
+                        // Se visualiza la marca siempre y cuando no sea 36 - Sin Marca
+                        if (marca != null)
+                            mMarcaProducto.setText(!marca.getCodigo().equals("36") ? marca.getDescripcion() : "");
 
                         mDescripcionProducto.setText(producto.getDescripcion());
                         mEspecificacionProducto.setText(producto.getEspecificacion());
