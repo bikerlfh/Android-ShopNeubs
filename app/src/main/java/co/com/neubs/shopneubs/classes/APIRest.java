@@ -60,6 +60,8 @@ public class APIRest {
     public final static String URL_SOLICITUD_PEDIDO = "ventas/solicitud/";
     public final static String URL_PRODUCTO_SIMPLE = "producto-simple/";
 
+    public final static String URL_RESET_PASSWORD = "https://www.shopneubs.com/accounts/password/reset/";
+
 
     /**
      * tiempo de espera maximo por petición
@@ -353,7 +355,7 @@ public class APIRest {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            APIValidations apiValidations = null;
+                            APIValidations apiValidations;
                             if (error.networkResponse != null) {
                                 RESPONSE_CODE = error.networkResponse.statusCode;
                                 // Si no fue un error de no found o un server error
