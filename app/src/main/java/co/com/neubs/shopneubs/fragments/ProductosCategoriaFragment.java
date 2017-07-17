@@ -145,9 +145,7 @@ public class ProductosCategoriaFragment extends Fragment implements PrincipalAct
             consultarPeticionAPI(urlRequest, parametrosRequest);
             vistaFiltroPrincipal.setFiltroAplicado(false);
         }
-        else{
-            ((PrincipalActivity)getActivity()).setOnBackPressedListener(null);
+        else
             getActivity().onBackPressed();
-        }
     }
 }

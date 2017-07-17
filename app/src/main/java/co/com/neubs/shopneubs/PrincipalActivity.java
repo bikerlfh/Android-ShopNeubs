@@ -230,6 +230,7 @@ public class PrincipalActivity extends AppCompatActivity {
         else{
             // se invoca el método doBack del fragment
             onBackPressedListener.doBack();
+            onBackPressedListener = null;
         }
     }
 
@@ -266,84 +267,6 @@ public class PrincipalActivity extends AppCompatActivity {
         }
         return true;
     }
-
-    /*
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        Fragment fragment;
-        String codigoCategoriaAnterior = codigoCategoria;
-        switch (item.getItemId()){
-            case R.id.nav_board:
-                codigoCategoria = "01";
-                break;
-            case R.id.nav_caja_atx:
-                codigoCategoria = "02";
-                break;
-            case R.id.nav_consolas:
-                codigoCategoria = "16";
-                break;
-            case R.id.nav_dd:
-                codigoCategoria = "04";
-                break;
-            case R.id.nav_electronica:
-                codigoCategoria = "17";
-                break;
-            case R.id.nav_fuentes:
-                codigoCategoria = "05";
-                break;
-            case R.id.nav_impresoras:
-                codigoCategoria = "06";
-                break;
-            case R.id.nav_memorias_ram:
-                codigoCategoria = "09";
-                break;
-            case R.id.nav_monitores:
-                codigoCategoria = "10";
-                break;
-            case R.id.nav_pcs:
-                codigoCategoria = "03";
-                break;
-            case R.id.nav_perifericos:
-                codigoCategoria = "15";
-                break;
-            case R.id.nav_portatiles:
-                codigoCategoria = "11";
-                break;
-            case R.id.nav_procesadores:
-                codigoCategoria = "12";
-                break;
-            case R.id.nav_refrigeracion:
-                codigoCategoria = "13";
-                break;
-            case R.id.nav_tabletas:
-                codigoCategoria = "18";
-                break;
-            case R.id.nav_tarjetas_video:
-                codigoCategoria = "14";
-                break;
-            case R.id.nav_my_account:
-                Intent intent = new Intent(this,AccountActivity.class);
-                startActivity(intent);
-                break;
-
-        }
-        // Se valida que la categoria seleccionada no sea la que se esta visualizando
-        if (codigoCategoria != null && !codigoCategoria.equals(codigoCategoriaAnterior)) {
-            // Se crea el argumento CODIGO_CATEGORIA para pasarle al fragment
-            Bundle args = new Bundle();
-            args.putString(ProductosCategoriaFragment.PARAM_CODIGO_CATEGORIA, codigoCategoria);
-
-            fragment = new ProductosCategoriaFragment();
-            fragment.setArguments(args);
-            openFragment(fragment);
-            item.setChecked(true);
-        }
-        // se cierran los drawers
-        drawer.closeDrawers();
-        return true;
-    }*/
 
     /**
      * Reemplaza un fragment en el contenedor
