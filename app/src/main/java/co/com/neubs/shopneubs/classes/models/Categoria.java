@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.com.neubs.shopneubs.classes.DbManager;
-import co.com.neubs.shopneubs.classes.Helper;
 import co.com.neubs.shopneubs.interfaces.ICrud;
 import co.com.neubs.shopneubs.models.CategoriaModel;
 

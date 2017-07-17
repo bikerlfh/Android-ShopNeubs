@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -30,7 +29,6 @@ import java.util.List;
 import java.util.Timer;
 
 import co.com.neubs.shopneubs.R;
-import co.com.neubs.shopneubs.fragments.IndexFragment;
 
 /**
  * Created by bikerlfh on 6/27/17.
