@@ -38,12 +38,9 @@ public class PerfilActivity extends AppCompatActivity {
     private EditText txtNit,txtPrimerNombre,txtSegundoNombre,txtPrimerApellido,txtSegundoApellido,txtDireccion,txtTelefono;
     private Button btnGuardar;
 
-
     private List<TipoDocumento> listadoTipoDocumento;
     private List<Pais> listadoPais;
     private Perfil perfil;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

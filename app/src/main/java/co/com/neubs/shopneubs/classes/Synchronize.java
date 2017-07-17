@@ -30,6 +30,9 @@ public class Synchronize {
     private final String URL_SECTION = "sync/section/";
 
 
+    private final String PARAM_ID_PAIS = "idPais";
+    private final String PARAM_ID_DEPARTAMENTO = "idDepartamento";
+
     public String message_error;
 
 
@@ -206,7 +209,7 @@ public class Synchronize {
      */
     public int SynchronizeDepartamento(int idPais){
         int numSincronizacion = 0;
-        String url = idPais > 0? URL_DEPARTAMENTO.concat("?idPais"+String.valueOf(idPais)):URL_DEPARTAMENTO;
+        String url = idPais > 0? URL_DEPARTAMENTO.concat("?" + PARAM_ID_PAIS + "="+String.valueOf(idPais)):URL_DEPARTAMENTO;
         final String response = APIRest.Sync.get(url);
         if (response != null && APIRest.Sync.ok()) {
             final Departamento[] listDepartamento = APIRest.serializeObjectFromJson(response, Departamento[].class);
@@ -234,7 +237,7 @@ public class Synchronize {
      */
     public int SynchronizeMunicipio(int idDepartamento){
         int numSincronizacion = 0;
-        String url = idDepartamento > 0? URL_MUNICIPIO.concat("?idPais"+String.valueOf(idDepartamento)):URL_MUNICIPIO;
+        String url = idDepartamento > 0? URL_MUNICIPIO.concat("?" + PARAM_ID_DEPARTAMENTO + "="+String.valueOf(idDepartamento)):URL_MUNICIPIO;
         final String response = APIRest.Sync.get(url);
         if (response != null && APIRest.Sync.ok()) {
             final Municipio[] listMunicipio = APIRest.serializeObjectFromJson(response, Municipio[].class);
