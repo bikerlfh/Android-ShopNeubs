@@ -150,7 +150,7 @@ public class DbManager
     public class DbHelper extends SQLiteOpenHelper {
 
         public static final String DB_NAME = "shopneubs.sqlite";
-        private static final int DB_SCHEMA_VERSION = 1;
+        private static final int DB_SCHEMA_VERSION = 2;
 
         public DbHelper(Context context) {
             super(context, DB_NAME, null, DB_SCHEMA_VERSION);
@@ -178,7 +178,11 @@ public class DbManager
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             if (oldVersion < newVersion){
-
+                // Para la versión 2 se eliminan los datos de Departamento y Municipio
+                if (oldVersion < 2) {
+                    db.execSQL("DELETE FROM " + MunicipioModel.NAME_TABLE);
+                    db.execSQL("DELETE FROM " + DepartamentoModel.NAME_TABLE);
+                }
             }
         }
     }
