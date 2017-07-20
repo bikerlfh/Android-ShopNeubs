@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "90493669510",
+    "firebase_url": "https://shopneubs-3703e.firebaseio.com",
+    "project_id": "shopneubs-3703e",
+    "storage_bucket": "shopneubs-3703e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90493669510:android:e50501a89392d072",
+        "android_client_info": {
+          "package_name": "co.com.neubs.shopneubs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90493669510-512uki3nf3qiuj5cp73kpba4s89a9rqr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.com.neubs.shopneubs",
+            "certificate_hash": "09d929f3dcdbf397552f09fde2ac20660976e062"
+          }
+        },
+        {
+          "client_id": "90493669510-327h43b88g0lomcd938abeac85q4oks3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnQYUnr00SRWImVJV5qJjzq-Bv-a_4FgQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90493669510-327h43b88g0lomcd938abeac85q4oks3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,6 +12,7 @@ import co.com.neubs.shopneubs.models.APISincronizacionModel;
 import co.com.neubs.shopneubs.models.APITablaModel;
 import co.com.neubs.shopneubs.models.CategoriaModel;
 import co.com.neubs.shopneubs.models.DepartamentoModel;
+import co.com.neubs.shopneubs.models.FireBaseTokenModel;
 import co.com.neubs.shopneubs.models.ItemCarModel;
 import co.com.neubs.shopneubs.models.MarcaModel;
 import co.com.neubs.shopneubs.models.MunicipioModel;
@@ -150,7 +151,7 @@ public class DbManager
     public class DbHelper extends SQLiteOpenHelper {
 
         public static final String DB_NAME = "shopneubs.sqlite";
-        private static final int DB_SCHEMA_VERSION = 2;
+        private static final int DB_SCHEMA_VERSION = 3;
 
         public DbHelper(Context context) {
             super(context, DB_NAME, null, DB_SCHEMA_VERSION);
@@ -173,6 +174,7 @@ public class DbManager
             db.execSQL(SugerenciaBusquedaModel.CREATE_TABLE);
             db.execSQL(APIBannerModel.CREATE_TABLE);
             db.execSQL(APISectionModel.CREATE_TABLE);
+            db.execSQL(FireBaseTokenModel.CREATE_TABLE);
         }
 
         @Override
@@ -182,6 +184,10 @@ public class DbManager
                 if (oldVersion < 2) {
                     db.execSQL("DELETE FROM " + MunicipioModel.NAME_TABLE);
                     db.execSQL("DELETE FROM " + DepartamentoModel.NAME_TABLE);
+                }
+                // Para la versión 3 se agrega la tabla TokenModel
+                if (oldVersion < 3){
+                    db.execSQL(FireBaseTokenModel.CREATE_TABLE);
                 }
             }
         }

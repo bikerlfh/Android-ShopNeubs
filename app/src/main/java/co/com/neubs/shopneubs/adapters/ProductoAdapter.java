@@ -77,7 +77,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
 
     @Override
     public int getItemCount() {
-        return listado_saldo_inventario.size();
+        return listado_saldo_inventario!=null? listado_saldo_inventario.size() : 0;
     }
 
     private void addItems(int position,ArrayList<SaldoInventario> listadoSaldoInventario){

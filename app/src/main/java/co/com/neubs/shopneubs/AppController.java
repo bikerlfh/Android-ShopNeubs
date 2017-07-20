@@ -27,10 +27,6 @@ public class AppController extends Application {
         super.onCreate();
         mInstance = this;
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
-        final boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isfirstrun", true);
-        if (isFirstRun)
-            addShortcut();
     }
 
     public static synchronized AppController getInstance() {
@@ -65,35 +61,5 @@ public class AppController extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
-    }
-
-    private void addShortcut() {
-        //Creamos el Intent y apuntamos a nuestra classe principal
-        //al hacer click al acceso directo
-        //En este caso de ejemplo se llama "Principal"
-        Intent shortcutIntent = new Intent(getApplicationContext(), SplashActivity.class);
-        //Añadimos accion
-        shortcutIntent.setAction(Intent.ACTION_MAIN);
-        //Recogemos el texto des de nuestros Values
-        CharSequence contentTitle = getString(R.string.app_name);
-        //Creamos intent para crear acceso directo
-        Intent addIntent = new Intent();
-        //Añadimos los Extras necesarios como nombre del icono y icono
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, contentTitle.toString());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher_round));
-        }
-        else{
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher));
-        }
-        //IMPORTATE: si el icono ya esta creado que no cree otro
-        addIntent.putExtra("duplicate", false);
-        //Llamamos a la acción
-        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        //Enviamos petición
-        getApplicationContext().sendBroadcast(addIntent);
     }
 }

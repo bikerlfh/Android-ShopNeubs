@@ -15,6 +15,7 @@ import java.util.Map;
 
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
+import co.com.neubs.shopneubs.classes.models.FireBaseToken;
 import co.com.neubs.shopneubs.classes.models.ItemCar;
 import co.com.neubs.shopneubs.classes.models.SaldoInventario;
 import co.com.neubs.shopneubs.classes.models.SugerenciaBusqueda;
@@ -32,6 +33,8 @@ public class SessionManager {
     private String username;
     private String email;
     private String token;
+    // token del FireBase Cloud Messages
+    private String FCMToken;
     /**
      * Listado de sugerencias para la busqueda
      */
@@ -50,6 +53,11 @@ public class SessionManager {
         cargarShopCar();
         if (usuario.getLoginUser())
             llenarCampos(usuario);
+        // Se obtiene el FireBaseToken
+        FireBaseToken fireBaseToken = new FireBaseToken();
+        if(fireBaseToken.exists()){
+            FCMToken = fireBaseToken.getToken();
+        }
     }
 
     /**
@@ -118,20 +126,6 @@ public class SessionManager {
         return shopCar;
     }
 
-    /***
-     * obtiene la canitdad de items que hay en el carro
-     */
-    public int getCountItemsShopCar(){
-        int countItems = 0;
-        if (shopCar != null){
-            for (ItemCar item:shopCar) {
-                countItems += item.getCantidad();
-            }
-        }
-
-        return countItems;
-    }
-
     /**
      * Valida si el usuario está autenticado
      * en caso que el atributo no exista, se consulta en la db si existe un usuario con el token asignado
@@ -139,6 +133,35 @@ public class SessionManager {
      */
     public boolean isAuthenticated(){
         return (token != null && !token.isEmpty());
+    }
+
+    /**
+     * Registra el token del Firebase Cloud Messages
+     */
+    public void registerFCMToken(String FCMToken){
+        this.FCMToken = FCMToken;
+        String url  = APIRest.URL_FCM;
+        Map<String,String> params = new HashMap<>();
+        params.put("registration_id",FCMToken);
+        params.put("type","android");
+        params.put("active","1");
+        // si existe un usuario autenticado, se envía.
+        if (isAuthenticated()){
+            //url = APIRest.URL_FCM_AUTH;
+            params.put("user",String.valueOf(getIdUsuario()));
+        }
+
+        APIRest.Async.post(url, params, new IServerCallback() {
+            @Override
+            public void onSuccess(String json) {
+                Log.d(TAG,"FCM Token registrado");
+            }
+
+            @Override
+            public void onError(String message_error, APIValidations apiValidations) {
+                Log.d(TAG,"Error al registrar el FCM Token");
+            }
+        });
     }
 
     /**
@@ -156,6 +179,10 @@ public class SessionManager {
             usuario.update();
 
             llenarCampos(usuario);
+
+            if(FCMToken != null && FCMToken.length() > 0){
+                registerFCMToken(FCMToken);
+            }
             return true;
         }
         return false;
@@ -291,7 +318,19 @@ public class SessionManager {
         }
         return false;
     }
+    /***
+     * obtiene la canitdad de items que hay en el carro
+     */
+    public int getCountItemsShopCar(){
+        int countItems = 0;
+        if (shopCar != null){
+            for (ItemCar item:shopCar) {
+                countItems += item.getCantidad();
+            }
+        }
 
+        return countItems;
+    }
     /**
      * Agrega un ItemCar al carrito
      * @param itemCar itemCar a agregar
