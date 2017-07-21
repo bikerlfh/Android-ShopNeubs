@@ -153,7 +153,7 @@ public class APIBanner implements ICrud {
      */
     public List<APIBanner> getAll(boolean estado){
         List<APIBanner> listadoApiBanner = new ArrayList<>();
-        Cursor c = dbManager.Select(APIBannerModel.NAME_TABLE,new String[] {"*"},APIBannerModel.ESTADO + "=?",new String[] {String.valueOf(estado?1:0)});
+        Cursor c = dbManager.Select(APIBannerModel.NAME_TABLE,new String[] {"*"},APIBannerModel.ESTADO + "=?",new String[] {String.valueOf(estado?1:0)}, APIBannerModel.FERCHA + " desc");
         if (c.moveToFirst()){
             do{
                 APIBanner apiBanner = new APIBanner();

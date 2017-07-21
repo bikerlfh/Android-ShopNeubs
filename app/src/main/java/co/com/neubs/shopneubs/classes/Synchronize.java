@@ -1,5 +1,7 @@
 package co.com.neubs.shopneubs.classes;
 
+import java.util.List;
+
 import co.com.neubs.shopneubs.classes.models.APIBanner;
 import co.com.neubs.shopneubs.classes.models.APISection;
 import co.com.neubs.shopneubs.classes.models.APISincronizacion;
@@ -313,6 +315,10 @@ public class Synchronize {
         int numSincronizacion = 0;
         final String response = APIRest.Sync.get(URL_BANNER);
         if (response != null && APIRest.Sync.ok()) {
+            // Se consultan todos los banner que estan guardados en la db
+            List<APIBanner> listApiBannerEliminar = new APIBanner().getAll();
+
+            // se obtienen los banners de la API
             final APIBanner[] listApiBanner = APIRest.serializeObjectFromJson(response, APIBanner[].class);
             if (listApiBanner != null && listApiBanner.length > 0) {
                 for (APIBanner banner : listApiBanner) {
@@ -329,12 +335,39 @@ public class Synchronize {
                         banner.delete();
                         numSincronizacion++;
                     }
+                    // se quita el banner del listado de banners a eliminar
+                    deleteAPIBannerToList(listApiBannerEliminar,banner.getIdApiBanner());
+                }
+            }
+            // Se eliminan los banner que no devuelto la API (se eliminarón)
+            if(listApiBannerEliminar.size() > 0){
+                for (APIBanner banner:listApiBannerEliminar) {
+                    banner.delete();
                 }
             }
         }
         else
             numSincronizacion = -1;
         return numSincronizacion;
+    }
+
+    /**
+     * Elimina de un listado APIBanner segun su id
+     * @param listApiBanner listadoApiBanner
+     * @param idApiBanner a buscar
+     * @return index
+     */
+    private void deleteAPIBannerToList(List<APIBanner> listApiBanner,int idApiBanner){
+        int index = -1;
+        for (APIBanner banner: listApiBanner) {
+            if(banner.getIdApiBanner() == idApiBanner){
+                index = listApiBanner.indexOf(banner);
+                break;
+            }
+        }
+        if (index>=0){
+            listApiBanner.remove(index);
+        }
     }
 
     /**
