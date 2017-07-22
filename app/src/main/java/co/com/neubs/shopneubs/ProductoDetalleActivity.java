@@ -137,14 +137,18 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         });
 
         Intent intentExtra = getIntent();
+        Toast.makeText(this,intentExtra.getAction(),Toast.LENGTH_LONG).show();
         if (intentExtra.getExtras().isEmpty())
             finish();
 
-        final int idSaldoInventario = intentExtra.getExtras().getInt(PARAM_ID_SALDO_INVENTARIO,0);
-        final String nomProducto = intentExtra.getExtras().getString(PARAM_NOMBRE_PRODUCTO,"");
-        final float precioOferta = intentExtra.getExtras().getFloat(PARAM_PRECIO_OFERTA,0);
-        final float precioVentaUnitario = intentExtra.getExtras().getFloat(PARAM_PRECIO_VENTA_UNITARIO,0);
-        final boolean estado = intentExtra.getExtras().getBoolean(PARAM_ESTADO,true);
+        int idSaldoInventario = intentExtra.getIntExtra(PARAM_ID_SALDO_INVENTARIO,0);
+        if (idSaldoInventario == 0 && intentExtra.getStringExtra(PARAM_ID_SALDO_INVENTARIO).length() >0){
+            idSaldoInventario = Integer.valueOf(intentExtra.getStringExtra(PARAM_ID_SALDO_INVENTARIO));
+        }
+        final String nomProducto = intentExtra.getStringExtra(PARAM_NOMBRE_PRODUCTO);
+        final float precioOferta = intentExtra.getFloatExtra(PARAM_PRECIO_OFERTA,0);
+        final float precioVentaUnitario = intentExtra.getFloatExtra(PARAM_PRECIO_VENTA_UNITARIO,0);
+        final boolean estado = intentExtra.getBooleanExtra(PARAM_ESTADO,true);
 
         // Se asignan los precios
         setPrecio(precioVentaUnitario,precioOferta);
@@ -218,8 +222,10 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                     showLoadingView(false);
                     if (apiValidations.notFound()) {
                         Toast.makeText(ProductoDetalleActivity.this, getString(R.string.error_default), Toast.LENGTH_SHORT).show();
+
                     } else
                         Toast.makeText(ProductoDetalleActivity.this, message_error, Toast.LENGTH_SHORT).show();
+                    onSupportNavigateUp();
                 }
             });
         }

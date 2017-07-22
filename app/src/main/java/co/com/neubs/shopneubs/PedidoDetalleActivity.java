@@ -88,7 +88,7 @@ public class PedidoDetalleActivity extends AppCompatActivity {
             });
         }
         else if(intentExtra.getExtras().containsKey(PARAM_ID_PEDIDO_VENTA)){
-            final String url = APIRest.URL_PEDIDO_DETALLE + String.valueOf((int)intentExtra.getExtras().get(PARAM_ID_PEDIDO_VENTA)) + "/";
+            final String url = APIRest.URL_PEDIDO_DETALLE + String.valueOf(intentExtra.getExtras().get(PARAM_ID_PEDIDO_VENTA)) + "/";
             APIRest.Async.get(url, new IServerCallback() {
                 @Override
                 public void onSuccess(String json) {
