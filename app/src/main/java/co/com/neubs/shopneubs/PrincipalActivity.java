@@ -40,6 +40,8 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public static final String TAG_FRAGMENT = "FRAGMENT";
 
+    public static final String ACTION_INTENT = "VISUALIZAR_LISTADO_PRODUCTOS";
+
     private String codigoCategoria = null;
     private TextView lblHeaderUsuario;
     private DrawerLayout drawer;
@@ -89,8 +91,24 @@ public class PrincipalActivity extends AppCompatActivity {
         // se inicializa la funcionalidad del SearchView
         initSearchView();
 
-        // Se inicializa con el fragment Index
-        openFragment(new IndexFragment());
+        /**
+         * Se valida si se debe abrir un listado de productos
+         * si se abre desde una notificacion push
+         */
+        if(getIntent().getAction() != null &&
+                getIntent().getAction().equals(ACTION_INTENT) &&
+                getIntent().getExtras().containsKey(ProductosCategoriaFragment.PARAM_URL_REQUEST)) {
+            Bundle args = new Bundle();
+            args.putString(ProductosCategoriaFragment.PARAM_URL_REQUEST, String.valueOf(getIntent().getExtras().get(ProductosCategoriaFragment.PARAM_URL_REQUEST)));
+
+            Fragment fragment = new ProductosCategoriaFragment();
+            fragment.setArguments(args);
+            openFragment(fragment);
+        }
+        else {
+            // Se inicializa con el fragment Index
+            openFragment(new IndexFragment());
+        }
     }
 
     /**
@@ -173,9 +191,7 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query != null && query.length() > 0) {
-                    Intent intent = new Intent(PrincipalActivity.this, BusquedaActivity.class);
-                    intent.putExtra(BusquedaActivity.PARAM_QUERY, query);
-                    startActivity(intent);
+                    abrirBusqueda(query);
                 }
                 return false;
             }
@@ -191,7 +207,16 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     /**
-     * Cambia los textos del header que esta en el navigationView
+     * Abre la actividad Busqueda pasando como parámetro el query a buscar
+     * @param query query a buscar
+     */
+    private void abrirBusqueda(String query){
+        Intent intent = new Intent(PrincipalActivity.this, BusquedaActivity.class);
+        intent.putExtra(BusquedaActivity.PARAM_QUERY, query);
+        startActivity(intent);
+    }
+    /**
+     * Cambia el texto del header que esta en el navigationView
      * @param isActiva
      */
     private void setTextHeaderNavigationView(boolean isActiva) {

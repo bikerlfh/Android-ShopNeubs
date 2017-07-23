@@ -158,6 +158,7 @@ public class SplashActivity extends Activity {
             isRunning = false;
             if(result) {
                 Intent intent = new Intent(SplashActivity.this,PrincipalActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 // Se sincronizan los precios del carro
                 if (sessionManager.getShopCar().size() > 0){

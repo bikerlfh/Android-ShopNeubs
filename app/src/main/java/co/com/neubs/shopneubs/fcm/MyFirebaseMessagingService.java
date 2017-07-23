@@ -49,17 +49,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSound);
 
         if (remoteMessage.getData().size() > 0) {
-            Intent intent = new Intent();
+            Intent intent = null;
             // OJO.. Siempre se debe enviar el click_action
-            intent.setAction(remoteMessage.getNotification().getClickAction());
-            //  Se agregan los datos como extras al intent
-            for (Map.Entry<String,String> entry : remoteMessage.getData().entrySet()){
-                intent.putExtra(entry.getKey(),entry.getValue());
-            }
+            //intent.setAction(remoteMessage.getNotification().getClickAction());
 
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-            notificationBuilder.setContentIntent(pendingIntent);
+            /**
+             * NO SE ENVÍA LA ACCIÓN PARA INDICARLE A LA ACTIVIDIAD QUE NO FUE LLAMADA
+             * CUANDO LA APLICACIÓN ESTABA EN SEGUNDO PLANO
+             */
+            String clickAction = remoteMessage.getNotification().getClickAction();
+            if(clickAction != null && !clickAction.isEmpty()){
+                switch (clickAction){
+                    case ProductoDetalleActivity.ACTION_INTENT:
+                        intent = new Intent(this,ProductoDetalleActivity.class);
+                        break;
+                    case PedidoDetalleActivity.ACTION_INTENT:
+                        intent = new Intent(this,PedidoDetalleActivity.class);
+                        break;
+                }
+            }
+            if(intent != null) {
+                //  Se agregan los datos como extras al intent
+                for (Map.Entry<String, String> entry : remoteMessage.getData().entrySet()) {
+                    intent.putExtra(entry.getKey(), entry.getValue());
+                }
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                notificationBuilder.setContentIntent(pendingIntent);
+            }
         }
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0,notificationBuilder.build());

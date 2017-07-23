@@ -20,6 +20,9 @@ import co.com.neubs.shopneubs.classes.models.PedidoVenta;
 import co.com.neubs.shopneubs.interfaces.IServerCallback;
 
 public class PedidoDetalleActivity extends AppCompatActivity {
+    // Action que realiza esta actividad (ver en Manifiesto)
+    public final static String ACTION_INTENT = "VISUALIZAR_PEDIDO_VENTA";
+
 
     public static final String PARAM_PEDIDO_VENTA = "pedidoVenta";
     public static final String PARAM_ID_PEDIDO_VENTA = "idPedidoVenta";
@@ -122,6 +125,26 @@ public class PedidoDetalleActivity extends AppCompatActivity {
             finishAfterTransition();
         else
             finish();
+        validarIntentAction();
         return true;
+    }
+    @Override
+    public void onBackPressed() {
+        validarIntentAction();
+        super.onBackPressed();
+    }
+
+    /**
+     * Método utilizado para validar si es necesario reiniciar la aplicación
+     * cuando cierra la actividad, debido a que es llamada desde una NotificaciónPush generada por la API
+     * y es recibida en segundo plano. Cuando se recibe en primer plano no es necesario reinicar la aplicación ya que
+     * la PrincipalActivity ya está cargada. Ademas el servicio de FCM no crea el intent asociando la acción
+     */
+    private void validarIntentAction(){
+        if(getIntent().getAction() != null && getIntent().getAction().equals(ACTION_INTENT)){
+            Intent intent = new Intent(this,SplashActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 }

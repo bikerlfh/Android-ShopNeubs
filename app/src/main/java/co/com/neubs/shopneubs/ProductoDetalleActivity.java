@@ -40,6 +40,9 @@ import static android.view.Gravity.CENTER;
 
 public class ProductoDetalleActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // Action que realiza esta actividad (ver en Manifiesto)
+    public final static String ACTION_INTENT = "VISUALIZAR_PRODUCTO_DETALLE";
+
     public final static String PARAM_ID_SALDO_INVENTARIO = "idSaldoInventario";
     public final static String PARAM_NOMBRE_PRODUCTO = "nombreProducto";
     public final static String PARAM_PRECIO_OFERTA = "precioOferta";
@@ -137,13 +140,12 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         });
 
         Intent intentExtra = getIntent();
-        Toast.makeText(this,intentExtra.getAction(),Toast.LENGTH_LONG).show();
         if (intentExtra.getExtras().isEmpty())
             finish();
 
-        int idSaldoInventario = intentExtra.getIntExtra(PARAM_ID_SALDO_INVENTARIO,0);
-        if (idSaldoInventario == 0 && intentExtra.getStringExtra(PARAM_ID_SALDO_INVENTARIO).length() >0){
-            idSaldoInventario = Integer.valueOf(intentExtra.getStringExtra(PARAM_ID_SALDO_INVENTARIO));
+        int idSaldoInventario = 0;
+        if (intentExtra.getExtras().containsKey(PARAM_ID_SALDO_INVENTARIO)) {
+            idSaldoInventario = (int)intentExtra.getExtras().get(PARAM_ID_SALDO_INVENTARIO);
         }
         final String nomProducto = intentExtra.getStringExtra(PARAM_NOMBRE_PRODUCTO);
         final float precioOferta = intentExtra.getFloatExtra(PARAM_PRECIO_OFERTA,0);
@@ -267,14 +269,6 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
         }
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            finishAfterTransition();
-        else
-            finish();
-        return true;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -373,5 +367,35 @@ public class ProductoDetalleActivity extends AppCompatActivity implements View.O
                 mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            finishAfterTransition();
+        else
+            finish();
+        validarIntentAction();
+        return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        validarIntentAction();
+        super.onBackPressed();
+    }
+
+    /**
+     * Método utilizado para validar si es necesario reiniciar la aplicación
+     * cuando cierra la actividad, debido a que es llamada desde una NotificaciónPush generada por la API
+     * y es recibida en segundo plano. Cuando se recibe en primer plano no es necesario reinicar la aplicación ya que
+     * la PrincipalActivity ya está cargada. Ademas el servicio de FCM no crea el intent asociando la acción
+     */
+    private void validarIntentAction(){
+        if(getIntent().getAction() != null && getIntent().getAction().equals(ACTION_INTENT)){
+            Intent intent = new Intent(this,SplashActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 }
