@@ -18,6 +18,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import co.com.neubs.shopneubs.PedidoDetalleActivity;
+import co.com.neubs.shopneubs.PrincipalActivity;
 import co.com.neubs.shopneubs.ProductoDetalleActivity;
 import co.com.neubs.shopneubs.R;
 import co.com.neubs.shopneubs.adapters.PedidoDetalleAdapter;
@@ -39,7 +40,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon((android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) ? R.drawable.ic_notification_small : R.drawable.ic_notification_small_normal)
                 //.setColor(getColor(R.color.colorAccent))
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_notification_large))
                 .setVibrate(new long[]{1000,1000,1000,1000,1000})
                 .setLights(getColor(R.color.colorAccent),3000,3000)
                 .setContentTitle(remoteMessage.getNotification().getTitle())
@@ -66,6 +67,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     case PedidoDetalleActivity.ACTION_INTENT:
                         intent = new Intent(this,PedidoDetalleActivity.class);
                         break;
+                    case PrincipalActivity.ACTION_INTENT:
+                        intent = new Intent(this,PrincipalActivity.class);
+                        intent.setAction(clickAction);
                 }
             }
             if(intent != null) {

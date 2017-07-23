@@ -36,15 +36,14 @@ import static java.net.HttpURLConnection.HTTP_UNAVAILABLE;
 
 public class APIRest {
 
-    //public final static String PROTOCOL_URL_API = "https";
-    //public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
+    public final static String PROTOCOL_URL_API = "https";
+    public final static String URL_API = PROTOCOL_URL_API + "://api.shopneubs.com/";
 
     /**
      * URL desarrollo
      */
-    //
-    public final static String PROTOCOL_URL_API = "http";
-    public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
+    //public final static String PROTOCOL_URL_API = "http";
+    //public final static String URL_API = PROTOCOL_URL_API + "://192.168.1.50:8000/api/";
 
     // URLs de funcionalidad de la API
     public final static String URL_LOGIN = "rest-auth/login/";
@@ -373,11 +372,12 @@ public class APIRest {
                             }
                             else{
                                 apiValidations = new APIValidations();
-                                if (error.getCause().getClass() == ConnectException.class) {
-                                    RESPONSE_CODE = HTTP_UNAVAILABLE;
-                                }
-                                else if(error.getClass() == TimeoutError.class || error.getCause().getClass() == SocketTimeoutException.class) {
-                                    RESPONSE_CODE = HTTP_CLIENT_TIMEOUT;
+                                if (error.getCause() != null) {
+                                    if (error.getCause().getClass() == ConnectException.class) {
+                                        RESPONSE_CODE = HTTP_UNAVAILABLE;
+                                    } else if (error.getClass() == TimeoutError.class || error.getCause().getClass() == SocketTimeoutException.class) {
+                                        RESPONSE_CODE = HTTP_CLIENT_TIMEOUT;
+                                    }
                                 }
                                 apiValidations.setResponseCode(RESPONSE_CODE);
                             }

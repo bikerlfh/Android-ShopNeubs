@@ -117,7 +117,8 @@ public class SessionManager {
     public void addSugerencia(String sugerencia){
         SugerenciaBusqueda sugerenciaBusqueda = new SugerenciaBusqueda(sugerencia);
         sugerenciaBusqueda.save();
-        this.listSugerencias.add(sugerencia);
+        if (this.listSugerencias != null)
+            this.listSugerencias.add(sugerencia);
     }
 
     public ArrayList<ItemCar> getShopCar() {
