@@ -49,8 +49,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSound);
 
+        Intent intent = new Intent(this,PrincipalActivity.class);
         if (remoteMessage.getData().size() > 0) {
-            Intent intent = null;
             // OJO.. Siempre se debe enviar el click_action
             //intent.setAction(remoteMessage.getNotification().getClickAction());
 
@@ -72,17 +72,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         intent.setAction(clickAction);
                 }
             }
-            if(intent != null) {
-                //  Se agregan los datos como extras al intent
-                for (Map.Entry<String, String> entry : remoteMessage.getData().entrySet()) {
-                    intent.putExtra(entry.getKey(), entry.getValue());
-                }
-
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-                notificationBuilder.setContentIntent(pendingIntent);
+            //  Se agregan los datos como extras al intent
+            for (Map.Entry<String, String> entry : remoteMessage.getData().entrySet()) {
+                intent.putExtra(entry.getKey(), entry.getValue());
             }
         }
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        notificationBuilder.setContentIntent(pendingIntent);
+
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0,notificationBuilder.build());
     }
